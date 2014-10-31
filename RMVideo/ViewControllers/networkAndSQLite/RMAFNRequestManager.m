@@ -448,12 +448,20 @@
     NSString *url = [self urlPathadress:Http_getJoinMyChannel];
     url = [NSString stringWithFormat:@"%@token=%@&id=%@",url,token,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [SVProgressHUD showErrorWithStatus:@"添加成功"];
+                [self.delegate requestFinishiDownLoadWith:nil];
+            }
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"添加失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"添加失败"];
     }];
-
-    
 }
 
 #pragma mark - 设置：我的收藏视频列表

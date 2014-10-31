@@ -17,15 +17,21 @@
 #import "RMPublicModel.h"
 #import "UIImageView+AFNetworking.h"
 
+typedef enum{
+    requestIntroType = 1,
+    requestAddMyChannelType,
+}LoadType;
+
 #define maskView_TAG            101
 
 #define kFold_on                @"fold_on"
 #define kFold_off               @"fold_off"
 
-@interface RMStarDetailsViewController (){
+@interface RMStarDetailsViewController ()<RMAFNRequestManagerDelegate>{
     NSString * foldType;
     RMAFNRequestManager * requset;
     NSMutableArray * introDataArr;
+    LoadType loadType;
 }
 @property (nonatomic, strong) NSMutableString * star_id;
 
@@ -50,6 +56,7 @@
     introDataArr = [[NSMutableArray alloc] init];
     foldType = [[NSString alloc] init];
     foldType = kFold_off;
+    loadType = requestIntroType;
     
     [self setTitle:@"明星"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
@@ -138,7 +145,9 @@
     [_segmentedControl setTag:3];
     [self.contentView addSubview:_segmentedControl];
 
-
+    requset = [[RMAFNRequestManager alloc] init];
+    [requset getStartDetailWithID:self.star_id];
+    requset.delegate = self;
 }
 
 
@@ -168,7 +177,10 @@
     switch (sender.tag) {
         case 201:{
             NSLog(@"加入频道");
-
+            loadType = requestAddMyChannelType;
+            RMPublicModel * model = [introDataArr objectAtIndex:0];
+            [requset getJoinMyChannelWithToken:testToken andID:model.tag_id];
+            requset.delegate = self;
             break;
         }
         case 202:{
@@ -232,12 +244,6 @@
 
 - (void)setStarID:(NSString *)star_id {
     self.star_id = [[NSMutableString alloc] initWithString:star_id];
-    NSLog(@"传过来的明星tag_id:%@",self.star_id);
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - requset RMAFNRequestManagerDelegate
@@ -251,12 +257,21 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    introDataArr = data;
-    [self refreshIntroductionView];
+    if (loadType == requestIntroType) {
+        introDataArr = data;
+        [self refreshIntroductionView];
+    }else if (loadType == requestAddMyChannelType) {
+        
+    }
 }
 
 - (void)requestError:(NSError *)error {
     NSLog(@"明星详情:%@",error);
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 /*

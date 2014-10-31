@@ -32,12 +32,20 @@
 
 #import "RMAFNRequestManager.h"
 
+typedef enum{
+    requestStarListType = 1,
+    requestAddStarMyChannelType,
+}LoadType;
+
+
+
 #define searchTextField_TAG         101
 #define cancelBtn_TAG               102
 #define voiceBtn_TAG                103
 
 @interface RMStarViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,StarCellDelegate,UIGestureRecognizerDelegate,IFlySpeechRecognizerDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
+    LoadType loadType;
 }
 
 @property (nonatomic, strong) AMBlurView * blurView;
@@ -97,7 +105,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    loadType = requestStarListType;
+
     dataArr = [[NSMutableArray alloc] init];
     
     [self setTitle:@"明星"];
@@ -650,7 +659,10 @@
 
 - (void)clickAddMyChannelMethod:(RMImageView *)imageView {
     if (imageView.identifierString){
-        NSLog(@"添加明星%@到我的频道",imageView.identifierString);
+        loadType = requestAddStarMyChannelType;
+        RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+        [requset getJoinMyChannelWithToken:testToken andID:imageView.identifierString];
+        requset.delegate = self;
     }
 }
 
@@ -696,8 +708,12 @@
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    dataArr = data;
-    [(UITableView *)[self.view viewWithTag:201] reloadData];
+    if (loadType == requestStarListType){
+        dataArr = data;
+        [(UITableView *)[self.view viewWithTag:201] reloadData];
+    }else if (loadType == requestAddStarMyChannelType){
+        
+    }
 }
 
 - (void)requestError:(NSError *)error {
