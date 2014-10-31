@@ -52,11 +52,6 @@
     return cell;
 }
 
-- (void)reloadTableViewWithDataArray:(NSMutableArray *)array{
-    self.dataArray = array;
-    [self.mainTableView reloadData];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if([self.delegate respondsToSelector:@selector(selectTVTableViewCellWithIndex:)])
     {

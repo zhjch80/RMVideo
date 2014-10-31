@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,45 +14,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="Jdf-xN-mQn">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="Jdf-xN-mQn" customClass="RMImageView">
                         <rect key="frame" x="14" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="CsL-2i-Uij">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="CsL-2i-Uij" customClass="RMImageView">
                         <rect key="frame" x="117" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-pL-Irc">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-pL-Irc" customClass="RMImageView">
                         <rect key="frame" x="220" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blt-xP-uTJ">
-                        <rect key="frame" x="14" y="8" width="84" height="109"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="cellbuttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7Yg-Yy-eHL"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LA1-Jw-CnB">
-                        <rect key="frame" x="117" y="8" width="84" height="109"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="cellbuttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RgQ-4r-vLH"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFo-oF-2SM">
-                        <rect key="frame" x="220" y="8" width="84" height="109"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="cellbuttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U7E-Jb-3r5"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="布达佩斯饭店" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcw-m7-0YA">
                         <rect key="frame" x="14" y="120" width="84" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -88,8 +61,14 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="firstStarRateView" destination="tlt-wc-EDp" id="Rmg-70-IG9"/>
+                <outlet property="fristImage" destination="Jdf-xN-mQn" id="vsO-kv-HyG"/>
+                <outlet property="fristLable" destination="jcw-m7-0YA" id="if4-Cm-92k"/>
+                <outlet property="secondImage" destination="CsL-2i-Uij" id="6jj-3R-0zX"/>
+                <outlet property="secondLable" destination="Hqz-t1-xJY" id="G9f-Ns-s8Y"/>
                 <outlet property="secondStarRateView" destination="gPN-eO-HVh" id="HOc-i0-MdO"/>
                 <outlet property="thirdStarRateView" destination="zy0-d5-pl0" id="1Vl-6i-HSv"/>
+                <outlet property="threeImage" destination="sOr-pL-Irc" id="GJZ-R0-BzD"/>
+                <outlet property="threeLable" destination="5ze-Xl-Ihm" id="fNl-Fw-CsL"/>
             </connections>
             <point key="canvasLocation" x="140" y="146"/>
         </tableViewCell>

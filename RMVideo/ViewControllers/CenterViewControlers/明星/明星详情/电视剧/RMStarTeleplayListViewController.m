@@ -66,7 +66,7 @@
 
 #pragma mark - StarDetailsCellDelegate
 
-- (void)startDetailsCellDidSelectWithIndex:(NSInteger)index {
+- (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView {
     NSLog(@"电视剧");
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMStarDetailsViewController * starDetailsDelegate = _starDetailsDelegate;

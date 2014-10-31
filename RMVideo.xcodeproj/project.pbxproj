@@ -427,6 +427,12 @@
 		91908CDF19FA3C3300C3DF09 /* complete_btn_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CD919FA3C3300C3DF09 /* complete_btn_image@2x.png */; };
 		91908CE019FA3C3300C3DF09 /* editing_btn_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CDA19FA3C3300C3DF09 /* editing_btn_image.png */; };
 		91908CE119FA3C3300C3DF09 /* editing_btn_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CDB19FA3C3300C3DF09 /* editing_btn_image@2x.png */; };
+		9195B4CD1A037663005ED51B /* RMShouldSeeMovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9195B4CB1A037663005ED51B /* RMShouldSeeMovieViewController.m */; };
+		9195B4CE1A037663005ED51B /* RMShouldSeeMovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9195B4CC1A037663005ED51B /* RMShouldSeeMovieViewController.xib */; };
+		9195B4D21A03767B005ED51B /* RMShouldSeeTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9195B4D01A03767B005ED51B /* RMShouldSeeTVViewController.m */; };
+		9195B4D31A03767B005ED51B /* RMShouldSeeTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9195B4D11A03767B005ED51B /* RMShouldSeeTVViewController.xib */; };
+		9195B4D71A0376A1005ED51B /* RMShouldSeeVarietViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9195B4D51A0376A1005ED51B /* RMShouldSeeVarietViewController.m */; };
+		9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9195B4D61A0376A1005ED51B /* RMShouldSeeVarietViewController.xib */; };
 		91D4EC7C19FB7F98005E9235 /* toppaiming@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4EC7B19FB7F98005E9235 /* toppaiming@2x.png */; };
 		91D4EC7F19FB7FF9005E9235 /* pd_accessoryType_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4EC7D19FB7FF9005E9235 /* pd_accessoryType_gray.png */; };
 		91D4EC8019FB7FF9005E9235 /* pd_accessoryType_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4EC7E19FB7FF9005E9235 /* pd_accessoryType_red.png */; };
@@ -1042,6 +1048,15 @@
 		91908CD919FA3C3300C3DF09 /* complete_btn_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "complete_btn_image@2x.png"; sourceTree = "<group>"; };
 		91908CDA19FA3C3300C3DF09 /* editing_btn_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editing_btn_image.png; sourceTree = "<group>"; };
 		91908CDB19FA3C3300C3DF09 /* editing_btn_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editing_btn_image@2x.png"; sourceTree = "<group>"; };
+		9195B4CA1A037663005ED51B /* RMShouldSeeMovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMShouldSeeMovieViewController.h; sourceTree = "<group>"; };
+		9195B4CB1A037663005ED51B /* RMShouldSeeMovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMShouldSeeMovieViewController.m; sourceTree = "<group>"; };
+		9195B4CC1A037663005ED51B /* RMShouldSeeMovieViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMShouldSeeMovieViewController.xib; sourceTree = "<group>"; };
+		9195B4CF1A03767B005ED51B /* RMShouldSeeTVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMShouldSeeTVViewController.h; sourceTree = "<group>"; };
+		9195B4D01A03767B005ED51B /* RMShouldSeeTVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMShouldSeeTVViewController.m; sourceTree = "<group>"; };
+		9195B4D11A03767B005ED51B /* RMShouldSeeTVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMShouldSeeTVViewController.xib; sourceTree = "<group>"; };
+		9195B4D41A0376A1005ED51B /* RMShouldSeeVarietViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMShouldSeeVarietViewController.h; sourceTree = "<group>"; };
+		9195B4D51A0376A1005ED51B /* RMShouldSeeVarietViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMShouldSeeVarietViewController.m; sourceTree = "<group>"; };
+		9195B4D61A0376A1005ED51B /* RMShouldSeeVarietViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMShouldSeeVarietViewController.xib; sourceTree = "<group>"; };
 		91D4EC7B19FB7F98005E9235 /* toppaiming@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toppaiming@2x.png"; sourceTree = "<group>"; };
 		91D4EC7D19FB7FF9005E9235 /* pd_accessoryType_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pd_accessoryType_gray.png; sourceTree = "<group>"; };
 		91D4EC7E19FB7FF9005E9235 /* pd_accessoryType_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pd_accessoryType_red.png; sourceTree = "<group>"; };
@@ -1147,10 +1162,10 @@
 		1D4D475719D7AAD900E3A50B = {
 			isa = PBXGroup;
 			children = (
-				1D8480761A03633400A92879 /* ViewControllers */,
 				1D4D478F19D7B35800E3A50B /* Icon */,
 				1D4D478C19D7B35100E3A50B /* Resources */,
 				1D4D478D19D7B35100E3A50B /* Vendors */,
+				1D8480761A03633400A92879 /* ViewControllers */,
 				1D4D476219D7AAD900E3A50B /* RMVideo */,
 				1D4D477F19D7AADA00E3A50B /* RMVideoTests */,
 				1D4D482019D7B57300E3A50B /* Frameworks */,
@@ -1899,6 +1914,9 @@
 				1D8480B01A03633400A92879 /* RMMyChannelShouldSeeViewController.h */,
 				1D8480B11A03633400A92879 /* RMMyChannelShouldSeeViewController.m */,
 				1D8480B21A03633400A92879 /* RMMyChannelShouldSeeViewController.xib */,
+				9195B4C81A037615005ED51B /* 电影 */,
+				9195B4C71A037615005ED51B /* 电视剧 */,
+				9195B4C91A037615005ED51B /* 综艺 */,
 			);
 			path = "推荐必看";
 			sourceTree = "<group>";
@@ -2559,6 +2577,36 @@
 			path = "设置";
 			sourceTree = "<group>";
 		};
+		9195B4C71A037615005ED51B /* 电视剧 */ = {
+			isa = PBXGroup;
+			children = (
+				9195B4CF1A03767B005ED51B /* RMShouldSeeTVViewController.h */,
+				9195B4D01A03767B005ED51B /* RMShouldSeeTVViewController.m */,
+				9195B4D11A03767B005ED51B /* RMShouldSeeTVViewController.xib */,
+			);
+			path = "电视剧";
+			sourceTree = "<group>";
+		};
+		9195B4C81A037615005ED51B /* 电影 */ = {
+			isa = PBXGroup;
+			children = (
+				9195B4CA1A037663005ED51B /* RMShouldSeeMovieViewController.h */,
+				9195B4CB1A037663005ED51B /* RMShouldSeeMovieViewController.m */,
+				9195B4CC1A037663005ED51B /* RMShouldSeeMovieViewController.xib */,
+			);
+			path = "电影";
+			sourceTree = "<group>";
+		};
+		9195B4C91A037615005ED51B /* 综艺 */ = {
+			isa = PBXGroup;
+			children = (
+				9195B4D41A0376A1005ED51B /* RMShouldSeeVarietViewController.h */,
+				9195B4D51A0376A1005ED51B /* RMShouldSeeVarietViewController.m */,
+				9195B4D61A0376A1005ED51B /* RMShouldSeeVarietViewController.xib */,
+			);
+			path = "综艺";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2820,6 +2868,7 @@
 				912C099419F8D79E006B6305 /* movie_selected.png in Resources */,
 				1D84816A1A03633400A92879 /* RMStarCell.xib in Resources */,
 				1DAB0D0A19EB647E0063A58E /* arrow_down1.png in Resources */,
+				9195B4D31A03767B005ED51B /* RMShouldSeeTVViewController.xib in Resources */,
 				1DAB0D1319EB647E0063A58E /* blueArrow_up@2x.png in Resources */,
 				1D71171E19EE17A10007D393 /* mx_searchBar@2x.png in Resources */,
 				1D4C363619F6050700AC8F1E /* logo_td.png in Resources */,
@@ -2847,6 +2896,7 @@
 				1D8481871A03633400A92879 /* RMVideoPlotIntroducedViewController.xib in Resources */,
 				1DAB0D1219EB647E0063A58E /* blueArrow_up.png in Resources */,
 				1D84815D1A03633400A92879 /* RMMyChannelCell.xib in Resources */,
+				9195B4CE1A037663005ED51B /* RMShouldSeeMovieViewController.xib in Resources */,
 				1D4C364619F6050700AC8F1E /* setup.png in Resources */,
 				1DAB0D1119EB647E0063A58E /* blueArrow@2x.png in Resources */,
 				1D8481811A03633400A92879 /* RMVideoPlaybackDetailsViewController.xib in Resources */,
@@ -2887,6 +2937,7 @@
 				1DAB0DB919ECC2EC0063A58E /* SoHotList_red@2x.png in Resources */,
 				1D4C364519F6050700AC8F1E /* rotating_img.png in Resources */,
 				1D84819D1A03633400A92879 /* RMVideoPlayHistoryViewController.xib in Resources */,
+				9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */,
 				1D847F3A1A0324D000A92879 /* UMSnsAccountViewController.xib in Resources */,
 				91908CB019FA30E400C3DF09 /* SoHotList_red@3x.png in Resources */,
 				1D71170519ED26000007D393 /* cell_accessoryType_red.png in Resources */,
@@ -2993,6 +3044,7 @@
 				1D4D47B319D7B41C00E3A50B /* AESCrypt.m in Sources */,
 				913D15D71A01E4BB000A50E2 /* UIButton+WebCache.m in Sources */,
 				1D4D47F419D7B42800E3A50B /* JDStatusBarNotification.m in Sources */,
+				9195B4D71A0376A1005ED51B /* RMShouldSeeVarietViewController.m in Sources */,
 				1D8481581A03633400A92879 /* RMDailyTVViewController.m in Sources */,
 				1D84819E1A03633400A92879 /* RMMoreAPPTableViewCell.m in Sources */,
 				1D4D476619D7AAD900E3A50B /* main.m in Sources */,
@@ -3008,7 +3060,9 @@
 				1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */,
 				1D84817E1A03633400A92879 /* RMLoginRecommendViewController.m in Sources */,
 				1DAB0D1C19EB64C80063A58E /* JSONKit.m in Sources */,
+				9195B4CD1A037663005ED51B /* RMShouldSeeMovieViewController.m in Sources */,
 				1D4D47B819D7B41C00E3A50B /* AFHTTPRequestOperationManager.m in Sources */,
+				9195B4D21A03767B005ED51B /* RMShouldSeeTVViewController.m in Sources */,
 				1D722AC219F7628000424446 /* UIImage+ImageEffects.m in Sources */,
 				1D8481561A03633400A92879 /* RMDailyMovieViewController.m in Sources */,
 				1D8481A81A03633400A92879 /* RMAFNRequestManager.m in Sources */,

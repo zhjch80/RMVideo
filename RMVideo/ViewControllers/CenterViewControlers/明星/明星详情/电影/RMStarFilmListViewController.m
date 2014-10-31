@@ -11,7 +11,12 @@
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMStarDetailsViewController.h"
 
-@interface RMStarFilmListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate>{
+#import "RMAFNRequestManager.h"
+#import "RMPublicModel.h"
+#import "UIImageView+AFNetworking.h"
+
+@interface RMStarFilmListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate>{
+    NSMutableArray * dataArr;
 }
 
 @end
@@ -22,12 +27,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    dataArr = [[NSMutableArray alloc] init];
     UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.backgroundColor = [UIColor clearColor];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
+    
+    NSLog(@"这是第一个");
+    //TODO:记得换tag_id
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getTagOfVideoListWithID:@"25151" andVideoType:@"1"];
+    request.delegate = self;
+
 }
 
 #pragma mark - UITableView Delegate
@@ -65,7 +78,7 @@
 
 #pragma mark - StarDetailsCellDelegate
 
-- (void)startDetailsCellDidSelectWithIndex:(NSInteger)index {
+- (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView {
     NSLog(@"电影");
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMStarDetailsViewController * starDetailsDelegate = _starDetailsDelegate;
@@ -76,6 +89,18 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - request RMAFNRequestManagerDelegate
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    dataArr = data;
+    NSLog(@"%d",data.count);
+    [(UITableView *)[self.view viewWithTag:201] reloadData];
+}
+
+-(void)requestError:(NSError *)error {
+    NSLog(@"star 电影 error:%@",error);
 }
 
 /*

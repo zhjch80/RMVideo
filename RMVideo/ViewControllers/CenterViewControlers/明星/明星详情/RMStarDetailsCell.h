@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "RatingView.h"
+#import "RMImageView.h"
 
 @protocol StarDetailsCellDelegate <NSObject>
 
-- (void)startDetailsCellDidSelectWithIndex:(NSInteger)index;
+- (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView;
 
 @end
 
@@ -19,8 +20,13 @@
 
 @property (assign ,nonatomic) id<StarDetailsCellDelegate> delegate;
 
-- (IBAction)cellbuttonClick:(UIButton *)sender;
 
+@property (weak, nonatomic) IBOutlet RMImageView *fristImage;
+@property (weak, nonatomic) IBOutlet RMImageView *secondImage;
+@property (weak, nonatomic) IBOutlet RMImageView *threeImage;
+@property (weak, nonatomic) IBOutlet UILabel *fristLable;
+@property (weak, nonatomic) IBOutlet UILabel *secondLable;
+@property (weak, nonatomic) IBOutlet UILabel *threeLable;
 
 @property (weak, nonatomic) IBOutlet RatingView *firstStarRateView;
 

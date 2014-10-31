@@ -7,7 +7,6 @@
 //
 
 #import "RMBaseViewController.h"
-#import "HMSegmentedControl.h"
 
 @interface RMDailyListViewController : RMBaseViewController
 

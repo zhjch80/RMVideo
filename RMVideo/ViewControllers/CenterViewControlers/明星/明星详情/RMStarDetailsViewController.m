@@ -13,6 +13,10 @@
 #import "RMStarFilmListViewController.h"
 #import "RMStarVarietyListViewController.h"
 
+#import "RMAFNRequestManager.h"
+#import "RMPublicModel.h"
+#import "UIImageView+AFNetworking.h"
+
 #define maskView_TAG            101
 
 #define kFold_on                @"fold_on"
@@ -20,6 +24,8 @@
 
 @interface RMStarDetailsViewController (){
     NSString * foldType;
+    RMAFNRequestManager * requset;
+    NSMutableArray * introDataArr;
 }
 @property (nonatomic, strong) NSMutableString * star_id;
 
@@ -41,7 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
- 
+    introDataArr = [[NSMutableArray alloc] init];
     foldType = [[NSString alloc] init];
     foldType = kFold_off;
     
@@ -232,6 +238,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - requset RMAFNRequestManagerDelegate
+
+- (void)refreshIntroductionView {
+    RMPublicModel * model = [introDataArr objectAtIndex:0];
+    [self setTitle:model.name];
+    [self.starPhoto setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
+    self.starName.text = model.name;
+    self.starIntrduce.text = model.detail;
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    introDataArr = data;
+    [self refreshIntroductionView];
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"明星详情:%@",error);
 }
 
 /*

@@ -12,7 +12,8 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 
-#define baseUrl @"http://172.16.2.66/index.php/vod/"
+//#define baseUrl @"http://172.16.2.66/index.php/vod/"
+#define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
 @implementation RMAFNRequestManager
 
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
@@ -345,9 +346,30 @@
     NSString *url = [self urlPathadress:Http_getTagOfVideoList];
     url = [NSString stringWithFormat:@"%@tag_id=%@&video_type=%@",url,ID,type];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSLog(@"明星responseObject%@",responseObject);
+        if([[responseObject objectForKey:@"code"] intValue]==4001){
+            NSMutableArray *array = [NSMutableArray array];
+            for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+                RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.pic = [dict objectForKey:@"pic"];
+                model.name = [dict objectForKey:@"name"];
+                model.gold = [dict objectForKey:@"gold"];
+                model.video_type = [dict objectForKey:@"video_type"];
+                model.video_id = [dict objectForKey:@"video_id"];
+                [array addObject:model];
+            }
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:array];
+            }
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"提交失败"];
+        }
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
 
     
@@ -402,12 +424,21 @@
     NSString *url = [self urlPathadress:Http_getStartDetail];
     url = [NSString stringWithFormat:@"%@id=%@",url,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray * dataArray = [NSMutableArray array];
+        RMPublicModel *model = [[RMPublicModel alloc] init];
+        model.tag_id = [responseObject objectForKey:@"tag_id"];
+        model.detail = [responseObject objectForKey:@"detail"];
+        model.name = [responseObject objectForKey:@"name"];
+        model.pic_url = [responseObject objectForKey:@"pic_url"];
+        [dataArray addObject:model];
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
-
-    
 }
 
 #pragma mark - 明星：加入我的频道

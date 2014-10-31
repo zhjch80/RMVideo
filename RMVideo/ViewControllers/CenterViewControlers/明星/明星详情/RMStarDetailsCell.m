@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.fristImage addTarget:self WithSelector:@selector(cellImageClick:)];
+    [self.secondImage addTarget:self WithSelector:@selector(cellImageClick:)];
+    [self.threeImage addTarget:self WithSelector:@selector(cellImageClick:)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,7 +23,7 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)cellbuttonClick:(UIButton *)sender {
-    [self.delegate startDetailsCellDidSelectWithIndex:1];
+- (void)cellImageClick:(RMImageView *)image {
+    [self.delegate startDetailsCellDidSelectWithImage:image];
 }
 @end

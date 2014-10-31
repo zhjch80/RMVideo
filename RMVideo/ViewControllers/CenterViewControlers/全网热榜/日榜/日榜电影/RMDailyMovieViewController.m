@@ -57,12 +57,6 @@
     
 }
 
-- (void)reloadTableViewWithDataArray:(NSMutableArray *)array{
-    NSLog(@"responseObject:%@",array);
-    self.dataArray = array;
-    [self.mainTableView reloadData];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if([self.delegate respondsToSelector:@selector(selectMovieTableViewWithIndex:)]){
         [self.delegate selectMovieTableViewWithIndex:indexPath.row];
