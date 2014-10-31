@@ -22,11 +22,9 @@
     [self setTitle:@"登录"];
     
     leftBarButton.hidden = YES;
-    [rightBarButton setTitle:@"取消" forState:UIControlStateNormal];
-    [rightBarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    rightBarButton.frame = CGRectMake(0, 0, 60, 30);
-    rightBarButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    
+    rightBarButton.frame = CGRectMake(0, 0, 35, 20);
+    [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+    self.line.frame = CGRectMake([UtilityFunc shareInstance].globleWidth/2+100, self.line.frame.origin.y, self.line.frame.size.width, self.line.frame.size.height);
     
     
     
@@ -101,8 +99,7 @@
         NSLog(@"sina nickName is %@, iconURL is %@ token:%@",sinaAccount.userName,sinaAccount.iconURL,sinaAccount.accessToken);
         RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
         manager.delegate = self;
-        NSString *headURL = [sinaAccount.iconURL substringFromIndex:7];
-        [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:@""];
     }
     
 }

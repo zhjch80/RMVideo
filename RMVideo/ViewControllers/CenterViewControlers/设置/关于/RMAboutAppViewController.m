@@ -29,7 +29,7 @@
     self.webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.webView];
     
-    NSURL *url= [NSURL URLWithString:@"http://m.kankan.com/v/73/73509.shtml"];
+    NSURL *url= [NSURL URLWithString:@"http://www.baidu.com"];
     NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
     [self.webView loadRequest:request];
 }

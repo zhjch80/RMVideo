@@ -10,7 +10,16 @@
 #import "RMFinishDownTableViewCell.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 
-@interface RMDownMoreViewController ()
+typedef enum{
+    downLoadRequestType = 1,
+    deleteRequestType
+    
+}AFNRequestType;
+
+@interface RMDownMoreViewController (){
+    RMAFNRequestManager *manager;
+    AFNRequestType requestType;
+}
 
 @end
 
@@ -53,8 +62,8 @@
     [super viewDidLoad];
     
     isSeleltAllCell = YES;
+    requestType = downLoadRequestType;
     
-    self.dataArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     
     selectCellArray = [NSMutableArray array];
@@ -63,6 +72,10 @@
         [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
 
+    manager = [[RMAFNRequestManager alloc] init];
+    manager.delegate = self;
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [manager getFavoriteVideoListWithToken:testToken Page:@"1" count:@"10"];
 }
 
 - (void)EditingViewBtnClick:(UIButton *)sender{
@@ -83,31 +96,40 @@
         isSeleltAllCell = !isSeleltAllCell;
         [self.mainTableView reloadData];
     }else{
-        NSMutableArray *deleteArray = [NSMutableArray array];
-        NSArray *sort = [selectCellArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
-            return obj1.integerValue<obj2.integerValue;
-        }];
-        for(int i=0;i<sort.count;i++){
-            NSNumber *number = [sort objectAtIndex:i];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
-            [deleteArray addObject:indexPath];
+        requestType = deleteRequestType;
+        if (selectCellArray.count>0) {
+            NSString *deleteID = @"id";
+            for(int i=0;i<selectCellArray.count;i++){
+                int index = [[selectCellArray objectAtIndex:i] intValue];
+                RMPublicModel *model = [self.dataArray objectAtIndex:index];
+                deleteID = [NSString stringWithFormat:@"%@,%@",deleteID,model.video_id];
+            }
+            deleteID = [deleteID substringFromIndex:3];
+            [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
+            [manager getDeleteFavoriteVideoWithToken:testToken videoID:deleteID];
         }
-        for(int i=0;i<sort.count;i++){
-            NSNumber *number = [sort objectAtIndex:i];
-            [self.dataArray removeObjectAtIndex:number.integerValue];
-            [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+        else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请选择要删除的选项" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }
-        
-        [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
-        [self.mainTableView reloadData];
-        [selectCellArray removeAllObjects];
-        [UIView animateWithDuration:0.5 animations:^{
-            btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
-            self.mainTableView.frame = CGRectMake(self.mainTableView.frame.origin.x, self.mainTableView.frame.origin.y, self.mainTableView.frame.size.width, self.mainTableView.frame.size.height+25);
-        }];
-        [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
-        isEditing = NO;
     }
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *identifier = @"cellIIdentifier";
+    RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(cell==nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
+        if(isEditing)
+            [cell setCellViewFrame];
+    }
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.headImage setImageWithURL:[NSURL URLWithString:model.pic]];
+    cell.movieName.text = model.name;
+    cell.movieCount.text = nil;
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    return cell;
+    
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -133,6 +155,42 @@
     }
 }
 
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    
+    if(requestType == downLoadRequestType){
+        self.dataArray = data;
+        [self.mainTableView reloadData];
+    }else if (requestType == deleteRequestType) {
+        
+        NSMutableArray *deleteArray = [NSMutableArray array];
+        NSArray *sort = [selectCellArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+            return obj1.integerValue<obj2.integerValue;
+        }];
+        for(int i=0;i<sort.count;i++){
+            NSNumber *number = [sort objectAtIndex:i];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
+            [deleteArray addObject:indexPath];
+        }
+        for(int i=0;i<sort.count;i++){
+            NSNumber *number = [sort objectAtIndex:i];
+            [self.dataArray removeObjectAtIndex:number.integerValue];
+            [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+        }
+        
+        [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
+        [self.mainTableView reloadData];
+        [selectCellArray removeAllObjects];
+        [UIView animateWithDuration:0.5 animations:^{
+            btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
+            self.mainTableView.frame = CGRectMake(self.mainTableView.frame.origin.x, self.mainTableView.frame.origin.y, self.mainTableView.frame.size.width, self.mainTableView.frame.size.height+25);
+        }];
+        [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
+        isEditing = NO;
+        requestType = downLoadRequestType;
+    }
+    [SVProgressHUD dismiss];
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
