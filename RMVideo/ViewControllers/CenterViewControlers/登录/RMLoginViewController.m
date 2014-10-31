@@ -95,11 +95,11 @@
         
         //NSLog(@"didFinishOauthAndGetAccount response is %@",response);
         NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
-        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
+        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToTencent];
         NSLog(@"sina nickName is %@, iconURL is %@ token:%@",sinaAccount.userName,sinaAccount.iconURL,sinaAccount.accessToken);
         RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
         manager.delegate = self;
-        [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:@""];
+        [manager postLoginWithSourceType:@"2" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:nil];
     }
     
 }

@@ -13,4 +13,5 @@
 @property (nonatomic,strong) NSMutableArray *dataArray;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 
+@property (nonatomic, assign) id myChannelShouldDelegate;
 @end

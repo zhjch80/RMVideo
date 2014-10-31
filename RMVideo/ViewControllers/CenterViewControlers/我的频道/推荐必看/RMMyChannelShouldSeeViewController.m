@@ -39,11 +39,11 @@
     _slideSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"movie_selected",@"teleplay_selected",@"variety_selected", nil];
     
     _starFilmListCtl = [[RMShouldSeeMovieViewController alloc] init];
-    //_starFilmListCtl.delegate = self;
+    _starFilmListCtl.myChannelShouldDelegate = self;
     _starTeleplayListCtl = [[RMShouldSeeTVViewController alloc] init];
-    //_starTeleplayListCtl.delegate = self;
+    _starTeleplayListCtl.myChannelShouldDelegate = self;
     _starVarietyListCtl = [[RMShouldSeeVarietViewController alloc] init];
-    //_starVarietyListCtl.delegate = self;
+    _starVarietyListCtl.myChannelShouldDelegate = self;
     
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         _slideSwitchView.btnHeight = 30;

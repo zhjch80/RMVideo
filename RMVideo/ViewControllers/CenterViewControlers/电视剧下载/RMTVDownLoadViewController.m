@@ -8,6 +8,7 @@
 
 #import "RMTVDownLoadViewController.h"
 #import "RMTVDownView.h"
+#import "RMAFNRequestManager.h"
 
 @interface RMTVDownLoadViewController ()
 
@@ -30,6 +31,8 @@
         count = 6; width = 50;
     }
     [self addTVDetailEveryEpisodeViewFromArray:TVDetailArray andEveryTVViewWidth:width andEveryRowHaveTVViewCount:count];
+    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+    [manager getDownloadDiversityWithID:@"9507"];
 }
 
 //添加集数的按钮

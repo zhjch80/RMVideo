@@ -7,6 +7,8 @@
 //
 
 #import "RMShouldSeeTVViewController.h"
+#import "RMVideoPlaybackDetailsViewController.h"
+#import "RMMyChannelShouldSeeViewController.h"
 
 @interface RMShouldSeeTVViewController ()
 
@@ -61,6 +63,7 @@
         cell.secondLable.text = model_center.name;
         cell.threeLable.text = model_right.name;
 //    }
+    cell.delegate = self;
     return cell;
 }
 
@@ -93,6 +96,13 @@
 
 - (void)requestError:(NSError *)error{
     [SVProgressHUD showErrorWithStatus:@"下载失败"];
+}
+- (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
+    NSLog(@"identifer:%@",imageView.identifierString);
+    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
+    RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
+    [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
+    [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
 
 

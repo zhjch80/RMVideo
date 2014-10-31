@@ -8,6 +8,8 @@
 
 #import "RMShouldSeeMovieViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "RMVideoPlaybackDetailsViewController.h"
+#import "RMMyChannelShouldSeeViewController.h"
 
 @interface RMShouldSeeMovieViewController ()
 
@@ -92,7 +94,12 @@
 }
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
+    //TODO:push到下一个界面
     NSLog(@"identifer:%@",imageView.identifierString);
+    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
+    RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
+    [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
+    [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
 
 @end

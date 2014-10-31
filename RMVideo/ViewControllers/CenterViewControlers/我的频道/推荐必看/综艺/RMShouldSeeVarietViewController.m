@@ -7,6 +7,8 @@
 //
 
 #import "RMShouldSeeVarietViewController.h"
+#import "RMVideoPlaybackDetailsViewController.h"
+#import "RMMyChannelShouldSeeViewController.h"
 
 @interface RMShouldSeeVarietViewController ()
 
@@ -91,5 +93,10 @@
 - (void)requestError:(NSError *)error{
     [SVProgressHUD showErrorWithStatus:@"下载失败"];
 }
-
+- (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
+    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
+    RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
+    [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
+    [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
+}
 @end
