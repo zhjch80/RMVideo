@@ -10,6 +10,9 @@
 
 @interface RMMyChannelShouldSeeViewController : RMBaseViewController
 
+@property (nonatomic,copy)NSString *titleString;
+@property (nonatomic,copy)NSString *downLoadID;
+
 - (void)setTagId:(NSString *)tag_id;
 
 @end

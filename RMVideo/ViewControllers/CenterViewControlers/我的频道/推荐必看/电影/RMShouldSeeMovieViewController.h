@@ -12,6 +12,7 @@
 @interface RMShouldSeeMovieViewController : RMBaseViewController<StarDetailsCellDelegate>
 @property (nonatomic,strong) NSMutableArray *dataArray;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+@property (nonatomic,copy)NSString *downLoadID;
 
 @property (nonatomic, assign) id myChannelShouldDelegate;
 @end

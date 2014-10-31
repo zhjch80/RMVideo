@@ -243,10 +243,12 @@
 
 - (void)startCellDidSelectWithIndex:(NSInteger)index {
     RMPublicModel *model = [dataArr objectAtIndex:index];
-    NSLog(@"obj:%@",model.tag_id);
     RMMyChannelShouldSeeViewController * myChannelShouldSeeCtl = [[RMMyChannelShouldSeeViewController alloc] init];
+    myChannelShouldSeeCtl.titleString = model.name;
+    myChannelShouldSeeCtl.downLoadID = model.tag_id;
     [self.navigationController pushViewController:myChannelShouldSeeCtl animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+    myChannelShouldSeeCtl.title = model.name;
 }
 
 - (void)clickVideoImageViewMehtod:(RMImageView *)imageView {

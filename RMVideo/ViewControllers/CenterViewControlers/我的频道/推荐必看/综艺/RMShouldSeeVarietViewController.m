@@ -25,6 +25,8 @@
     manager.delegate = self;
     //视频类型（1：电影 2：电视剧 3：综艺）
     //排行类型（1：日榜 2：周榜 3：月榜）
+    NSLog(@"------33self.downLoadID:%@",self.downLoadID);
+    //TODO:  换成动态的id
     [manager getTagOfVideoListWithID:@"25155" andVideoType:@"3"];
     [self setExtraCellLineHidden:self.mainTableView];
 }

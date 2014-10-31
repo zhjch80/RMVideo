@@ -14,6 +14,7 @@
 #import "RMShouldSeeVarietViewController.h"
 
 @interface RMMyChannelShouldSeeViewController ()<SUNSlideSwitchViewDelegate>
+@property (nonatomic, strong) NSString * navTitle;
 @property (nonatomic, strong) NSString *tag_id;
 @property RMShouldSeeTVViewController * starTeleplayListCtl;
 @property RMShouldSeeMovieViewController * starFilmListCtl;
@@ -26,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setTitle:@"tag必看"];
+    [self setTitle:self.titleString];
     
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
@@ -40,10 +41,15 @@
     
     _starFilmListCtl = [[RMShouldSeeMovieViewController alloc] init];
     _starFilmListCtl.myChannelShouldDelegate = self;
+    _starFilmListCtl.downLoadID = self.downLoadID;
+    
     _starTeleplayListCtl = [[RMShouldSeeTVViewController alloc] init];
     _starTeleplayListCtl.myChannelShouldDelegate = self;
+    _starTeleplayListCtl.downLoadID = self.downLoadID;
+
     _starVarietyListCtl = [[RMShouldSeeVarietViewController alloc] init];
     _starVarietyListCtl.myChannelShouldDelegate = self;
+    _starVarietyListCtl.downLoadID = self.downLoadID;
     
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         _slideSwitchView.btnHeight = 30;
@@ -94,6 +100,7 @@
         NSLog(@"slie to 第三个");
     }
 }
+
 
 #pragma mark - base Method
 
