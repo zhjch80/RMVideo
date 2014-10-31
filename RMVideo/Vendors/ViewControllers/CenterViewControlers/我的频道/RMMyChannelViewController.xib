@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RMMyChannelViewController">
+            <connections>
+                <outlet property="moreBgImg" destination="umK-kK-hSS" id="Lzx-9H-Qgs"/>
+                <outlet property="moreBtn" destination="5Al-M8-EUj" id="iEp-Lq-MbM"/>
+                <outlet property="moreTitle" destination="9LA-Ql-ahz" id="jus-Ye-Ieb"/>
+                <outlet property="moreWonderfulImg" destination="S3O-Xh-eO4" id="aF6-lE-pWm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S3O-Xh-eO4" customClass="RMImageView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                    <color key="backgroundColor" red="0.19607844948768616" green="0.19607844948768616" blue="0.19607844948768616" alpha="1" colorSpace="deviceRGB"/>
+                </imageView>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="更多精彩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9LA-Ql-ahz">
+                    <rect key="frame" x="220" y="9" width="60" height="21"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.40000003576278687" green="0.39607846736907959" blue="0.39607846736907959" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pd_accessoryType_red" translatesAutoresizingMaskIntoConstraints="NO" id="umK-kK-hSS">
+                    <rect key="frame" x="295" y="13" width="10" height="15"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Al-M8-EUj">
+                    <rect key="frame" x="160" y="0.0" width="160" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="mbuttonClick:" destination="-1" eventType="touchUpInside" id="GVC-5N-Xme"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="umK-kK-hSS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="13" id="EPJ-jD-28R"/>
+                <constraint firstAttribute="trailing" secondItem="S3O-Xh-eO4" secondAttribute="trailing" id="IRg-3P-Usn"/>
+                <constraint firstAttribute="trailing" secondItem="9LA-Ql-ahz" secondAttribute="trailing" constant="40" id="Ob2-z3-a7K"/>
+                <constraint firstAttribute="trailing" secondItem="umK-kK-hSS" secondAttribute="trailing" constant="15" id="d84-da-U4Z"/>
+                <constraint firstAttribute="trailing" secondItem="5Al-M8-EUj" secondAttribute="trailing" id="zHv-9q-Egm"/>
+                <constraint firstItem="S3O-Xh-eO4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zuM-Sk-Ir6"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="30" y="94"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pd_accessoryType_red" width="44" height="44"/>
+    </resources>
+</document>

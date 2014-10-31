@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RMLoginViewController">
+            <connections>
+                <outlet property="line" destination="lek-rh-KwU" id="AXj-3z-FoJ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用社交账号登陆到客户端" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxW-5f-DrU">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="Ytt-Qn-THe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRU-ly-Eql">
+                    <rect key="frame" x="0.0" y="46" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.6549019814" green="0.6549019814" blue="0.6549019814" alpha="1" colorSpace="deviceRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="HB1-UH-UDc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lek-rh-KwU">
+                    <rect key="frame" x="160" y="73" width="1" height="50"/>
+                    <color key="backgroundColor" red="0.6549019814" green="0.6549019814" blue="0.6549019814" alpha="1" colorSpace="deviceRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7SM-fY-VOO">
+                    <rect key="frame" x="85" y="62" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="9rf-xk-9S0"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="logo_weibo.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="weiboLogin:" destination="-1" eventType="touchUpInside" id="gEN-nj-c7w"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flx-Jh-sl4">
+                    <rect key="frame" x="185" y="62" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="V9X-kb-dIZ"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="logo_qq.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="tencentLogin:" destination="-1" eventType="touchUpInside" id="c4f-to-Tsb"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新浪微博" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hq0-60-HI1">
+                    <rect key="frame" x="76" y="120" width="68" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="腾讯微博" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkL-wb-LcC">
+                    <rect key="frame" x="176" y="120" width="68" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="RkL-wb-LcC" secondAttribute="trailing" constant="76" id="7Eb-Dd-SBQ"/>
+                <constraint firstItem="dRU-ly-Eql" firstAttribute="top" secondItem="SxW-5f-DrU" secondAttribute="bottom" constant="1" id="DKY-FI-MdZ"/>
+                <constraint firstItem="hq0-60-HI1" firstAttribute="top" secondItem="7SM-fY-VOO" secondAttribute="bottom" constant="8" id="JJp-BP-5eh"/>
+                <constraint firstItem="RkL-wb-LcC" firstAttribute="top" secondItem="flx-Jh-sl4" secondAttribute="bottom" constant="8" id="JxB-bF-EVr"/>
+                <constraint firstAttribute="trailing" secondItem="flx-Jh-sl4" secondAttribute="trailing" constant="85" id="Tle-qv-R1c"/>
+                <constraint firstItem="RkL-wb-LcC" firstAttribute="width" secondItem="hq0-60-HI1" secondAttribute="width" id="Uwd-Sc-pZh"/>
+                <constraint firstAttribute="trailing" secondItem="dRU-ly-Eql" secondAttribute="trailing" id="Vve-mS-4eV"/>
+                <constraint firstItem="flx-Jh-sl4" firstAttribute="top" secondItem="dRU-ly-Eql" secondAttribute="bottom" constant="15" id="XkK-Rh-rni"/>
+                <constraint firstItem="7SM-fY-VOO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="85" id="Xuz-Ws-3Jy"/>
+                <constraint firstItem="SxW-5f-DrU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b2d-HN-fD5"/>
+                <constraint firstItem="7SM-fY-VOO" firstAttribute="top" secondItem="dRU-ly-Eql" secondAttribute="bottom" constant="15" id="bBv-w3-3DO"/>
+                <constraint firstItem="SxW-5f-DrU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fS7-gd-DYH"/>
+                <constraint firstItem="hq0-60-HI1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="76" id="gvU-fY-pa5"/>
+                <constraint firstAttribute="trailing" secondItem="SxW-5f-DrU" secondAttribute="trailing" id="ue1-cY-UcR"/>
+                <constraint firstItem="RkL-wb-LcC" firstAttribute="height" secondItem="hq0-60-HI1" secondAttribute="height" id="xJG-7C-3kE"/>
+                <constraint firstItem="dRU-ly-Eql" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zHk-uq-mIM"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="381" y="356"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo_qq.png" width="50" height="50"/>
+        <image name="logo_weibo.png" width="50" height="50"/>
+    </resources>
+</document>
