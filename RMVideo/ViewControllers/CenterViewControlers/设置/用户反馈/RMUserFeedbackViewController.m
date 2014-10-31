@@ -24,7 +24,7 @@
         if(self.feedBackTextView.text && ![self.feedBackTextView.text isEqualToString:@""]){
             RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
             manager.delegate = self;
-            [manager postUserFeedbackWithToken:@"" andFeedBackString:[self.feedBackTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [manager postUserFeedbackWithToken:testToken andFeedBackString:[self.feedBackTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请填写您宝贵的意见" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];
@@ -43,14 +43,12 @@
     [self.feedBackTextView.layer setCornerRadius:10];
     self.feedBackTextView.layer.borderColor = [UIColor blackColor].CGColor;
     self.feedBackTextView.layer.borderWidth = 1;
-    
+
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
-    if([[data objectAtIndex:0] intValue]==4001){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的意见已成功提交" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alertView show];
-    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的意见已成功提交" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertView show];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -58,13 +56,13 @@
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

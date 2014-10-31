@@ -34,15 +34,20 @@
     for (int i = 0;i<2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(i*([UtilityFunc shareInstance].globleWidth/2), 0, [UtilityFunc shareInstance].globleWidth/2, 49);
-        if(i==0)
+        if(i==0){
             [button setImage:[UIImage imageNamed:@"select_all_btn"] forState:UIControlStateNormal];
-        else
+            [button setBackgroundColor:[UIColor cyanColor]];
+        }
+        else{
             [button setImage:[UIImage imageNamed:@"delect_all_btn"] forState:UIControlStateNormal];
+            [button setBackgroundColor:[UIColor redColor]];
+        }
         button.tag = i+10;
         [button addTarget:self action:@selector(EditingViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btnView addSubview:button];
     }
     [self.view addSubview:btnView];
+    [self setExtraCellLineHidden:self.mainTableView];
 }
 - (void)EditingViewBtnClick:(UIButton *)sender{
     
@@ -84,17 +89,8 @@
         [rightBarButton setBackgroundImage:LOADIMAGE(@"complete_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     }
     else{
-        [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+        [rightBarButton setBackgroundImage:LOADIMAGE(@"editing_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     }
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

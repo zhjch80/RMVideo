@@ -16,6 +16,8 @@
 #import "RMUserFeedbackViewController.h"
 #import "RMAboutAppViewController.h"
 #import "RMMoreAppViewController.h"
+#import "RMLoginViewController.h"
+#import "UMSocial.h"
 
 @interface RMSetupViewController ()
 
@@ -65,7 +67,6 @@
     if(cell==nil){
         cell = [[[NSBundle mainBundle]loadNibNamed:@"RMSetUpTableViewCell" owner:self options:nil]lastObject];
         if(indexPath.section==1&&indexPath.row==1){
-            NSLog(@"dsjgkl;dsjfklg;jsdlk;gjdl;fs");
             cell.subtitleString.text = @"18.8M";
         }
         if(indexPath.section==0){
@@ -177,9 +178,17 @@
 -(IBAction)loginOrExitButtonClick:(UIButton *)sender{
     //登录
     if(sender.tag == 1){
+        RMLoginViewController *loginControl = [[RMLoginViewController alloc] init];
+        [self.navigationController pushViewController:loginControl animated:YES];
     }
     //退出登录
     else if(sender.tag ==2){
+        [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToSina  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"response is %@",response);
+        }];
+        [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToTencent  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"response is %@",response);
+        }];
     }
 }
 
