@@ -534,6 +534,7 @@
             }
         }
         else{
+            NSLog(@"fdsfdsfsadfsdfds");
             [SVProgressHUD showErrorWithStatus:@"登录失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
