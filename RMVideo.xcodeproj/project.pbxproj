@@ -1228,9 +1228,9 @@
 		1D4D478D19D7B35100E3A50B /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				1D847F021A0324CF00A92879 /* umeng_ios_social_sdk_4.2_custom */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
+				1D847F021A0324CF00A92879 /* umeng_ios_social_sdk_4.2_custom */,
 				913D15AC1A01E4BB000A50E2 /* SDWebImage */,
 				1D722AC319F762EB00424446 /* blur */,
 				1D722ABF19F7627500424446 /* UIImage+ImageEffects */,
@@ -3141,7 +3141,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
+				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -3178,7 +3178,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
+				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -3209,7 +3209,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
+				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
 			};
 			name = Debug;
 		};
@@ -3236,7 +3236,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
+				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
 			};
 			name = Release;
 		};
