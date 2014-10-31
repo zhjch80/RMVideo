@@ -29,7 +29,7 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_head-Image.png" translatesAutoresizingMaskIntoConstraints="NO" id="soZ-aZ-Ekh">
                             <rect key="frame" x="15" y="8" width="30" height="30"/>
                         </imageView>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ko-Dv-YIo">
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ko-Dv-YIo">
                             <rect key="frame" x="277" y="8" width="30" height="30"/>
                             <state key="normal" title="登录">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,6 +43,8 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="k0B-WU-fdT"/>
+                        <constraint firstAttribute="trailing" secondItem="0ko-Dv-YIo" secondAttribute="trailing" constant="13" id="mQ1-z0-Lr6"/>
+                        <constraint firstItem="0ko-Dv-YIo" firstAttribute="top" secondItem="5h2-Eh-8qo" secondAttribute="top" constant="8" id="sWu-np-toU"/>
                     </constraints>
                 </view>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZ8-OU-9Ss">

@@ -50,7 +50,7 @@
     }else if (IS_IPHONE_6_SCREEN){
         //TODO:todo...
         _slideSwitchView.btnHeight = 40;
-        _slideSwitchView.btnWidth = 120;
+        _slideSwitchView.btnWidth = 105;
     }else if (IS_IPHONE_6p_SCREEN){
         _slideSwitchView.btnHeight = 40;
         _slideSwitchView.btnWidth = 120;

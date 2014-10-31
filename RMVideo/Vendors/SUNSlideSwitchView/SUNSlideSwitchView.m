@@ -174,14 +174,20 @@ static const NSUInteger kTagOfRightSideButton = 999;
         //累计每个tab文字的长度
         //设置按钮尺寸
         //计算下一个tab的x偏移量
-        
+        int count = 0;
+        if(IS_IPHONE_6_SCREEN){
+            count = 5;
+        }
         if ([_viewArray count] == 3){
             if (i==1){
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 12, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 14+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
+//                button.backgroundColor = [UIColor blueColor];
             }else if (i==2){
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + 3, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + 1+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
+//                button.backgroundColor = [UIColor cyanColor];
             }else{
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2- 9, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2- 11+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
+//                button.backgroundColor = [UIColor redColor];
             }
         }else{
             if (i==1){

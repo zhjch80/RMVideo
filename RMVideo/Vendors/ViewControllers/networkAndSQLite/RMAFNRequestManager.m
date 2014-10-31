@@ -10,6 +10,7 @@
 #import "CONSTURL.h"
 #import "AFNetworking.h"
 #import "RMPublicModel.h"
+#import "SVProgressHUD.h"
 
 #define baseUrl @"http://172.16.2.66/index.php/vod/"
 @implementation RMAFNRequestManager
@@ -161,11 +162,14 @@
                 [self.delegate requestFinishiDownLoadWith:dataArray];
             }
         }
+        else{
+            [SVProgressHUD showErrorWithStatus:@"下载失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        
+        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
 }
 
@@ -194,11 +198,15 @@
                 [self.delegate requestFinishiDownLoadWith:dataArray];
             }
         }
+        else{
+            [SVProgressHUD showErrorWithStatus:@"下载失败"];
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
+        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
     
     
@@ -410,10 +418,29 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getFavoriteVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit=%@&offset=%@",url,token,count,[self setOffsetWith:page andCount:count]];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] integerValue] == 4001){
+            NSMutableArray *array = [NSMutableArray array];
+            for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+                RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.pic = [dict objectForKey:@"pic"];
+                model.name = [dict objectForKey:@"name"];
+                model.video_id =[dict objectForKey:@"video_id"];
+                model.video_type = [dict objectForKey:@"video_type"];
+                [array addObject:model];
+            }
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:array];
+            }
+        }
+        else{
+            [SVProgressHUD showErrorWithStatus:@"下载失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
 
     
@@ -425,10 +452,20 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDeleteFavoriteVideo];
     url = [NSString stringWithFormat:@"%@token=%@&video_ids=%@",url,token,ID];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         NSLog(@"responseObject:%@",responseObject);
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:nil];
+            }
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"删除失败"];
     }];
 
     
@@ -440,10 +477,19 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_postUserFeedback];
     url = [NSString stringWithFormat:@"%@token=%@&text=%@",url,token,string];
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] intValue]==4001){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:nil];
+            }
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"提交失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"提交失败"];
     }];
 
     
@@ -468,12 +514,22 @@
 
 - (void)postLoginWithSourceType:(NSString *)type sourceId:(NSString *)ID username:(NSString *)name headImageURL:(NSString *)imageUrl{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
-    NSString *url = [self urlPathadress:Http_getDailyRecommend];
+    NSString *url = [self urlPathadress:Http_postLogin];
     url = [NSString stringWithFormat:@"%@source_type=%@&source_id=%@&username=%@&face=%@",url,type,ID,name,imageUrl];
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:nil];
+            }
+        }
+        else{
+            [SVProgressHUD showErrorWithStatus:@"登录失败"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+        [SVProgressHUD showErrorWithStatus:@"登录失败"];
     }];
 
     

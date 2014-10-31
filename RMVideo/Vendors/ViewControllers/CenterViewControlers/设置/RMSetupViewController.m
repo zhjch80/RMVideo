@@ -17,6 +17,7 @@
 #import "RMAboutAppViewController.h"
 #import "RMMoreAppViewController.h"
 #import "RMLoginViewController.h"
+#import "UMSocial.h"
 
 @interface RMSetupViewController ()
 
@@ -182,6 +183,12 @@
     }
     //退出登录
     else if(sender.tag ==2){
+        [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToSina  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"response is %@",response);
+        }];
+        [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToTencent  completion:^(UMSocialResponseEntity *response){
+            NSLog(@"response is %@",response);
+        }];
     }
 }
 
