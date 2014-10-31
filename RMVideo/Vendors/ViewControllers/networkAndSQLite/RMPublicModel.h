@@ -10,6 +10,8 @@
 
 @interface RMPublicModel : NSObject
 
+@property (nonatomic,strong) NSString *code;
+
 //今日推荐
 @property(nonatomic,strong) NSString *DailyRecommendPic;
 @property(nonatomic,strong) NSString *DailyRecommendVideo_id;

@@ -116,7 +116,6 @@
 - (void)getDailyRecommend{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDailyRecommend];
-    __unsafe_unretained RMAFNRequestManager *weekSelf = self;
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
@@ -158,18 +157,15 @@
             [dataArray addObject:movie];
             [dataArray addObject:tv];
             [dataArray addObject:variety];
-            if([weekSelf.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:dataArray];
             }
         }
-        else{
-            [SVProgressHUD showErrorWithStatus:@"下载失败"];
-        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"下载失败"];
+        
     }];
 }
 
@@ -180,7 +176,6 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getTopList];
     url = [NSString stringWithFormat:@"%@video_type=%@&top_type=%@&limit=%@&offset=%@",url,videoType,topType,count,[self setOffsetWith:page andCount:count]];
-    __unsafe_unretained RMAFNRequestManager *weekSelf = self;
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
@@ -194,22 +189,16 @@
                 model.sum_i_hits = [dict objectForKey:@"sum_i_hits"];
                 [dataArray addObject:model];
             }
-            if([weekSelf.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:dataArray];
             }
         }
-        else{
-            [SVProgressHUD showErrorWithStatus:@"下载失败"];
-        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
-    
-    
 }
 
 #pragma mark - 视频详情
@@ -261,7 +250,6 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMyChannelVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit_tag=%@&offset_tag=%@",url,token,count,[self setOffsetWith:page andCount:count]];
-    __unsafe_unretained RMAFNRequestManager *weekSelf = self;
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"tag_list"]){
@@ -271,26 +259,37 @@
             model.video_list = [dict objectForKey:@"video_list"];
             [dataArray addObject:model];
         }
-        if([weekSelf.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if ([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
+        if ([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
     }];
 }
 
-#pragma mrak - 我的频道：更多精彩
+#pragma mark - 我的频道：更多精彩
 
 - (void)getMoreWonderfulVideoListWithPage:(NSString *)page count:(NSString *)count{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMoreWonderfulVideoList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.tag_id = [dict objectForKey:@"tag_id"];
+            model.name = [dict objectForKey:@"name"];
+            [dataArray addObject:model];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 
@@ -301,27 +300,42 @@
     NSString *url = [self urlPathadress:Http_getReplaceChannel];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.tag_id = [dict objectForKey:@"tag_id"];
+            model.name = [dict objectForKey:@"name"];
+            [dataArray addObject:model];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
-
-    
 }
 
 #pragma mark - 我的频道：自定义tag
 
-- (void)getCustomTagWithToken:(NSString *)token tagName:(NSString *)tag{
+- (void)getCustomTagWithToken:(NSString *)token tagName:(NSString *)name{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getCustomTag];
-    url = [NSString stringWithFormat:@"%@token=%@&tag=%@",url,token,tag];
+    url = [NSString stringWithFormat:@"%@token=%@&tag=%@",url,token,[name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        RMPublicModel *model = [[RMPublicModel alloc] init];
+        model.code = [responseObject objectForKey:@"code"];
+        [dataArray addObject:model];
+        if ([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]) {
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
-
-    
 }
 
 #pragma mark - 我的频道：单个tag下的影片列表
@@ -345,7 +359,6 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStarList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
-    __unsafe_unretained RMAFNRequestManager *weekSelf = self;
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"明星列表%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
@@ -357,11 +370,11 @@
             model.pic_url = [dict objectForKey:@"pic_url"];
             [dataArray addObject:model];
         }
-        if([weekSelf.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if ([weekSelf.delegate respondsToSelector:@selector(requestError:)]){
+        if ([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
     }];
@@ -412,7 +425,7 @@
     
 }
 
-#pragma mark - 设置：我收藏的视频列表
+#pragma mark - 设置：我的收藏视频列表
 
 - (void)getFavoriteVideoListWithToken:(NSString *)token Page:(NSString *)page count:(NSString *)count{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
@@ -442,11 +455,9 @@
         }
         [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
-
-    
 }
 
-#pragma mark - 设置：我收藏的：取消收藏
+#pragma mark - 设置：我的收藏：取消收藏
 
 - (void)getDeleteFavoriteVideoWithToken:(NSString *)token videoID:(NSString *)ID{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
@@ -467,7 +478,7 @@
         }
         [SVProgressHUD showErrorWithStatus:@"删除失败"];
     }];
-
+    
     
 }
 
@@ -491,7 +502,7 @@
         }
         [SVProgressHUD showErrorWithStatus:@"提交失败"];
     }];
-
+    
     
 }
 
@@ -531,7 +542,7 @@
         }
         [SVProgressHUD showErrorWithStatus:@"登录失败"];
     }];
-
+    
     
 }
 
