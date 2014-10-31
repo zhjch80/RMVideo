@@ -9,6 +9,8 @@
 #import "RMDailyMovieViewController.h"
 #import "RMDailyListTableViewCell.h"
 #import "RMImageView.h"
+#import "RMPublicModel.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface RMDailyMovieViewController ()
 
@@ -21,10 +23,18 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor greenColor];
     self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
+    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+    manager.delegate = self;
+    //视频类型（1：电影 2：电视剧 3：综艺）
+    //排行类型（1：日榜 2：周榜 3：月榜）
+    [manager getTopListWithVideoTpye:@"1" andTopType:@"1" searchPageNumber:@"1" andCount:@"10"];
+
+    [self setExtraCellLineHidden:self.mainTableView];
+    
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //return dataArray.count;
-    return 15;
+    return self.dataArray.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -33,18 +43,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *cellName = @"DailyListCell";
+    static NSString *cellName = @"DailyListCellIndex";
     RMDailyListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     if(cell ==nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
     }
-    [(RMImageView *)cell.headImage setFileShowImageView:[UIImage imageNamed:@"003"]];
-    [(RMImageView *)cell.TopImage addTopNumber:1];
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.headImage setImageWithURL:[NSURL URLWithString:model.pic]];
+    cell.movieName.text = model.name;
+    cell.playCount.text = model.sum_i_hits;
+    [(RMImageView *)cell.TopImage addTopNumber:indexPath.row+1];
     return cell;
+    
 }
 
 - (void)reloadTableViewWithDataArray:(NSMutableArray *)array{
-    dataArray = array;
+    NSLog(@"responseObject:%@",array);
+    self.dataArray = array;
     [self.mainTableView reloadData];
 }
 
@@ -58,15 +73,20 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    if (data.count==0) {
+        [SVProgressHUD showErrorWithStatus:@"电影暂无数据"];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    self.dataArray = data;
+    [self.mainTableView reloadData];
 }
-*/
+
+- (void)requestError:(NSError *)error{
+    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+}
+
+
 
 @end

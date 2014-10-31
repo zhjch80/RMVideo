@@ -15,8 +15,9 @@
 @end
 
 @interface RMDailyVarietyViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{
-    NSMutableArray *dataArray;
+    
 }
+@property (nonatomic,strong) NSMutableArray *dataArray;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (assign,nonatomic)id<RMDailyVarietyViewControllerDelegate> delegate;
 - (void)reloadTableViewWithDataArray:(NSMutableArray *)array;

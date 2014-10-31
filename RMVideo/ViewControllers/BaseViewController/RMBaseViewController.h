@@ -17,7 +17,12 @@
 //AES
 #import "AESCrypt.h"
 
-@interface RMBaseViewController : UIViewController{
+#import "RMAFNRequestManager.h"
+#import "RMPublicModel.h"
+#import "SVProgressHUD.h"
+
+
+@interface RMBaseViewController : UIViewController<RMAFNRequestManagerDelegate>{
     UIButton *leftBarButton;
     UIButton *rightBarButton;
 }

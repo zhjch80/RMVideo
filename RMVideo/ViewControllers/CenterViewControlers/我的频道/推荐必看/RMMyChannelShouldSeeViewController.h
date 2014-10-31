@@ -10,4 +10,6 @@
 
 @interface RMMyChannelShouldSeeViewController : RMBaseViewController
 
+- (void)setTagId:(NSString *)tag_id;
+
 @end

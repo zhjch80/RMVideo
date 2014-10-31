@@ -17,9 +17,11 @@
 #import "RMVideoPlaybackDetailsViewController.h"
 
 #import "RMLoginRecommendViewController.h"
+#import "RMAFNRequestManager.h"
+#import "UIImageView+AFNetworking.h"
+#import "RMMyChannelShouldSeeViewController.h"
 
-
-@interface RMMyChannelViewController ()<UITableViewDataSource,UITableViewDelegate,MyChannemMoreWonderfulDelegate> {
+@interface RMMyChannelViewController ()<UITableViewDataSource,UITableViewDelegate,MyChannemMoreWonderfulDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
 }
 
@@ -46,8 +48,7 @@
     
     if ([loginStatus isEqualToString:@"islogin"]){
         //登录
-        dataArr = [[NSMutableArray alloc] initWithObjects:@"11", @"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",nil];
-        
+        dataArr = [[NSMutableArray alloc] init];
         
         [self setTitle:@"我的频道"];
         [leftBarButton setBackgroundImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
@@ -57,9 +58,15 @@
         UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 40 - 49 - 44) style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource  =self;
+        tableView.tag = 101;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         tableView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tableView];
+        
+        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+        [request getMyChannelVideoListWithToken:testToken pageNumber:@"1" count:@"10"];
+        request.delegate = self;
+        
     }else{
         //未登录
         self.moreWonderfulImg.hidden = YES;
@@ -109,17 +116,18 @@
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([dataArr count]/3 == 0){
-        return [dataArr count]/3;
-    }else if ([dataArr count]/3 == 1){
-        return ([dataArr count] + 2) / 3;
-    }else {
-        return ([dataArr count] + 1) / 3;
-    }
+    return [dataArr count];
+//    if ([dataArr count]/3 == 0){
+//        return [dataArr count]/3;
+//    }else if ([dataArr count]/3 == 1){
+//        return ([dataArr count] + 2) / 3;
+//    }else {
+//        return ([dataArr count] + 1) / 3;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier = @"RMMyChannelCellIdentifier";
+    NSString * CellIdentifier = [NSString stringWithFormat:@"RMMyChannelCellIdentifier%d",indexPath.row];
     RMMyChannelCell * cell = (RMMyChannelCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (! cell) {
         /*
@@ -134,26 +142,57 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.delegate = self;
     }
+    RMPublicModel *model = [dataArr objectAtIndex:indexPath.row];    
+    CGFloat width = [UtilityFunc boundingRectWithSize:CGSizeMake(0, 30) font:[UIFont systemFontOfSize:14.0] text:model.name].width;
+    cell.tag_title.frame = CGRectMake(2, 0, width + 30, 30);
+    cell.tag_title.text = model.name;
+    cell.moreBtn.tag = indexPath.row;
     
-    if ([dataArr count]/3 == 0){
-        //正好
+    if ([model.video_list count] == 0){
         
-    }else if ([dataArr count]/3 == 1){
-        //最后一行没有 center right
+    } else if ([model.video_list count] == 1){
+        cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
+        [cell.videoFirstImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.firstMovieRateView displayRating:0];
+        cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
+    
+    }else if ([model.video_list count] == 2){
+        cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
+        [cell.videoFirstImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.firstMovieRateView displayRating:0];
+        cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
         
-    }else if ([dataArr count]/3 == 2){
-        //最后一行没有 right
+        cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
+        [cell.videoSecondImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.secondMovieRateView displayRating:4];
+        cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
+
         
+    }else if ([model.video_list count] == 3){
+        cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
+        [cell.videoFirstImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.firstMovieRateView displayRating:0];
+        cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
+
+        
+        cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
+        [cell.videoSecondImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.secondMovieRateView displayRating:4];
+        cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
+
+        
+        
+        cell.videoThirdName.text = [[model.video_list objectAtIndex:2] objectForKey:@"name"];
+        [cell.videoThirdImg setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:2] objectForKey:@"pic"]] placeholderImage:nil];
+        [cell.thirdMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.thirdMovieRateView displayRating:3];
+        cell.videoThirdImg.identifierString = [[model.video_list objectAtIndex:2] objectForKey:@"video_id"];
     }
-    
-    [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.firstMovieRateView displayRating:3];
-    
-    [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.secondMovieRateView displayRating:4];
-    
-    [cell.thirdMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.thirdMovieRateView displayRating:3];
     return cell;
 }
 
@@ -182,7 +221,6 @@
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
-                NSLog(@"setup view appear finished");
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -192,7 +230,6 @@
             RMSearchViewController * searchCtl = [[RMSearchViewController shared] init];
             
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
-                NSLog(@"search view appear finished");
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -205,10 +242,21 @@
 }
 
 - (void)startCellDidSelectWithIndex:(NSInteger)index {
-    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
-    [self.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
-    [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kYES];
+    RMPublicModel *model = [dataArr objectAtIndex:index];
+    NSLog(@"obj:%@",model.tag_id);
+    RMMyChannelShouldSeeViewController * myChannelShouldSeeCtl = [[RMMyChannelShouldSeeViewController alloc] init];
+    [self.navigationController pushViewController:myChannelShouldSeeCtl animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+}
+
+- (void)clickVideoImageViewMehtod:(RMImageView *)imageView {
+    if (imageView.identifierString){
+        RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
+        [self.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
+        [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kYES];
+        [videoPlaybackDetailsCtl setVideoDetilID:imageView.identifierString];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+    }
 }
 
 - (IBAction)mbuttonClick:(UIButton *)sender {
@@ -231,6 +279,15 @@
         default:
             break;
     }
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    dataArr = data;
+    [(UITableView *)[self.view viewWithTag:101] reloadData];
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

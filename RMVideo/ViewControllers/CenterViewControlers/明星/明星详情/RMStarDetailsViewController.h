@@ -20,15 +20,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *starName;
 @property (weak, nonatomic) IBOutlet UITextView *starIntrduce;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *foldMarkTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *foldImg;
 @property (weak, nonatomic) IBOutlet UIButton *foldBtn;
 
-
-
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 - (IBAction)mbuttonClick:(UIButton *)sender;
+
+/**
+ 把明星的tag_id传过来
+ */
+- (void)setStarID:(NSString *)star_id;
 
 @end

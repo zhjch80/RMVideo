@@ -21,6 +21,8 @@
 @interface RMStarDetailsViewController (){
     NSString * foldType;
 }
+@property (nonatomic, strong) NSMutableString * star_id;
+
 @property (nonatomic, copy) HMSegmentedControl *segmentedControl;
 
 @property RMStarTeleplayListViewController * starTeleplayListCtl;
@@ -220,6 +222,11 @@
         default:
             break;
     }
+}
+
+- (void)setStarID:(NSString *)star_id {
+    self.star_id = [[NSMutableString alloc] initWithString:star_id];
+    NSLog(@"传过来的明星tag_id:%@",self.star_id);
 }
 
 - (void)didReceiveMemoryWarning {

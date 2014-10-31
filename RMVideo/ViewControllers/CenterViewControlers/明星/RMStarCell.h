@@ -7,35 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMImageView.h"
 
 @protocol StarCellDelegate <NSObject>
 
-- (void)startCellDidSelectWithIndex:(NSInteger)index;
+- (void)clickAddMyChannelMethod:(RMImageView *)imageView;
+
+- (void)clickVideoImageViewMehtod:(RMImageView *)imageView;
 
 @end
 @interface RMStarCell : UITableViewCell
 
 @property (assign ,nonatomic) id<StarCellDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UIImageView *leftBtnView;
-@property (weak, nonatomic) IBOutlet UIImageView *centerBtnView;
-@property (weak, nonatomic) IBOutlet UIImageView *rightBtnView;
+
+@property (weak, nonatomic) IBOutlet RMImageView *starLeftImg;
+@property (weak, nonatomic) IBOutlet RMImageView *starCenterImg;
+@property (weak, nonatomic) IBOutlet RMImageView *starRightImg;
+
+@property (weak, nonatomic) IBOutlet RMImageView *starAddLeftImg;
+@property (weak, nonatomic) IBOutlet RMImageView *starAddCenterImg;
+@property (weak, nonatomic) IBOutlet RMImageView *starAddRightImg;
 
 @property (weak, nonatomic) IBOutlet UILabel *leftTitle;
 @property (weak, nonatomic) IBOutlet UILabel *centerTitle;
 @property (weak, nonatomic) IBOutlet UILabel *rightTitle;
-
-@property (weak, nonatomic) IBOutlet UIButton *leftImg_on_btn;
-@property (weak, nonatomic) IBOutlet UIButton *centerImg_on_btn;
-@property (weak, nonatomic) IBOutlet UIButton *rightImg_on_btn;
-
-@property (weak, nonatomic) IBOutlet UIButton *leftBtn;
-@property (weak, nonatomic) IBOutlet UIButton *centerBtn;
-@property (weak, nonatomic) IBOutlet UIButton *rightBtn;
-
-
-- (IBAction)buttonClick:(id)sender;
-
-
 
 
 @end

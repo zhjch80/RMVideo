@@ -30,11 +30,13 @@
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
 
+#import "RMAFNRequestManager.h"
+
 #define searchTextField_TAG         101
 #define cancelBtn_TAG               102
 #define voiceBtn_TAG                103
 
-@interface RMStarViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,StarCellDelegate,UIGestureRecognizerDelegate,IFlySpeechRecognizerDelegate> {
+@interface RMStarViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,StarCellDelegate,UIGestureRecognizerDelegate,IFlySpeechRecognizerDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
 }
 
@@ -96,7 +98,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    dataArr = [[NSMutableArray alloc] initWithObjects:@"11", @"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",@"11",nil];
+    dataArr = [[NSMutableArray alloc] init];
     
     [self setTitle:@"明星"];
     [leftBarButton setImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
@@ -153,6 +155,9 @@
 
     //TODO:上拉刷新， 下拉加载更多
 
+    RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+    [requset getStarListWithPage:@"1" count:@"12"];
+    requset.delegate = self;
 }
 
 #pragma mark - 默认输入搜索界面
@@ -534,27 +539,26 @@
             cell.delegate = self;
         }
         
-        cell.leftImg_on_btn.tag = 101;
-        cell.leftBtn.tag = 102;
+        RMPublicModel *model_left = [dataArr objectAtIndex:indexPath.row*3];
+        RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
+        RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         
-        cell.centerImg_on_btn.tag = 201;
-        cell.centerBtn.tag = 202;
+        cell.leftTitle.text = model_left.name;
+        [cell.starLeftImg setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:nil];
         
-        cell.rightImg_on_btn.tag = 301;
-        cell.rightBtn.tag = 302;
+        cell.centerTitle.text = model_center.name;
+        [cell.starCenterImg setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:nil];
         
-        if ([dataArr count]/3 == 0){
-            //正好
-            
-        }else if ([dataArr count]/3 == 1){
-            //最后一行没有 center right
-            
-        }else if ([dataArr count]/3 == 2){
-            //最后一行没有 right
-            
-        }
-        
-        
+        cell.rightTitle.text = model_right.name;
+        [cell.starRightImg setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:nil];
+ 
+        cell.starLeftImg.identifierString = model_left.tag_id;
+        cell.starCenterImg.identifierString = model_center.tag_id;
+        cell.starRightImg.identifierString = model_right.tag_id;
+
+        cell.starAddLeftImg.identifierString = model_left.tag_id;
+        cell.starAddCenterImg.identifierString = model_center.tag_id;
+        cell.starAddRightImg.identifierString = model_right.tag_id;
         
         return cell;
     }else {
@@ -631,14 +635,23 @@
     }
 }
 
-- (void)startCellDidSelectWithIndex:(NSInteger)index {
-    NSLog(@"index:%d",index);
-    
-    //TODO : two method type with this
-    
-    RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
-    [self.navigationController pushViewController:starDetailsCtl animated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+#pragma mark - 进入明星详情页面
+
+- (void)clickVideoImageViewMehtod:(RMImageView *)imageView {
+    if (imageView.identifierString) {
+        RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
+        [self.navigationController pushViewController:starDetailsCtl animated:YES];
+        [starDetailsCtl setStarID:imageView.identifierString];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+    }
+}
+
+#pragma mark - 添加明星到我的频道
+
+- (void)clickAddMyChannelMethod:(RMImageView *)imageView {
+    if (imageView.identifierString){
+        NSLog(@"添加明星%@到我的频道",imageView.identifierString);
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -665,7 +678,6 @@
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
-                NSLog(@"setup view appear finished");
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -681,26 +693,15 @@
     }
 }
 
-#pragma mark - loadRequst
+#pragma mark - request RMAFNRequestManagerDelegate
 
-- (void)loadRequest {
-    NSLog(@"laodRequest...");
-    /*
-     By default, AFJSONRequestOperation accepts only "text/json", "application/json" or "text/javascript" content-types from server, but you are getting "text/html".
-     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-     */
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    dataArr = data;
+    [(UITableView *)[self.view viewWithTag:201] reloadData];
+}
+
+- (void)requestError:(NSError *)error {
     
-    NSString * str = @"http://mv.runmobile.cn/app/start";
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
-    
-    [manager POST:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
-    }];
 }
 
 - (void)didReceiveMemoryWarning {

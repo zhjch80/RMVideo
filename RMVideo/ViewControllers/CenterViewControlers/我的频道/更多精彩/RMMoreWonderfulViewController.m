@@ -8,8 +8,27 @@
 
 #import "RMMoreWonderfulViewController.h"
 #import "RMAddRecommendView.h"
+#import "RMAFNRequestManager.h"
 
-@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,AddRecommendDelegate,UITextFieldDelegate>
+/**
+ *区分请求类型
+ *requestListType:  默认进来请求列表
+ *requestReplease:  点击换一批
+ *requestCustom:    自定义tag
+ */
+typedef enum{
+    requestListType = 1,
+    requestReplace,
+    requestCustom
+}LoadType;
+
+@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,AddRecommendDelegate,UITextFieldDelegate,RMAFNRequestManagerDelegate> {
+    NSMutableArray * dataArr;
+    RMAFNRequestManager * request;
+    NSInteger pageCount;
+    
+    LoadType loadType;
+}
 @end
 
 @implementation RMMoreWonderfulViewController
@@ -18,6 +37,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    loadType = requestListType;
+
+    dataArr = [[NSMutableArray alloc] init];
+    pageCount = 1;
+    
     [self setTitle:@"我的频道"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
@@ -34,12 +58,15 @@
     [bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
     [self.view addSubview:bgScrView];
     
+    NSInteger value = 1001;
     for (int i=0; i<3; i++) {
         for (int j=0; j<3; j++) {
             RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
             addRecommendView.delegate = self;
+            addRecommendView.tag = value;
             addRecommendView.userInteractionEnabled = YES;
             [bgScrView addSubview:addRecommendView];
+            value ++;
         }
     }
 
@@ -69,6 +96,10 @@
     [bgScrView addSubview:customBtn];
 
     
+    request = [[RMAFNRequestManager alloc] init];
+    [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"9"];
+    request.delegate = self;
+    
 }
 
 #pragma mark - 
@@ -76,12 +107,12 @@
 - (void)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
-            NSLog(@"换一批");
-            
+            loadType = requestReplace;
+            pageCount ++;
+            [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"9"];
             break;
         }
         case 102:{
-            NSLog(@"添加自定义标签");
             UIAlertView *addAlertView = [[UIAlertView alloc] initWithTitle:@"添加属于自己的标签"
                                                                    message:nil
                                                                   delegate:self
@@ -106,8 +137,9 @@
     if (buttonIndex != alertView.cancelButtonIndex) {
         if (buttonIndex == 1) {
             //添加
+            loadType = requestCustom;
             NSString *str = [alertView textFieldAtIndex:0].text;
-            NSLog(@"标签为:%@",str);
+            [request getCustomTagWithToken:testToken tagName:str];
         }else{
         }
     }
@@ -116,7 +148,7 @@
 #pragma mark - AddRecommendDelegate
 
 - (void)startAddDidSelectWithIndex:(NSInteger)index {
-    NSLog(@"我的频道 添加");
+    NSLog(@"我的频道 添加%d",index);
 }
 
 #pragma mark - Base Method
@@ -136,6 +168,38 @@
         default:
             break;
     }
+}
+
+- (void)refreshTagList {
+    for (int i=1001; i<=1009; i++) {    
+        RMPublicModel *model = [dataArr objectAtIndex:i-1001];
+        RMAddRecommendView * addRecomendView = (RMAddRecommendView *)[self.view viewWithTag:i];
+        addRecomendView.tagTitle.text = model.name;
+        addRecomendView.tagBtn.tag = model.tag_id.integerValue;
+        [addRecomendView.tagTitle sizeToFit];
+    }
+}
+
+#pragma mark - request RMAFNRequestManagerDelegate
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    if (loadType == requestListType){
+        dataArr = data;
+        [self refreshTagList];
+    }else if (loadType == requestReplace){
+        dataArr = data;
+        [self refreshTagList];
+    }else if (loadType == requestCustom){
+        RMPublicModel *model = [data objectAtIndex:0];
+        if ([model.code integerValue] == 4001) {
+            NSLog(@"增加新的tag成功");
+            //TODO:添加到 我的频道
+        }
+    }
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"更多精彩：error;%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

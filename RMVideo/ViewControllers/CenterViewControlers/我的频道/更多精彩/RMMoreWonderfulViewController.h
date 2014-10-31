@@ -8,6 +8,7 @@
 
 #import "RMBaseViewController.h"
 
-@interface RMMoreWonderfulViewController : RMBaseViewController
-
+@interface RMMoreWonderfulViewController : RMBaseViewController{
+  
+}
 @end

@@ -16,6 +16,7 @@
 @interface RMVideoPlaybackDetailsViewController () {
 
 }
+@property (nonatomic, strong) NSMutableString * video_id;              //视频的id
 
 @property (nonatomic, copy) HMSegmentedControl *segmentedControl;
 
@@ -195,6 +196,11 @@
 
 - (void)setAppearTabBarNextPopViewController:(NSString *)identifier {
     self.tabBarIdentifier = [NSMutableString stringWithFormat:@"%@",identifier];
+}
+
+- (void)setVideoDetilID:(NSString *)video_id {
+    self.video_id = [NSMutableString stringWithFormat:@"%@",video_id];
+    NSLog(@"self.video_id:%@",self.video_id);
 }
 
 - (void)didReceiveMemoryWarning {

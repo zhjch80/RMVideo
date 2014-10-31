@@ -17,4 +17,8 @@
 @interface RMAddRecommendView : UIView
 @property (assign ,nonatomic) id<AddRecommendDelegate> delegate;
 
+
+@property (nonatomic, strong) UILabel * tagTitle;
+@property (nonatomic, strong) UIButton * tagBtn;
+
 @end

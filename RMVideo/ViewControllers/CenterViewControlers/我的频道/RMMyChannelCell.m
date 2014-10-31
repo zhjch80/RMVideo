@@ -12,6 +12,16 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.videoFirstImg addTarget:self WithSelector:@selector(videoImageClick:)];
+    [self.videoSecondImg addTarget:self WithSelector:@selector(videoImageClick:)];
+    [self.videoThirdImg addTarget:self WithSelector:@selector(videoImageClick:)];
+
+}
+
+- (void)videoImageClick:(RMImageView *)imageView {
+    if ([self.delegate respondsToSelector:@selector(clickVideoImageViewMehtod:)]) {
+        [self.delegate clickVideoImageViewMehtod:imageView];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -21,7 +31,8 @@
 }
 
 - (IBAction)cellbuttonClick:(UIButton *)sender {
-    [self.delegate startCellDidSelectWithIndex:1];
-    
+    if ([self.delegate respondsToSelector:@selector(startCellDidSelectWithIndex:)]){
+        [self.delegate startCellDidSelectWithIndex:sender.tag];
+    }
 }
 @end

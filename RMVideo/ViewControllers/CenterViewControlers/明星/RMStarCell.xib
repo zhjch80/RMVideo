@@ -13,45 +13,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="qE3-Xe-d6p">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="qE3-Xe-d6p" customClass="RMImageView">
                         <rect key="frame" x="15" y="10" width="90" height="90"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="604-g6-Y8b">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="604-g6-Y8b" customClass="RMImageView">
                         <rect key="frame" x="115" y="10" width="90" height="90"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="kCG-YI-XZX">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_2@2x" translatesAutoresizingMaskIntoConstraints="NO" id="kCG-YI-XZX" customClass="RMImageView">
                         <rect key="frame" x="215" y="10" width="90" height="90"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsn-tV-2ak">
-                        <rect key="frame" x="15" y="10" width="90" height="90"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1iU-m0-LiJ"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTP-wo-tAo">
-                        <rect key="frame" x="115" y="10" width="90" height="90"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dJZ-Rg-5KP"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cs-yi-m15">
-                        <rect key="frame" x="215" y="10" width="90" height="90"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cNX-nm-qwQ"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="尚雯婕" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GrL-qD-OYl">
                         <rect key="frame" x="15" y="107" width="90" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -70,54 +43,33 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5A-cz-oxg">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mx_add_img" translatesAutoresizingMaskIntoConstraints="NO" id="iAV-lg-PVw" customClass="RMImageView">
                         <rect key="frame" x="85" y="110" width="15" height="15"/>
-                        <state key="normal" backgroundImage="mx_add_img@2x">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EzF-N3-3jC"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHq-zG-JZg">
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mx_add_img" translatesAutoresizingMaskIntoConstraints="NO" id="e6H-8S-2wf" customClass="RMImageView">
                         <rect key="frame" x="184" y="110" width="15" height="15"/>
-                        <state key="normal" backgroundImage="mx_add_img@2x">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Rsq-r7-nBu"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIY-8k-RKr">
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mx_add_img" translatesAutoresizingMaskIntoConstraints="NO" id="amu-uu-rLE" customClass="RMImageView">
                         <rect key="frame" x="284" y="110" width="15" height="15"/>
-                        <state key="normal" backgroundImage="mx_add_img@2x">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="buttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rx1-it-Jmf"/>
-                        </connections>
-                    </button>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="centerBtn" destination="XHq-zG-JZg" id="Y6i-QN-x1z"/>
-                <outlet property="centerBtnView" destination="kCG-YI-XZX" id="MyR-lk-1LT"/>
-                <outlet property="centerImg_on_btn" destination="UTP-wo-tAo" id="tcL-Yz-VF0"/>
                 <outlet property="centerTitle" destination="Kai-Rp-mgf" id="Rbg-M3-2Uc"/>
-                <outlet property="leftBtn" destination="H5A-cz-oxg" id="Be1-go-7Zv"/>
-                <outlet property="leftBtnView" destination="qE3-Xe-d6p" id="xun-K8-cxU"/>
-                <outlet property="leftImg_on_btn" destination="gsn-tV-2ak" id="cMk-nI-wLX"/>
                 <outlet property="leftTitle" destination="GrL-qD-OYl" id="G65-E2-AjN"/>
-                <outlet property="rightBtn" destination="vIY-8k-RKr" id="gcM-1o-4Q3"/>
-                <outlet property="rightBtnView" destination="604-g6-Y8b" id="GxQ-0R-fmJ"/>
-                <outlet property="rightImg_on_btn" destination="6cs-yi-m15" id="fDv-OO-vaW"/>
                 <outlet property="rightTitle" destination="G0P-ly-vx9" id="4Md-GZ-f2q"/>
+                <outlet property="starAddCenterImg" destination="e6H-8S-2wf" id="f11-zD-BGD"/>
+                <outlet property="starAddLeftImg" destination="iAV-lg-PVw" id="6z7-37-fwY"/>
+                <outlet property="starAddRightImg" destination="amu-uu-rLE" id="IX4-fX-P9T"/>
+                <outlet property="starCenterImg" destination="604-g6-Y8b" id="ggz-CF-aw6"/>
+                <outlet property="starLeftImg" destination="qE3-Xe-d6p" id="0Re-aj-pmg"/>
+                <outlet property="starRightImg" destination="kCG-YI-XZX" id="RSC-eU-eJI"/>
             </connections>
             <point key="canvasLocation" x="34" y="165.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="mx_add_img@2x" width="44" height="44"/>
+        <image name="mx_add_img" width="44" height="44"/>
         <image name="test_2@2x" width="44" height="44"/>
     </resources>
 </document>

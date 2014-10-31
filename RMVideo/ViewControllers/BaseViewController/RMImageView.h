@@ -16,7 +16,7 @@
 
 - (void)addTopNumber:(int)num;
 - (void)addRotatingViewWithName:(NSString *)str;
-- (void)setFileShowImageView:(UIImage *)image;
+- (void)setFileShowImageView:(NSString *)imageUrl;
 
 - (void)addTarget:(id)target WithSelector:(SEL)sel;
 

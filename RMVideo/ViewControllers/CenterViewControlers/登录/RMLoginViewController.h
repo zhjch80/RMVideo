@@ -9,10 +9,9 @@
 #import "RMBaseViewController.h"
 
 @interface RMLoginViewController : RMBaseViewController
+@property (weak, nonatomic) IBOutlet UILabel *line;
 
-/**
- *提供一个类方法，返回内部唯一的一个变量
- */
-+ (instancetype)shared;
+- (IBAction)weiboLogin:(UIButton *)sender;
+- (IBAction)tencentLogin:(UIButton *)sender;
 
 @end

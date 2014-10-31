@@ -10,11 +10,14 @@
 #import "RMSetupViewController.h"
 #import "RMSearchViewController.h"
 #import "RMVideoPlaybackDetailsViewController.h"
+#import "AFSoundManager.h"
 
 #import "SDiPhoneVersion.h"
 
 
-@interface RMRecommendedDailyViewController ()
+@interface RMRecommendedDailyViewController (){
+    UIImageView * splashView;
+}
 
 @end
 
@@ -27,11 +30,10 @@
     
     [leftBarButton setImage:[UIImage imageNamed:@"setup"] forState:UIControlStateNormal];
     [rightBarButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
-    CellScrollimageArray = [NSMutableArray arrayWithObjects:@"001.png",@"002.png",@"003.png",@"001.png",@"002.png",@"003.png",@"001.png",@"002.png",@"003.png", nil];
+    CellScrollimageArray = [[NSMutableArray alloc] init];
     cellHeadImageArray = [NSArray arrayWithObjects:@"jr_movie",@"jr_teleplay",@"jr_Variety", nil];
     self.title = @"今日推荐";
     cellHeadStringArray = [NSArray arrayWithObjects:@"电影",@"电视剧",@"综艺", nil];
-    dataArray = [NSMutableArray arrayWithObjects:@"电视",@"电影",@"综艺", nil];
     
     mainTableVeiew = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-49-44) style:UITableViewStylePlain];
     mainTableVeiew.backgroundColor = [UIColor clearColor];
@@ -39,8 +41,11 @@
     mainTableVeiew.dataSource = self;
     mainTableVeiew.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:mainTableVeiew];
+    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+    manager.delegate = self;
+    [manager getDailyRecommend];
 }
-
 #pragma mark main tableVeiw dataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -59,7 +64,11 @@
     
     cell.headImageView.image = NULL;
     cell.headImageView.image = [UIImage imageNamed:[cellHeadImageArray objectAtIndex:indexPath.row]];
-    [cell cellAddMovieCountFromDataArray:CellScrollimageArray andCellIdentifiersName:[cellHeadStringArray objectAtIndex:indexPath.row]];
+    NSMutableArray *cellImage = [NSMutableArray array];
+    for(RMPublicModel *model in [[dataArray objectAtIndex:indexPath.row] objectForKey:[cellHeadStringArray objectAtIndex:indexPath.row]]){
+        [cellImage addObject:model.DailyRecommendPic];
+    }
+    [cell cellAddMovieCountFromDataArray:cellImage andCellIdentifiersName:[cellHeadStringArray objectAtIndex:indexPath.row]];
     cell.delegate = self;
 
     
@@ -88,8 +97,16 @@
 #pragma mark cell Image点击事件 tag标识每个cell的位置 identifier标识cell
 - (void)didSelectCellImageWithTag:(NSInteger)tag andImageViewIdentifier:(NSString *)identifier{
     NSLog(@"tag:%d identifier:%@",tag,identifier);
+    NSString *movieID ;
+    for(NSDictionary *dict in dataArray){
+        NSMutableArray *array = [dict objectForKey:identifier];
+        if(array){
+            RMPublicModel *model = [array objectAtIndex:tag];
+            movieID = model.DailyRecommendVideo_id;
+        }
+    }
     if ([identifier isEqualToString:@"电影"]) {
-            }
+    }
     else if ([identifier isEqualToString:@"电视剧"]) {
 
     }else{
@@ -108,7 +125,6 @@
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
-                NSLog(@"setup view appear finished");
                 
             }];
             
@@ -119,7 +135,6 @@
             RMSearchViewController * searchCtl = [[RMSearchViewController shared] init];
             
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
-                NSLog(@"search view appear finished");
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -129,6 +144,66 @@
         default:
             break;
     }
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    dataArray = data;
+   [mainTableVeiew reloadData];
+    [SVProgressHUD dismiss];
+}
+
+- (void)requestError:(NSError *)error{
+    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+}
+
+#pragma mark - Animation 广告展示页面
+/**
+ 启动完成后的广告展示页面
+ 
+ 添加网络请求 刷新 splashView
+ */
+- (void)AnimationForWindowHidden {
+    splashView = [[UIImageView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    //视觉过渡
+    if (IS_IPHONE_5_SCREEN){
+        splashView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-568h" ofType:@"png"]];
+    }else{
+        splashView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default" ofType:@"png"]];
+    }
+    
+    splashView.backgroundColor = [UIColor clearColor];
+    splashView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+    [window addSubview:splashView];
+    [window bringSubviewToFront:splashView];
+    self.view.userInteractionEnabled = NO;
+    
+    
+    [self performSelector:@selector(hiddenA) withObject:nil afterDelay:3];
+}
+
+- (void)hiddenA {
+    [[AFSoundManager sharedManager] startPlayingLocalFileWithName:@"loading.wav" andBlock:^(int percentage, CGFloat elapsedTime, CGFloat timeRemaining, NSError *error, BOOL finished) {
+    }];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:3.2];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView: self.navigationController.view cache:YES];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animateStop)];
+    splashView.alpha = 0.0;
+    if (!IS_IPHONE_5_SCREEN){
+        splashView.frame = CGRectMake(-60, -85, 440, 635);
+    }else{
+        splashView.frame = CGRectMake(-60, -85, 440, 735);
+    }
+    [UIView commitAnimations];
+    self.view.userInteractionEnabled = YES;
+}
+
+- (void)animateStop {
+    [[AFSoundManager sharedManager] stop];
 }
 
 - (void)didReceiveMemoryWarning {

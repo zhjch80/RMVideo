@@ -19,10 +19,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
+    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+    manager.delegate = self;
+    //视频类型（1：电影 2：电视剧 3：综艺）
+    //排行类型（1：日榜 2：周榜 3：月榜）
+    [manager getTopListWithVideoTpye:@"3" andTopType:@"1" searchPageNumber:@"1" andCount:@"10"];
+    [self setExtraCellLineHidden:self.mainTableView];
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //return dataArray.count;
-    return 20;
+    return self.dataArray.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -40,7 +46,7 @@
 }
 
 - (void)reloadTableViewWithDataArray:(NSMutableArray *)array{
-    dataArray = array;
+    self.dataArray = array;
     [self.mainTableView reloadData];
 }
 
@@ -54,15 +60,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    
+    if (data.count==0) {
+        [SVProgressHUD showErrorWithStatus:@"综艺暂无数据"];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    NSLog(@"综艺data:%@",data);
 }
-*/
+
+- (void)requestError:(NSError *)error{
+    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+}
 
 @end

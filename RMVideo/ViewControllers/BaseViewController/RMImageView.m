@@ -8,6 +8,7 @@
 
 #import "RMImageView.h"
 #import "CONST.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation RMImageView
 @synthesize identifierString;
@@ -25,12 +26,15 @@
 }
 
 - (void)addTopNumber:(int)num {
+    
     UILabel *lable = [[UILabel alloc] init];
     lable.frame = CGRectMake(-1, 0, self.frame.size.width, self.frame.size.height/2-5);
     lable.text = [NSString stringWithFormat:@"TOP"];
     lable.textColor = [UIColor whiteColor];
     lable.textAlignment = NSTextAlignmentCenter;
-    lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:9];
+    //lable.font = [UIFont fontWithName:@"Helvetica-Bold" size:9];
+    lable.font = [UIFont systemFontOfSize:10];
+    lable.tag = 100;
     [self addSubview:lable];
     
     UILabel *lable1 = [[UILabel alloc] init];
@@ -38,7 +42,9 @@
     lable1.text = [NSString stringWithFormat:@"%d",num];
     lable1.textColor = [UIColor whiteColor];
     lable1.textAlignment = NSTextAlignmentCenter;
-    lable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:9];
+    //lable1.font = [UIFont fontWithName:@"Helvetica-Bold" size:9];
+    lable1.font = [UIFont systemFontOfSize:10];
+    lable.tag = 200;
     [self addSubview:lable1];
 }
 
@@ -66,11 +72,11 @@
     return view;
 }
 
-- (void)setFileShowImageView:(UIImage *)image{
+- (void)setFileShowImageView:(NSString *)imageUrl{
     self.image = LOADIMAGE(@"file_bg_Image", kImageTypePNG);
     UIImageView *showImageView = [[UIImageView alloc] init];
     showImageView.frame = CGRectMake(5, 10, self.frame.size.width-10, self.frame.size.height-10);
-    showImageView.image = image;
+    [showImageView setImageWithURL:[NSURL URLWithString:imageUrl]];
     [self addSubview:showImageView];
     
     UIImageView *beforeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+5, self.frame.size.width, self.frame.size.height/2-5)];

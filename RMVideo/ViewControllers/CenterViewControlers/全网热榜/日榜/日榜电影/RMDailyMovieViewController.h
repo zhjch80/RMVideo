@@ -14,8 +14,9 @@
 
 @end
 @interface RMDailyMovieViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{
-    NSMutableArray *dataArray;
+   
 }
+@property (nonatomic,strong) NSMutableArray *dataArray;
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic, assign) id<RMDailyMovieViewControllerDelegate> delegate;
 - (void)reloadTableViewWithDataArray:(NSMutableArray *)array;

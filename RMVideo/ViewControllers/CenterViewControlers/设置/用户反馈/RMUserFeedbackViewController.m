@@ -21,8 +21,14 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     else{
-        //提交
-        NSLog(@"%@",self.feedBackTextView.text);
+        if(self.feedBackTextView.text && ![self.feedBackTextView.text isEqualToString:@""]){
+            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+            manager.delegate = self;
+            [manager postUserFeedbackWithToken:@"" andFeedBackString:[self.feedBackTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请填写您宝贵的意见" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+        }
     }
 }
 
@@ -40,6 +46,12 @@
 
 }
 
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    if([[data objectAtIndex:0] intValue]==4001){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的意见已成功提交" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

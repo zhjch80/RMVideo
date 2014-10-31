@@ -7,60 +7,13 @@
 //
 
 #import "RMLoginViewController.h"
+#import "UMSocial.h"
+#import "RMAFNRequestManager.h"
 
-@interface RMLoginViewController ()
+@interface RMLoginViewController ()<UMSocialUIDelegate,RMAFNRequestManagerDelegate>
 
 @end
 @implementation RMLoginViewController
-static id _instance;
-/*
- 永远只分配一块内存来创建对象
- 提供一个类方法，返回内部唯一的一个变量
- 最好保证init方法也只初创化一次
- */
-
-//构造方法
-- (id)init {
-    static id obj=nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if ((obj=[super init]) != nil) {
-            //code ...
-            
-            
-        }
-    });
-    self=obj;
-
-    return self;
-}
-
-+ (id)alloc {
-    return [super alloc];
-}
-
-//重写该方法，控制内存的分配，永远只分配一次存储空间
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    //里面的代码只会执行一次
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance=[super allocWithZone:zone];
-    });
-    return _instance;
-}
-
-//类方法 里面的代码永远都只执行一次
-+ (instancetype)shared {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance=[[self alloc]init];
-    });
-    return _instance;
-}
-
-+ (id)copyWithZone:(struct _NSZone *)zone {
-    return _instance;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -87,10 +40,7 @@ static id _instance;
             break;
         }
         case 2:{
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                
-            }];
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         }
             
@@ -104,14 +54,60 @@ static id _instance;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+- (IBAction)weiboLogin:(UIButton *)sender {
+    
+    BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToSina];
+    if(isOauth){
+        
+        NSLog(@"YES");
+        NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
+        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
+        NSLog(@"sina nickName is %@, iconURL is %@",sinaAccount.userName,sinaAccount.iconURL);
+    }
+    else{
+        UINavigationController *oauthController = [[UMSocialControllerService defaultControllerService] getSocialOauthController:UMShareToSina];
+        [self presentViewController:oauthController animated:YES completion:nil];
+    }
+    [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
+
+- (IBAction)tencentLogin:(UIButton *)sender {
+    
+    BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToTencent];
+    if(isOauth){
+        
+        NSLog(@"YES");
+        NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
+        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToTencent];
+        NSLog(@"sina nickName is %@, iconURL is %@",sinaAccount.userName,sinaAccount.iconURL);
+    }
+    else{
+        UINavigationController *oauthController = [[UMSocialControllerService defaultControllerService] getSocialOauthController:UMShareToTencent];
+        [self presentViewController:oauthController animated:YES completion:nil];
+    }
+    [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
+
+}
+
+- (void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //授权成功后的回调函数
+    if (response.viewControllerType == UMSViewControllerOauth) {
+        
+        //NSLog(@"didFinishOauthAndGetAccount response is %@",response);
+        NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
+        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
+        NSLog(@"sina nickName is %@, iconURL is %@ token:%@",sinaAccount.userName,sinaAccount.iconURL,sinaAccount.accessToken);
+        RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+        manager.delegate = self;
+        NSString *headURL = [sinaAccount.iconURL substringFromIndex:7];
+        [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+}
 
 @end

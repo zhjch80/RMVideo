@@ -27,24 +27,26 @@
     imgageView.userInteractionEnabled = YES;
     [self addSubview:imgageView];
     
-    UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake(3, 0, 90, 30)];
-    title.textAlignment = NSTextAlignmentLeft;
-    title.backgroundColor = [UIColor clearColor];
-    title.textColor = [UIColor colorWithRed:0.42 green:0.42 blue:0.42 alpha:1];
-    title.font = [UIFont systemFontOfSize:12.0];
-    title.text = @"射手座必看";
-    [self addSubview:title];
+    self.tagTitle = [[UILabel alloc] initWithFrame:CGRectMake(6, 0, 90, 30)];
+    self.tagTitle.textAlignment = NSTextAlignmentLeft;
+    self.tagTitle.backgroundColor = [UIColor clearColor];
+    self.tagTitle.textColor = [UIColor colorWithRed:0.42 green:0.42 blue:0.42 alpha:1];
+    self.tagTitle.numberOfLines = 1;
+    self.tagTitle.backgroundColor = [UIColor redColor];
+    self.tagTitle.font = [UIFont systemFontOfSize:12.0];
+    self.tagTitle.text = @"";
+    [self addSubview:self.tagTitle];
     
-    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(68, 7.5, 15, 15);
-    [button setBackgroundImage:LOADIMAGE(@"mx_add_img", kImageTypePNG) forState:UIControlStateNormal];
-    [button setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
-    [button addTarget:self action:@selector(addbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:button];
+    self.tagBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.tagBtn.frame = CGRectMake(68, 7.5, 15, 15);
+    [self.tagBtn setBackgroundImage:LOADIMAGE(@"mx_add_img", kImageTypePNG) forState:UIControlStateNormal];
+    [self.tagBtn setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
+    [self.tagBtn addTarget:self action:@selector(addbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.tagBtn];
 }
 
 - (void)addbuttonClick:(UIButton *)sender {
-    [self.delegate startAddDidSelectWithIndex:1];
+    [self.delegate startAddDidSelectWithIndex:sender.tag];
 }
 
 /*
