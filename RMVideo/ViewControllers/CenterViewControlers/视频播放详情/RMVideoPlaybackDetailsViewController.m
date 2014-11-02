@@ -146,7 +146,7 @@
     
     //TODO:修改成动态
     //self.currentVideo_id
-    
+    NSLog(@"self.currentVideo_id:%@",self.currentVideo_id);
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getVideoDetailWithID:@"623" andToken:@""];
     request.delegate = self;
