@@ -18,27 +18,55 @@
 #import "RMMoreAppViewController.h"
 #import "RMLoginViewController.h"
 #import "UMSocial.h"
+#import "SDImageCache.h"
+#import <StoreKit/StoreKit.h>
 
-@interface RMSetupViewController ()
+@interface RMSetupViewController ()<UMSocialUIDelegate,SKStoreProductViewControllerDelegate>
 
 @end
 
 @implementation RMSetupViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation];
+    //已登录
+    if([loginStatus isEqualToString: @"islogin"]){
+        mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44-49);
+        self.exitbtn.hidden = NO;
+        self.loginBtn.hidden = YES;
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"HeadImageURL"]]];
+        self.userNameLable.text = [dict objectForKey:@"userName"];
+    }
+    //未登录
+    else{
+        mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44);
+        self.exitbtn.hidden = YES;
+        self.loginBtn.hidden = NO;
+        [self.headImageView setImage:LOADIMAGE(@"user_head-Image", kImageTypePNG)];
+        self.userNameLable.text = @"";
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     self.title = @"设置";
-    
+    self.headImageView.layer.masksToBounds = YES;
+    self.headImageView.layer.cornerRadius = 15;
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
+    self.headView.frame = CGRectMake(self.headView.frame.origin.x, self.headView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, self.headView.frame.size.height);
+    self.loginBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-18-self.loginBtn.frame.size.width, self.loginBtn.frame.origin.y, self.loginBtn.frame.size.width, self.loginBtn.frame.size.height);
+    self.exitbtn.frame = CGRectMake(0, [UtilityFunc shareInstance].globleHeight-49-44, [UtilityFunc shareInstance].globleWidth, 49);
+    
     [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     dataArray = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"我的下载",@"播放历史"],@[@"用户反馈",@"清理缓存"],@[@"关于",@"分享给朋友",@"去给评分",@"更多应用"]]];
     
     [self loadCustomView];
-    
-}
+    }
 
 - (void)loadCustomView {
     UIView * headTableView = [[UIView alloc] init];
@@ -67,7 +95,9 @@
     if(cell==nil){
         cell = [[[NSBundle mainBundle]loadNibNamed:@"RMSetUpTableViewCell" owner:self options:nil]lastObject];
         if(indexPath.section==1&&indexPath.row==1){
-            cell.subtitleString.text = @"18.8M";
+            float tmpSize = [[SDImageCache sharedImageCache] getSize];
+            NSString *clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"%.2fM",tmpSize/1024.0/1024.0] : [NSString stringWithFormat:@"0.0M"];
+            cell.subtitleString.text = clearCacheName;
         }
         if(indexPath.section==0){
             cell.backgroundColor = [UtilityFunc colorWithHexString:@"#E1DECE"];
@@ -136,6 +166,13 @@
                     break;
                     //清理缓存
                 case 1:{
+                    NSLog(@"清理之前个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
+                    [[SDImageCache sharedImageCache] clearDisk];
+                    NSLog(@"清理之后个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
+                    RMSetUpTableViewCell *cell = (RMSetUpTableViewCell *)[mainTableView cellForRowAtIndexPath:indexPath];
+                    float tmpSize = [[SDImageCache sharedImageCache] getSize];
+                    NSString *clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"%.2fM",tmpSize/1024.0/1024.0] : [NSString stringWithFormat:@"0.0M"];
+                    cell.subtitleString.text = clearCacheName;
                 }
                     break;
                 default:
@@ -152,11 +189,39 @@
                 }
                     break;
                     //分享给朋友
-                case 1:{}
+                case 1:{
+                    [UMSocialSnsService presentSnsIconSheetView:self
+                                                         appKey:@"544db5aafd98c570d2069586"
+                                                      shareText:@"测试"
+                                                     shareImage:[UIImage imageNamed:@"001.png"]
+                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone,nil]
+                                                       delegate:self];
+
+                }
                     break;
                     //评分
                 case 2:{
+//                    NSString *evaluateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/i.-shang-wen-jie/id791488575?mt=8"];
+//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
                     
+//                    //初始化控制器
+//                    SKStoreProductViewController *storeProductViewContorller = [[SKStoreProductViewController alloc] init];
+//                    //设置代理请求为当前控制器本身
+//                    storeProductViewContorller.delegate = self;
+//                    //加载一个新的视图展示
+//                    [storeProductViewContorller loadProductWithParameters:
+//                     //appId唯一的
+//                     @{SKStoreProductParameterITunesItemIdentifier : @"id791488575"} completionBlock:^(BOOL result, NSError *error) {
+//                         //block回调
+//                         if(error){
+//                             NSLog(@"error %@ with userInfo %@",error,[error userInfo]);
+//                         }else{
+//                             //模态弹出appstore
+//                             [self presentViewController:storeProductViewContorller animated:YES completion:^{
+//                                 
+//                             }];
+//                         }
+//                     }];
                 }
                     break;
                     //更多应用
@@ -189,6 +254,18 @@
         [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToTencent  completion:^(UMSocialResponseEntity *response){
             NSLog(@"response is %@",response);
         }];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        [storage beginUpdates];
+        NSString * loginStatus = [AESCrypt encrypt:@"notlogin" password:PASSWORD];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [storage setObject:loginStatus forKey:LoginStatus_KEY];
+        [storage setObject:dict forKey:UserLoginInformation];
+        [storage endUpdates];
+        mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44);
+        self.exitbtn.hidden = YES;
+        self.loginBtn.hidden = NO;
+        [self.headImageView setImage:LOADIMAGE(@"user_head-Image", kImageTypePNG)];
+        self.userNameLable.text = @"";
     }
 }
 
@@ -211,7 +288,12 @@
             break;
     }
 }
-
+//取消按钮监听
+//- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController{
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

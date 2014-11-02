@@ -66,13 +66,14 @@
 
     [self.window makeKeyAndVisible];
     
-//TODO:记得要改！！！
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-    [storage beginUpdates];
-    NSString * loginStatus = [AESCrypt encrypt:@"notlogin" password:PASSWORD];
-    [storage setObject:loginStatus forKey:LoginStatus_KEY];
-    [storage endUpdates];
-
+    NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
+    if (loginStatus == nil){
+        [storage beginUpdates];
+        NSString * loginStatus = [AESCrypt encrypt:@"notlogin" password:PASSWORD];
+        [storage setObject:loginStatus forKey:LoginStatus_KEY];
+        [storage endUpdates];
+    }
     return YES;
 }
 

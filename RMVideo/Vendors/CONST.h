@@ -88,6 +88,8 @@
 #define PASSWORD                                    @"password"
 
 #define LoginStatus_KEY                             @"loginstatus_KEY"
+#define UserLoginInformation                               @"userLoginInformation_KEY"
+
 /*
  loginStatus  value为:islogin  表示登录    value为:notlogin  表示未登录
 */

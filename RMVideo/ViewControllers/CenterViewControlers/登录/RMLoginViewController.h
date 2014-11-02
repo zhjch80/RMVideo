@@ -8,7 +8,15 @@
 
 #import "RMBaseViewController.h"
 
-@interface RMLoginViewController : RMBaseViewController
+typedef enum{
+    usingSinaLogin = 1,
+    usingTencentLogin
+    
+} LoginType;
+
+@interface RMLoginViewController : RMBaseViewController{
+    LoginType loginType;
+}
 @property (weak, nonatomic) IBOutlet UILabel *line;
 
 - (IBAction)weiboLogin:(UIButton *)sender;

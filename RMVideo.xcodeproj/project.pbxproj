@@ -397,6 +397,7 @@
 		913D15DD1A01E4BB000A50E2 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D15CD1A01E4BB000A50E2 /* UIView+WebCacheOperation.m */; };
 		913D15E01A01E56D000A50E2 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913D15DF1A01E56D000A50E2 /* ImageIO.framework */; };
 		913D165B1A01FF78000A50E2 /* file_before_Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 913D165A1A01FF78000A50E2 /* file_before_Image.png */; };
+		918DE7001A05F6E200287E06 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918DE6FF1A05F6E200287E06 /* StoreKit.framework */; };
 		91908CAB19FA30E400C3DF09 /* MyChannel_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA319FA30E400C3DF09 /* MyChannel_black@3x.png */; };
 		91908CAC19FA30E400C3DF09 /* MyChannel_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA419FA30E400C3DF09 /* MyChannel_red@3x.png */; };
 		91908CAD19FA30E400C3DF09 /* RecommendedDaily_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA519FA30E400C3DF09 /* RecommendedDaily_black@3x.png */; };
@@ -1018,6 +1019,7 @@
 		913D15CD1A01E4BB000A50E2 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		913D15DF1A01E56D000A50E2 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		913D165A1A01FF78000A50E2 /* file_before_Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = file_before_Image.png; sourceTree = "<group>"; };
+		918DE6FF1A05F6E200287E06 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		91908CA319FA30E400C3DF09 /* MyChannel_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyChannel_black@3x.png"; sourceTree = "<group>"; };
 		91908CA419FA30E400C3DF09 /* MyChannel_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyChannel_red@3x.png"; sourceTree = "<group>"; };
 		91908CA519FA30E400C3DF09 /* RecommendedDaily_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecommendedDaily_black@3x.png"; sourceTree = "<group>"; };
@@ -1074,6 +1076,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				918DE7001A05F6E200287E06 /* StoreKit.framework in Frameworks */,
 				913D15E01A01E56D000A50E2 /* ImageIO.framework in Frameworks */,
 				1D847F411A0324D000A92879 /* libSocialTencentWeibo.a in Frameworks */,
 				1D847F3F1A0324D000A92879 /* TencentOpenAPI.framework in Frameworks */,
@@ -1451,6 +1454,7 @@
 		1D4D482019D7B57300E3A50B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				918DE6FF1A05F6E200287E06 /* StoreKit.framework */,
 				913D15DF1A01E56D000A50E2 /* ImageIO.framework */,
 				1DA2AC5319F65CAA0036C1AD /* AddressBook.framework */,
 				1DA2AC5119F65C810036C1AD /* iflyMSC.framework */,

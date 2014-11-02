@@ -13,8 +13,12 @@
     __weak IBOutlet UITableView *mainTableView;
     NSMutableArray *dataArray;
 }
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
 @property (weak, nonatomic) IBOutlet UIView *headView;
+@property (weak, nonatomic) IBOutlet UIButton *exitbtn;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLable;
 
 -(IBAction)loginOrExitButtonClick:(UIButton *)sender;
 @end
