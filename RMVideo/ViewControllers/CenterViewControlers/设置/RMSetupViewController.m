@@ -30,7 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
-    NSDictionary *dict = [storage objectForKey:UserLoginInformation];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     //已登录
     if([loginStatus isEqualToString: @"islogin"]){
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44-49);
@@ -259,7 +259,7 @@
         NSString * loginStatus = [AESCrypt encrypt:@"notlogin" password:PASSWORD];
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [storage setObject:loginStatus forKey:LoginStatus_KEY];
-        [storage setObject:dict forKey:UserLoginInformation];
+        [storage setObject:dict forKey:UserLoginInformation_KEY];
         [storage endUpdates];
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44);
         self.exitbtn.hidden = YES;

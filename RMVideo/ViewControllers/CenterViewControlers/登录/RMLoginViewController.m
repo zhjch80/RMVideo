@@ -132,7 +132,7 @@
      CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
      [storage beginUpdates];
      NSString * loginStatus = [AESCrypt encrypt:@"islogin" password:PASSWORD];
-    [storage setObject:dict forKey:UserLoginInformation];
+    [storage setObject:dict forKey:UserLoginInformation_KEY];
      [storage setObject:loginStatus forKey:LoginStatus_KEY];
      [storage endUpdates];
 }
