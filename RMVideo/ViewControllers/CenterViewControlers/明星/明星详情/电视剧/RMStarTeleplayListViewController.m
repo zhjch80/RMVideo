@@ -14,6 +14,7 @@
 #import "RMAFNRequestManager.h"
 #import "RMPublicModel.h"
 #import "UIImageView+AFNetworking.h"
+#import "PullToRefreshTableView.h"
 
 @interface RMStarTeleplayListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate>{
     NSMutableArray * dataArr;
@@ -28,18 +29,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     dataArr = [[NSMutableArray alloc] init];
-    UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180) style:UITableViewStylePlain];
+    PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180)];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.tag = 202;
     tableView.backgroundColor = [UIColor clearColor];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [tableView setIsCloseFooter:NO];
+    [tableView setIsCloseHeader:NO];
     [self.view addSubview:tableView];
     
-    
-    //TODO: 上拉刷新  下拉加载
-    
-    NSLog(@"这是第二个");
     //TODO:记得换tag_id
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getTagOfVideoListWithID:@"25151" andVideoType:@"1"];
@@ -100,6 +99,53 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 155;
+}
+
+#pragma mark -
+#pragma mark Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [(PullToRefreshTableView *)[self.view viewWithTag:202]tableViewDidDragging];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
+    
+    //  returnKey用来判断执行的拖动是下拉还是上拖
+    //  如果数据正在加载，则回返DO_NOTHING
+    //  如果是下拉，则返回k_RETURN_REFRESH
+    //  如果是上拖，则返回k_RETURN_LOADMORE
+    //  相应的Key宏定义也封装在PullToRefreshTableView中
+    //  根据返回的值，您可以自己写您的数据改变方式
+    
+    if (returnKey != k_RETURN_DO_NOTHING) {
+        //  这里执行方法
+        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
+        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+    }
+}
+
+- (void)updateThread:(id)sender {
+    int index = [sender intValue];
+    switch (index) {
+        case k_RETURN_DO_NOTHING://不执行操作
+        {
+            
+            break;
+        }
+        case k_RETURN_REFRESH://刷新
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:202] reloadData:NO];
+            break;
+        }
+        case k_RETURN_LOADMORE://加载更多
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:202] reloadData:NO];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - StarDetailsCellDelegate

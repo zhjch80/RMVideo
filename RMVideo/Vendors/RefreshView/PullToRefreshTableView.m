@@ -43,7 +43,7 @@
         
         //  初始化箭头视图
         arrowView = [[UIImageView alloc] initWithFrame:CGRectMake((k_STATE_VIEW_INDICATE_WIDTH - 32) / 2, (k_STATE_VIEW_HEIGHT - 32) / 2, 32, 32)];
-        NSString * imageNamed = type == k_VIEW_TYPE_HEADER ? @"arrow_down.png" : @"arrow_up.png";
+        NSString * imageNamed = type == k_VIEW_TYPE_HEADER ? @"arrow_down" : @"arrow_up";
         arrowView.image = [UIImage imageNamed:imageNamed];
         [self addSubview:arrowView];
         
@@ -190,11 +190,11 @@
     }
     
 }
-//- (void)dealloc{
-//    [headerView release];
-//    [footerView release];
-//    [super dealloc];
-//}
+
+- (void)dealloc{
+    headerView = nil;
+    footerView = nil;
+}
 
 - (void)tableViewDidDragging{
     CGFloat offsetY = self.contentOffset.y;

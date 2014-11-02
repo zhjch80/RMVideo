@@ -20,6 +20,7 @@
 #import "RMAFNRequestManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "RMMyChannelShouldSeeViewController.h"
+#import "PullToRefreshTableView.h"
 
 @interface RMMyChannelViewController ()<UITableViewDataSource,UITableViewDelegate,MyChannemMoreWonderfulDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
@@ -55,12 +56,14 @@
         [rightBarButton setBackgroundImage:LOADIMAGE(@"search", kImageTypePNG) forState:UIControlStateNormal];
         [self.moreWonderfulImg addTarget:self WithSelector:@selector(moreWonderfulMethod)];
         
-        UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 40 - 49 - 44) style:UITableViewStylePlain];
+        PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 40 - 49 - 44)];
         tableView.delegate = self;
         tableView.dataSource  =self;
         tableView.tag = 101;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         tableView.backgroundColor = [UIColor clearColor];
+        [tableView setIsCloseFooter:NO];
+        [tableView setIsCloseHeader:NO];
         [self.view addSubview:tableView];
         
         RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
@@ -282,6 +285,55 @@
             break;
     }
 }
+
+#pragma mark -
+#pragma mark Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [(PullToRefreshTableView *)[self.view viewWithTag:101]tableViewDidDragging];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
+    
+    //  returnKey用来判断执行的拖动是下拉还是上拖
+    //  如果数据正在加载，则回返DO_NOTHING
+    //  如果是下拉，则返回k_RETURN_REFRESH
+    //  如果是上拖，则返回k_RETURN_LOADMORE
+    //  相应的Key宏定义也封装在PullToRefreshTableView中
+    //  根据返回的值，您可以自己写您的数据改变方式
+    
+    if (returnKey != k_RETURN_DO_NOTHING) {
+        //  这里执行方法
+        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
+        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+    }
+}
+
+- (void)updateThread:(id)sender {
+    int index = [sender intValue];
+    switch (index) {
+        case k_RETURN_DO_NOTHING://不执行操作
+        {
+            
+            break;
+        }
+        case k_RETURN_REFRESH://刷新
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:101] reloadData:NO];
+            break;
+        }
+        case k_RETURN_LOADMORE://加载更多
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:101] reloadData:NO];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     dataArr = data;

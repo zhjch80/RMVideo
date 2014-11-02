@@ -10,6 +10,7 @@
 #import "RMStarCell.h"
 #import "RMImageView.h"
 #import "RMBaseTextField.h"
+#import "PullToRefreshTableView.h"
 
 #import "RMSetupViewController.h"
 #import "RMStarDetailsViewController.h"
@@ -154,15 +155,15 @@ typedef enum{
     [voiceBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:voiceBtn];
     
-    UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 45 - 44 - 49) style:UITableViewStylePlain];
+    PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 45, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 45 - 44 - 49)];
     tableView.tag = 201;
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.backgroundColor = [UIColor clearColor];
+    [tableView setIsCloseHeader:NO];
+    [tableView setIsCloseFooter:NO];
     [self.view addSubview:tableView];
-
-    //TODO:上拉刷新， 下拉加载更多
 
     RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
     [requset getStarListWithPage:@"1" count:@"12"];
@@ -669,12 +670,56 @@ typedef enum{
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     switch (scrollView.tag) {
         case 201:{
+            [(PullToRefreshTableView *)[self.view viewWithTag:201] tableViewDidDragging];
             [self cancelSearch];
             break;
         }
         case 202:{
             [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
 
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201] tableViewDidEndDragging];
+    
+    //  returnKey用来判断执行的拖动是下拉还是上拖
+    //  如果数据正在加载，则回返DO_NOTHING
+    //  如果是下拉，则返回k_RETURN_REFRESH
+    //  如果是上拖，则返回k_RETURN_LOADMORE
+    //  相应的Key宏定义也封装在PullToRefreshTableView中
+    //  根据返回的值，您可以自己写您的数据改变方式
+    
+    if (returnKey != k_RETURN_DO_NOTHING) {
+        //  这里执行方法
+        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
+        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+    }
+    
+}
+
+- (void)updateThread:(id)sender {
+    int index = [sender intValue];
+    switch (index) {
+        case k_RETURN_DO_NOTHING://不执行操作
+        {
+            break;
+        }
+        case k_RETURN_REFRESH://刷新
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
+            NSLog(@"刷新");
+            break;
+        }
+        case k_RETURN_LOADMORE://加载更多
+        {
+            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
+            NSLog(@"加载更多");
             break;
         }
             

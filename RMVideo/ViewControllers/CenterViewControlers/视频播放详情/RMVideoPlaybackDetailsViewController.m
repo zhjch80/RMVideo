@@ -72,7 +72,7 @@ typedef enum{
         self.videoShareBtn.frame = CGRectMake(360, 166, 25, 25);
     }
     
-    [self setTitle:@""];
+    [self setTitle:@"电影"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
