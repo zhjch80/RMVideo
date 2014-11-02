@@ -10,4 +10,6 @@
 
 @interface RMDailyListViewController : RMBaseViewController
 
+@property(nonatomic ,copy) NSString *topType;
+
 @end

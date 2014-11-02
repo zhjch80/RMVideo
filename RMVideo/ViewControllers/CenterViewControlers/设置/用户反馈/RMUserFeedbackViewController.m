@@ -36,9 +36,8 @@
     [super viewDidLoad];
     self.title = @"用户反馈";
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
-    [rightBarButton setImage:nil forState:UIControlStateNormal];
-    [rightBarButton setTitle:@"提交" forState:UIControlStateNormal];
-    rightBarButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    rightBarButton.frame = CGRectMake(0, 0, 38, 23);
+    [rightBarButton setBackgroundImage:LOADIMAGE(@"tijiao", kImageTypePNG) forState:UIControlStateNormal];
     self.feedBackTextView.layer.masksToBounds = YES;
     [self.feedBackTextView.layer setCornerRadius:10];
     self.feedBackTextView.layer.borderColor = [UIColor blackColor].CGColor;
