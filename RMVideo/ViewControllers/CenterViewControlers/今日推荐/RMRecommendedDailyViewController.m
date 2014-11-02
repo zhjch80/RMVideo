@@ -35,11 +35,12 @@
     self.title = @"今日推荐";
     cellHeadStringArray = [NSArray arrayWithObjects:@"电影",@"电视剧",@"综艺", nil];
     
-    mainTableVeiew = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-49-44) style:UITableViewStylePlain];
+    mainTableVeiew = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-49-44)];
     mainTableVeiew.backgroundColor = [UIColor clearColor];
     mainTableVeiew.delegate = self;
     mainTableVeiew.dataSource = self;
     mainTableVeiew.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [mainTableVeiew setIsCloseFooter:YES];
     [self.view addSubview:mainTableVeiew];
     [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
     RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
@@ -87,9 +88,58 @@
     }
     return 0;
 }
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewDidEndDecelerating" object:nil];
+#pragma mark -
+#pragma mark Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [mainTableVeiew tableViewDidDragging];
 }
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewDidEndDecelerating" object:nil];
+    NSInteger returnKey = [mainTableVeiew tableViewDidEndDragging];
+    
+    //  returnKey用来判断执行的拖动是下拉还是上拖
+    //  如果数据正在加载，则回返DO_NOTHING
+    //  如果是下拉，则返回k_RETURN_REFRESH
+    //  如果是上拖，则返回k_RETURN_LOADMORE
+    //  相应的Key宏定义也封装在PullToRefreshTableView中
+    //  根据返回的值，您可以自己写您的数据改变方式
+    
+    if (returnKey != k_RETURN_DO_NOTHING) {
+        
+        
+        //  这里执行方法
+        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
+        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+    }
+    
+}
+
+- (void)updateThread:(id)sender
+{
+    int index = [sender intValue];
+    switch (index) {
+        case k_RETURN_DO_NOTHING://不执行操作
+        {
+            
+        }
+            break;
+        case k_RETURN_REFRESH://刷新
+        {
+            [mainTableVeiew reloadData:YES];
+        }
+            break;
+        case k_RETURN_LOADMORE://加载更多
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewWillBeginDragging" object:nil];

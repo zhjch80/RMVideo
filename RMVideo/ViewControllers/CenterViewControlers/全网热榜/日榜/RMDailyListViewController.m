@@ -25,7 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = @"日榜";
+    if([self.topType isEqualToString:@"1"]){
+        self.title = @"日榜";
+    }else if([self.topType isEqualToString:@"2"]){
+        self.title = @"周报";
+    }else{
+        self.title = @"月榜";
+    }
 
     rightBarButton.hidden = YES;
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
@@ -39,17 +45,20 @@
     
     _starFilmListCtl = [[RMDailyMovieViewController alloc] init];
     _starFilmListCtl.delegate = self;
+    _starFilmListCtl.downLoadTopType = self.topType;
     _starTeleplayListCtl = [[RMDailyTVViewController alloc] init];
     _starTeleplayListCtl.delegate = self;
+    _starTeleplayListCtl.downLoadTopType = self.topType;
     _starVarietyListCtl = [[RMDailyVarietyViewController alloc] init];
     _starVarietyListCtl.delegate = self;
+    _starVarietyListCtl.downLoadTopType = self.topType;
     
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         _slideSwitchView.btnHeight = 30;
         _slideSwitchView.btnWidth = 93;
     }else if (IS_IPHONE_6_SCREEN){
         //TODO:todo...
-        _slideSwitchView.btnHeight = 40;
+        _slideSwitchView.btnHeight = 40;//356 120
         _slideSwitchView.btnWidth = 105;
     }else if (IS_IPHONE_6p_SCREEN){
         _slideSwitchView.btnHeight = 40;
