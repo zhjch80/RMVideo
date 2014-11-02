@@ -12,8 +12,12 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 
-//#define baseUrl @"http://172.16.2.66/index.php/vod/"
+#if 1
+#define baseUrl @"http://172.16.2.66/index.php/vod/"
+#else
 #define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
+#endif
+
 @implementation RMAFNRequestManager
 
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
@@ -108,6 +112,7 @@
     }
     return strUrl;
 }
+
 - (NSString *)setOffsetWith:(NSString *)page andCount:(NSString *)count{
     return [NSString stringWithFormat:@"%d",([page intValue] -1)*[count intValue]];
 }
@@ -209,9 +214,27 @@
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSLog(@"视频详情:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        RMPublicModel *model = [[RMPublicModel alloc] init];
+        model.code = [responseObject objectForKey:@"code"];
+        model.content = [responseObject objectForKey:@"content"];
+        model.creatorArr = [responseObject objectForKey:@"creator"];
+        model.gold = [responseObject objectForKey:@"gold"];
+        model.hits = [responseObject objectForKey:@"hits"];
+        model.name = [responseObject objectForKey:@"name"];
+        model.pic = [responseObject objectForKey:@"pic"];
+        model.playurlArr = [responseObject objectForKey:@"playurl"];
+        model.video_id = [responseObject objectForKey:@"video_id"];
+        model.video_type = [responseObject objectForKey:@"video_type"];
+        [dataArray addObject:model];
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 
@@ -226,8 +249,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
     }];
-
-    
 }
 
 #pragma mark - 电影详情：添加收藏
@@ -241,8 +262,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
     }];
-
-    
 }
 
 #pragma mark - 我的频道
@@ -371,8 +390,6 @@
         }
         [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
-
-    
 }
 
 #pragma mark - 明星列表
@@ -413,8 +430,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
     }];
-
-    
 }
 
 #pragma mark - 明星：明星详情
@@ -517,8 +532,6 @@
         }
         [SVProgressHUD showErrorWithStatus:@"删除失败"];
     }];
-    
-    
 }
 
 #pragma mark - 设置：用户反馈
@@ -541,8 +554,6 @@
         }
         [SVProgressHUD showErrorWithStatus:@"提交失败"];
     }];
-    
-    
 }
 
 #pragma mark - 搜索
@@ -556,8 +567,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
     }];
-
-    
 }
 
 #pragma mark - 登录
@@ -582,8 +591,6 @@
         }
         [SVProgressHUD showErrorWithStatus:@"登录失败"];
     }];
-    
-    
 }
 
 @end

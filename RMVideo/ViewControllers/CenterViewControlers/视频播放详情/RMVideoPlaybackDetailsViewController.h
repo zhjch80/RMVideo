@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSString * tabBarIdentifier;      //是否隐藏TabBar
 
+@property (nonatomic, copy) NSString * currentVideo_id;
 
 @property (weak, nonatomic) IBOutlet UIView *videoHeadBGView;
 
@@ -38,11 +39,5 @@
  * identifier is NO when navigationController popViewController hide TabBar
  */
 - (void)setAppearTabBarNextPopViewController:(NSString *)identifier;
-
-/**
- 视频的id
- */
-- (void)setVideoDetilID:(NSString *)video_id;
-
 
 @end

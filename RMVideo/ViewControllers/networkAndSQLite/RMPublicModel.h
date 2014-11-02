@@ -44,11 +44,15 @@
 //@property (nonatomic, strong) NSString * tag_id;
 
 
-
-
-
-
-
+//视频详情
+@property (nonatomic, strong) NSMutableArray * playurlArr;
+@property (nonatomic, strong) NSMutableArray * creatorArr;
+@property (nonatomic, strong) NSString * hits;
+@property (nonatomic, strong) NSString * jumpurl;
+@property (nonatomic, strong) NSString * reurl;
+@property (nonatomic, strong) NSString * source_type;
+//@property (nonatomic, strong) NSString * source_type_ids;
+@property (nonatomic, strong) NSString * content;
 
 
 

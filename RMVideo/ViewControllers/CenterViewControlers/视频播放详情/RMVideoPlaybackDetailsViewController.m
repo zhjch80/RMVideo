@@ -13,10 +13,13 @@
 #import "RMVideoBroadcastAddressViewController.h"
 #import "RMVideoCreativeStaffViewController.h"
 
-@interface RMVideoPlaybackDetailsViewController () {
+#import "RMAFNRequestManager.h"
+#import "RMPublicModel.h"
+#import "UIImageView+AFNetworking.h"
+
+@interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate> {
 
 }
-@property (nonatomic, strong) NSMutableString * video_id;              //视频的id
 
 @property (nonatomic, copy) HMSegmentedControl *segmentedControl;
 
@@ -140,6 +143,13 @@
     [_segmentedControl setSelectionIndicatorColor:[UIColor clearColor]];
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
+    
+    //TODO:修改成动态
+    //self.currentVideo_id
+    
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getVideoDetailWithID:@"623" andToken:@""];
+    request.delegate = self;
 }
 
 #pragma mark - Base Method
@@ -198,9 +208,16 @@
     self.tabBarIdentifier = [NSMutableString stringWithFormat:@"%@",identifier];
 }
 
-- (void)setVideoDetilID:(NSString *)video_id {
-    self.video_id = [NSMutableString stringWithFormat:@"%@",video_id];
-    NSLog(@"self.video_id:%@",self.video_id);
+#pragma mark request RMAFNRequestManagerDelegate
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    RMPublicModel * model = [data objectAtIndex:0];
+    NSLog(@"name:%@, hits:%@",model.name,model.hits);
+
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"视频详情：error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,6 +8,10 @@
 
 #import "RMVideoPlotIntroducedViewController.h"
 
+#import "RMAFNRequestManager.h"
+#import "RMPublicModel.h"
+#import "UIImageView+AFNetworking.h"
+
 @interface RMVideoPlotIntroducedViewController ()<UIScrollViewDelegate>
 
 @end

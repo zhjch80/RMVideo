@@ -256,7 +256,7 @@
         RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
         [self.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
         [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kYES];
-        [videoPlaybackDetailsCtl setVideoDetilID:imageView.identifierString];
+        videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
         [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
     }
 }
