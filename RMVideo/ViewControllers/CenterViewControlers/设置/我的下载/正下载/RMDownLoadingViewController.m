@@ -118,6 +118,7 @@ static id _instance;
         else{
             [selectCellArray addObject:[NSNumber numberWithInt:indexPath.row]];
         }
+        selectArray(selectCellArray);
         [self.mainTableView reloadData];
     }else{
         selectIndex(indexPath.row);
@@ -137,6 +138,9 @@ static id _instance;
 
 - (void)selectTableViewCellWithIndex:(void (^)(NSInteger))selectBlock{
     selectIndex = selectBlock;
+}
+- (void)delectCellArray:(void (^)(NSMutableArray *))block{
+    selectArray = block;
 }
 
 - (void)selectAllTableViewCellWithState:(BOOL)state{

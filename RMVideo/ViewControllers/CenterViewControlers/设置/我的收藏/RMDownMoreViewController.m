@@ -44,6 +44,8 @@ typedef enum{
                 btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
                 self.mainTableView.frame = CGRectMake(self.mainTableView.frame.origin.x, self.mainTableView.frame.origin.y, self.mainTableView.frame.size.width, self.mainTableView.frame.size.height+25);
             }];
+            ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
             for(int i=0;i<selectCellArray.count;i++){
                 NSNumber *number = [selectCellArray objectAtIndex:i];
@@ -83,12 +85,14 @@ typedef enum{
         NSLog(@"全选");
         [selectCellArray removeAllObjects];
         if(isSeleltAllCell){
+            [sender setImage:LOADIMAGE(@"uncancle_select_all", kImageTypePNG) forState:UIControlStateNormal];
             for(int i=0; i<self.dataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"select_cellImage"];
                 [selectCellArray addObject:[NSNumber numberWithInt:i]];
             }
         }
         else{
+            [sender setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             for(int i=0; i<self.dataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"no-select_cellImage"];
             }
@@ -104,6 +108,8 @@ typedef enum{
                 RMPublicModel *model = [self.dataArray objectAtIndex:index];
                 deleteID = [NSString stringWithFormat:@"%@,%@",deleteID,model.video_id];
             }
+            ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             deleteID = [deleteID substringFromIndex:3];
             [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
             [manager getDeleteFavoriteVideoWithToken:testToken videoID:deleteID];
@@ -145,6 +151,14 @@ typedef enum{
         }
         else{
             [selectCellArray addObject:[NSNumber numberWithInt:indexPath.row]];
+        }
+        UIButton *button = (UIButton *)[btnView viewWithTag:11];
+        if(selectCellArray.count>0){
+            [button setImage:[UIImage imageNamed:@"undelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = YES;
+        }else{
+            [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = NO;
         }
         [self.mainTableView reloadData];
     }

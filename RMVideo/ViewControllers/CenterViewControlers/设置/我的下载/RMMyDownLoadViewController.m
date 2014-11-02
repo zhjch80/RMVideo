@@ -36,11 +36,32 @@
         RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
         [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
     }];
+    [downLoadingViewContr delectCellArray:^(NSMutableArray *array) {
+        UIButton *button = (UIButton *)[btnView viewWithTag:11];
+        if(array.count>0){
+            [button setImage:[UIImage imageNamed:@"undelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = YES;
+        }else{
+            [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = NO;
+        }
+
+    }];
     finishDownViewContr = [[RMFinishDownViewController alloc] init];
     finishDownViewContr.dataArray = array;
     [finishDownViewContr selectTableViewCellWithIndex:^(NSInteger index) {
         RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
         [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
+    }];
+    [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
+        UIButton *button = (UIButton *)[btnView viewWithTag:11];
+        if(array.count>0){
+            [button setImage:[UIImage imageNamed:@"undelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = YES;
+        }else{
+            [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = NO;
+        }
     }];
     sunSliderSwitchView.btnWidth = 145;
     sunSliderSwitchView.btnHeight = 30;
@@ -65,9 +86,12 @@
     //全选
     if(sender.tag == 10){
         if(selectViewControl == 0){
+            [sender setImage:LOADIMAGE(@"uncancle_select_all", kImageTypePNG) forState:UIControlStateNormal];
+
             [finishDownViewContr selectAllTableViewCellWithState:isSeleltAllCell];
         }
         else{
+            [sender setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             [downLoadingViewContr selectAllTableViewCellWithState:isSeleltAllCell];
         }
         isSeleltAllCell = !isSeleltAllCell;
@@ -81,6 +105,8 @@
             [downLoadingViewContr deleteAllTableViewCell];
         }
         isEditing = YES;
+        [sender setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+        sender.enabled = NO;
         btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
     }
     
@@ -116,6 +142,9 @@
         [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
     }
     isEditing = YES;
+    UIButton *button = (UIButton *)[btnView viewWithTag:11];
+    [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+    button.enabled = NO;
     btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
 }
 
@@ -138,7 +167,12 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDownLoadingControStartEditing object:nil];
         }
         else{
+            
             btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
+            
+            UIButton *button = (UIButton *)[btnView viewWithTag:11];
+            [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+            button.enabled = NO;
             if(selectViewControl==0)
                 [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
             else

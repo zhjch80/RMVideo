@@ -35,12 +35,12 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(i*([UtilityFunc shareInstance].globleWidth/2), 0, [UtilityFunc shareInstance].globleWidth/2, 49);
         if(i==0){
-            [button setImage:[UIImage imageNamed:@"select_all_btn"] forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor cyanColor]];
+            [button setImage:[UIImage imageNamed:@"unselect_all_btn"] forState:UIControlStateNormal];
         }
         else{
-            [button setImage:[UIImage imageNamed:@"delect_all_btn"] forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor redColor]];
+            [button setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
+            [button setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.9]];
+            button.enabled = NO;
         }
         button.tag = i+10;
         [button addTarget:self action:@selector(EditingViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];

@@ -13,6 +13,7 @@
     NSMutableArray *selectCellArray;
     NSMutableArray *cellEditingImageArray;
     void (^selectIndex)(NSInteger index);
+    void(^selectArray)(NSMutableArray *array);
     BOOL isBeginEditing;
     BOOL isPauseAllDownLoadAssignment;//是否暂停所有下载任务
 }
@@ -23,6 +24,8 @@
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender;
 
 - (void)selectTableViewCellWithIndex:(void(^)(NSInteger index))selectBlock;
+
+- (void)delectCellArray:(void(^)(NSMutableArray *array))block;
 
 +(instancetype)shared;
 

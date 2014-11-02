@@ -12,12 +12,15 @@
     NSMutableArray *selectCellArray;
     NSMutableArray *cellEditingImageArray;
     void(^selectIndex)(NSInteger index);
+    void(^selectArray)(NSMutableArray *array);
     BOOL isBegingEditing;
 }
 @property (weak, nonatomic) IBOutlet UITableView *maiTableView;
 @property (nonatomic ,strong) NSMutableArray *dataArray;
 
 - (void) selectTableViewCellWithIndex:(void(^)(NSInteger index))block;
+
+- (void)delectCellArray:(void(^)(NSMutableArray *array))block;
 
 //全选
 - (void)selectAllTableViewCellWithState:(BOOL)state;

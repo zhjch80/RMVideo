@@ -97,6 +97,7 @@
         else{
             [selectCellArray addObject:[NSNumber numberWithInt:indexPath.row]];
         }
+        selectArray(selectCellArray);
         [self.maiTableView reloadData];
     }
     else{
@@ -145,5 +146,8 @@
 }
 - (void)selectTableViewCellWithIndex:(void (^)(NSInteger))block{
     selectIndex = block;
+}
+- (void)delectCellArray:(void (^)(NSMutableArray *))block{
+    selectArray = block;
 }
 @end
