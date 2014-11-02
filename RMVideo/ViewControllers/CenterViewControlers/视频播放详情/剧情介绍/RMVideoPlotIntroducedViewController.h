@@ -10,4 +10,6 @@
 
 @interface RMVideoPlotIntroducedViewController : RMBaseViewController
 
+- (void)updatePlotIntroduced:(RMPublicModel *)model;
+
 @end

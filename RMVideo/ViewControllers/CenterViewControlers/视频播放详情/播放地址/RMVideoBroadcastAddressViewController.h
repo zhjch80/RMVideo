@@ -10,4 +10,6 @@
 
 @interface RMVideoBroadcastAddressViewController : RMBaseViewController
 
+- (void)updateBroadcastAddress:(RMPublicModel *)model;
+
 @end

@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.leftAddImg addTarget:self WithSelector:@selector(starHeadClick:)];
+    [self.centerAddImg addTarget:self WithSelector:@selector(starHeadClick:)];
+    [self.rightAddImg addTarget:self WithSelector:@selector(starHeadClick:)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,8 +23,8 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)cbuttonClick:(UIButton *)sender {
-    [self.delegate startCellDidSelectWithIndex:1];
-    
+- (void)starHeadClick:(RMImageView *)imageView {
+    [self.delegate clickCreativeStaffCellAddMyChannelMethod:imageView];
 }
+
 @end

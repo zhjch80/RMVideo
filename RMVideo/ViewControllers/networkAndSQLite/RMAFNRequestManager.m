@@ -199,7 +199,6 @@
                 [self.delegate requestFinishiDownLoadWith:dataArray];
             }
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
@@ -257,9 +256,19 @@
     NSString *url = [self urlPathadress:Http_getAddFavorite];
     url = [NSString stringWithFormat:@"%@token=%@&video_id=%@",url,token,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        if ([[responseObject objectForKey:@"code"] integerValue] == 4001){
+            [SVProgressHUD showErrorWithStatus:@"收藏成功"];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"收藏失败"];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:nil];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if ([self.delegate respondsToSelector:@selector(requestError:)]) {
+            [SVProgressHUD showErrorWithStatus:@"收藏失败"];
+            [self.delegate requestError:error];
+        }
     }];
 }
 

@@ -104,9 +104,9 @@
 #pragma mark - StarDetailsCellDelegate
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView {
-    NSLog(@"电影");
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMStarDetailsViewController * starDetailsDelegate = _starDetailsDelegate;
+    videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
     [starDetailsDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }

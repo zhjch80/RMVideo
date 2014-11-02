@@ -17,15 +17,22 @@
 #import "RMPublicModel.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate> {
+typedef enum{
+    requestVideoContentType = 1,
+    requestAddVideoCollectlType,
+}LoadType;
 
+@interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate> {
+    
+    LoadType loadType;
 }
+@property (nonatomic, strong) NSMutableArray * dataArr;
 
 @property (nonatomic, copy) HMSegmentedControl *segmentedControl;
 
 @property (nonatomic, strong) RMVideoPlotIntroducedViewController * videoPlotIntroducedCtl;
 @property (nonatomic, strong) RMVideoBroadcastAddressViewController * videoBroadcastAddressCtl;
-@property (nonatomic, strong) RMVideoCreativeStaffViewController * videoCreativeStaff;
+@property (nonatomic, strong) RMVideoCreativeStaffViewController * videoCreativeStaffCtl;
 
 @end
 
@@ -42,10 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
-    [self.videoRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [self.videoRateView displayRating:3];
-    
+    self.dataArr = [[NSMutableArray alloc] init];
+    loadType = requestVideoContentType;
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         self.videoHeadBGView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 205);
         self.videoImg.frame = CGRectMake(10, 10, 128, 175);
@@ -67,12 +72,9 @@
         self.videoShareBtn.frame = CGRectMake(360, 166, 25, 25);
     }
     
-    [self setTitle:@"电影"];
+    [self setTitle:@""];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
-    
-    [self.videoRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [self.videoRateView displayRating:4];
     
     _segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"", @"", @""] withIdentifierType:@"videoIdentifier"];
     __block RMVideoPlaybackDetailsViewController *blockSelf = self;
@@ -106,23 +108,25 @@
                 }else if (IS_IPHONE_6p_SCREEN){
                 blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
-
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
+                RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
+                [blockSelf refreshBroadcastAddressDate:model];
                 break;
             }
             case 2:{
-                if (! blockSelf.videoCreativeStaff){
-                    blockSelf.videoCreativeStaff = [[RMVideoCreativeStaffViewController alloc] init];
+                if (! blockSelf.videoCreativeStaffCtl){
+                    blockSelf.videoCreativeStaffCtl = [[RMVideoCreativeStaffViewController alloc] init];
                 }
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-                    blockSelf.videoCreativeStaff.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
+                    blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6_SCREEN){
                     
                 }else if (IS_IPHONE_6p_SCREEN){
-                    blockSelf.videoCreativeStaff.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
+                    blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
- 
-                [blockSelf.view addSubview:blockSelf.videoCreativeStaff.view];
+                [blockSelf.view addSubview:blockSelf.videoCreativeStaffCtl.view];
+                RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
+                [blockSelf refreshCreativeStaffDate:model];
                 break;
             }
                 
@@ -173,8 +177,6 @@
     }
 }
 
-
-
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
@@ -186,7 +188,10 @@
         case 102:{
             //收藏
             NSLog(@"收藏");
-            
+            loadType = requestAddVideoCollectlType;
+            RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+            [request getAddFavoriteWithID:self.currentVideo_id andToken:testToken];
+            request.delegate = self;
             break;
         }
         case 103:{
@@ -208,12 +213,55 @@
 }
 
 #pragma mark request RMAFNRequestManagerDelegate
+/**
+ 刷新视频详情界面
+ */
+- (void)refreshVideoHeadView {
+    RMPublicModel * model = [self.dataArr objectAtIndex:0];
+    if ([model.video_type isEqualToString:@"1"]) {
+        [self setTitle:@"电影"];
+    }else if ([model.video_type isEqualToString:@"2"]) {
+        [self setTitle:@"电视剧"];
+    }else if ([model.video_type isEqualToString:@"3"]) {
+        [self setTitle:@"综艺"];
+    }
+    [self.videoImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:nil];
+    self.videoTitle.text = model.name;
+    [self.videoRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+    [self.videoRateView displayRating:[model.gold integerValue]];
+    self.videoPlayCount.text = [NSString stringWithFormat:@"播放%@次",model.hits];
+    
+    [self refreshPlotIntroducedDate:model];
+}
+
+/**
+ *刷新剧情介绍的内容
+ */
+- (void)refreshPlotIntroducedDate:(RMPublicModel *)model {
+    [self.videoPlotIntroducedCtl updatePlotIntroduced:model];
+}
+
+/**
+ *刷新播放地址的内容
+ */
+- (void)refreshBroadcastAddressDate:(RMPublicModel *)model {
+    [self.videoBroadcastAddressCtl updateBroadcastAddress:model];
+}
+
+/**
+ *刷新主创人员的内容
+ */
+- (void)refreshCreativeStaffDate:(RMPublicModel *)model {
+    [self.videoCreativeStaffCtl updateCreativeStaff:model];
+}
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-//    RMPublicModel * model = [data objectAtIndex:0];
-    NSLog(@"self.currentVideo_id:%@",self.currentVideo_id);
-//    NSLog(@"name:%@, hits:%@,video_id:%@",model.name,model.hits,model.video_id);
-
+    if (loadType == requestVideoContentType) {
+        self.dataArr = data;
+        [self refreshVideoHeadView];
+    }else if (loadType == requestAddVideoCollectlType) {
+        
+    }
 }
 
 - (void)requestError:(NSError *)error {

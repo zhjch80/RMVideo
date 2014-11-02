@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMImageView.h"
 
 @protocol CreativeStaffCellDelegate <NSObject>
 
-- (void)startCellDidSelectWithIndex:(NSInteger)index;
+- (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView;
 
 @end
 @interface RMVideoCreativeStaffCell : UITableViewCell
@@ -21,7 +22,25 @@
 @property (weak, nonatomic) IBOutlet UIView *rightRotatView;
 
 
-- (IBAction)cbuttonClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *leftHeadImg;
+@property (weak, nonatomic) IBOutlet UIImageView *centerHeadImg;
+@property (weak, nonatomic) IBOutlet UIImageView *rightHeadImg;
+
+@property (weak, nonatomic) IBOutlet RMImageView *leftAddImg;
+@property (weak, nonatomic) IBOutlet RMImageView *centerAddImg;
+@property (weak, nonatomic) IBOutlet RMImageView *rightAddImg;
+
+@property (weak, nonatomic) IBOutlet UILabel *leftTitle;
+@property (weak, nonatomic) IBOutlet UILabel *centerTitle;
+@property (weak, nonatomic) IBOutlet UILabel *rightTitle;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *leftRotatingTitle;
+@property (weak, nonatomic) IBOutlet UILabel *centerRotatingTitle;
+@property (weak, nonatomic) IBOutlet UILabel *rightRotatingTitle;
+
+
+
 
 
 

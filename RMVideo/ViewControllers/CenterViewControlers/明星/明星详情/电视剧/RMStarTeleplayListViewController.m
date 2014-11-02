@@ -108,6 +108,7 @@
     NSLog(@"电视剧");
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMStarDetailsViewController * starDetailsDelegate = _starDetailsDelegate;
+    videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
     [starDetailsDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
 }
 

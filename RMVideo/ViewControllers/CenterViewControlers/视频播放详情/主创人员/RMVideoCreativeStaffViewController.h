@@ -10,4 +10,6 @@
 
 @interface RMVideoCreativeStaffViewController : RMBaseViewController
 
+- (void)updateCreativeStaff:(RMPublicModel *)model;
+
 @end
