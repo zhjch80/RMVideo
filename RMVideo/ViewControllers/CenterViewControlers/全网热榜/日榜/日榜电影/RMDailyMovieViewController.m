@@ -58,8 +58,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([self.delegate respondsToSelector:@selector(selectMovieTableViewWithIndex:)]){
-        [self.delegate selectMovieTableViewWithIndex:indexPath.row];
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    if([self.delegate respondsToSelector:@selector(selectMovieTableViewWithIndex: andStringID:)]){
+        [self.delegate selectMovieTableViewWithIndex:indexPath.row andStringID:model.video_id];
     }
 }
 

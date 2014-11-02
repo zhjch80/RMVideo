@@ -10,7 +10,7 @@
 #import "UtilityFunc.h"
 #import "RMImageView.h"
 #import "CONST.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 
 @implementation RMRecommendedDailyTableViewCell
@@ -78,11 +78,12 @@
     subImage.identifierString = cellImgageIdentifier;
     
     
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]]];
-    if(data==nil){
-        NSLog(@"预备图片");
-    }
-    subImage.image = [UIImage imageWithData:data];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]]];
+//    if(data==nil){
+//        NSLog(@"预备图片");
+//    }
+//    subImage.image = [UIImage imageWithData:data];
+    [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]]];
     
     if(IS_IPHONE_4_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 230.0f, 332);

@@ -55,9 +55,9 @@
         RMPublicModel *model_left = [self.dataArray objectAtIndex:indexPath.row*3];
         RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
         RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
-        [cell.fristImage setImageWithURL:[NSURL URLWithString:model_left.pic]];
-        [cell.secondImage setImageWithURL:[NSURL URLWithString:model_center.pic]];
-        [cell.threeImage setImageWithURL:[NSURL URLWithString:model_right.pic]];
+        [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic]];
+        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic]];
+        [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic]];
         cell.fristImage.identifierString = model_left.video_id;
         cell.secondImage.identifierString = model_center.video_id;
         cell.threeImage.identifierString = model_right.video_id;
@@ -100,6 +100,7 @@
     NSLog(@"identifer:%@",imageView.identifierString);
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
+    videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
     [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }

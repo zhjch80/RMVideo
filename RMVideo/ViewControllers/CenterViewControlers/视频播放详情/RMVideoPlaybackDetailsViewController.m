@@ -146,7 +146,6 @@
     
     //TODO:修改成动态
     //self.currentVideo_id
-    NSLog(@"self.currentVideo_id:%@",self.currentVideo_id);
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getVideoDetailWithID:@"623" andToken:@""];
     request.delegate = self;
@@ -211,8 +210,9 @@
 #pragma mark request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    RMPublicModel * model = [data objectAtIndex:0];
-    NSLog(@"name:%@, hits:%@",model.name,model.hits);
+//    RMPublicModel * model = [data objectAtIndex:0];
+    NSLog(@"self.currentVideo_id:%@",self.currentVideo_id);
+//    NSLog(@"name:%@, hits:%@,video_id:%@",model.name,model.hits,model.video_id);
 
 }
 

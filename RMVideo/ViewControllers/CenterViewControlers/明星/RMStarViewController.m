@@ -553,13 +553,13 @@ typedef enum{
         RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         
         cell.leftTitle.text = model_left.name;
-        [cell.starLeftImg setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:nil];
+        [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:nil];
         
         cell.centerTitle.text = model_center.name;
-        [cell.starCenterImg setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:nil];
+        [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:nil];
         
         cell.rightTitle.text = model_right.name;
-        [cell.starRightImg setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:nil];
+        [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:nil];
  
         cell.starLeftImg.identifierString = model_left.tag_id;
         cell.starCenterImg.identifierString = model_center.tag_id;

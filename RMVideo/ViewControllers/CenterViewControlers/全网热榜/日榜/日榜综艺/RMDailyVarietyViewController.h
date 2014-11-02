@@ -10,7 +10,7 @@
 
 @protocol RMDailyVarietyViewControllerDelegate <NSObject>
 
-- (void)selectVarietyTableViewCellWithIndex:(NSInteger)index;
+- (void)selectVarietyTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
 
 @end
 

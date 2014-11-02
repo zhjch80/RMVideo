@@ -214,7 +214,6 @@
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"视频详情:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
         model.code = [responseObject objectForKey:@"code"];

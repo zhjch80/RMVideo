@@ -76,11 +76,11 @@
     cell.secondLable.text = model_center.name;
     cell.threeLable.text = model_right.name;
     
-    [cell.fristImage setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:nil];
+    [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:nil];
     cell.fristImage.identifierString = model_left.video_id;
-    [cell.secondImage setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:nil];
+    [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:nil];
     cell.secondImage.identifierString = model_center.video_id;
-    [cell.threeImage setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:nil];
+    [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:nil];
     cell.threeImage.identifierString = model_right.video_id;
     
     [cell.firstStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];

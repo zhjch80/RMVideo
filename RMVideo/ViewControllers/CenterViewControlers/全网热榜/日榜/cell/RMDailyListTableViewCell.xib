@@ -17,7 +17,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="002.png" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
                         <rect key="frame" x="17" y="7" width="85" height="85"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ToPromote.png" translatesAutoresizingMaskIntoConstraints="NO" id="VBc-dj-ylE">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VBc-dj-ylE">
                         <rect key="frame" x="17" y="7" width="24" height="25"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="被解放的讲台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLY-It-XaX">
@@ -64,7 +64,6 @@
     </objects>
     <resources>
         <image name="002.png" width="640" height="1136"/>
-        <image name="ToPromote.png" width="25" height="25"/>
         <image name="paly_bg_img.png" width="10" height="10"/>
         <image name="toppaiming.png" width="24" height="35"/>
     </resources>

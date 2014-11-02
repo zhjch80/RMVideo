@@ -96,23 +96,26 @@
 }
 #pragma mark delegate
 //电影
-- (void)selectMovieTableViewWithIndex:(NSInteger)index{
+- (void)selectMovieTableViewWithIndex:(NSInteger)index andStringID:(NSString *)stringID{
     
     RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
     videoPlay.tabBarIdentifier = kNO;
+    videoPlay.currentVideo_id = stringID;
     [self.navigationController pushViewController:videoPlay animated:YES];
 }
 //电视剧
-- (void)selectTVTableViewCellWithIndex:(NSInteger)index{
+- (void)selectTVTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID{
     RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
     videoPlay.tabBarIdentifier = kNO;
+    videoPlay.currentVideo_id = stringID;
     [self.navigationController pushViewController:videoPlay animated:YES];
 
 }
 //综艺
-- (void)selectVarietyTableViewCellWithIndex:(NSInteger)index{
+- (void)selectVarietyTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID{
     RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
     videoPlay.tabBarIdentifier = kNO;
+    videoPlay.currentVideo_id = stringID;
     [self.navigationController pushViewController:videoPlay animated:YES];
 
 }

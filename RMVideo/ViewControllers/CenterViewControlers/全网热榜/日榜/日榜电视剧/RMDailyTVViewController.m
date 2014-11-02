@@ -53,9 +53,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([self.delegate respondsToSelector:@selector(selectTVTableViewCellWithIndex:)])
+    
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    if([self.delegate respondsToSelector:@selector(selectTVTableViewCellWithIndex: andStringID:)])
     {
-        [self.delegate selectTVTableViewCellWithIndex:indexPath.row];
+        [self.delegate selectTVTableViewCellWithIndex:indexPath.row andStringID:model.video_id];
     }
 }
 - (void)didReceiveMemoryWarning {

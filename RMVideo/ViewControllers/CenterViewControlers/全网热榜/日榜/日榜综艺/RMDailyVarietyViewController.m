@@ -44,7 +44,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [cell.headImage setImageWithURL:[NSURL URLWithString:model.pic]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
     [(RMImageView *)cell.TopImage addTopNumber:indexPath.row+1];
@@ -52,8 +52,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([self.delegate respondsToSelector:@selector(selectVarietyTableViewCellWithIndex:)]){
-        [self.delegate selectVarietyTableViewCellWithIndex:indexPath.row];
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    if([self.delegate respondsToSelector:@selector(selectVarietyTableViewCellWithIndex: andStringID:)]){
+        [self.delegate selectVarietyTableViewCellWithIndex:indexPath.row andStringID:model.video_id];
     }
 }
 

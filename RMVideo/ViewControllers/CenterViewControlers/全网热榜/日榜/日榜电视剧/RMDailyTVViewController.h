@@ -10,7 +10,7 @@
 
 @protocol RMDailyTVViewControllerDelegate <NSObject>
 
-- (void)selectTVTableViewCellWithIndex:(NSInteger)index;
+- (void)selectTVTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
 
 @end
 @interface RMDailyTVViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{

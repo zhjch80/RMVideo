@@ -10,7 +10,7 @@
 
 @protocol RMDailyMovieViewControllerDelegate <NSObject>
 
-- (void)selectMovieTableViewWithIndex:(NSInteger)index;
+- (void)selectMovieTableViewWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
 
 @end
 @interface RMDailyMovieViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{

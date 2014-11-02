@@ -251,7 +251,7 @@ typedef enum{
 - (void)refreshIntroductionView {
     RMPublicModel * model = [introDataArr objectAtIndex:0];
     [self setTitle:model.name];
-    [self.starPhoto setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
+    [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
     self.starName.text = model.name;
     self.starIntrduce.text = model.detail;
 }

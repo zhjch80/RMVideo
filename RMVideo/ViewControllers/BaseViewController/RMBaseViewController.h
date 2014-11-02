@@ -10,7 +10,7 @@
 #import "CONST.h"
 #import "UtilityFunc.h"
 #import "AFNetworking.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 //storage
 #import "CUSFileStorage.h"
 #import "CUSSerializer.h"

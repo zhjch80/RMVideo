@@ -105,15 +105,9 @@
             movieID = model.DailyRecommendVideo_id;
         }
     }
-    if ([identifier isEqualToString:@"电影"]) {
-    }
-    else if ([identifier isEqualToString:@"电视剧"]) {
-
-    }else{
-        
-    }
     RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
     videoPlay.tabBarIdentifier = kYES;
+    videoPlay.currentVideo_id = movieID;
     [self.navigationController pushViewController:videoPlay animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 }
