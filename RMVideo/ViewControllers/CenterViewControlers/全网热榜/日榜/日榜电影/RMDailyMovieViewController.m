@@ -10,7 +10,7 @@
 #import "RMDailyListTableViewCell.h"
 #import "RMImageView.h"
 #import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 @interface RMDailyMovieViewController ()
 
@@ -49,7 +49,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [cell.headImage setImageWithURL:[NSURL URLWithString:model.pic]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
     [(RMImageView *)cell.TopImage addTopNumber:indexPath.row+1];

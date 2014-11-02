@@ -49,10 +49,12 @@
                 </view>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZ8-OU-9Ss">
                     <rect key="frame" x="0.0" y="530" width="320" height="38"/>
+                    <color key="backgroundColor" red="0.46666669845581055" green="0.46666669845581055" blue="0.46666669845581055" alpha="1" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="ift-CC-ITh"/>
                     </constraints>
-                    <state key="normal" backgroundImage="loginOut@2x">
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="退出登录">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -87,7 +89,6 @@
         </view>
     </objects>
     <resources>
-        <image name="loginOut@2x" width="44" height="44"/>
         <image name="user_head-Image.png" width="30" height="30"/>
     </resources>
 </document>
