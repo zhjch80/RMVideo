@@ -46,6 +46,7 @@ typedef enum{
             }];
             ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
             [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
+             [((UIButton *)[btnView viewWithTag:10]) setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
             for(int i=0;i<selectCellArray.count;i++){
                 NSNumber *number = [selectCellArray objectAtIndex:i];
@@ -90,12 +91,16 @@ typedef enum{
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"select_cellImage"];
                 [selectCellArray addObject:[NSNumber numberWithInt:i]];
             }
+            ((UIButton *)[btnView viewWithTag:11]).enabled = YES;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"undelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
         }
         else{
             [sender setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             for(int i=0; i<self.dataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"no-select_cellImage"];
             }
+            ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
         }
         isSeleltAllCell = !isSeleltAllCell;
         [self.mainTableView reloadData];
