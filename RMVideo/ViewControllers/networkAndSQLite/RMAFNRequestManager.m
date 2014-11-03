@@ -12,7 +12,7 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 
-#if 1
+#if 0
 #define baseUrl @"http://172.16.2.66/index.php/vod/"
 #else
 #define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
@@ -433,9 +433,25 @@
     NSString *url = [self urlPathadress:Http_getStartSearch];
     url = [NSString stringWithFormat:@"%@name=%@&limit=%@&offset=%@",url,name,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSLog(@"明星搜索:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.gold = [dict objectForKey:@"gold"];
+            model.name = [dict objectForKey:@"name"];
+            model.pic = [dict objectForKey:@"pic"];
+            model.video_type = [dict objectForKey:@"video_type"];
+            model.video_id = [dict objectForKey:@"video_id"];
+            model.hits = [dict objectForKey:@"hits"];
+            [dataArray addObject:model];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if ([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 

@@ -89,6 +89,8 @@
 
 #define LoginStatus_KEY                             @"loginstatus_KEY"
 #define UserLoginInformation_KEY                    @"userLoginInformation_KEY"
+#define UserSearchRecordData_KEY                    @"userSearchRecordData_KEY"
+#define UserSearchStarRecordData_KEY                @"userSearchSatrRecordData_KEY"
 
 /*
  loginStatus  value为:islogin  表示登录    value为:notlogin  表示未登录

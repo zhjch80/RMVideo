@@ -64,7 +64,7 @@
     self.result = @"";
     
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-    NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:@"userSearchRecordData_KEY"]];
+    NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
     recordsDataArr = arr;
     [self.searchTableView reloadData];
     [self refreshRecodsView];
@@ -221,7 +221,7 @@
             }
         }
     }
-    [storage setObject:recordsDataArr forKey:@"userSearchRecordData_KEY"];
+    [storage setObject:recordsDataArr forKey:UserSearchRecordData_KEY];
     [storage endUpdates];
     [self refreshRecodsView];
 }
@@ -244,11 +244,11 @@
         }
         case 1:{
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:@"userSearchRecordData_KEY"]];
+            NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
             [arr removeAllObjects];
             [recordsDataArr removeAllObjects];
             [storage beginUpdates];
-            [storage setObject:arr forKey:@"userSearchRecordData_KEY"];
+            [storage setObject:arr forKey:UserSearchRecordData_KEY];
             [storage endUpdates];
             [self refreshRecodsView];
             [self.searchTableView reloadData];
@@ -370,7 +370,7 @@
 }
 
 - (void)requestError:(NSError *)error {
-    [SVProgressHUD dismissWithError:@"搜索失败"];
+    [SVProgressHUD showErrorWithStatus:@"搜索失败,请重新尝试"];
 }
 
 #pragma mark - Base Method
@@ -414,7 +414,7 @@
             if (ret) {
             }else{
                 NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
-                [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败"];
+                [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
             }
             [self showVoiceView:YES];
 
