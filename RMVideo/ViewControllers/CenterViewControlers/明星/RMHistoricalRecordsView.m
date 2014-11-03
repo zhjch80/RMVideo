@@ -9,6 +9,11 @@
 #import "RMHistoricalRecordsView.h"
 #import "UtilityFunc.h"
 
+@interface RMHistoricalRecordsView (){
+    UILabel * disTitle;
+}
+
+@end
 @implementation RMHistoricalRecordsView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -20,12 +25,15 @@
 }
 
 - (void)initView {
-    UILabel * title = [[UILabel alloc] init];
-    title.frame = CGRectMake(10, 5, [UtilityFunc shareInstance].globleWidth, 30);
-    title.text = @"清空历史记录";
-    title.backgroundColor = [UIColor clearColor];
-    title.font = [UIFont systemFontOfSize:14.0];
-    [self addSubview:title];
+    disTitle = [[UILabel alloc] init];
+    disTitle.frame = CGRectMake(10, 5, [UtilityFunc shareInstance].globleWidth, 30);
+    disTitle.backgroundColor = [UIColor clearColor];
+    disTitle.font = [UIFont systemFontOfSize:14.0];
+    [self addSubview:disTitle];
+}
+
+- (void)updateDisplayTitle:(NSString *)displayTitle {
+    disTitle.text = displayTitle;
 }
 
 /*

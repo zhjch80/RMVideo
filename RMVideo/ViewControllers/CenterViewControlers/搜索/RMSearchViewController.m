@@ -43,6 +43,7 @@
 @property (nonatomic, strong) RMAFNRequestManager * request;
 @property (nonatomic, strong) NSArray * onVoiceImgArr;
 @property (nonatomic, strong) RMImageView * voiceImage;
+@property (nonatomic, strong) RMHistoricalRecordsView * historicalRecordsView;
 
 @end
 
@@ -66,6 +67,7 @@
     NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:@"userSearchRecordData_KEY"]];
     recordsDataArr = arr;
     [self.searchTableView reloadData];
+    [self refreshRecodsView];
 }
 
 - (void)viewDidLoad {
@@ -150,17 +152,25 @@
     [self.view addSubview:self.searchTableView];
     
     //初始化 清空历史记录View
-    RMHistoricalRecordsView * historicalRecordsView = [[RMHistoricalRecordsView alloc] init];
-    historicalRecordsView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 40);
-    historicalRecordsView.userInteractionEnabled = YES;
-    historicalRecordsView.backgroundColor = [UIColor clearColor];
-    self.searchTableView.tableHeaderView = historicalRecordsView;
+    self.historicalRecordsView = [[RMHistoricalRecordsView alloc] init];
+    self.historicalRecordsView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 40);
+    self.historicalRecordsView.userInteractionEnabled = YES;
+    self.historicalRecordsView.backgroundColor = [UIColor clearColor];
+    self.searchTableView.tableHeaderView = self.historicalRecordsView;
     
     UITapGestureRecognizer *historicalRecordsViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clearHistoryRecords:)];
     historicalRecordsViewRecognizer.numberOfTouchesRequired = 1; //手指数
     historicalRecordsViewRecognizer.numberOfTapsRequired = 1; //tap次数
     historicalRecordsViewRecognizer.delegate = self;
-    [historicalRecordsView addGestureRecognizer:historicalRecordsViewRecognizer];
+    [self.historicalRecordsView addGestureRecognizer:historicalRecordsViewRecognizer];
+}
+
+- (void)refreshRecodsView {
+    if ([recordsDataArr count] == 0) {
+        [self.historicalRecordsView updateDisplayTitle:@"没有历史记录"];
+    }else{
+        [self.historicalRecordsView updateDisplayTitle:@"清空历史记录"];
+    }
 }
 
 #pragma mark - 默认语音搜索界面
@@ -213,6 +223,7 @@
     }
     [storage setObject:recordsDataArr forKey:@"userSearchRecordData_KEY"];
     [storage endUpdates];
+    [self refreshRecodsView];
 }
 
 #pragma mark - UIGestureRecognizerDelegate-清空历史记录 UITextField Delegate
@@ -239,6 +250,7 @@
             [storage beginUpdates];
             [storage setObject:arr forKey:@"userSearchRecordData_KEY"];
             [storage endUpdates];
+            [self refreshRecodsView];
             [self.searchTableView reloadData];
             break;
         }
@@ -249,6 +261,9 @@
 }
 
 - (void)clearHistoryRecords:(id)sender {
+    if ([recordsDataArr count] == 0){
+        return;
+    }
     [self judgeUserClearRecord];
 }
 
@@ -274,9 +289,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //TODO: 开始搜索一
-    [self updateUserSearchRecord:textField.text];
-    [self.searchTableView reloadData];
-    [self startSearchRequest:textField.text];
+    if ([UtilityFunc isConnectionAvailable] == 0) {
+        [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+    }else {
+        [self updateUserSearchRecord:textField.text];
+        [self.searchTableView reloadData];
+        [self startSearchRequest:textField.text];
+    }
     return YES;
 }
 
@@ -319,6 +338,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO:开始搜索二
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+        return;
+    }
     [self startSearchRequest:[NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]]];
 }
 
@@ -378,6 +401,10 @@
             break;
         }
         case voiceBtn_TAG:{
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+                return;
+            }
             ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
             [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
             
@@ -438,7 +465,7 @@
  */
 - (void) onBeginOfSpeech {
     NSLog(@"正在录音");
-    [SVProgressHUD showSuccessWithStatus:@"开始语音搜索" duration:0.3];
+    [SVProgressHUD showSuccessWithStatus:@"开始语音搜索" duration:0.44];
 }
 
 /**

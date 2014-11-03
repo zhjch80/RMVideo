@@ -9,6 +9,7 @@
 #import "RMSearchResultViewController.h"
 #import "PullToRefreshTableView.h"
 #import "RMSearchCell.h"
+#import "RMVideoPlaybackDetailsViewController.h"
 
 @interface RMSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate> {
     
@@ -82,7 +83,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"点击");
+    RMPublicModel * model = [self.resultData objectAtIndex:indexPath.row];
+    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
+    [self.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
+    videoPlaybackDetailsCtl.currentVideo_id  = model.video_id;
+    [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
 
 #pragma mark -

@@ -94,6 +94,10 @@
  loginStatus  value为:islogin  表示登录    value为:notlogin  表示未登录
 */
 
+#define kShowConnectionAvailableError               @"没有网络，请检查网络连接"
+
+
+
 
 
 #if __has_feature(objc_arc)

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RMHistoricalRecordsView : UIView
-
+- (void)updateDisplayTitle:(NSString *)displayTitle;
 @end

@@ -47,7 +47,7 @@
 //检查网络链接是否可用
 + (NSInteger)isConnectionAvailable {
     NSInteger isNet = 0;
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    Reachability * reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
     switch ([reach currentReachabilityStatus]) {
         case NotReachable:
             isNet = 0;
