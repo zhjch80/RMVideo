@@ -12,6 +12,8 @@
 		1D16BC0219E664D0008BBB08 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D16BBFD19E664D0008BBB08 /* MMDrawerVisualState.m */; };
 		1D16BC0319E664D0008BBB08 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D16BBFF19E664D0008BBB08 /* UIViewController+MMDrawerController.m */; };
 		1D16BC0619E66558008BBB08 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D16BC0519E66558008BBB08 /* MMExampleDrawerVisualStateManager.m */; };
+		1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */; };
+		1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */; };
 		1D4C35CB19F5F8D800AC8F1E /* 001.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C219F5F8D800AC8F1E /* 001.png */; };
 		1D4C35CC19F5F8D800AC8F1E /* 002.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C319F5F8D800AC8F1E /* 002.png */; };
 		1D4C35CD19F5F8D800AC8F1E /* 003.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C419F5F8D800AC8F1E /* 003.png */; };
@@ -491,6 +493,9 @@
 		1D16BBFF19E664D0008BBB08 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		1D16BC0419E66558008BBB08 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
 		1D16BC0519E66558008BBB08 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
+		1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchRecordsCell.h; sourceTree = "<group>"; };
+		1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchRecordsCell.m; sourceTree = "<group>"; };
+		1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchRecordsCell.xib; sourceTree = "<group>"; };
 		1D4C35C219F5F8D800AC8F1E /* 001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001.png; sourceTree = "<group>"; };
 		1D4C35C319F5F8D800AC8F1E /* 002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 002.png; sourceTree = "<group>"; };
 		1D4C35C419F5F8D800AC8F1E /* 003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 003.png; sourceTree = "<group>"; };
@@ -2007,6 +2012,9 @@
 				1D8480B81A03633400A92879 /* RMSearchCell.h */,
 				1D8480B91A03633400A92879 /* RMSearchCell.m */,
 				1D8480BA1A03633400A92879 /* RMSearchCell.xib */,
+				1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */,
+				1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */,
+				1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */,
 				1D8480BB1A03633400A92879 /* RMSearchViewController.h */,
 				1D8480BC1A03633400A92879 /* RMSearchViewController.m */,
 				1D8480BD1A03633400A92879 /* RMSearchViewController.xib */,
@@ -3006,6 +3014,7 @@
 				1D8481831A03633400A92879 /* RMVideoCreativeStaffCell.xib in Resources */,
 				918DE70D1A062BFD00287E06 /* movie_selected@3x.png in Resources */,
 				1DAB0D1819EB647E0063A58E /* RefreshView.xib in Resources */,
+				1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */,
 				1D847F351A0324D000A92879 /* UMSCommentInputController.xib in Resources */,
 				1DAB0DC719ECD5680063A58E /* search@2x.png in Resources */,
 				1D4C366E19F6054100AC8F1E /* 下载.png in Resources */,
@@ -3124,6 +3133,7 @@
 				1D84814E1A03633400A92879 /* RMRecommendedDailyViewController.m in Sources */,
 				1D84818E1A03633400A92879 /* RMAboutAppViewController.m in Sources */,
 				1D16BC0619E66558008BBB08 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */,
 				913D15D41A01E4BB000A50E2 /* SDWebImageDownloaderOperation.m in Sources */,
 				1D16BC0319E664D0008BBB08 /* UIViewController+MMDrawerController.m in Sources */,
 				1D4D47FA19D7B42800E3A50B /* UIAlertView+AFNetworking.m in Sources */,
