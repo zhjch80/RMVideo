@@ -21,7 +21,7 @@
 
 - (void)initView {
     UILabel * title = [[UILabel alloc] init];
-    title.frame = CGRectMake(5, 5, [UtilityFunc shareInstance].globleWidth, 30);
+    title.frame = CGRectMake(10, 5, [UtilityFunc shareInstance].globleWidth, 30);
     title.text = @"清空历史记录";
     title.backgroundColor = [UIColor clearColor];
     title.font = [UIFont systemFontOfSize:14.0];

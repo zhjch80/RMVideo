@@ -14,6 +14,11 @@
 		1D16BC0619E66558008BBB08 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D16BC0519E66558008BBB08 /* MMExampleDrawerVisualStateManager.m */; };
 		1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */; };
 		1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */; };
+		1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C881A0748E9000C5C44 /* RMSearchCell.m */; };
+		1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C891A0748E9000C5C44 /* RMSearchCell.xib */; };
+		1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */; };
+		1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */; };
+		1D357C941A076A1C000C5C44 /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */; };
 		1D4C35CB19F5F8D800AC8F1E /* 001.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C219F5F8D800AC8F1E /* 001.png */; };
 		1D4C35CC19F5F8D800AC8F1E /* 002.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C319F5F8D800AC8F1E /* 002.png */; };
 		1D4C35CD19F5F8D800AC8F1E /* 003.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C419F5F8D800AC8F1E /* 003.png */; };
@@ -243,8 +248,6 @@
 		1D8481611A03633400A92879 /* RMMyChannelShouldSeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8480B21A03633400A92879 /* RMMyChannelShouldSeeViewController.xib */; };
 		1D8481621A03633400A92879 /* RMMoreWonderfulViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8480B51A03633400A92879 /* RMMoreWonderfulViewController.m */; };
 		1D8481631A03633400A92879 /* RMMoreWonderfulViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8480B61A03633400A92879 /* RMMoreWonderfulViewController.xib */; };
-		1D8481641A03633400A92879 /* RMSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8480B91A03633400A92879 /* RMSearchCell.m */; };
-		1D8481651A03633400A92879 /* RMSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8480BA1A03633400A92879 /* RMSearchCell.xib */; };
 		1D8481661A03633400A92879 /* RMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8480BC1A03633400A92879 /* RMSearchViewController.m */; };
 		1D8481671A03633400A92879 /* RMSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8480BD1A03633400A92879 /* RMSearchViewController.xib */; };
 		1D8481681A03633400A92879 /* RMHistoricalRecordsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8480C01A03633400A92879 /* RMHistoricalRecordsView.m */; };
@@ -510,6 +513,14 @@
 		1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchRecordsCell.h; sourceTree = "<group>"; };
 		1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchRecordsCell.m; sourceTree = "<group>"; };
 		1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchRecordsCell.xib; sourceTree = "<group>"; };
+		1D357C871A0748E9000C5C44 /* RMSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchCell.h; sourceTree = "<group>"; };
+		1D357C881A0748E9000C5C44 /* RMSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchCell.m; sourceTree = "<group>"; };
+		1D357C891A0748E9000C5C44 /* RMSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchCell.xib; sourceTree = "<group>"; };
+		1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultViewController.h; sourceTree = "<group>"; };
+		1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultViewController.m; sourceTree = "<group>"; };
+		1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultViewController.xib; sourceTree = "<group>"; };
+		1D357C921A076A1C000C5C44 /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
+		1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
 		1D4C35C219F5F8D800AC8F1E /* 001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001.png; sourceTree = "<group>"; };
 		1D4C35C319F5F8D800AC8F1E /* 002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 002.png; sourceTree = "<group>"; };
 		1D4C35C419F5F8D800AC8F1E /* 003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 003.png; sourceTree = "<group>"; };
@@ -825,9 +836,6 @@
 		1D8480B41A03633400A92879 /* RMMoreWonderfulViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMoreWonderfulViewController.h; sourceTree = "<group>"; };
 		1D8480B51A03633400A92879 /* RMMoreWonderfulViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMoreWonderfulViewController.m; sourceTree = "<group>"; };
 		1D8480B61A03633400A92879 /* RMMoreWonderfulViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMoreWonderfulViewController.xib; sourceTree = "<group>"; };
-		1D8480B81A03633400A92879 /* RMSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchCell.h; sourceTree = "<group>"; };
-		1D8480B91A03633400A92879 /* RMSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchCell.m; sourceTree = "<group>"; };
-		1D8480BA1A03633400A92879 /* RMSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchCell.xib; sourceTree = "<group>"; };
 		1D8480BB1A03633400A92879 /* RMSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchViewController.h; sourceTree = "<group>"; };
 		1D8480BC1A03633400A92879 /* RMSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchViewController.m; sourceTree = "<group>"; };
 		1D8480BD1A03633400A92879 /* RMSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchViewController.xib; sourceTree = "<group>"; };
@@ -1215,6 +1223,28 @@
 			path = MMDrawerController;
 			sourceTree = "<group>";
 		};
+		1D357C861A0748E9000C5C44 /* 搜索结果 */ = {
+			isa = PBXGroup;
+			children = (
+				1D357C871A0748E9000C5C44 /* RMSearchCell.h */,
+				1D357C881A0748E9000C5C44 /* RMSearchCell.m */,
+				1D357C891A0748E9000C5C44 /* RMSearchCell.xib */,
+				1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */,
+				1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */,
+				1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */,
+			);
+			path = "搜索结果";
+			sourceTree = "<group>";
+		};
+		1D357C911A076A0F000C5C44 /* PulsingHalo */ = {
+			isa = PBXGroup;
+			children = (
+				1D357C921A076A1C000C5C44 /* PulsingHaloLayer.h */,
+				1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */,
+			);
+			path = PulsingHalo;
+			sourceTree = "<group>";
+		};
 		1D4C35C119F5F8D800AC8F1E /* 测试 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1325,6 +1355,7 @@
 		1D4D478D19D7B35100E3A50B /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				1D357C911A076A0F000C5C44 /* PulsingHalo */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
 				1D847F021A0324CF00A92879 /* umeng_ios_social_sdk_4.2_custom */,
@@ -2051,9 +2082,7 @@
 		1D8480B71A03633400A92879 /* 搜索 */ = {
 			isa = PBXGroup;
 			children = (
-				1D8480B81A03633400A92879 /* RMSearchCell.h */,
-				1D8480B91A03633400A92879 /* RMSearchCell.m */,
-				1D8480BA1A03633400A92879 /* RMSearchCell.xib */,
+				1D357C861A0748E9000C5C44 /* 搜索结果 */,
 				1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */,
 				1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */,
 				1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */,
@@ -2903,6 +2932,7 @@
 				1D7116FF19ED21270007D393 /* jr_teleplay@2x.png in Resources */,
 				1D8481591A03633400A92879 /* RMDailyTVViewController.xib in Resources */,
 				1D4C35FC19F5F91800AC8F1E /* tv_download-test.png in Resources */,
+				1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */,
 				1D84815F1A03633400A92879 /* RMMyChannelViewController.xib in Resources */,
 				1D84816E1A03633400A92879 /* RMStarDetailsCell.xib in Resources */,
 				1D4C365619F6051800AC8F1E /* Star_red.png in Resources */,
@@ -2959,6 +2989,7 @@
 				912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */,
 				1D4C362319F6050700AC8F1E /* 更多.png in Resources */,
 				912C099A19F8D79E006B6305 /* variety_selected.png in Resources */,
+				1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */,
 				1D4C35D019F5F8D800AC8F1E /* test_2@2x.png in Resources */,
 				918DE7241A063A9B00287E06 /* hotPlay_zhoubang@3x.png in Resources */,
 				91908CCB19FA355A00C3DF09 /* open_all_back_image.png in Resources */,
@@ -3111,7 +3142,6 @@
 				91B2C23E1A07173D001F0220 /* nodelect_all_btn@2x.png in Resources */,
 				1D8481A71A03633400A92879 /* LeftMenuViewController.xib in Resources */,
 				1D4C35D219F5F8D800AC8F1E /* test_4@2x.png in Resources */,
-				1D8481651A03633400A92879 /* RMSearchCell.xib in Resources */,
 				1D4C35CB19F5F8D800AC8F1E /* 001.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3131,7 +3161,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D84817D1A03633400A92879 /* RMAddRecommendView.m in Sources */,
-				1D8481641A03633400A92879 /* RMSearchCell.m in Sources */,
 				1D71181E19F12DB10007D393 /* SUNSlideSwitchView.m in Sources */,
 				1D722AC619F762F400424446 /* AMBlurView.m in Sources */,
 				1D8481961A03633400A92879 /* RMDownLoadingTableViewCell.m in Sources */,
@@ -3210,6 +3239,7 @@
 				1D8481581A03633400A92879 /* RMDailyTVViewController.m in Sources */,
 				1D84819E1A03633400A92879 /* RMMoreAPPTableViewCell.m in Sources */,
 				1D4D476619D7AAD900E3A50B /* main.m in Sources */,
+				1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */,
 				1D4D47BA19D7B41C00E3A50B /* AFHTTPSessionManager.m in Sources */,
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
 				913D15D91A01E4BB000A50E2 /* UIImage+MultiFormat.m in Sources */,
@@ -3217,6 +3247,7 @@
 				1D99745E19E92D62007E53DB /* DBImageView.m in Sources */,
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
 				913D15D21A01E4BB000A50E2 /* SDWebImageDecoder.m in Sources */,
+				1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */,
 				1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */,
 				1D4D47BD19D7B41C00E3A50B /* AFSecurityPolicy.m in Sources */,
 				1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */,
@@ -3269,6 +3300,7 @@
 				1D16BC0119E664D0008BBB08 /* MMDrawerController.m in Sources */,
 				913D15D31A01E4BB000A50E2 /* SDWebImageDownloader.m in Sources */,
 				1D8481501A03633400A92879 /* RMSoHotListViewController.m in Sources */,
+				1D357C941A076A1C000C5C44 /* PulsingHaloLayer.m in Sources */,
 				1DAB0D7419EBDBB10063A58E /* HJMTabBar.m in Sources */,
 				1DA2AC6C19F65F5B0036C1AD /* SBJson4Parser.m in Sources */,
 				1D8481881A03633400A92879 /* RMVideoBroadcastAddressViewController.m in Sources */,

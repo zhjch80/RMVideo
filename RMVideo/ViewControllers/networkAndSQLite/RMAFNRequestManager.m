@@ -407,7 +407,6 @@
     NSString *url = [self urlPathadress:Http_getStarList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"明星列表%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -571,9 +570,24 @@
     NSString *url = [self urlPathadress:Http_getSearchVidieo];
     url = [NSString stringWithFormat:@"%@keyword=%@",url,string];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.gold = [dict objectForKey:@"gold"];
+            model.name = [dict objectForKey:@"name"];
+            model.pic = [dict objectForKey:@"pic"];
+            model.video_type = [dict objectForKey:@"video_type"];
+            model.video_id = [dict objectForKey:@"video_id"];
+            model.hits = [dict objectForKey:@"hits"];
+            [dataArray addObject:model];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 

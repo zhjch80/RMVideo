@@ -24,7 +24,7 @@
                         <rect key="frame" x="10" y="35" width="300" height="1"/>
                         <color key="backgroundColor" red="0.67289402173913038" green="0.67289402173913038" blue="0.67289402173913038" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rm8-0F-KXl">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rm8-0F-KXl">
                         <rect key="frame" x="295" y="14" width="15" height="15"/>
                         <color key="backgroundColor" red="0.75686281919999998" green="0.023529414089999999" blue="0.082352943720000002" alpha="1" colorSpace="deviceRGB"/>
                     </imageView>

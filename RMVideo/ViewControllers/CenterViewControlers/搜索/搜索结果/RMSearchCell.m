@@ -20,7 +20,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)cbuttonClick:(UIButton *)sender {
-    [self.delegate startCellDidSelectWithIndex:1];
-}
 @end
