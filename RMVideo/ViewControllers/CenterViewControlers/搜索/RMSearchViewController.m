@@ -10,6 +10,7 @@
 #import "RMImageView.h"
 #import "RMBaseTextField.h"
 #import "RMSearchCell.h"
+#import "RMSearchRecordsCell.h"
 
 //搜索
 #import "AMBlurView.h"
@@ -29,8 +30,8 @@
 #define cancelBtn_TAG                   102
 #define voiceBtn_TAG                    103
 
-@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,SearchCellDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate>{
-    NSMutableArray * dataArr;
+@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,SearchCellDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate>{
+    NSMutableArray * recordsDataArr;
 }
 @property (nonatomic, strong) AMBlurView * blurView;
 @property (nonatomic, strong) UITableView * searchTableView;
@@ -39,6 +40,7 @@
 @property (nonatomic)         BOOL                 isCanceled;          //语音搜索是否取消
 @property (nonatomic, strong) NSString             * onResult;          //语音正在搜索的结果
 @property (nonatomic, strong) NSString             * result;            //语音搜索结束的结果
+@property (nonatomic, strong) RMAFNRequestManager * request;
 
 @end
 
@@ -62,7 +64,6 @@ static id _instance;
             _iFlySpeechRecognizer = [RecognizerFactory CreateRecognizer:self Domain:@"iat"];
             [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
             
-            dataArr = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", nil];
             [self loadCustom];
         }
     });
@@ -98,11 +99,6 @@ static id _instance;
     return _instance;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self loadDefaultSearchView];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     //取消识别
     [_iFlySpeechRecognizer cancel];
@@ -111,10 +107,19 @@ static id _instance;
     [super viewWillDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    recordsDataArr = [[NSMutableArray alloc] init];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    recordsDataArr = [storage objectForKey:@"userSearchRecordData_KEY"];
+    NSLog(@"记录条数count:%d",[recordsDataArr count]);
+    [self.searchTableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
     [self setTitle:@"搜索"];
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
@@ -166,33 +171,19 @@ static id _instance;
     [voiceBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:voiceBtn];
     
-    UITableView * tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 109, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 89) style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.tag = 201;
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tableView];
+    [self loadDefaultSearchView];
 }
 
 #pragma mark - 默认搜索界面
 
 - (void)loadDefaultSearchView {
-    //初始化View
-    self.blurView = [[AMBlurView alloc] init];
-    self.blurView.frame = CGRectMake(0, 64+45, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 45 - 49);
-    [self.blurView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-    [self.view addSubview:self.blurView];
-    self.blurView.hidden = YES;
-    
-    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 45 - 64) style:UITableViewStylePlain];
-    self.searchTableView.tag = 202;
+    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 45, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 45 - 64) style:UITableViewStylePlain];
+    self.searchTableView.tag = 201;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.searchTableView.backgroundColor = [UIColor clearColor];
     self.searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.blurView addSubview:self.searchTableView];
-    self.searchTableView.hidden = YES;
+    [self.view addSubview:self.searchTableView];
     
     //初始化 清空历史记录View
     RMHistoricalRecordsView * historicalRecordsView = [[RMHistoricalRecordsView alloc] init];
@@ -206,7 +197,6 @@ static id _instance;
     historicalRecordsViewRecognizer.numberOfTapsRequired = 1; //tap次数
     historicalRecordsViewRecognizer.delegate = self;
     [historicalRecordsView addGestureRecognizer:historicalRecordsViewRecognizer];
-    
 }
 
 #pragma mark - 更新用户查询记录  并持久化数据
@@ -256,12 +246,11 @@ static id _instance;
 
 - (void)startSearch {
     ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
-    self.blurView.hidden = NO;
-    self.searchTableView.hidden = NO;
 }
 
 - (void)cancelSearch {
     [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -280,6 +269,20 @@ static id _instance;
     //TODO: 开始搜索一
     NSLog(@"开始搜索");
     
+    NSLog(@"obj:%@",textField.text);
+    
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    [storage beginUpdates];
+    NSString * userSearchRecord = [AESCrypt encrypt:textField.text password:PASSWORD];
+    
+    NSLog(@"userSearchRecord:%@",userSearchRecord);
+    
+    [recordsDataArr addObject:userSearchRecord];
+    [storage setObject:recordsDataArr forKey:@"userSearchRecordData_KEY"];
+    [storage endUpdates];
+    
+    NSLog(@"保存后count:%d",recordsDataArr.count);
+    
     return YES;
 }
 
@@ -296,118 +299,48 @@ static id _instance;
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (tableView.tag) {
-        case 201:{
-            return [dataArr count];
-            break;
-        }
-        case 202:{
-            return 15;
-            break;
-        }
-            
-        default:
-            return 0;
-            break;
-    }
+    return [recordsDataArr count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView.tag == 201){
-        static NSString * CellIdentifier = @"RMSearchCellIdentifier";
-        RMSearchCell * cell = (RMSearchCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (! cell) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchCell" owner:self options:nil];
-            cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.backgroundColor = [UIColor clearColor];
-            cell.delegate = self;
-        }
-        
-        
-        [cell.searchFirstRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-        [cell.searchFirstRateView displayRating:3];
-        
-        [cell.searchSecondRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-        [cell.searchSecondRateView displayRating:4];
-        
-        [cell.searchThirdRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-        [cell.searchThirdRateView displayRating:3];
-        
-        
-        return cell;
-    }else{
-        static NSString * CellIdentifier = @"RMSearchblurCellIdentifier";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (! cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.backgroundColor = [UIColor clearColor];
-            /*
-             NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
-             cell = [array objectAtIndex:0];
-             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-             cell.backgroundColor = [UIColor clearColor];
-             cell.delegate = self;
-             */
-        }
-        cell.textLabel.text = @"搜索";
-        return cell;
+    static NSString * CellIdentifier = @"RMSearchCellIdentifier";
+    RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (! cell) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
+        cell = [array objectAtIndex:0];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cell.backgroundColor = [UIColor clearColor];
     }
+   
+    cell.recordsName.text = [AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD];
+    
+    
+//    [cell.searchFirstRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+//    [cell.searchFirstRateView displayRating:3];
+//    
+//    [cell.searchSecondRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+//    [cell.searchSecondRateView displayRating:4];
+//    
+//    [cell.searchThirdRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+//    [cell.searchThirdRateView displayRating:3];
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (tableView.tag) {
-        case 201:{
-            if (indexPath.row == [dataArr count] - 1){
-                return 190;
-            }else {
-                return 180;
-            }
-            break;
-        }
-        case 202:{
-            return 40;
-            break;
-        }
-            
-        default:
-            return 0;
-            break;
+    if (indexPath.row == [recordsDataArr count] - 1){
+        return 44;
+    }else {
+        return 50;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (tableView.tag) {
-        case 201:{
-            
-            break;
-        }
-        case 202:{
-            //TODO:开始搜索二
-            NSLog(@"搜索");
-            break;
-        }
-
-        default:
-            break;
-    }
+    //TODO:开始搜索二
+    NSLog(@"搜索");
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    switch (scrollView.tag) {
-        case 201:{
-            [self cancelSearch];
-            break;
-        }
-        case 202:{
-            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-            break;
-        }
-
-        default:
-            break;
-    }
+    [self cancelSearch];
 }
 
 - (void)startCellDidSelectWithIndex:(NSInteger)index {
@@ -423,9 +356,7 @@ static id _instance;
         }
         case 2:{
             [self dismissViewControllerAnimated:YES completion:^{
-                NSLog(@"search veiw disappear finished");
             }];
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
             break;
         }
@@ -440,12 +371,7 @@ static id _instance;
 - (void)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case cancelBtn_TAG:{
-            NSLog(@"取消");
-            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-            self.blurView.hidden = YES;
-            self.searchTableView.hidden = YES;
-            ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
-            
+            [self cancelSearch];
             break;
         }
         case voiceBtn_TAG:{
@@ -505,7 +431,6 @@ static id _instance;
 - (void) onEndOfSpeech {
     NSLog(@"停止录音");
 }
-
 
 /**
  * @fn      onError
@@ -572,7 +497,6 @@ static id _instance;
 {
     NSLog(@"识别取消");
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
