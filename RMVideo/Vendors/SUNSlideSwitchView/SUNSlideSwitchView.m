@@ -181,13 +181,13 @@ static const NSUInteger kTagOfRightSideButton = 999;
         if ([_viewArray count] == 3){
             if (i==1){
                 button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 14+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
-                button.backgroundColor = [UIColor blueColor];
+//                button.backgroundColor = [UIColor blueColor];
             }else if (i==2){
                 button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + 1+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
-                button.backgroundColor = [UIColor cyanColor];
+//                button.backgroundColor = [UIColor cyanColor];
             }else{
                 button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2- 11+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
-                button.backgroundColor = [UIColor redColor];
+//                button.backgroundColor = [UIColor redColor];
             }
         }else{
             if (i==1){

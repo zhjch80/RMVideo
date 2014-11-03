@@ -189,7 +189,7 @@
                                                          appKey:@"544db5aafd98c570d2069586"
                                                       shareText:@"测试"
                                                      shareImage:[UIImage imageNamed:@"001.png"]
-                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone,nil]
+                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
                                                        delegate:self];
 
                 }

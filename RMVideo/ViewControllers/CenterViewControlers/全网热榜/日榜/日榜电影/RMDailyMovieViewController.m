@@ -103,6 +103,7 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
+            [SVProgressHUD showWithStatus:@"正在加载中。。。。" maskType:SVProgressHUDMaskTypeBlack];
             [self.mainTableView reloadData:YES];
         }
             break;
