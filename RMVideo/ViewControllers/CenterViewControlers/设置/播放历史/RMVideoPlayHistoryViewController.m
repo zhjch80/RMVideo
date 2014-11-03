@@ -44,12 +44,16 @@
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"select_cellImage"];
                 [selectCellArray addObject:[NSNumber numberWithInt:i]];
             }
+            ((UIButton *)[btnView viewWithTag:11]).enabled = YES;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"undelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
         }
         else{
             [sender setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             for(int i=0; i<self.dataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"no-select_cellImage"];
             }
+            ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
+            [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
         }
         isSeleltAllCell = !isSeleltAllCell;
         [self.mainTableView reloadData];
@@ -101,8 +105,11 @@
                 btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
                 self.mainTableView.frame = CGRectMake(self.mainTableView.frame.origin.x, self.mainTableView.frame.origin.y, self.mainTableView.frame.size.width, self.mainTableView.frame.size.height+49);
             }];
+            
             ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
             [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
+            [((UIButton *)[btnView viewWithTag:10]) setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
+
             [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
             for(int i=0;i<selectCellArray.count;i++){
                 NSNumber *number = [selectCellArray objectAtIndex:i];

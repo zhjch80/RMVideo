@@ -56,14 +56,21 @@
 }
 
 - (IBAction)weiboLogin:(UIButton *)sender {
-    
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
     loginType = usingSinaLogin;
     BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToSina];
     if(isOauth){
-        [self showAlertView];
-        NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
-        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
-        NSLog(@"sina nickName is %@, iconURL is %@",sinaAccount.userName,sinaAccount.iconURL);
+        if([loginStatus isEqualToString: @"islogin"]){
+            [self showAlertView];
+        }else{
+            NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
+            userName = sinaAccount.userName;
+            headImageURLString = sinaAccount.iconURL;
+            [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+            [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:nil];
+        }
     }
     else{
         UINavigationController *oauthController = [[UMSocialControllerService defaultControllerService] getSocialOauthController:UMShareToSina];
@@ -74,13 +81,22 @@
 }
 
 - (IBAction)tencentLogin:(UIButton *)sender {
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
+    
     loginType = usingTencentLogin;
     BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToTencent];
     if(isOauth){
-        [self showAlertView];
-        NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
-        UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToTencent];
-        NSLog(@"sina nickName is %@, iconURL is %@",sinaAccount.userName,sinaAccount.iconURL);
+        if([loginStatus isEqualToString: @"islogin"]){
+            [self showAlertView];
+        }else{
+            NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
+            userName = tencentAccount.userName;
+            headImageURLString = tencentAccount.iconURL;
+            [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+            [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:nil];
+        }
     }
     else{
         UINavigationController *oauthController = [[UMSocialControllerService defaultControllerService] getSocialOauthController:UMShareToTencent];
@@ -105,18 +121,18 @@
             BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToTencent];
             if(isOauth){
                 UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
-                NSLog(@"sina nickName is %@, iconURL is %@ token:%@",tencentAccount.userName,tencentAccount.iconURL,tencentAccount.accessToken);
                 userName = tencentAccount.userName;
                 headImageURLString = tencentAccount.iconURL;
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
                 [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:nil];
             }
         }else if ( loginType == usingSinaLogin){
             BOOL isOauth = [UMSocialAccountManager isOauthAndTokenNotExpired:UMShareToSina];
             if(isOauth){
                 UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
-                NSLog(@"sina nickName is %@, iconURL is %@ token:%@",sinaAccount.userName,sinaAccount.iconURL,sinaAccount.accessToken);
                 userName = sinaAccount.userName;
                 headImageURLString = sinaAccount.iconURL;
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
                 [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:nil];
             }
         }
@@ -135,6 +151,7 @@
     [storage setObject:dict forKey:UserLoginInformation_KEY];
      [storage setObject:loginStatus forKey:LoginStatus_KEY];
      [storage endUpdates];
+    [SVProgressHUD dismiss];
 }
 
 @end

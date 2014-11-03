@@ -166,13 +166,8 @@
                     break;
                     //清理缓存
                 case 1:{
-                    NSLog(@"清理之前个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
-                    [[SDImageCache sharedImageCache] clearDisk];
-                    NSLog(@"清理之后个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
-                    RMSetUpTableViewCell *cell = (RMSetUpTableViewCell *)[mainTableView cellForRowAtIndexPath:indexPath];
-                    float tmpSize = [[SDImageCache sharedImageCache] getSize];
-                    NSString *clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"%.2fM",tmpSize/1024.0/1024.0] : [NSString stringWithFormat:@"0.0M"];
-                    cell.subtitleString.text = clearCacheName;
+                    [SVProgressHUD showWithStatus:@"清理中" maskType:SVProgressHUDMaskTypeClear];
+                    [self performSelector:@selector(clearImageMemory) withObject:nil afterDelay:1];
                 }
                     break;
                 default:
@@ -201,8 +196,8 @@
                     break;
                     //评分
                 case 2:{
-//                    NSString *evaluateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/i.-shang-wen-jie/id791488575?mt=8"];
-//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+                    NSString *evaluateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/i.-shang-wen-jie/id791488575?mt=8"];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
                     
 //                    //初始化控制器
 //                    SKStoreProductViewController *storeProductViewContorller = [[SKStoreProductViewController alloc] init];
@@ -238,6 +233,19 @@
         default:
             break;
     }
+}
+
+- (void)clearImageMemory{
+    
+    NSLog(@"清理之前个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
+    [[SDImageCache sharedImageCache] clearDisk];
+    NSLog(@"清理之后个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    RMSetUpTableViewCell *cell = (RMSetUpTableViewCell *)[mainTableView cellForRowAtIndexPath:indexPath];
+    float tmpSize = [[SDImageCache sharedImageCache] getSize];
+    NSString *clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"%.2fM",tmpSize/1024.0/1024.0] : [NSString stringWithFormat:@"0.0M"];
+    cell.subtitleString.text = clearCacheName;
+    [SVProgressHUD dismiss];
 }
 
 -(IBAction)loginOrExitButtonClick:(UIButton *)sender{
@@ -294,6 +302,16 @@
 //        
 //    }];
 //}
+
+//根据`responseCode`得到发送结果,如果分享成功
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
