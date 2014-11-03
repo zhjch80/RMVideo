@@ -45,59 +45,6 @@
 @end
 
 @implementation RMSearchViewController
-static id _instance;
-/*
- 永远只分配一块内存来创建对象
- 提供一个类方法，返回内部唯一的一个变量
- 最好保证init方法也只初创化一次
- */
-
-//构造方法
-- (id)init {
-    static id obj=nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if ((obj=[super init]) != nil) {
-            self.result = @"";
-            self.onResult = @"";
-        
-            _iFlySpeechRecognizer = [RecognizerFactory CreateRecognizer:self Domain:@"iat"];
-            [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
-            
-            [self loadCustom];
-        }
-    });
-    self=obj;
-    
-    return self;
-}
-
-+ (id)alloc {
-    return [super alloc];
-}
-
-//重写该方法，控制内存的分配，永远只分配一次存储空间
-+ (id)allocWithZone:(struct _NSZone *)zone {
-    //里面的代码只会执行一次
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance=[super allocWithZone:zone];
-    });
-    return _instance;
-}
-
-//类方法 里面的代码永远都只执行一次
-+ (instancetype)shared {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance=[[self alloc]init];
-    });
-    return _instance;
-}
-
-+ (id)copyWithZone:(struct _NSZone *)zone {
-    return _instance;
-}
 
 - (void)viewWillDisappear:(BOOL)animated {
     //取消识别
@@ -124,6 +71,15 @@ static id _instance;
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
     [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+    
+    self.result = @"";
+    self.onResult = @"";
+    
+    _iFlySpeechRecognizer = [RecognizerFactory CreateRecognizer:self Domain:@"iat"];
+    [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
+    
+    [self loadCustom];
+    
 }
 
 - (void)loadCustom {

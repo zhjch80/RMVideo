@@ -230,7 +230,7 @@
             break;
         }
         case 2:{
-            RMSearchViewController * searchCtl = [[RMSearchViewController shared] init];
+            RMSearchViewController * searchCtl = [[RMSearchViewController alloc] init];
             
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
                 

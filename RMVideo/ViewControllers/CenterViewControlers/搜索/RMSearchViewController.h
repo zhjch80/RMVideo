@@ -10,9 +10,4 @@
 
 @interface RMSearchViewController : RMBaseViewController
 
-/**
- *提供一个类方法，返回内部唯一的一个变量
- */
-+ (instancetype)shared;
-
 @end
