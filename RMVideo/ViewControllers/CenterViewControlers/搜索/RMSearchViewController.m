@@ -405,6 +405,7 @@
                 [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
                 return;
             }
+            self.isCanceled = NO;
             ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
             [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
             
@@ -412,6 +413,7 @@
             [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
             bool ret = [_iFlySpeechRecognizer startListening];
             if (ret) {
+                ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
             }else{
                 NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
                 [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
@@ -500,6 +502,7 @@
     }else{
         text = [NSString stringWithFormat:@"发生错误：%d %@",error.errorCode,error.errorDesc];
     }
+    ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = YES;
     [self showVoiceView:NO];
 }
 
@@ -532,6 +535,7 @@
         [self updateUserSearchRecord:self.result];
         [self.searchTableView reloadData];
         [self startSearchRequest:self.result];
+        ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).enabled = YES;
     }
 }
 

@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RMStarSearchResultCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *headImg;
+@property (weak, nonatomic) IBOutlet UILabel *name;
 
 @end

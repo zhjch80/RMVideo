@@ -235,6 +235,7 @@ typedef enum{
 - (void)stopVoiceSearchMethod {
     [_iFlySpeechRecognizer cancel];
     [self showStarVoiceView:NO WithShowVoiceImage:NO WithShowTableView:NO];
+    ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
 }
 
 - (void)loadAddCovertextField {
@@ -259,11 +260,16 @@ typedef enum{
             break;
         }
         case voiceBtn_TAG: {
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+                return;
+            }
             self.isCanceled = NO;
             [self showStarVoiceView:YES WithShowVoiceImage:YES WithShowTableView:NO];
             [self loadAddCovertextField];
             [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-            
+            ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
+
             //设置为录音模式
             [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
             bool ret = [_iFlySpeechRecognizer startListening];
@@ -357,10 +363,6 @@ typedef enum{
     ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
     [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
     ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self cancelSatrSearch];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -668,6 +670,7 @@ typedef enum{
  */
 - (void) onBeginOfSpeech {
     NSLog(@"正在录音");
+    [SVProgressHUD showSuccessWithStatus:@"开始语音搜索" duration:0.44];
     [self loadAddCovertextField];
 }
 
@@ -784,6 +787,7 @@ typedef enum{
         UINavigationController * searchResultNav = [[UINavigationController alloc] initWithRootViewController:starSearchResultCtl];
         [self presentViewController:searchResultNav animated:YES completion:^{
             [self showStarVoiceView:NO WithShowVoiceImage:NO WithShowTableView:NO];
+            ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
         }];
     }
 }

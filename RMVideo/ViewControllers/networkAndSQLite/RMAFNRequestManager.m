@@ -13,8 +13,10 @@
 #import "SVProgressHUD.h"
 
 #if 0
+//雪峰
 #define baseUrl @"http://172.16.2.66/index.php/vod/"
 #else
+//测试服务器
 #define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
 #endif
 
@@ -433,16 +435,13 @@
     NSString *url = [self urlPathadress:Http_getStartSearch];
     url = [NSString stringWithFormat:@"%@name=%@&limit=%@&offset=%@",url,name,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"明星搜索:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];
-            model.gold = [dict objectForKey:@"gold"];
+            model.detail = [dict objectForKey:@"detail"];
             model.name = [dict objectForKey:@"name"];
-            model.pic = [dict objectForKey:@"pic"];
-            model.video_type = [dict objectForKey:@"video_type"];
-            model.video_id = [dict objectForKey:@"video_id"];
-            model.hits = [dict objectForKey:@"hits"];
+            model.pic_url = [dict objectForKey:@"pic_url"];
+            model.tag_id = [dict objectForKey:@"tag_id"];
             [dataArray addObject:model];
         }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
