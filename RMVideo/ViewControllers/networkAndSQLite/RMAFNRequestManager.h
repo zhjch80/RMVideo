@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum{
+    requestReturnStatusNormalType = 4001,                           //正常
+    requestReturnStatusNoVideosFoundType,                           //没有找到该视频
+    requestReturnStatusUserIdentityExpiredType,                     //未找到该用户，请重新登录
+    requestReturnStatusSystemErrorType,                             //系统错误，稍后再试
+    requestReturnStatusNoStarFoundType,                             //没有找到该明星
+    requestReturnStatusHasBeenAddedToMyChannelType,                 //明星已经添加到我的频道
+    requestReturnStatusInputDoesNotMeetSpecificationsType,          //输入不符合规范
+    requestReturnStatusDataEnteredIsIncompleteType,                 //输入的数据不完整
+    requestReturnStatusContentsOfTheInputCanNotBeEmptyType          //输入的内容不能为空
+}kCodeReturnStatusType;
+
 #define testToken           @"aaa"
 #define testName            @"测试用户"
 
@@ -17,7 +29,6 @@
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data;
 
 - (void)requestError:(NSError *)error;
-
 
 @end
 
