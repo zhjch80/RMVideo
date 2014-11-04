@@ -139,7 +139,9 @@ typedef enum{
             //添加
             loadType = requestCustom;
             NSString *str = [alertView textFieldAtIndex:0].text;
-            [request getCustomTagWithToken:testToken tagName:str];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [request getCustomTagWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] tagName:str];
         }else{
         }
     }

@@ -9,23 +9,25 @@
 #import "RMMoreAppViewController.h"
 #import "RMMoreAPPTableViewCell.h"
 
-@interface RMMoreAppViewController ()<UITableViewDelegate,UITableViewDataSource,RMMoreAPPTableViewCellDelegate>
+@interface RMMoreAppViewController ()<UITableViewDelegate,UITableViewDataSource,RMMoreAPPTableViewCellDelegate,RMAFNRequestManagerDelegate> {
+    NSMutableArray * dataArr;
+}
 
 @end
 
 @implementation RMMoreAppViewController
 
-- (void) navgationBarButtonClick:(UIBarButtonItem *)sender{
-    
-    if(sender.tag==1){
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else{
-    }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getMoreAppSpread];
+    request.delegate = self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dataArr = [[NSMutableArray alloc] init];
+    
     self.title = @"更多应用";
     rightBarButton.hidden = YES;
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
@@ -33,28 +35,56 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return [dataArr count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdetifier = @"CELLIDENTIFIER";
     RMMoreAPPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];
-    if(cell==nil)
-    {
+    if(cell==nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMMoreAPPTableViewCell" owner:self options:nil] lastObject];
+        cell.backgroundColor = [UIColor clearColor];
     }
     cell.delegate = self;
-    cell.headImage.image = [UIImage imageNamed:@"003"];
+    
+    RMPublicModel * model = [dataArr objectAtIndex:indexPath.row];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.appPic] placeholderImage:nil];
+    cell.titleLable.text = model.appName;
     cell.openBtn.tag = indexPath.row;
     return cell;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
 }
 
 - (void)cellBtnSelectWithIndex:(NSInteger)index{
-    NSLog(@"index:%d",index);
+    RMPublicModel * model = [dataArr objectAtIndex:index];
+    NSString *evaluateString = [NSString stringWithFormat:@"%@",model.ios];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
 }
+
+#pragma mark- request RMAFNRequestManagerDelegate
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    dataArr = data;
+    [self.mainTableView reloadData];
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
+}
+
+#pragma mark - base Method
+
+- (void) navgationBarButtonClick:(UIBarButtonItem *)sender{
+    if(sender.tag==1){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else{
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

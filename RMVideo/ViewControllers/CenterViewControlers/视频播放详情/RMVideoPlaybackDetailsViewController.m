@@ -149,10 +149,10 @@ typedef enum{
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
     
-    //TODO:修改成动态
-    //self.currentVideo_id
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getVideoDetailWithID:@"623" andToken:@""];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
     request.delegate = self;
 }
 
@@ -191,7 +191,9 @@ typedef enum{
             NSLog(@"收藏");
             loadType = requestAddVideoCollectlType;
             RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-            [request getAddFavoriteWithID:self.currentVideo_id andToken:testToken];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [request getAddFavoriteWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
             request.delegate = self;
             break;
         }

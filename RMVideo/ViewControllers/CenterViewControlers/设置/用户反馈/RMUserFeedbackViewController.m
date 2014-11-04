@@ -24,7 +24,9 @@
         if(self.feedBackTextView.text && ![self.feedBackTextView.text isEqualToString:@""]){
             RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
             manager.delegate = self;
-            [manager postUserFeedbackWithToken:testToken andFeedBackString:[self.feedBackTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [manager postUserFeedbackWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andFeedBackString:[self.feedBackTextView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请填写您宝贵的意见" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];

@@ -117,7 +117,9 @@
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getJoinMyChannelWithToken:testToken andID:imageView.identifierString];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    [request getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
     request.delegate = self;
 }
 

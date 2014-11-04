@@ -66,6 +66,8 @@
 
     [self.window makeKeyAndVisible];
     
+    [self loadSocial];
+    
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
     if (loginStatus == nil){
@@ -74,7 +76,15 @@
         [storage setObject:loginStatus forKey:LoginStatus_KEY];
         [storage endUpdates];
     }
+    
     return YES;
+}
+
+- (void)loadSocial {
+    [UMSocialData setAppKey:@"544db5aafd98c570d2069586"];
+    [UMSocialWechatHandler setWXAppId:@"wx2673239b8581c02f" appSecret:@"24f7cb54293563bd17b97157a301672a" url:@"http://www.umeng.com/social"];
+    [UMSocialQQHandler setQQWithAppId:@"1103407338" appKey:@"ou34kHUYlejRpSfF" url:@"http://www.umeng.com/social"];
+    [UMSocialQQHandler setSupportWebView:YES];
 }
 
 #pragma mark - MSC 科大讯飞 语音
@@ -131,10 +141,6 @@
         [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
     }
     
-    [UMSocialData setAppKey:@"544db5aafd98c570d2069586"];
-    [UMSocialWechatHandler setWXAppId:@"wx2673239b8581c02f" appSecret:@"24f7cb54293563bd17b97157a301672a" url:@"http://www.umeng.com/social"];
-    [UMSocialQQHandler setQQWithAppId:@"1103407338" appKey:@"ou34kHUYlejRpSfF" url:@"http://www.umeng.com/social"];
-    [UMSocialQQHandler setSupportWebView:YES];
 }
 
 - (void)initMainViewController {

@@ -20,9 +20,6 @@ typedef enum{
     requestReturnStatusContentsOfTheInputCanNotBeEmptyType          //输入的内容不能为空
 }kCodeReturnStatusType;
 
-#define testToken           @"aaa"
-#define testName            @"测试用户"
-
 @protocol RMAFNRequestManagerDelegate <NSObject>
 
 @optional
@@ -189,4 +186,11 @@ typedef enum{
  *  @param url  用户头像
  */
 - (void)postLoginWithSourceType:(NSString *)type sourceId:(NSString *)ID username:(NSString *)name headImageURL:(NSString *)imageUrl;
+
+/**
+ *  更多应用推广
+ *
+ */
+- (void)getMoreAppSpread;
+
 @end

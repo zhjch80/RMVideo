@@ -34,6 +34,10 @@
 @property (nonatomic, strong) NSString * reurl;
 @property (nonatomic, strong) NSString * source_type;
 @property (nonatomic, strong) NSString * content;
+@property (nonatomic, strong) NSString * android;
+@property (nonatomic, strong) NSString * appName;
+@property (nonatomic, strong) NSString * appPic;
+@property (nonatomic, strong) NSString * ios;
 
 
 

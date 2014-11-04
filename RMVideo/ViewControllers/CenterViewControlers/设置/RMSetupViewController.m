@@ -196,7 +196,7 @@
                     break;
                     //评分
                 case 2:{
-                    NSString *evaluateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/i.-shang-wen-jie/id791488575?mt=8"];
+                    NSString *evaluateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/r-evolve/id%@?mt=8",kAppleId];
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
                     
 //                    //初始化控制器

@@ -26,4 +26,4 @@
 #define Http_postUserFeedback                   316     //设置：用户反馈
 #define Http_getSearchVidieo                    317     //搜索影片
 #define Http_postLogin                          318     //设置：登录
-
+#define Http_getMoreAppSpread                   319     //设置：更多应用

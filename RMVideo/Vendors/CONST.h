@@ -99,8 +99,22 @@
 #define kShowConnectionAvailableError               @"没有网络，请检查网络连接"
 
 
+
+//APP 相关信息
+#define kAppName                            @"天意"
+#define kAppleId                            @"791488575"
+#define kAppAddress                         @""
+
 #define AboutAppUrl                 @"http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0"
+
+
+
+//https://itunes.apple.com/cn/app/r-evolve/id877939351?mt=8
+
 //http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0
+
+
+
 
 #if __has_feature(objc_arc)
 // ARC

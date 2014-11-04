@@ -107,6 +107,10 @@
             strUrl = [NSString stringWithFormat:@"%@login?",baseUrl];
             break;
         }
+        case Http_getMoreAppSpread:{
+            strUrl = [NSString stringWithFormat:@"%@getMoreApp",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -181,12 +185,10 @@
 #pragma mark - 日榜
 
 - (void)getTopListWithVideoTpye:(NSString *)videoType andTopType:(NSString *)topType searchPageNumber:(NSString *)page andCount:(NSString *)count{
-    
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getTopList];
     url = [NSString stringWithFormat:@"%@video_type=%@&top_type=%@&limit=%@&offset=%@",url,videoType,topType,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-        
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -241,7 +243,7 @@
 }
 
 #pragma mark - 选择要下载的分集
-
+//TODO:todo...
 - (void)getDownloadDiversityWithID:(NSString *)ID{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDownloadDiversity];
@@ -377,7 +379,6 @@
     NSString *url = [self urlPathadress:Http_getTagOfVideoList];
     url = [NSString stringWithFormat:@"%@tag_id=%@&video_type=%@",url,ID,type];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"明星responseObject%@",responseObject);
         if([[responseObject objectForKey:@"code"] intValue]==4001){
             NSMutableArray *array = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -621,7 +622,6 @@
             }
         }
         else{
-            NSLog(@"fdsfdsfsadfsdfds");
             [SVProgressHUD showErrorWithStatus:@"登录失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -629,6 +629,31 @@
             [self.delegate requestError:error];
         }
         [SVProgressHUD showErrorWithStatus:@"登录失败"];
+    }];
+}
+
+#pragma mark - 设置：更多应用
+
+- (void)getMoreAppSpread {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getMoreAppSpread];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSMutableArray *dataArray = [NSMutableArray array];
+        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.android = [dict objectForKey:@"android"];
+            model.appName = [dict objectForKey:@"appName"];
+            model.appPic = [dict objectForKey:@"appPic"];
+            model.ios = [dict objectForKey:@"ios"];
+            [dataArray addObject:model];
+        }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 

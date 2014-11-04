@@ -78,7 +78,9 @@ typedef enum{
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
-    [manager getFavoriteVideoListWithToken:testToken Page:@"1" count:@"10"];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    [manager getFavoriteVideoListWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] Page:@"1" count:@"10"];
 }
 
 - (void)EditingViewBtnClick:(UIButton *)sender{
@@ -117,7 +119,9 @@ typedef enum{
             [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             deleteID = [deleteID substringFromIndex:3];
             [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
-            [manager getDeleteFavoriteVideoWithToken:testToken videoID:deleteID];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [manager getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:deleteID];
         }
         else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请选择要删除的选项" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];

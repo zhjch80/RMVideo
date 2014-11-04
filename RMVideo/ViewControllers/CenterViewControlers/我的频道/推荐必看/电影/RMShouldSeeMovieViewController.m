@@ -96,8 +96,6 @@
 }
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
-    //TODO:push到下一个界面
-    NSLog(@"identifer:%@",imageView.identifierString);
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
     videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;

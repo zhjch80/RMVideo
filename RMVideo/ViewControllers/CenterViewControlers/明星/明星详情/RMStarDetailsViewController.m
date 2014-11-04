@@ -65,8 +65,8 @@ typedef enum{
     self.headView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 140);
     self.headView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     self.headSubView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    
     self.starName.backgroundColor = [UIColor clearColor];
+    self.starIntrduce.editable = NO;
     
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         self.starIntrduce.frame = CGRectMake(0, 20, 200, 60);
@@ -179,7 +179,9 @@ typedef enum{
             NSLog(@"加入频道");
             loadType = requestAddMyChannelType;
             RMPublicModel * model = [introDataArr objectAtIndex:0];
-            [requset getJoinMyChannelWithToken:testToken andID:model.tag_id];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [requset getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:model.tag_id];
             requset.delegate = self;
             break;
         }

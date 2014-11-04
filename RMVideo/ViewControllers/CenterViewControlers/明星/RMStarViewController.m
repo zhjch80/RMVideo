@@ -545,7 +545,9 @@ typedef enum{
     if (imageView.identifierString){
         loadType = requestAddStarMyChannelType;
         RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
-        [requset getJoinMyChannelWithToken:testToken andID:imageView.identifierString];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [requset getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
         requset.delegate = self;
     }
 }
