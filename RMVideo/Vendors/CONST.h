@@ -99,8 +99,8 @@
 #define kShowConnectionAvailableError               @"没有网络，请检查网络连接"
 
 
-
-
+#define AboutAppUrl                 @"http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0"
+//http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0
 
 #if __has_feature(objc_arc)
 // ARC

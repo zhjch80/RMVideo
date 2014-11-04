@@ -102,4 +102,52 @@
     [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
+
+#pragma mark -
+#pragma mark Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.mainTableView tableViewDidDragging];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
+    
+    //  returnKey用来判断执行的拖动是下拉还是上拖
+    //  如果数据正在加载，则回返DO_NOTHING
+    //  如果是下拉，则返回k_RETURN_REFRESH
+    //  如果是上拖，则返回k_RETURN_LOADMORE
+    //  相应的Key宏定义也封装在PullToRefreshTableView中
+    //  根据返回的值，您可以自己写您的数据改变方式
+    
+    if (returnKey != k_RETURN_DO_NOTHING) {
+        //  这里执行方法
+        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
+        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+    }
+}
+
+- (void)updateThread:(id)sender {
+    int index = [sender intValue];
+    switch (index) {
+        case k_RETURN_DO_NOTHING://不执行操作
+        {
+            
+            break;
+        }
+        case k_RETURN_REFRESH://刷新
+        {
+            [self.mainTableView reloadData:NO];
+            break;
+        }
+        case k_RETURN_LOADMORE://加载更多
+        {
+            [self.mainTableView reloadData:NO];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 @end

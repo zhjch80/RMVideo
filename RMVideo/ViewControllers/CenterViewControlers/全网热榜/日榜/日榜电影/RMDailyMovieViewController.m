@@ -53,7 +53,7 @@
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
-    [(RMImageView *)cell.TopImage addTopNumber:indexPath.row+1];
+    [(RMImageView *)cell.TopImage addTopNumber:[model.topNum intValue]];
     return cell;
     
 }
@@ -103,7 +103,6 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
-            [SVProgressHUD showWithStatus:@"正在加载中。。。。" maskType:SVProgressHUDMaskTypeBlack];
             [self.mainTableView reloadData:YES];
         }
             break;

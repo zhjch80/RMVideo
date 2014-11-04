@@ -8,10 +8,11 @@
 
 #import "RMBaseViewController.h"
 #import "RMStarDetailsCell.h"
+#import "PullToRefreshTableView.h"
 
 @interface RMShouldSeeVarietViewController : RMBaseViewController<StarDetailsCellDelegate>
 @property (nonatomic,strong) NSMutableArray *dataArray;
-@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+@property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
 @property (nonatomic,copy)NSString *downLoadID;
 @property (nonatomic, assign) id myChannelShouldDelegate;
 @end

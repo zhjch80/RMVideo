@@ -24,6 +24,7 @@
 @property(nonatomic,strong) NSString *pic;
 @property(nonatomic,strong) NSString *sum_i_hits; //点击增长数
 @property(nonatomic,strong) NSString *video_type; //类型（1：电影 2：电视剧 3：综艺 99：广告）
+@property(nonatomic,strong) NSString *topNum;
 
 
 //我的频道

@@ -16,13 +16,14 @@
 #import "RMAFNRequestManager.h"
 #import "RMPublicModel.h"
 #import "UIImageView+AFNetworking.h"
+#import "UMSocial.h"
 
 typedef enum{
     requestVideoContentType = 1,
     requestAddVideoCollectlType,
 }LoadType;
 
-@interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate> {
+@interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate,UMSocialUIDelegate> {
     
     LoadType loadType;
 }
@@ -197,7 +198,12 @@ typedef enum{
         case 103:{
             //分享
             NSLog(@"分享");
-            
+            [UMSocialSnsService presentSnsIconSheetView:self
+                                                 appKey:@"544db5aafd98c570d2069586"
+                                              shareText:@"测试"
+                                             shareImage:[UIImage imageNamed:@"001.png"]
+                                        shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
+                                               delegate:self];
             break;
         }
             
@@ -272,7 +278,14 @@ typedef enum{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//根据`responseCode`得到发送结果,如果分享成功
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    }
+}
 /*
  #pragma mark - Navigation
  

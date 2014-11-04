@@ -49,7 +49,7 @@
     [(RMImageView *)cell.headImage setFileShowImageView:model.pic];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
-    [(RMImageView *)cell.TopImage addTopNumber:indexPath.row+1];
+    [(RMImageView *)cell.TopImage addTopNumber:[model.topNum intValue]];
     return cell;
 }
 

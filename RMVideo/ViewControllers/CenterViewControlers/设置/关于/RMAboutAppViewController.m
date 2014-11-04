@@ -14,8 +14,6 @@
 
 @implementation RMAboutAppViewController
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"关于";
@@ -26,16 +24,28 @@
     [self.webView setUserInteractionEnabled:YES];
     self.webView.scrollView.bounces = YES;
     self.webView.opaque = NO;
+    self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.webView];
-    
-    NSURL *url= [NSURL URLWithString:@"http://www.baidu.com"];
-    NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
-    [self.webView loadRequest:request];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    return NO;
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:AboutAppUrl] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    [self.webView loadRequest:request];
+    
+    [SVProgressHUD showWithStatus:@"正在加载中..." maskType:SVProgressHUDMaskTypeBlack];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [SVProgressHUD showSuccessWithStatus:@"加载完成"];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [SVProgressHUD showErrorWithStatus:@"加载失败"];
 }
 
 #pragma mark - Base Method

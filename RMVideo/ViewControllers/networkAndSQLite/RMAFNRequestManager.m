@@ -25,6 +25,7 @@
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 30;//超市
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
     return manager;
 }
@@ -195,6 +196,7 @@
                 model.video_id = [dict objectForKey:@"video_id"];
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.sum_i_hits = [dict objectForKey:@"sum_i_hits"];
+                model.topNum = [dict objectForKey:@"order"];
                 [dataArray addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
