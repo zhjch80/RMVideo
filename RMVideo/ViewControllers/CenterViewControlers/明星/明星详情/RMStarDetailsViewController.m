@@ -145,8 +145,10 @@ typedef enum{
     [_segmentedControl setTag:3];
     [self.contentView addSubview:_segmentedControl];
 
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     requset = [[RMAFNRequestManager alloc] init];
-    [requset getStartDetailWithID:self.star_id];
+    [requset getStartDetailWithID:self.star_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
     requset.delegate = self;
 }
 
@@ -256,6 +258,13 @@ typedef enum{
     [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
     self.starName.text = model.name;
     self.starIntrduce.text = model.detail;
+    if ([model.is_follow integerValue] == 1){
+        self.myChannelImgState.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        self.myChannelState.text = @"已在我的频道";
+    }else{
+        self.myChannelImgState.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        self.myChannelState.text = @"加入我的频道";
+    }
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {

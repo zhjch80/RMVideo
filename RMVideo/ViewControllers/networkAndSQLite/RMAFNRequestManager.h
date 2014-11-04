@@ -120,8 +120,9 @@ typedef enum{
  *
  *  @param page  页码
  *  @param count 条数
+ *  @param token 用户标示
  */
-- (void)getStarListWithPage:(NSString *)page count:(NSString *)count;
+- (void)getStarListWithPage:(NSString *)page count:(NSString *)count WithToken:(NSString *)token;
 
 /**
  *  明星：明星搜索
@@ -137,7 +138,7 @@ typedef enum{
  *
  *  @param ID 明星id
  */
-- (void)getStartDetailWithID:(NSString *)ID;
+- (void)getStartDetailWithID:(NSString *)ID WithToken:(NSString *)token;
 /**
  *  明星：加入我的频道
  *
@@ -192,5 +193,12 @@ typedef enum{
  *
  */
 - (void)getMoreAppSpread;
+
+/**
+ *  我的频道  删除标签
+ *  @param tag      标签tag_id
+ *  @param token    token
+ */
+- (void)getDeleteMyChannelWithTag:(NSString *)tag WithToken:(NSString *)token;
 
 @end

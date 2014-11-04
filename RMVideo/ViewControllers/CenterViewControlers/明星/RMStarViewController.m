@@ -45,6 +45,8 @@ typedef enum{
     NSMutableArray * dataArr;
     LoadType loadType;
     NSMutableArray * recordsDataArr;        //保存搜索记录的数组
+    NSInteger pageCount;
+    BOOL isRefresh;
 }
 
 @property (nonatomic, strong) AMBlurView * blurView;
@@ -160,10 +162,10 @@ typedef enum{
     [tableView setIsCloseHeader:NO];
     [tableView setIsCloseFooter:NO];
     [self.view addSubview:tableView];
-
-    RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
-    [requset getStarListWithPage:@"1" count:@"12"];
-    requset.delegate = self;
+    
+    pageCount = 1;
+    isRefresh = YES;
+    [self startRequest];
 }
 
 #pragma mark - 默认输入搜索界面
@@ -425,12 +427,6 @@ typedef enum{
         static NSString * CellIdentifier = @"RMStarCellIdentifier";
         RMStarCell * cell = (RMStarCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (! cell) {
-            /*
-             cell = [[RMStarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-             cell.backgroundColor = [UIColor clearColor];
-             */
-            
             NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -438,27 +434,55 @@ typedef enum{
             cell.delegate = self;
         }
         
-        RMPublicModel *model_left = [dataArr objectAtIndex:indexPath.row*3];
-        RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
-        RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
+        /*
         
+        if ([dataArr count]/3 == 0){
+         
+        }else if ([dataArr count]/3 == 1){
+
+        }else {
+        
+        }
+
+        */
+        //TODO:有bug,需要修复
+
+        RMPublicModel *model_left;
+        RMPublicModel *model_center;
+        RMPublicModel *model_right;
+        model_left = [dataArr objectAtIndex:indexPath.row*3];
         cell.leftTitle.text = model_left.name;
         [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:nil];
+        cell.starLeftImg.identifierString = model_left.tag_id;
+        cell.starAddLeftImg.identifierString = model_left.tag_id;
+        if ([model_left.is_follow integerValue] == 0){
+            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        }else{
+            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        }
         
+        model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
         cell.centerTitle.text = model_center.name;
         [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:nil];
+        cell.starCenterImg.identifierString = model_center.tag_id;
+        cell.starAddCenterImg.identifierString = model_center.tag_id;
+        if ([model_center.is_follow integerValue] == 0){
+            cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        }else{
+            cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        }
         
+        model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         cell.rightTitle.text = model_right.name;
         [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:nil];
- 
-        cell.starLeftImg.identifierString = model_left.tag_id;
-        cell.starCenterImg.identifierString = model_center.tag_id;
         cell.starRightImg.identifierString = model_right.tag_id;
-
-        cell.starAddLeftImg.identifierString = model_left.tag_id;
-        cell.starAddCenterImg.identifierString = model_center.tag_id;
         cell.starAddRightImg.identifierString = model_right.tag_id;
-        
+        if ([model_right.is_follow integerValue] == 0){
+            cell.starAddRightImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        }else{
+            cell.starAddRightImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        }
+
         return cell;
     }else {
         static NSString * CellIdentifier = @"RMStarSearchCellIdentifier";
@@ -596,14 +620,16 @@ typedef enum{
         }
         case k_RETURN_REFRESH://刷新
         {
-            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
-            NSLog(@"刷新");
+            pageCount = 1;
+            isRefresh = YES;
+            [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
-            NSLog(@"加载更多");
+            pageCount ++;
+            isRefresh = NO;
+            [self startRequest];
             break;
         }
             
@@ -776,10 +802,27 @@ typedef enum{
     request.delegate = self;
 }
 
+- (void)startRequest {
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+    [requset getStarListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12" WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+    requset.delegate = self;
+}
+
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestStarListType){
-        dataArr = data;
+        if (isRefresh){
+            dataArr = data;
+        }else{
+            for (int i=0; i<data.count; i++) {
+                RMPublicModel * model = [data objectAtIndex:i];
+                [dataArr addObject:model];
+            }
+        }
+        NSLog(@"add to dataArr.count%d",dataArr.count);
         [(UITableView *)[self.view viewWithTag:201] reloadData];
+        [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     }else if (loadType == requestAddStarMyChannelType){
         
     }else if (loadType == requestSearchStarType){

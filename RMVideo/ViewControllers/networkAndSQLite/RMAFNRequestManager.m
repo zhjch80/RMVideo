@@ -111,6 +111,10 @@
             strUrl = [NSString stringWithFormat:@"%@getMoreApp",baseUrl];
             break;
         }
+        case Http_getDeleteMyChannelTag:{
+            strUrl = [NSString stringWithFormat:@"%@delMyTag?",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -223,6 +227,7 @@
         RMPublicModel *model = [[RMPublicModel alloc] init];
         model.code = [responseObject objectForKey:@"code"];
         model.content = [responseObject objectForKey:@"content"];
+        model.is_favorite = [responseObject objectForKey:@"is_favorite"];
         model.creatorArr = [responseObject objectForKey:@"creator"];
         model.gold = [responseObject objectForKey:@"gold"];
         model.hits = [responseObject objectForKey:@"hits"];
@@ -407,15 +412,16 @@
 
 #pragma mark - 明星列表
 
-- (void)getStarListWithPage:(NSString *)page count:(NSString *)count{
+- (void)getStarListWithPage:(NSString *)page count:(NSString *)count WithToken:(NSString *)token{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStarList];
-    url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
+    url = [NSString stringWithFormat:@"%@limit=%@&offset=%@&token=%@",url,count,[self setOffsetWith:page andCount:count],token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];
             model.tag_id = [dict objectForKey:@"tag_id"];
+            model.is_follow = [dict objectForKey:@"is_follow"];
             model.detail = [dict objectForKey:@"detail"];
             model.name = [dict objectForKey:@"name"];
             model.pic_url = [dict objectForKey:@"pic_url"];
@@ -459,10 +465,10 @@
 
 #pragma mark - 明星：明星详情
 
-- (void)getStartDetailWithID:(NSString *)ID{
+- (void)getStartDetailWithID:(NSString *)ID WithToken:(NSString *)token {
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStartDetail];
-    url = [NSString stringWithFormat:@"%@id=%@",url,ID];
+    url = [NSString stringWithFormat:@"%@id=%@&token=%@",url,ID,token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray * dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -470,6 +476,7 @@
         model.detail = [responseObject objectForKey:@"detail"];
         model.name = [responseObject objectForKey:@"name"];
         model.pic_url = [responseObject objectForKey:@"pic_url"];
+        model.is_follow = [responseObject objectForKey:@"is_follow"];
         [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
@@ -490,9 +497,11 @@
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
-                [SVProgressHUD showErrorWithStatus:@"添加成功"];
+                [SVProgressHUD showSuccessWithStatus:@"添加成功"];
                 [self.delegate requestFinishiDownLoadWith:nil];
             }
+        }else if([[responseObject objectForKey:@"code"] integerValue] == 4006) {
+            [SVProgressHUD showSuccessWithStatus:@"已经在我的频道"];
         }else{
             [SVProgressHUD showErrorWithStatus:@"添加失败"];
         }
@@ -543,7 +552,6 @@
     NSString *url = [self urlPathadress:Http_getDeleteFavoriteVideo];
     url = [NSString stringWithFormat:@"%@token=%@&video_ids=%@",url,token,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:nil];
@@ -653,6 +661,29 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 我的频道 删除标签
+
+- (void)getDeleteMyChannelWithTag:(NSString *)tag_id WithToken:(NSString *)token {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getDeleteMyChannelTag];
+    url = [NSString stringWithFormat:@"%@tag_id=%@&token=%@",url,tag_id,token];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:nil];
+                [SVProgressHUD showErrorWithStatus:@"删除成功"];
+            }
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+            [SVProgressHUD showErrorWithStatus:@"删除失败"];
         }
     }];
 }

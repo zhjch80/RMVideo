@@ -27,3 +27,7 @@
 #define Http_getSearchVidieo                    317     //搜索影片
 #define Http_postLogin                          318     //设置：登录
 #define Http_getMoreAppSpread                   319     //设置：更多应用
+#define Http_getDeleteMyChannelTag              320     //我的频道：删除tag
+
+
+

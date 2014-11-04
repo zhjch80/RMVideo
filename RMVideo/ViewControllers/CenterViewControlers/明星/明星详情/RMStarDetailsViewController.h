@@ -28,6 +28,10 @@
 
 - (IBAction)mbuttonClick:(UIButton *)sender;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *myChannelState;
+@property (weak, nonatomic) IBOutlet UIImageView *myChannelImgState;
+
 /**
  把明星的tag_id传过来
  */

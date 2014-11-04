@@ -77,17 +77,13 @@
     //  根据返回的值，您可以自己写您的数据改变方式
     
     if (returnKey != k_RETURN_DO_NOTHING) {
-        
-        
         //  这里执行方法
         NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
         [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
     }
-    
 }
 
-- (void)updateThread:(id)sender
-{
+- (void)updateThread:(id)sender {
     int index = [sender intValue];
     switch (index) {
         case k_RETURN_DO_NOTHING://不执行操作
@@ -97,7 +93,9 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
-            [self.mainTableView reloadData:YES];
+            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+            manager.delegate = self;
+            [manager getTopListWithVideoTpye:@"3" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
         }
             break;
         case k_RETURN_LOADMORE://加载更多
@@ -116,13 +114,12 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
-    
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"综艺暂无数据"];
         return;
     }
     [SVProgressHUD dismiss];
-    NSLog(@"综艺data:%@",data);
+    [self.mainTableView reloadData:YES];
 }
 
 - (void)requestError:(NSError *)error{

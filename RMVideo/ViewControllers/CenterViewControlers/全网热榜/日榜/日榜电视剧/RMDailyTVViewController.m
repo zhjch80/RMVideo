@@ -31,7 +31,6 @@
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
-    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -100,7 +99,9 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
-            [self.mainTableView reloadData:YES];
+            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+            manager.delegate = self;
+            [manager getTopListWithVideoTpye:@"2" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
         }
             break;
         case k_RETURN_LOADMORE://加载更多
@@ -126,6 +127,7 @@
     [SVProgressHUD dismiss];
     self.dataArray = data;
     [self.mainTableView reloadData];
+    [self.mainTableView reloadData:YES];
 }
 
 - (void)requestError:(NSError *)error{

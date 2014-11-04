@@ -239,6 +239,12 @@ typedef enum{
     [self.videoRateView displayRating:[model.gold integerValue]];
     self.videoPlayCount.text = [NSString stringWithFormat:@"播放%@次",model.hits];
     
+    if ([model.is_favorite integerValue] == 1){
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"mx_rateFull_img", kImageTypePNG) forState:UIControlStateNormal];
+    }else{
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionImg@2x", kImageTypePNG) forState:UIControlStateNormal];
+    }
+    
     [self refreshPlotIntroducedDate:model];
 }
 

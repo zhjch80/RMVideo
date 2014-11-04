@@ -38,7 +38,8 @@
 @property (nonatomic, strong) NSString * appName;
 @property (nonatomic, strong) NSString * appPic;
 @property (nonatomic, strong) NSString * ios;
-
+@property (nonatomic, strong) NSString * is_follow;
+@property (nonatomic, strong) NSString * is_favorite;
 
 
 @end

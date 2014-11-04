@@ -28,7 +28,8 @@ typedef enum{
 
 typedef enum{
     requestMyChannelListType = 1,
-    requestLoginType
+    requestLoginType,
+    requestDeleteMyChannel
 }LoadType;
 
 
@@ -39,6 +40,7 @@ typedef enum{
     NSString *userName;
     NSMutableString *headImageURLString;
     RMAFNRequestManager *manager;
+    NSInteger GetDeleteRow;
 }
 @property (nonatomic, strong) NSString * kLoginStatus;
 @property (nonatomic, strong) PullToRefreshTableView * tableView;
@@ -246,6 +248,24 @@ typedef enum{
     }else{
         return 205;
     }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    RMPublicModel *model = [dataArr objectAtIndex:indexPath.row];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    loadType = requestDeleteMyChannel;
+    GetDeleteRow = indexPath.row;
+    manager.delegate = self;
+    [manager getDeleteMyChannelWithTag:model.tag_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
 }
 
 #pragma mark - RMImageView Method
@@ -466,6 +486,11 @@ typedef enum{
         [storage endUpdates];
         [SVProgressHUD dismiss];
         [self refreshCurrentCtl];
+    }else if (loadType == requestDeleteMyChannel){
+        [dataArr removeObjectAtIndex:GetDeleteRow];
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:GetDeleteRow inSection:0];
+        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 

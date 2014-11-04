@@ -42,10 +42,12 @@
     mainTableVeiew.separatorStyle = UITableViewCellSeparatorStyleNone;
     [mainTableVeiew setIsCloseFooter:YES];
     [self.view addSubview:mainTableVeiew];
+    
     [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
     RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     [manager getDailyRecommend];
+    
 }
 #pragma mark main tableVeiw dataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -106,17 +108,13 @@
     //  根据返回的值，您可以自己写您的数据改变方式
     
     if (returnKey != k_RETURN_DO_NOTHING) {
-        
-        
         //  这里执行方法
         NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
         [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
     }
-    
 }
 
-- (void)updateThread:(id)sender
-{
+- (void)updateThread:(id)sender {
     int index = [sender intValue];
     switch (index) {
         case k_RETURN_DO_NOTHING://不执行操作
@@ -126,7 +124,10 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
-            [mainTableVeiew reloadData:YES];
+            [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+            manager.delegate = self;
+            [manager getDailyRecommend];
         }
             break;
         case k_RETURN_LOADMORE://加载更多
@@ -141,12 +142,12 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewWillBeginDragging" object:nil];
 }
+
 #pragma mark cell Image点击事件 tag标识每个cell的位置 identifier标识cell
+
 - (void)didSelectCellImageWithTag:(NSInteger)tag andImageViewIdentifier:(NSString *)identifier{
-    NSLog(@"tag:%d identifier:%@",tag,identifier);
     NSString *movieID ;
     for(NSDictionary *dict in dataArray){
         NSMutableArray *array = [dict objectForKey:identifier];
@@ -192,8 +193,9 @@
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
     dataArray = data;
-   [mainTableVeiew reloadData];
+    [mainTableVeiew reloadData];
     [SVProgressHUD dismiss];
+    [mainTableVeiew reloadData:YES];
 }
 
 - (void)requestError:(NSError *)error{

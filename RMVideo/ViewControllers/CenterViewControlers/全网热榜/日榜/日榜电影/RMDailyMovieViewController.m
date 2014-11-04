@@ -12,7 +12,9 @@
 #import "RMPublicModel.h"
 #import "UIImageView+WebCache.h"
 
-@interface RMDailyMovieViewController ()
+@interface RMDailyMovieViewController (){
+
+}
 
 @end
 
@@ -29,7 +31,7 @@
     manager.delegate = self;
     //视频类型（1：电影 2：电视剧 3：综艺）
     //排行类型（1：日榜 2：周榜 3：月榜）
-    [manager getTopListWithVideoTpye:@"1" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
+    [manager getTopListWithVideoTpye:@"1" andTopType:self.downLoadTopType searchPageNumber:@"1"andCount:@"10"];
 
     [self setExtraCellLineHidden:self.mainTableView];
     
@@ -83,17 +85,13 @@
     //  根据返回的值，您可以自己写您的数据改变方式
     
     if (returnKey != k_RETURN_DO_NOTHING) {
-        
-        
         //  这里执行方法
         NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
         [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
     }
-    
 }
 
-- (void)updateThread:(id)sender
-{
+- (void)updateThread:(id)sender {
     int index = [sender intValue];
     switch (index) {
         case k_RETURN_DO_NOTHING://不执行操作
@@ -103,7 +101,9 @@
             break;
         case k_RETURN_REFRESH://刷新
         {
-            [self.mainTableView reloadData:YES];
+            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+            manager.delegate = self;
+            [manager getTopListWithVideoTpye:@"1" andTopType:self.downLoadTopType searchPageNumber:@"1"andCount:@"10"];
         }
             break;
         case k_RETURN_LOADMORE://加载更多
@@ -121,6 +121,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"电影暂无数据"];
@@ -129,6 +130,7 @@
     [SVProgressHUD dismiss];
     self.dataArray = data;
     [self.mainTableView reloadData];
+    [self.mainTableView reloadData:YES];
 }
 
 - (void)requestError:(NSError *)error{
