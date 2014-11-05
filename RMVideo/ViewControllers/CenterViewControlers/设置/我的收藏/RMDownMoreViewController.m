@@ -139,7 +139,7 @@ typedef enum{
             [cell setCellViewFrame];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.movieName.text = model.name;
     cell.movieCount.text = nil;
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];

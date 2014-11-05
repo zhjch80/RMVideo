@@ -32,5 +32,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *centerTitle;
 @property (weak, nonatomic) IBOutlet UILabel *rightTitle;
 
+/**
+ *  改变用户对这个明星的关注状态
+ */
+- (void)setImageWithImage:(UIImage *)image IdentifierString:(NSString *)tag AddMyChannel:(BOOL)isAdd;
 
 @end

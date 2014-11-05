@@ -128,7 +128,7 @@
     [SVProgressHUD dismiss];
     self.dataArray = data;
     [self.mainTableView reloadData];
-    [self.mainTableView reloadData:YES];
+    [self.mainTableView reloadData:NO];
 }
 
 - (void)requestError:(NSError *)error{

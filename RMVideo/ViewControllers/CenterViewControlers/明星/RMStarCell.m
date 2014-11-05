@@ -20,8 +20,6 @@
     [self.starAddLeftImg addTarget:self WithSelector:@selector(addVideoStarImageClick:)];
     [self.starAddCenterImg addTarget:self WithSelector:@selector(addVideoStarImageClick:)];
     [self.starAddRightImg addTarget:self WithSelector:@selector(addVideoStarImageClick:)];
-
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -39,6 +37,19 @@
 - (void)addVideoStarImageClick:(RMImageView *)imageView {
     if ([self.delegate respondsToSelector:@selector(clickAddMyChannelMethod:)]) {
         [self.delegate clickAddMyChannelMethod:imageView];
+    }
+}
+
+- (void)setImageWithImage:(UIImage *)image IdentifierString:(NSString *)tag AddMyChannel:(BOOL)isAdd {
+    if ([self.starAddLeftImg.identifierString isEqualToString:tag]){
+        self.starAddLeftImg.image = image;
+        self.starAddLeftImg.isAttentionStarState = isAdd;
+    }else if ([self.starAddCenterImg.identifierString isEqualToString:tag]){
+        self.starAddCenterImg.image = image;
+        self.starAddCenterImg.isAttentionStarState = isAdd;
+    }else if ([self.starAddRightImg.identifierString isEqualToString:tag]){
+        self.starAddRightImg.image = image;
+        self.starAddRightImg.isAttentionStarState = isAdd;
     }
 }
 

@@ -20,6 +20,7 @@
 typedef enum{
     requestIntroType = 1,
     requestAddMyChannelType,
+    requestDeleteMyChannelType
 }LoadType;
 
 #define maskView_TAG            101
@@ -29,9 +30,11 @@ typedef enum{
 
 @interface RMStarDetailsViewController ()<RMAFNRequestManagerDelegate>{
     NSString * foldType;
-    RMAFNRequestManager * requset;
+    RMAFNRequestManager * manager;
     NSMutableArray * introDataArr;
     LoadType loadType;
+    BOOL isStarAttentionMyChannel;             //1为已经加入，0为没有加入
+    
 }
 @property (nonatomic, strong) NSMutableString * star_id;
 
@@ -147,9 +150,9 @@ typedef enum{
 
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-    requset = [[RMAFNRequestManager alloc] init];
-    [requset getStartDetailWithID:self.star_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-    requset.delegate = self;
+    manager = [[RMAFNRequestManager alloc] init];
+    [manager getStartDetailWithID:self.star_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+    manager.delegate = self;
 }
 
 
@@ -178,13 +181,22 @@ typedef enum{
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 201:{
-            NSLog(@"加入频道");
-            loadType = requestAddMyChannelType;
-            RMPublicModel * model = [introDataArr objectAtIndex:0];
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-            [requset getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:model.tag_id];
-            requset.delegate = self;
+            //加入 或者 删除 明星  在我的频道
+            if (isStarAttentionMyChannel){
+                loadType = requestDeleteMyChannelType;
+                RMPublicModel * model = [introDataArr objectAtIndex:0];
+                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                [manager getDeleteMyChannelWithTag:model.tag_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+                manager.delegate = self;
+            }else{
+                loadType = requestAddMyChannelType;
+                RMPublicModel * model = [introDataArr objectAtIndex:0];
+                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                [manager getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:model.tag_id];
+                manager.delegate = self;
+            }
             break;
         }
         case 202:{
@@ -255,15 +267,17 @@ typedef enum{
 - (void)refreshIntroductionView {
     RMPublicModel * model = [introDataArr objectAtIndex:0];
     [self setTitle:model.name];
-    [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
+    [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     self.starName.text = model.name;
     self.starIntrduce.text = model.detail;
     if ([model.is_follow integerValue] == 1){
         self.myChannelImgState.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
         self.myChannelState.text = @"已在我的频道";
+        isStarAttentionMyChannel = YES;
     }else{
         self.myChannelImgState.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
         self.myChannelState.text = @"加入我的频道";
+        isStarAttentionMyChannel = NO;
     }
 }
 
@@ -272,7 +286,13 @@ typedef enum{
         introDataArr = data;
         [self refreshIntroductionView];
     }else if (loadType == requestAddMyChannelType) {
-        
+        self.myChannelImgState.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        self.myChannelState.text = @"已在我的频道";
+        isStarAttentionMyChannel = 1;
+    }else if (loadType == requestDeleteMyChannelType){
+        self.myChannelImgState.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        self.myChannelState.text = @"加入我的频道";
+        isStarAttentionMyChannel = 0;
     }
 }
 

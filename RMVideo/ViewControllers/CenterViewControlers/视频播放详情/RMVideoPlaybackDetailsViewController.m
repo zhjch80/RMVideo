@@ -21,11 +21,13 @@
 typedef enum{
     requestVideoContentType = 1,
     requestAddVideoCollectlType,
+    requestDeleteVideoCollectlType
 }LoadType;
 
 @interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate,UMSocialUIDelegate> {
-    
     LoadType loadType;
+    BOOL isCollect;                 //1为收藏   0为未收藏
+    
 }
 @property (nonatomic, strong) NSMutableArray * dataArr;
 
@@ -186,13 +188,22 @@ typedef enum{
             break;
         }
         case 102:{
-            //收藏
-            loadType = requestAddVideoCollectlType;
-            RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-            [request getAddFavoriteWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-            request.delegate = self;
+            //收藏 或者 取消收藏
+            if (isCollect){
+                loadType = requestDeleteVideoCollectlType;
+                RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                [request getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:self.currentVideo_id];
+                request.delegate = self;
+            }else{
+                loadType = requestAddVideoCollectlType;
+                RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                [request getAddFavoriteWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+                request.delegate = self;
+            }
             break;
         }
         case 103:{
@@ -229,16 +240,18 @@ typedef enum{
     }else if ([model.video_type isEqualToString:@"3"]) {
         [self setTitle:@"综艺"];
     }
-    [self.videoImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:nil];
+    [self.videoImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
     self.videoTitle.text = model.name;
     [self.videoRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
     [self.videoRateView displayRating:[model.gold integerValue]];
     self.videoPlayCount.text = [NSString stringWithFormat:@"播放%@次",model.hits];
     
     if ([model.is_favorite integerValue] == 1){
-        [self.videoCollectionBtn setImage:LOADIMAGE(@"mx_rateFull_img", kImageTypePNG) forState:UIControlStateNormal];
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionRedImg", kImageTypePNG) forState:UIControlStateNormal];
+        isCollect = YES;
     }else{
-        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionImg@2x", kImageTypePNG) forState:UIControlStateNormal];
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionWhiteImg", kImageTypePNG) forState:UIControlStateNormal];
+        isCollect = NO;
     }
     
     [self refreshPlotIntroducedDate:model];
@@ -270,7 +283,11 @@ typedef enum{
         self.dataArr = data;
         [self refreshVideoHeadView];
     }else if (loadType == requestAddVideoCollectlType) {
-        
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionRedImg", kImageTypePNG) forState:UIControlStateNormal];
+        isCollect = YES;
+    }else if (loadType == requestDeleteVideoCollectlType){
+        [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionWhiteImg", kImageTypePNG) forState:UIControlStateNormal];
+        isCollect = NO;
     }
 }
 

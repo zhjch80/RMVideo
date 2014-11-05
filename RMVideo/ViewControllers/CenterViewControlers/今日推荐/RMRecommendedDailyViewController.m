@@ -195,7 +195,7 @@
     dataArray = data;
     [mainTableVeiew reloadData];
     [SVProgressHUD dismiss];
-    [mainTableVeiew reloadData:YES];
+    [mainTableVeiew reloadData:NO];
 }
 
 - (void)requestError:(NSError *)error{

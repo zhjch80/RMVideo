@@ -32,12 +32,13 @@
 
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    if(self.dataArray.count%3==0){
-        return self.dataArray.count/3;
-//    }
-//    else{
-//        return self.dataArray.count/3+1;
-//    }
+    if ([self.dataArray count]%3 == 0){
+        return [self.dataArray count] / 3;
+    }else if ([self.dataArray count]%3 == 1){
+        return ([self.dataArray count] + 2) / 3;
+    }else {
+        return ([self.dataArray count] + 1) / 3;
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -51,21 +52,30 @@
     if(cell ==nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil] lastObject];
     }
-//    if(indexPath.row*3 + 1<self.dataArray.count && indexPath.row*3 + 2<self.dataArray.count){
-        RMPublicModel *model_left = [self.dataArray objectAtIndex:indexPath.row*3];
-        RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
-        RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
-        [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic]];
-        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic]];
-        [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic]];
-        cell.fristImage.identifierString = model_left.video_id;
-        cell.secondImage.identifierString = model_center.video_id;
-        cell.threeImage.identifierString = model_right.video_id;
-        cell.fristLable.text = model_left.name;
-        cell.secondLable.text = model_center.name;
-        cell.threeLable.text = model_right.name;
-//    }
     cell.delegate = self;
+
+    RMPublicModel *model_left = [self.dataArray objectAtIndex:indexPath.row*3];
+    [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+    cell.fristImage.identifierString = model_left.video_id;
+    cell.fristLable.text = model_left.name;
+    
+    if (indexPath.row * 3 + 1 >= [self.dataArray count]){
+        
+    }else{
+        RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
+        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        cell.secondImage.identifierString = model_center.video_id;
+        cell.secondLable.text = model_center.name;
+    }
+    
+    if (indexPath.row * 3 + 2 >= [self.dataArray count]){
+        
+    }else{
+        RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
+        [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        cell.threeImage.identifierString = model_right.video_id;
+        cell.threeLable.text = model_right.name;
+    }
     return cell;
 }
 
