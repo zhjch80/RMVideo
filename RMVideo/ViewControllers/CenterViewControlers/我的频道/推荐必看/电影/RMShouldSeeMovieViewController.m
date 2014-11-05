@@ -33,10 +33,10 @@
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-//    if(self.dataArray.count%3==0)
+    if(self.dataArray.count%3==0)
         return self.dataArray.count/3;
-//    else
-//        return self.dataArray.count/3+1;
+    else
+        return self.dataArray.count/3+1;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -51,7 +51,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil] lastObject];
     }
     cell.delegate = self;
-//    if(indexPath.row*3 + 1<self.dataArray.count && indexPath.row*3 + 2<self.dataArray.count){
+    if(indexPath.row*3 + 1<self.dataArray.count && indexPath.row*3 + 2<self.dataArray.count){
         RMPublicModel *model_left = [self.dataArray objectAtIndex:indexPath.row*3];
         RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
         RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
@@ -64,7 +64,7 @@
         cell.fristLable.text = model_left.name;
         cell.secondLable.text = model_center.name;
         cell.threeLable.text = model_right.name;
-//    }
+    }
     
     return cell;
     

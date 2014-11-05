@@ -161,7 +161,6 @@ typedef enum{
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender {
     switch (sender.tag) {
         case 1:{
-            NSLog(@"tabBarIdentifier:%@",self.tabBarIdentifier);
             [self.navigationController popViewControllerAnimated:YES];
             if ([self.tabBarIdentifier isEqualToString:kYES]){
                 [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
@@ -188,7 +187,6 @@ typedef enum{
         }
         case 102:{
             //收藏
-            NSLog(@"收藏");
             loadType = requestAddVideoCollectlType;
             RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -198,8 +196,6 @@ typedef enum{
             break;
         }
         case 103:{
-            //分享
-            NSLog(@"分享");
             [UMSocialSnsService presentSnsIconSheetView:self
                                                  appKey:@"544db5aafd98c570d2069586"
                                               shareText:@"测试"
@@ -279,14 +275,15 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
-    NSLog(@"视频详情：error:%@",error);
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//根据`responseCode`得到发送结果,如果分享成功
+
+//根据`responseCode得到发送结果,如果分享成功
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
     if(response.responseCode == UMSResponseCodeSuccess)
     {
@@ -294,6 +291,7 @@ typedef enum{
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
+
 /*
  #pragma mark - Navigation
  

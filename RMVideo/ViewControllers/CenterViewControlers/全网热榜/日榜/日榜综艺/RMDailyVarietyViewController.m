@@ -48,6 +48,7 @@
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
+    cell.movieKind.text = [NSString stringWithFormat:@"分类:%@",model.video_type];
     [(RMImageView *)cell.TopImage addTopNumber:[model.topNum intValue]];
     return cell;
 }

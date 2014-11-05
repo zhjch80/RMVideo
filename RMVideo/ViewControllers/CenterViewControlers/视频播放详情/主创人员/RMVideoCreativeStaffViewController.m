@@ -17,6 +17,8 @@
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
     NSMutableDictionary * starTypeDic;
+    NSInteger pageCount;
+    BOOL isRefresh;
 }
 
 @end
@@ -42,19 +44,25 @@
     tableView.tag = 101;
     tableView.backgroundColor = [UIColor clearColor];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [tableView setIsCloseHeader:NO];
-    [tableView setIsCloseFooter:NO];
+    [tableView setIsCloseHeader:YES];
+    [tableView setIsCloseFooter:YES];
     [self.view addSubview:tableView];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([dataArr count]/3 == 0){
-        return [dataArr count]/3;
-    }else if ([dataArr count]/3 == 1){
-        return ([dataArr count] + 2) / 3;
-    }else {
-        return ([dataArr count] + 1) / 3;
-    }
+//    if ([dataArr count]/3 == 0){
+//        return [dataArr count]/3;
+//    }else if ([dataArr count]/3 == 1){
+//        return ([dataArr count] + 2) / 3;
+//    }else {
+//        return ([dataArr count] + 1) / 3;
+//    }
+    
+    
+    if(dataArr.count%3==0)
+        return dataArr.count/3;
+    else
+        return dataArr.count/3+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,6 +75,19 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.delegate = self;
     }
+    
+//    if ([dataArr count]/2 == 0){
+//        return [dataArr count]/2;
+//    }else{
+//        return ([dataArr count] + 1) / 2;
+//    }
+    
+//    if (indexPath.row * 2 + 1 == [dataArr count]){
+//    }else{
+//
+//    }
+    
+    
     NSMutableDictionary * dic_left = [dataArr objectAtIndex:indexPath.row * 3];
     NSMutableDictionary * dic_center = [dataArr objectAtIndex:indexPath.row * 3 +1];
     NSMutableDictionary * dic_right = [dataArr objectAtIndex:indexPath.row * 3 +2];
@@ -94,23 +115,25 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 120;
+
     if ([dataArr count]/3 == 0){
         if (indexPath.row == [dataArr count]/3){
-            return 170;
+            return 120;
         }else {
-            return 150;
+            return 140;
         }
     }else if ([dataArr count]/3 == 1){
         if (indexPath.row == ([dataArr count] + 2) / 3){
-            return 170;
+            return 120;
         }else {
-            return 150;
+            return 140;
         }
     }else {
         if (indexPath.row == ([dataArr count] + 1) / 3){
-            return 170;
+            return 120;
         }else {
-            return 150;
+            return 140;
         }
     }
 }
@@ -125,6 +148,7 @@
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
     dataArr = model.creatorArr;
+    NSLog(@"--------dataArr%@  count:%d",dataArr,dataArr.count);
     [(UITableView *)[self.view viewWithTag:101] reloadData];
 }
 #pragma mark -
