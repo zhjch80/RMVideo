@@ -12,7 +12,10 @@
     id _target;
     SEL _sel;
 }
-@property (nonatomic ,strong) NSString *identifierString;
+@property (nonatomic, strong) NSString *identifierString;
+@property (nonatomic, strong) NSIndexPath * indexPath;              //我的明星  获取点击加入我的频道当前的cell
+@property (nonatomic, assign) NSInteger isAttentionStarState;       //我的明星  获取当前用户是否已经关注该明星
+
 
 - (void)addTopNumber:(int)num;
 - (void)addRotatingViewWithName:(NSString *)str;

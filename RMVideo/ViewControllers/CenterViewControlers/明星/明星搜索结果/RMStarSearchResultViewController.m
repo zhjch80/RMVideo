@@ -11,8 +11,14 @@
 #import "PullToRefreshTableView.h"
 #import "RMStarDetailsViewController.h"
 
-@interface RMStarSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface RMStarSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,RMAFNRequestManagerDelegate> {
+    NSInteger pageCount;
+    BOOL isRefresh;
+}
 @property (nonatomic, strong) PullToRefreshTableView * tableView;
+@property (nonatomic, strong) RMAFNRequestManager * manager;
+@property (nonatomic, strong) NSMutableArray * dataArr;
+@property (nonatomic, strong) NSString * keyWord;
 
 @end
 
@@ -21,12 +27,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.dataArr = [[NSMutableArray alloc] init];
+    
+    RMPublicModel * model = [self.resultData objectAtIndex:0];
+    self.keyWord = model.name;
+    self.dataArr = [NSMutableArray arrayWithArray:model.list];
+    
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     [self setTitle:@"搜索结果"];
     
-    NSLog(@"count:%d \n obj:%@",self.resultData.count,self.resultData);
-    
+    self.manager = [[RMAFNRequestManager alloc] init];
+    self.manager.delegate = self;
+        
     self.tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -39,7 +52,7 @@
 #pragma mark - UITableViewDataSource UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.resultData.count;
+    return [self.dataArr count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -52,9 +65,8 @@
         cell.backgroundColor = [UIColor clearColor];
     }
     
-    RMPublicModel * model = [self.resultData objectAtIndex:indexPath.row];
-    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:nil];
-    cell.name.text = model.name;
+    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    cell.name.text = [[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
     return cell;
 }
 
@@ -63,10 +75,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RMPublicModel * model = [self.resultData objectAtIndex:indexPath.row];
     RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
     [self.navigationController pushViewController:starDetailsCtl animated:YES];
-    [starDetailsCtl setStarID:model.tag_id];
+    [starDetailsCtl setStarID:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"tag_id"]];
 }
 
 #pragma mark -
@@ -102,12 +113,16 @@
         }
         case k_RETURN_REFRESH://刷新
         {
-            [self.tableView reloadData:YES];
+            pageCount = 1;
+            isRefresh = YES;
+            [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [self.tableView reloadData:YES];
+            pageCount ++;
+            isRefresh = NO;
+            [self startRequest];
             break;
         }
             
@@ -134,6 +149,31 @@
         default:
             break;
     }
+}
+
+#pragma mark - request RMAFNRequestManagerDelegate
+
+- (void)startRequest {
+    [self.manager getSearchStartWithName:[self.keyWord stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    RMPublicModel * model = [data objectAtIndex:0];
+    if (isRefresh){
+        [self.dataArr removeAllObjects];
+        for (int i=0; i<[model.list count]; i++){
+            [self.dataArr addObject:[model.list objectAtIndex:i]];
+        }
+    }else{
+        for (int i=0; i<[model.list count]; i++){
+            [self.dataArr addObject:[model.list objectAtIndex:i]];
+        }
+    }
+    [self.tableView reloadData:NO];
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

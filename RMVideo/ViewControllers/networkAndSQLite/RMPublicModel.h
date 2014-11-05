@@ -40,6 +40,6 @@
 @property (nonatomic, strong) NSString * ios;
 @property (nonatomic, strong) NSString * is_follow;
 @property (nonatomic, strong) NSString * is_favorite;
-
-
+@property (nonatomic, strong) NSString * keyword;
+@property (nonatomic, strong) NSMutableArray * list;
 @end

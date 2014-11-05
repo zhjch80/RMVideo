@@ -271,8 +271,8 @@
 }
 
 - (void)reloadData:(BOOL)dataIsAllLoaded{
-        [self reloadData];
-      self.contentInset = UIEdgeInsetsZero;
+    [self reloadData];
+    self.contentInset = UIEdgeInsetsZero;
     [headerView changeState:k_PULL_STATE_NORMAL];
     //  如果数据已全部加载，则禁用“上拖加载”
     if (dataIsAllLoaded) {

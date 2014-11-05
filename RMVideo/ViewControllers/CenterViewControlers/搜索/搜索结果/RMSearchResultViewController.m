@@ -11,10 +11,16 @@
 #import "RMSearchCell.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 
-@interface RMSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate> {
+@interface RMSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,RMAFNRequestManagerDelegate> {
+    NSInteger pageCount;
+    BOOL isRefresh;
     
 }
 @property (nonatomic, strong) PullToRefreshTableView * tableView;
+@property (nonatomic, strong) RMAFNRequestManager * manager;
+@property (nonatomic, strong) NSString * keyWord;
+@property (nonatomic, strong) NSMutableArray * dataArr;
+
 @end
 
 @implementation RMSearchResultViewController
@@ -22,9 +28,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.dataArr = [[NSMutableArray alloc] init];
+    
+    RMPublicModel * model = [self.resultData objectAtIndex:0];
+    self.keyWord = model.keyword;
+    self.dataArr = [NSMutableArray arrayWithArray:model.list];
+    
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     [self setTitle:@"搜索结果"];
+    
+    self.manager = [[RMAFNRequestManager alloc] init];
+    self.manager.delegate = self;
     
     self.tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44)];
     self.tableView.delegate = self;
@@ -32,12 +47,13 @@
     self.tableView.tag = 101;
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.tableView];
+    
 }
 
 #pragma mark - UITableViewDataSource UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.resultData.count;
+    return [self.dataArr count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -51,8 +67,7 @@
     }
     cell.type.text = @"";
     
-    RMPublicModel * model = [self.resultData objectAtIndex:indexPath.row];
-    switch ([model.video_type integerValue]) {
+    switch ([[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"video_type"] integerValue]) {
         case 1:{
             cell.type.text = @"电影";
             break;
@@ -69,12 +84,12 @@
         default:
             cell.type.text = @"";
             break;
-    }    
-    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:nil];
-    cell.name.text = model.name;
+    }
+    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic"]] placeholderImage:nil];
+    cell.name.text = [[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
     [cell.searchFirstRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.searchFirstRateView displayRating:[model.gold integerValue]];
-    cell.hits.text = [NSString stringWithFormat:@"点击量:%@",model.hits];
+    [cell.searchFirstRateView displayRating:[[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"gold"] integerValue]];
+    cell.hits.text = [NSString stringWithFormat:@"点击量:%@",[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"hits"]];
     return cell;
 }
 
@@ -83,10 +98,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RMPublicModel * model = [self.resultData objectAtIndex:indexPath.row];
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     [self.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
-    videoPlaybackDetailsCtl.currentVideo_id  = model.video_id;
+    videoPlaybackDetailsCtl.currentVideo_id  = [[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"video_id"];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
 
@@ -123,12 +137,16 @@
         }
         case k_RETURN_REFRESH://刷新
         {
-            [self.tableView reloadData:YES];
+            pageCount = 1;
+            isRefresh = YES;
+            [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [self.tableView reloadData:YES];
+            pageCount ++;
+            isRefresh = NO;
+            [self startRequest];
             break;
         }
             
@@ -155,6 +173,31 @@
         default:
             break;
     }
+}
+
+#pragma mark - request RMAFNRequestManagerDelegate
+
+- (void)startRequest {
+    [self.manager getSearchStartWithName:[self.keyWord stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    RMPublicModel * model = [data objectAtIndex:0];
+    if (isRefresh){
+        [self.dataArr removeAllObjects];
+        for (int i=0; i<[model.list count]; i++){
+            [self.dataArr addObject:[model.list objectAtIndex:i]];
+        }
+    }else{
+        for (int i=0; i<[model.list count]; i++){
+            [self.dataArr addObject:[model.list objectAtIndex:i]];
+        }
+    }
+    [self.tableView reloadData:NO];
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

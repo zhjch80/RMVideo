@@ -355,7 +355,7 @@
     [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
     [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeBlack];
     self.request = [[RMAFNRequestManager alloc] init];
-    [self.request getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [self.request getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:@"1" count:@"20"];
     self.request.delegate = self;
 }
 

@@ -50,19 +50,13 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if ([dataArr count]/3 == 0){
-//        return [dataArr count]/3;
-//    }else if ([dataArr count]/3 == 1){
-//        return ([dataArr count] + 2) / 3;
-//    }else {
-//        return ([dataArr count] + 1) / 3;
-//    }
-    
-    
-    if(dataArr.count%3==0)
-        return dataArr.count/3;
-    else
-        return dataArr.count/3+1;
+    if ([dataArr count]%3 == 0){
+        return [dataArr count] / 3;
+    }else if ([dataArr count]%3 == 1){
+        return ([dataArr count] + 2) / 3;
+    }else {
+        return ([dataArr count] + 1) / 3;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -76,66 +70,41 @@
         cell.delegate = self;
     }
     
-//    if ([dataArr count]/2 == 0){
-//        return [dataArr count]/2;
-//    }else{
-//        return ([dataArr count] + 1) / 2;
-//    }
-    
-//    if (indexPath.row * 2 + 1 == [dataArr count]){
-//    }else{
-//
-//    }
-    
-    
     NSMutableDictionary * dic_left = [dataArr objectAtIndex:indexPath.row * 3];
-    NSMutableDictionary * dic_center = [dataArr objectAtIndex:indexPath.row * 3 +1];
-    NSMutableDictionary * dic_right = [dataArr objectAtIndex:indexPath.row * 3 +2];
-    
     cell.leftTitle.text = [dic_left objectForKey:@"name"];
-    cell.centerTitle.text = [dic_center objectForKey:@"name"];
-    cell.rightTitle.text = [dic_right objectForKey:@"name"];
-    
-    [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:nil];
-    [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:nil];
-    [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:nil];
-    
+    [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.leftAddImg.identifierString = [dic_left objectForKey:@"tag_id"];
-    cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
-    cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
-    
     cell.leftRotatingTitle.text = [starTypeDic objectForKey:[dic_left objectForKey:@"type"]];
-    cell.centerRotatingTitle.text = [starTypeDic objectForKey:[dic_center objectForKey:@"type"]];
-    cell.rightRotatingTitle.text = [starTypeDic objectForKey:[dic_right objectForKey:@"type"]];
-
     [UtilityFunc rotatingView:cell.leftRotatView];
-    [UtilityFunc rotatingView:cell.centerRotatView];
-    [UtilityFunc rotatingView:cell.rightRotatView];
+    
+    if (indexPath.row * 3 + 1 >= [dataArr count]){
+        cell.centerAddImg.hidden = YES;
+        cell.centerRotatView.hidden = YES;
+    }else{
+        NSMutableDictionary * dic_center = [dataArr objectAtIndex:indexPath.row * 3 +1];
+        cell.centerTitle.text = [dic_center objectForKey:@"name"];
+        [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
+        cell.centerRotatingTitle.text = [starTypeDic objectForKey:[dic_center objectForKey:@"type"]];
+        [UtilityFunc rotatingView:cell.centerRotatView];
+    }
+        
+    if (indexPath.row * 3 + 2 >= [dataArr count]){
+        cell.rightAddImg.hidden = YES;
+        cell.rightRotatView.hidden = YES;
+    }else{
+        NSMutableDictionary * dic_right = [dataArr objectAtIndex:indexPath.row * 3 +2];
+        cell.rightTitle.text = [dic_right objectForKey:@"name"];
+        [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
+        cell.rightRotatingTitle.text = [starTypeDic objectForKey:[dic_right objectForKey:@"type"]];
+        [UtilityFunc rotatingView:cell.rightRotatView];
+    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 120;
-
-    if ([dataArr count]/3 == 0){
-        if (indexPath.row == [dataArr count]/3){
-            return 120;
-        }else {
-            return 140;
-        }
-    }else if ([dataArr count]/3 == 1){
-        if (indexPath.row == ([dataArr count] + 2) / 3){
-            return 120;
-        }else {
-            return 140;
-        }
-    }else {
-        if (indexPath.row == ([dataArr count] + 1) / 3){
-            return 120;
-        }else {
-            return 140;
-        }
-    }
+    return 150;
 }
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
@@ -148,7 +117,6 @@
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
     dataArr = model.creatorArr;
-    NSLog(@"--------dataArr%@  count:%d",dataArr,dataArr.count);
     [(UITableView *)[self.view viewWithTag:101] reloadData];
 }
 #pragma mark -

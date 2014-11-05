@@ -11,9 +11,6 @@
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMStarDetailsViewController.h"
 
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
 #import "PullToRefreshTableView.h"
 
 @interface RMStarTeleplayListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate>{
@@ -49,9 +46,9 @@
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([dataArr count]/3 == 0){
-        return [dataArr count]/3;
-    }else if ([dataArr count]/3 == 1){
+    if ([dataArr count]%3 == 0){
+        return [dataArr count] / 3;
+    }else if ([dataArr count]%3 == 1){
         return ([dataArr count] + 2) / 3;
     }else {
         return ([dataArr count] + 1) / 3;
@@ -71,29 +68,33 @@
     }
     
     RMPublicModel *model_left = [dataArr objectAtIndex:indexPath.row*3];
-    RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
-    RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
-    
     cell.fristLable.text = model_left.name;
-    cell.secondLable.text = model_center.name;
-    cell.threeLable.text = model_right.name;
-    
-    [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:nil];
+    [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
     cell.fristImage.identifierString = model_left.video_id;
-    [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:nil];
-    cell.secondImage.identifierString = model_center.video_id;
-    [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:nil];
-    cell.threeImage.identifierString = model_right.video_id;
-    
     [cell.firstStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
     [cell.firstStarRateView displayRating:[model_left.gold integerValue]];
-    
-    [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.secondStarRateView displayRating:[model_center.gold integerValue]];
-    
-    [cell.thirdStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-    [cell.thirdStarRateView displayRating:[model_right.gold integerValue]];
-    
+
+    if (indexPath.row * 3 + 1 >= [dataArr count]){
+        
+    }else{
+        RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
+        cell.secondLable.text = model_center.name;
+        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        cell.secondImage.identifierString = model_center.video_id;
+        [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.secondStarRateView displayRating:[model_center.gold integerValue]];
+    }
+
+    if (indexPath.row * 3 + 2 >= [dataArr count]){
+        
+    }else{
+        RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
+        cell.threeLable.text = model_right.name;
+        [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        cell.threeImage.identifierString = model_right.video_id;
+        [cell.thirdStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.thirdStarRateView displayRating:[model_right.gold integerValue]];
+    }
     return cell;
 }
 

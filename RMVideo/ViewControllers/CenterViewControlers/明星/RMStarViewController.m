@@ -34,6 +34,7 @@
 typedef enum{
     requestStarListType = 1,
     requestAddStarMyChannelType,
+    requestDeleteStarMyChannelType,
     requestSearchStarType
 }LoadType;
 
@@ -47,6 +48,8 @@ typedef enum{
     NSMutableArray * recordsDataArr;        //保存搜索记录的数组
     NSInteger pageCount;
     BOOL isRefresh;
+    RMImageView * rmImage;                  //获取点击cell的图片
+
 }
 
 @property (nonatomic, strong) AMBlurView * blurView;
@@ -402,9 +405,9 @@ typedef enum{
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (tableView.tag) {
         case 201:{
-            if ([dataArr count]/3 == 0){
-                return [dataArr count]/3;
-            }else if ([dataArr count]/3 == 1){
+            if ([dataArr count]%3 == 0){
+                return [dataArr count] / 3;
+            }else if ([dataArr count]%3 == 1){
                 return ([dataArr count] + 2) / 3;
             }else {
                 return ([dataArr count] + 1) / 3;
@@ -433,56 +436,59 @@ typedef enum{
             cell.backgroundColor = [UIColor clearColor];
             cell.delegate = self;
         }
-        
-        /*
-        
-        if ([dataArr count]/3 == 0){
-         
-        }else if ([dataArr count]/3 == 1){
-
-        }else {
-        
-        }
-
-        */
-        //TODO:有bug,需要修复
-
         RMPublicModel *model_left;
         RMPublicModel *model_center;
         RMPublicModel *model_right;
+        
         model_left = [dataArr objectAtIndex:indexPath.row*3];
         cell.leftTitle.text = model_left.name;
-        [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:nil];
+        [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.starLeftImg.identifierString = model_left.tag_id;
         cell.starAddLeftImg.identifierString = model_left.tag_id;
+        cell.starAddLeftImg.indexPath = indexPath;
         if ([model_left.is_follow integerValue] == 0){
             cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+            cell.starAddLeftImg.isAttentionStarState = 0;
         }else{
             cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+            cell.starAddLeftImg.isAttentionStarState = 1;
         }
         
-        model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
-        cell.centerTitle.text = model_center.name;
-        [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:nil];
-        cell.starCenterImg.identifierString = model_center.tag_id;
-        cell.starAddCenterImg.identifierString = model_center.tag_id;
-        if ([model_center.is_follow integerValue] == 0){
-            cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        if (indexPath.row * 3 + 1 >= [dataArr count]){
+            
         }else{
-            cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+            model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
+            cell.centerTitle.text = model_center.name;
+            [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+            cell.starCenterImg.identifierString = model_center.tag_id;
+            cell.starAddCenterImg.identifierString = model_center.tag_id;
+            cell.starAddCenterImg.indexPath = indexPath;
+            if ([model_center.is_follow integerValue] == 0){
+                cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+                cell.starAddCenterImg.isAttentionStarState = 0;
+            }else{
+                cell.starAddCenterImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+                cell.starAddCenterImg.isAttentionStarState = 1;
+            }
         }
         
-        model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
-        cell.rightTitle.text = model_right.name;
-        [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:nil];
-        cell.starRightImg.identifierString = model_right.tag_id;
-        cell.starAddRightImg.identifierString = model_right.tag_id;
-        if ([model_right.is_follow integerValue] == 0){
-            cell.starAddRightImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        if (indexPath.row * 3 + 2 >= [dataArr count]){
+            
         }else{
-            cell.starAddRightImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+            model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
+            cell.rightTitle.text = model_right.name;
+            [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+            cell.starRightImg.identifierString = model_right.tag_id;
+            cell.starAddRightImg.identifierString = model_right.tag_id;
+            cell.starAddRightImg.indexPath = indexPath;
+            if ([model_right.is_follow integerValue] == 0){
+                cell.starAddRightImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+                cell.starAddRightImg.isAttentionStarState = 0;
+            }else{
+                cell.starAddRightImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+                cell.starAddRightImg.isAttentionStarState = 1;
+            }
         }
-
         return cell;
     }else {
         static NSString * CellIdentifier = @"RMStarSearchCellIdentifier";
@@ -503,9 +509,10 @@ typedef enum{
     switch (tableView.tag) {
         case 201:{
             NSInteger value = 0;
-            if ([dataArr count]/3 == 0){
+            
+            if ([dataArr count]%3 == 0){
                 value = [dataArr count]/3;
-            }else if ([dataArr count]/3 == 1){
+            }else if ([dataArr count]%3 == 1){
                 value = ([dataArr count] + 2) / 3;
             }else {
                 value = ([dataArr count] + 1) / 3;
@@ -563,16 +570,27 @@ typedef enum{
     }
 }
 
-#pragma mark - 添加明星到我的频道
+#pragma mark - 添加或者删除 明星 在我的频道里
 
 - (void)clickAddMyChannelMethod:(RMImageView *)imageView {
     if (imageView.identifierString){
-        loadType = requestAddStarMyChannelType;
-        RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
-        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-        [requset getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
-        requset.delegate = self;
+        if (imageView.isAttentionStarState == 0){
+            loadType = requestAddStarMyChannelType;
+            RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [requset getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
+            requset.delegate = self;
+            rmImage = imageView;
+        }else{
+            loadType = requestDeleteStarMyChannelType;
+            RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [requset getDeleteMyChannelWithTag:imageView.identifierString WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+            requset.delegate = self;
+            rmImage = imageView;
+        }
     }
 }
 
@@ -820,11 +838,18 @@ typedef enum{
                 [dataArr addObject:model];
             }
         }
-        NSLog(@"add to dataArr.count%d",dataArr.count);
         [(UITableView *)[self.view viewWithTag:201] reloadData];
         [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     }else if (loadType == requestAddStarMyChannelType){
-        
+        RMStarCell * cell = (RMStarCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        UIImage * image = [[UIImage alloc] init];
+        image = [UIImage imageNamed:@"mx_add_success_img"];
+        [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:YES];
+    }else if (loadType == requestDeleteStarMyChannelType){
+        RMStarCell * cell = (RMStarCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        UIImage * image = [[UIImage alloc] init];
+        image = [UIImage imageNamed:@"mx_add_img"];
+        [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:NO];
     }else if (loadType == requestSearchStarType){
         [SVProgressHUD dismiss];
         RMStarSearchResultViewController * starSearchResultCtl = [[RMStarSearchResultViewController alloc] init];

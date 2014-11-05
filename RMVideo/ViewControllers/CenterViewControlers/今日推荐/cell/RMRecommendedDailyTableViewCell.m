@@ -83,7 +83,7 @@
 //        NSLog(@"预备图片");
 //    }
 //    subImage.image = [UIImage imageWithData:data];
-    [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]]];
+    [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"jr_loadingImg", kImageTypePNG)];
     
     if(IS_IPHONE_4_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 230.0f, 332);

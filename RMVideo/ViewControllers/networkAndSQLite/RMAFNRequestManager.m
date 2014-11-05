@@ -268,7 +268,7 @@
     url = [NSString stringWithFormat:@"%@token=%@&video_id=%@",url,token,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 4001){
-            [SVProgressHUD showErrorWithStatus:@"收藏成功"];
+            [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
         }else {
             [SVProgressHUD showErrorWithStatus:@"收藏失败"];
         }
@@ -445,14 +445,11 @@
     url = [NSString stringWithFormat:@"%@name=%@&limit=%@&offset=%@",url,name,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
-        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
-            RMPublicModel *model = [[RMPublicModel alloc] init];
-            model.detail = [dict objectForKey:@"detail"];
-            model.name = [dict objectForKey:@"name"];
-            model.pic_url = [dict objectForKey:@"pic_url"];
-            model.tag_id = [dict objectForKey:@"tag_id"];
-            [dataArray addObject:model];
-        }
+        RMPublicModel *model = [[RMPublicModel alloc] init];
+        model.code = [responseObject objectForKey:@"code"];
+        model.name = [responseObject objectForKey:@"name"];
+        model.list = [responseObject objectForKey:@"list"];
+        [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
@@ -554,16 +551,17 @@
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [SVProgressHUD showSuccessWithStatus:@"取消收藏成功"];
                 [self.delegate requestFinishiDownLoadWith:nil];
             }
         }else{
-            [SVProgressHUD showErrorWithStatus:@"删除失败"];
+            [SVProgressHUD showErrorWithStatus:@"取消收藏失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        [SVProgressHUD showErrorWithStatus:@"取消收藏失败"];
     }];
 }
 
@@ -591,22 +589,17 @@
 
 #pragma mark - 搜索
 
-- (void)getSearchVideoWithKeyword:(NSString *)string{
+- (void)getSearchVideoWithKeyword:(NSString *)string Page:(NSString *)page count:(NSString *)count{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getSearchVidieo];
-    url = [NSString stringWithFormat:@"%@keyword=%@",url,string];
+    url = [NSString stringWithFormat:@"%@keyword=%@&limit=%@&offset=%@",url,string,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
-        for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
-            RMPublicModel *model = [[RMPublicModel alloc] init];
-            model.gold = [dict objectForKey:@"gold"];
-            model.name = [dict objectForKey:@"name"];
-            model.pic = [dict objectForKey:@"pic"];
-            model.video_type = [dict objectForKey:@"video_type"];
-            model.video_id = [dict objectForKey:@"video_id"];
-            model.hits = [dict objectForKey:@"hits"];
-            [dataArray addObject:model];
-        }
+        RMPublicModel *model = [[RMPublicModel alloc] init];
+        model.code = [responseObject objectForKey:@"code"];
+        model.keyword = [responseObject objectForKey:@"keyword"];
+        model.list = [responseObject objectForKey:@"list"];
+        [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
@@ -675,7 +668,7 @@
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:nil];
-                [SVProgressHUD showErrorWithStatus:@"删除成功"];
+                [SVProgressHUD showSuccessWithStatus:@"删除成功"];
             }
         }else{
             [SVProgressHUD showErrorWithStatus:@"删除失败"];
