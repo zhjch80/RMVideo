@@ -28,8 +28,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
-
-#import "RMAFNRequestManager.h"
+#import "RMLoginViewController.h"
 
 typedef enum{
     requestStarListType = 1,
@@ -427,7 +426,7 @@ typedef enum{
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView.tag == 201){
-        static NSString * CellIdentifier = @"RMStarCellIdentifier";
+        NSString * CellIdentifier = [NSString stringWithFormat:@"RMStarCellIdentifier%d",indexPath.row];
         RMStarCell * cell = (RMStarCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (! cell) {
             NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
@@ -441,7 +440,8 @@ typedef enum{
         RMPublicModel *model_right;
         
         model_left = [dataArr objectAtIndex:indexPath.row*3];
-        cell.leftTitle.text = model_left.name;
+        [cell.leftTitle loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
+        [cell.leftTitle startScrolling];
         [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.starLeftImg.identifierString = model_left.tag_id;
         cell.starAddLeftImg.identifierString = model_left.tag_id;
@@ -455,10 +455,11 @@ typedef enum{
         }
         
         if (indexPath.row * 3 + 1 >= [dataArr count]){
-            
+            cell.starAddCenterImg.hidden = YES;
         }else{
             model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
-            cell.centerTitle.text = model_center.name;
+            [cell.centerTitle loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
+            [cell.centerTitle startScrolling];            
             [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
             cell.starCenterImg.identifierString = model_center.tag_id;
             cell.starAddCenterImg.identifierString = model_center.tag_id;
@@ -473,10 +474,11 @@ typedef enum{
         }
         
         if (indexPath.row * 3 + 2 >= [dataArr count]){
-            
+            cell.starAddRightImg.hidden = YES;
         }else{
             model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
-            cell.rightTitle.text = model_right.name;
+            [cell.rightTitle loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
+            [cell.rightTitle startScrolling];
             [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
             cell.starRightImg.identifierString = model_right.tag_id;
             cell.starAddRightImg.identifierString = model_right.tag_id;
@@ -573,6 +575,14 @@ typedef enum{
 #pragma mark - 添加或者删除 明星 在我的频道里
 
 - (void)clickAddMyChannelMethod:(RMImageView *)imageView {
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        UINavigationController * loginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+        [self presentViewController:loginNav animated:YES completion:^{
+        }];
+        return;
+    }
     if (imageView.identifierString){
         if (imageView.isAttentionStarState == 0){
             loadType = requestAddStarMyChannelType;

@@ -8,10 +8,6 @@
 
 #import "RMVideoPlotIntroducedViewController.h"
 
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
-
 @interface RMVideoPlotIntroducedViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView * bgScrView;
 @property (nonatomic, strong) UILabel * introduce;
@@ -48,6 +44,9 @@
 #pragma mark - 刷新界面
 
 - (void)updatePlotIntroduced:(RMPublicModel *)model {
+    if (model.content.length == 0){
+        return;
+    }
     // 设置字体间每行的间距
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //    paragraphStyle.lineHeightMultiple = 15.0f;

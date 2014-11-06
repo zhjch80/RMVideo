@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RatingView.h"
 #import "RMImageView.h"
+#import "DAAutoScrollView.h"
 
 @protocol StarDetailsCellDelegate <NSObject>
 
@@ -24,9 +25,9 @@
 @property (weak, nonatomic) IBOutlet RMImageView *fristImage;
 @property (weak, nonatomic) IBOutlet RMImageView *secondImage;
 @property (weak, nonatomic) IBOutlet RMImageView *threeImage;
-@property (weak, nonatomic) IBOutlet UILabel *fristLable;
-@property (weak, nonatomic) IBOutlet UILabel *secondLable;
-@property (weak, nonatomic) IBOutlet UILabel *threeLable;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *fristLable;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *secondLable;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *threeLable;
 
 @property (weak, nonatomic) IBOutlet RatingView *firstStarRateView;
 

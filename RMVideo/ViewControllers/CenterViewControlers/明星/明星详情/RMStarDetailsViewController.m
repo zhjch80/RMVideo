@@ -8,14 +8,10 @@
 
 #import "RMStarDetailsViewController.h"
 #import "HMSegmentedControl.h"
-
 #import "RMStarTeleplayListViewController.h"
 #import "RMStarFilmListViewController.h"
 #import "RMStarVarietyListViewController.h"
-
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
+#import "RMLoginViewController.h"
 
 typedef enum{
     requestIntroType = 1,
@@ -53,6 +49,11 @@ typedef enum{
 @synthesize starFilmListCtl = _starFilmListCtl;
 @synthesize starVarietyListCtl = _starVarietyListCtl;
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setTitle:@"明星"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -61,7 +62,6 @@ typedef enum{
     foldType = kFold_off;
     loadType = requestIntroType;
     
-    [self setTitle:@"明星"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
@@ -182,6 +182,14 @@ typedef enum{
     switch (sender.tag) {
         case 201:{
             //加入 或者 删除 明星  在我的频道
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+                RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+                UINavigationController * loginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+                [self presentViewController:loginNav animated:YES completion:^{
+                }];
+                return;
+            }
             if (isStarAttentionMyChannel){
                 loadType = requestDeleteMyChannelType;
                 RMPublicModel * model = [introDataArr objectAtIndex:0];
@@ -268,7 +276,10 @@ typedef enum{
     RMPublicModel * model = [introDataArr objectAtIndex:0];
     [self setTitle:model.name];
     [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
-    self.starName.text = model.name;
+    
+    [self.starName loadTextViewWithString:model.name WithTextFont:[UIFont systemFontOfSize:16.0]WithTextColor:[UIColor whiteColor] WithTextAlignment:NSTextAlignmentLeft WithSetupLabelCenterPoint:NO WithTextOffset:0];
+    [self.starName startScrolling];
+    
     self.starIntrduce.text = model.detail;
     if ([model.is_follow integerValue] == 1){
         self.myChannelImgState.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);

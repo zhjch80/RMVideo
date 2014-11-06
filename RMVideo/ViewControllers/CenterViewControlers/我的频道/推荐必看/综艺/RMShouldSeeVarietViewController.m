@@ -20,6 +20,7 @@
     [super viewDidLoad];
     self.dataArray = [[NSMutableArray alloc] init];
      self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    self.mainTableView.backgroundColor = [UIColor clearColor];
     [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
     RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
@@ -49,13 +50,15 @@
     RMStarDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     if(cell ==nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil] lastObject];
+        cell.backgroundColor = [UIColor clearColor];
     }
     cell.delegate = self;
     
     RMPublicModel *model_left = [self.dataArray objectAtIndex:indexPath.row*3];
     [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
     cell.fristImage.identifierString = model_left.video_id;
-    cell.fristLable.text = model_left.name;
+    [cell.fristLable loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+    [cell.fristLable startScrolling];
     
     if (indexPath.row * 3 + 1 >= [self.dataArray count]){
         
@@ -63,7 +66,8 @@
         RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
         [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
         cell.secondImage.identifierString = model_center.video_id;
-        cell.secondLable.text = model_center.name;
+        [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+        [cell.secondLable startScrolling];
     }
     
     if (indexPath.row * 3 + 2 >= [self.dataArray count]){
@@ -72,7 +76,8 @@
         RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
         [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
         cell.threeImage.identifierString = model_right.video_id;
-        cell.threeLable.text = model_right.name;
+        [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+        [cell.threeLable startScrolling];
     }
     return cell;
 }

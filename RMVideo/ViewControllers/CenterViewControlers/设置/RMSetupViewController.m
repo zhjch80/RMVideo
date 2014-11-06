@@ -58,11 +58,12 @@
     self.headImageView.layer.cornerRadius = 15;
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
+    [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+
     self.headView.frame = CGRectMake(self.headView.frame.origin.x, self.headView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, self.headView.frame.size.height);
     self.loginBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-18-self.loginBtn.frame.size.width, self.loginBtn.frame.origin.y, self.loginBtn.frame.size.width, self.loginBtn.frame.size.height);
     self.exitbtn.frame = CGRectMake(0, [UtilityFunc shareInstance].globleHeight-49-44, [UtilityFunc shareInstance].globleWidth, 49);
     
-    [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     dataArray = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"我的下载",@"播放历史"],@[@"用户反馈",@"清理缓存"],@[@"关于",@"分享给朋友",@"去给评分",@"更多应用"]]];
     
     [self loadCustomView];
@@ -251,8 +252,13 @@
 -(IBAction)loginOrExitButtonClick:(UIButton *)sender{
     //登录
     if(sender.tag == 1){
-        RMLoginViewController *loginControl = [[RMLoginViewController alloc] init];
-        [self.navigationController pushViewController:loginControl animated:YES];
+        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        UINavigationController * LoginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+        
+        [self presentViewController:LoginNav animated:YES completion:^{
+            
+            
+        }];
     }
     //退出登录
     else if(sender.tag ==2){

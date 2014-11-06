@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RMImageView.h"
+#import "DAAutoScrollView.h"
 
 @protocol StarCellDelegate <NSObject>
 
@@ -28,9 +29,9 @@
 @property (weak, nonatomic) IBOutlet RMImageView *starAddCenterImg;
 @property (weak, nonatomic) IBOutlet RMImageView *starAddRightImg;
 
-@property (weak, nonatomic) IBOutlet UILabel *leftTitle;
-@property (weak, nonatomic) IBOutlet UILabel *centerTitle;
-@property (weak, nonatomic) IBOutlet UILabel *rightTitle;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *leftTitle;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *centerTitle;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *rightTitle;
 
 /**
  *  改变用户对这个明星的关注状态

@@ -8,15 +8,11 @@
 
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "HMSegmentedControl.h"
-
 #import "RMVideoPlotIntroducedViewController.h"
 #import "RMVideoBroadcastAddressViewController.h"
 #import "RMVideoCreativeStaffViewController.h"
-
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
 #import "UMSocial.h"
+#import "RMLoginViewController.h"
 
 typedef enum{
     requestVideoContentType = 1,
@@ -189,6 +185,15 @@ typedef enum{
         }
         case 102:{
             //收藏 或者 取消收藏
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+                RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+                UINavigationController * loginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+                [self presentViewController:loginNav animated:YES completion:^{
+                }];
+                return;
+            }
+
             if (isCollect){
                 loadType = requestDeleteVideoCollectlType;
                 RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];

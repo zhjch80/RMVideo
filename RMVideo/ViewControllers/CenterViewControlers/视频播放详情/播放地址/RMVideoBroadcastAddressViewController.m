@@ -8,10 +8,6 @@
 
 #import "RMVideoBroadcastAddressViewController.h"
 
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
-
 @interface RMVideoBroadcastAddressViewController () {
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;

@@ -14,8 +14,6 @@
 #import "RMImageView.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMLoginRecommendViewController.h"
-#import "RMAFNRequestManager.h"
-#import "UIImageView+AFNetworking.h"
 #import "RMMyChannelShouldSeeViewController.h"
 #import "PullToRefreshTableView.h"
 #import "UMSocial.h"

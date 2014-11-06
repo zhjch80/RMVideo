@@ -7,7 +7,6 @@
 //
 
 #import "RMMyChannelShouldSeeViewController.h"
-#import "RMAFNRequestManager.h"
 #import "SUNSlideSwitchView.h"
 #import "RMShouldSeeMovieViewController.h"
 #import "RMShouldSeeTVViewController.h"

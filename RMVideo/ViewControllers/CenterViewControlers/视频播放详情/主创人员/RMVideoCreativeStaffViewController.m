@@ -8,10 +8,6 @@
 
 #import "RMVideoCreativeStaffViewController.h"
 #import "RMVideoCreativeStaffCell.h"
-
-#import "RMAFNRequestManager.h"
-#import "RMPublicModel.h"
-#import "UIImageView+AFNetworking.h"
 #import "PullToRefreshTableView.h"
 
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {

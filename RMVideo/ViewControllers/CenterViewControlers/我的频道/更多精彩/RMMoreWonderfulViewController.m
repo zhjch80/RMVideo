@@ -8,7 +8,6 @@
 
 #import "RMMoreWonderfulViewController.h"
 #import "RMAddRecommendView.h"
-#import "RMAFNRequestManager.h"
 
 /**
  *区分请求类型

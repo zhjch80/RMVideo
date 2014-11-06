@@ -67,7 +67,9 @@
     }
     
     RMPublicModel *model_left = [dataArr objectAtIndex:indexPath.row*3];
-    cell.fristLable.text = model_left.name;
+    [cell.fristLable loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+    [cell.fristLable startScrolling];
+    
     [cell.fristImage sd_setImageWithURL:[NSURL URLWithString:model_left.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
     cell.fristImage.identifierString = model_left.video_id;
     [cell.firstStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
@@ -78,7 +80,8 @@
         
     }else{
         RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
-        cell.secondLable.text = model_center.name;
+        [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+        [cell.secondLable startScrolling];
         [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:nil];
         cell.secondImage.identifierString = model_center.video_id;
         [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
@@ -90,7 +93,8 @@
         
     }else{
         RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
-        cell.threeLable.text = model_right.name;
+        [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
+        [cell.threeLable startScrolling];
         [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
         cell.threeImage.identifierString = model_right.video_id;
         [cell.thirdStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];

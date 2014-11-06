@@ -8,7 +8,6 @@
 
 #import "RMTVDownLoadViewController.h"
 #import "RMTVDownView.h"
-#import "RMAFNRequestManager.h"
 
 @interface RMTVDownLoadViewController ()
 

@@ -8,7 +8,6 @@
 
 #import "RMLoginViewController.h"
 #import "UMSocial.h"
-#import "RMAFNRequestManager.h"
 
 @interface RMLoginViewController ()<UMSocialUIDelegate,RMAFNRequestManagerDelegate>
 {
@@ -25,8 +24,9 @@
     
     [self setTitle:@"登录"];
     
-    rightBarButton.hidden = YES;
-    [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
+    leftBarButton.hidden = YES;
+    rightBarButton.frame = CGRectMake(0, 0, 35, 20);
+    [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
 
     self.line.frame = CGRectMake([UtilityFunc shareInstance].globleWidth/2+100, self.line.frame.origin.y, self.line.frame.size.width, self.line.frame.size.height);
     manager = [[RMAFNRequestManager alloc] init];
@@ -136,7 +136,8 @@
 
 - (void)dissmissCurrentCtl {
     [SVProgressHUD dismiss];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
 #pragma mark - base Method
@@ -144,11 +145,12 @@
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender {
     switch (sender.tag) {
         case 1:{
-            [self.navigationController popViewControllerAnimated:YES];
+
             break;
         }
         case 2:{
-            
+            [self dismissViewControllerAnimated:YES completion:^{
+            }];
             break;
         }
             

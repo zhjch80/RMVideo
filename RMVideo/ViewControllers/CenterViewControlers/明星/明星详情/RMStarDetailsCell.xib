@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RMStarDetailsCellIdentifier" id="KGk-i7-Jjw" customClass="RMStarDetailsCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RMStarDetailsCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="155"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="Jdf-xN-mQn" customClass="RMImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jdf-xN-mQn" customClass="RMImageView">
                         <rect key="frame" x="14" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="CsL-2i-Uij" customClass="RMImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CsL-2i-Uij" customClass="RMImageView">
                         <rect key="frame" x="117" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="test_4@2x" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-pL-Irc" customClass="RMImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-pL-Irc" customClass="RMImageView">
                         <rect key="frame" x="220" y="8" width="84" height="109"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="布达佩斯饭店" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcw-m7-0YA">
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6OQ-zg-Kr8" customClass="DAAutoScrollView">
                         <rect key="frame" x="14" y="120" width="84" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="布达佩斯饭店" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqz-t1-xJY">
+                    </scrollView>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Gq-lb-wKz" customClass="DAAutoScrollView">
                         <rect key="frame" x="117" y="120" width="84" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="布达佩斯饭店" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-Xl-Ihm">
+                    </scrollView>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Mx-nn-FP5" customClass="DAAutoScrollView">
                         <rect key="frame" x="220" y="120" width="84" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </scrollView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tlt-wc-EDp" customClass="RatingView">
                         <rect key="frame" x="22" y="140" width="84" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -61,18 +53,15 @@
             <connections>
                 <outlet property="firstStarRateView" destination="tlt-wc-EDp" id="Rmg-70-IG9"/>
                 <outlet property="fristImage" destination="Jdf-xN-mQn" id="vsO-kv-HyG"/>
-                <outlet property="fristLable" destination="jcw-m7-0YA" id="if4-Cm-92k"/>
+                <outlet property="fristLable" destination="6OQ-zg-Kr8" id="AXl-rK-TrD"/>
                 <outlet property="secondImage" destination="CsL-2i-Uij" id="6jj-3R-0zX"/>
-                <outlet property="secondLable" destination="Hqz-t1-xJY" id="G9f-Ns-s8Y"/>
+                <outlet property="secondLable" destination="1Gq-lb-wKz" id="R5h-ik-Yf6"/>
                 <outlet property="secondStarRateView" destination="gPN-eO-HVh" id="HOc-i0-MdO"/>
                 <outlet property="thirdStarRateView" destination="zy0-d5-pl0" id="1Vl-6i-HSv"/>
                 <outlet property="threeImage" destination="sOr-pL-Irc" id="GJZ-R0-BzD"/>
-                <outlet property="threeLable" destination="5ze-Xl-Ihm" id="fNl-Fw-CsL"/>
+                <outlet property="threeLable" destination="5Mx-nn-FP5" id="kYq-sW-sa1"/>
             </connections>
             <point key="canvasLocation" x="140" y="146"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="test_4@2x" width="44" height="44"/>
-    </resources>
 </document>

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RMBaseViewController.h"
+#import "DAAutoScrollView.h"
 
 @interface RMStarDetailsViewController : RMBaseViewController{
     
@@ -17,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIView *headSubChannelView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *starPhoto;
-@property (weak, nonatomic) IBOutlet UILabel *starName;
+@property (weak, nonatomic) IBOutlet DAAutoScrollView *starName;
 @property (weak, nonatomic) IBOutlet UITextView *starIntrduce;
 
 @property (weak, nonatomic) IBOutlet UILabel *foldMarkTitle;
