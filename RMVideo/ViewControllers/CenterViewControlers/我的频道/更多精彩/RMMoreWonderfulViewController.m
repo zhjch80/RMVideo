@@ -57,21 +57,22 @@ typedef enum{
     [bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
     [self.view addSubview:bgScrView];
     
-    NSInteger value = 1001;
-    for (int i=0; i<3; i++) {
-        for (int j=0; j<3; j++) {
-            RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
-            addRecommendView.delegate = self;
-            addRecommendView.tag = value;
-            addRecommendView.userInteractionEnabled = YES;
-            [bgScrView addSubview:addRecommendView];
-            value ++;
-        }
-    }
+    
+//    NSInteger value = 1001;
+//    for (int i=0; i<3; i++) {
+//        for (int j=0; j<3; j++) {
+//            RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
+//            addRecommendView.delegate = self;
+//            addRecommendView.tag = value;
+//            addRecommendView.userInteractionEnabled = YES;
+//            [bgScrView addSubview:addRecommendView];
+//            value ++;
+//        }
+//    }
 
     
     UILabel * changeTitle = [[UILabel alloc] init];
-    changeTitle.frame = CGRectMake(15, 235, 90, 30);
+    changeTitle.frame = CGRectMake(15, 400, 90, 30);
     changeTitle.userInteractionEnabled = YES;
     changeTitle.text = @"换一批";
     changeTitle.font = [UIFont systemFontOfSize:12.0];
@@ -82,13 +83,13 @@ typedef enum{
     
     UIButton * changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     changeBtn.tag = 101;
-    changeBtn.frame = CGRectMake(15, 235, 90, 30);
+    changeBtn.frame = CGRectMake(15, 400, 90, 30);
     [changeBtn setBackgroundImage:LOADIMAGE(@"re_redFrame", kImageTypePNG) forState:UIControlStateNormal];
     [changeBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [bgScrView addSubview:changeBtn];
     
     UIButton * customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    customBtn.frame = CGRectMake(120, 235, 90, 30);
+    customBtn.frame = CGRectMake(120, 400, 90, 30);
     [customBtn setBackgroundImage:LOADIMAGE(@"re_redFrame", kImageTypePNG) forState:UIControlStateNormal];
     [customBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     customBtn.tag = 102;
@@ -144,6 +145,10 @@ typedef enum{
         }else{
         }
     }
+}
+
+- (void)searchHotTaglibWithKeyWord:(NSString *)keyWords {
+    NSLog(@"keyWords:%@",keyWords);
 }
 
 #pragma mark - AddRecommendDelegate

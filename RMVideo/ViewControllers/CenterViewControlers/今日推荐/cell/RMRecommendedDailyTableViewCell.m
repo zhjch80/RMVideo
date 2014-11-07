@@ -58,10 +58,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHeadImgeView) name:@"tableViewWillBeginDragging" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHeadImageView) name:@"tableViewDidEndDecelerating" object:nil];
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
@@ -137,6 +133,17 @@
     
 }
 
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    return YES;
+//}
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
 
 @end

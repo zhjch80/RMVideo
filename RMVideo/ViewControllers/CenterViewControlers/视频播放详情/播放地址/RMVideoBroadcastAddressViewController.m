@@ -7,11 +7,15 @@
 //
 
 #import "RMVideoBroadcastAddressViewController.h"
+#import "CustomVideoPlayerController.h"
+#import "Database.h"
+#import "RMVideoPlaybackDetailsViewController.h"
 
 @interface RMVideoBroadcastAddressViewController () {
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;
     NSMutableArray * dataArr;
+    RMPublicModel *publicModel;
 }
 
 @end
@@ -40,6 +44,20 @@
     NSMutableDictionary * dic = [dataArr objectAtIndex:index];
     //TODO:跳转到播放界面或者选集界面 接口不完全
     NSLog(@"index:%d jumpurl:%@",index,[dic objectForKey:@"jumpurl"]);
+    
+    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+    insertModel.name = publicModel.name;
+    insertModel.pic_url = publicModel.pic;
+    insertModel.reurl = [dic objectForKey:@"jumpurl"];
+    insertModel.playTime = @"0";
+    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+    
+    RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
+    CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
+    playContro.playURL = [dic objectForKey:@"jumpurl"];
+    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:nil];
+
+    
 }
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {

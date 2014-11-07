@@ -37,6 +37,7 @@
 @property (strong, nonatomic) UIButton *nextButton; //下一集
 
 @property (strong, nonatomic) UISlider *progressBar; //影片播放进度
+@property (strong, nonatomic) UIProgressView *videoProgress;
 
 @property (strong, nonatomic) UILabel *playBackTime; //播放时间
 @property (strong, nonatomic) UILabel *playBackTotalTime; //影片总时间

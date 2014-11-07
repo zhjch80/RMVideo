@@ -664,16 +664,24 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     [self setGestureCompletion:gestureCompletionBlock];
 }
 
-#pragma mark - Subclass Methods
--(BOOL)shouldAutomaticallyForwardAppearanceMethods{
-    return NO;
+//#pragma mark - Subclass Methods
+//-(BOOL)shouldAutomaticallyForwardAppearanceMethods{
+//    return NO;
+//}
+//
+//-(BOOL)shouldAutomaticallyForwardRotationMethods{
+//    return NO;
+//}
+//
+//-(BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers{
+//    return NO;
+//}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
 }
 
--(BOOL)shouldAutomaticallyForwardRotationMethods{
-    return NO;
-}
-
--(BOOL)automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers{
+- (BOOL)shouldAutorotate {
     return NO;
 }
 
@@ -782,9 +790,9 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     }
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    return YES;
-}
+//-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+//    return YES;
+//}
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];

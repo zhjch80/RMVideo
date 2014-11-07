@@ -25,7 +25,7 @@
 #import "UMSocialQQHandler.h"
 #import "iflyMSC/iflySetting.h"
 #import "iflyMSC/IFlySpeechUtility.h"
-
+#import "RMCustomNavViewController.h"
 
 #define COLOR_RGB(r,g,b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1]
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
@@ -144,17 +144,17 @@
 }
 
 - (void)initMainViewController {
-    UINavigationController * leftMenuNav = [[UINavigationController alloc] initWithRootViewController:[[LeftMenuViewController alloc] init]];
+    RMCustomNavViewController * leftMenuNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[LeftMenuViewController alloc] init]];
     
-    UINavigationController * rightMenuNav = [[UINavigationController alloc] initWithRootViewController:[[RightMenuViewController alloc] init]];
+    RMCustomNavViewController * rightMenuNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[RightMenuViewController alloc] init]];
     
-    UINavigationController * recommendedDailyNav = [[UINavigationController alloc] initWithRootViewController:[[RMRecommendedDailyViewController alloc] init]];
+    RMCustomNavViewController * recommendedDailyNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[RMRecommendedDailyViewController alloc] init]];
     
-    UINavigationController * soHotListNav = [[UINavigationController alloc] initWithRootViewController:[[RMSoHotListViewController alloc] init]];
+    RMCustomNavViewController * soHotListNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[RMSoHotListViewController alloc] init]];
     
-    UINavigationController * starNav = [[UINavigationController alloc] initWithRootViewController:[[RMStarViewController alloc] init]];
+    RMCustomNavViewController * starNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[RMStarViewController alloc] init]];
     
-    UINavigationController * myChannelNav = [[UINavigationController alloc] initWithRootViewController:[[RMMyChannelViewController alloc] init]];
+    RMCustomNavViewController * myChannelNav = [[RMCustomNavViewController alloc] initWithRootViewController:[[RMMyChannelViewController alloc] init]];
     
     NSArray * ctlsArr = [NSArray arrayWithObjects:recommendedDailyNav, soHotListNav, starNav, myChannelNav, nil];
     

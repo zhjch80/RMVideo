@@ -45,16 +45,6 @@
 		1D357D131A0B07AD000C5C44 /* RMPublicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D101A0B07AD000C5C44 /* RMPublicModel.m */; };
 		1D357D161A0B07D9000C5C44 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D141A0B07D9000C5C44 /* MediaPlayer.framework */; };
 		1D357D171A0B07D9000C5C44 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D151A0B07D9000C5C44 /* MediaToolbox.framework */; };
-		1D357D201A0B08F3000C5C44 /* next_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D1B1A0B08F3000C5C44 /* next_btn.png */; };
-		1D357D211A0B08F3000C5C44 /* fastforward.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D1C1A0B08F3000C5C44 /* fastforward.png */; };
-		1D357D221A0B08F3000C5C44 /* retreatquickly.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D1D1A0B08F3000C5C44 /* retreatquickly.png */; };
-		1D357D231A0B08F3000C5C44 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D1E1A0B08F3000C5C44 /* pause.png */; };
-		1D357D241A0B08F3000C5C44 /* play_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D1F1A0B08F3000C5C44 /* play_btn.png */; };
-		1D357D2C1A0B0900000C5C44 /* CustomVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D261A0B0900000C5C44 /* CustomVideoPlayerView.m */; };
-		1D357D2D1A0B0900000C5C44 /* CustomSVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D281A0B0900000C5C44 /* CustomSVProgressHUD.m */; };
-		1D357D2E1A0B0900000C5C44 /* CustomSVProgressHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357D291A0B0900000C5C44 /* CustomSVProgressHUD.xib */; };
-		1D357D2F1A0B0900000C5C44 /* TouchVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D2B1A0B0900000C5C44 /* TouchVIew.m */; };
-		1D357D321A0B0928000C5C44 /* CustomVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D311A0B0928000C5C44 /* CustomVideoPlayerController.m */; };
 		1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */; };
 		1D4C35CB19F5F8D800AC8F1E /* 001.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C219F5F8D800AC8F1E /* 001.png */; };
 		1D4C35CC19F5F8D800AC8F1E /* 002.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35C319F5F8D800AC8F1E /* 002.png */; };
@@ -414,6 +404,17 @@
 		1DED75C41A0B59BF004ADBD1 /* jr_Variety.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED75BB1A0B59BF004ADBD1 /* jr_Variety.png */; };
 		1DED75C51A0B59BF004ADBD1 /* jr_Variety@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED75BC1A0B59BF004ADBD1 /* jr_Variety@2x.png */; };
 		1DED75C61A0B59BF004ADBD1 /* zongyi@3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED75BD1A0B59BF004ADBD1 /* zongyi@3.png */; };
+		1DED761C1A0C5168004ADBD1 /* RMCustomNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DED761B1A0C5168004ADBD1 /* RMCustomNavViewController.m */; };
+		1DED762B1A0C51DB004ADBD1 /* CustomSVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DED761F1A0C51DB004ADBD1 /* CustomSVProgressHUD.m */; };
+		1DED762C1A0C51DB004ADBD1 /* CustomSVProgressHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76201A0C51DB004ADBD1 /* CustomSVProgressHUD.xib */; };
+		1DED762D1A0C51DB004ADBD1 /* CustomVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DED76221A0C51DB004ADBD1 /* CustomVideoPlayerView.m */; };
+		1DED762E1A0C51DB004ADBD1 /* fastforward.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76241A0C51DB004ADBD1 /* fastforward.png */; };
+		1DED762F1A0C51DB004ADBD1 /* next_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76251A0C51DB004ADBD1 /* next_btn.png */; };
+		1DED76301A0C51DB004ADBD1 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76261A0C51DB004ADBD1 /* pause.png */; };
+		1DED76311A0C51DB004ADBD1 /* play_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76271A0C51DB004ADBD1 /* play_btn.png */; };
+		1DED76321A0C51DB004ADBD1 /* retreatquickly.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DED76281A0C51DB004ADBD1 /* retreatquickly.png */; };
+		1DED76331A0C51DB004ADBD1 /* TouchVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DED762A1A0C51DB004ADBD1 /* TouchVIew.m */; };
+		1DED76361A0C521C004ADBD1 /* CustomVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DED76351A0C521C004ADBD1 /* CustomVideoPlayerController.m */; };
 		912C099419F8D79E006B6305 /* movie_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C098C19F8D79E006B6305 /* movie_selected.png */; };
 		912C099519F8D79E006B6305 /* movie_unSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C098D19F8D79E006B6305 /* movie_unSelected.png */; };
 		912C099619F8D79E006B6305 /* paly_bg_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C098E19F8D79E006B6305 /* paly_bg_img.png */; };
@@ -595,20 +596,6 @@
 		1D357D101A0B07AD000C5C44 /* RMPublicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPublicModel.m; sourceTree = "<group>"; };
 		1D357D141A0B07D9000C5C44 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		1D357D151A0B07D9000C5C44 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
-		1D357D1B1A0B08F3000C5C44 /* next_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next_btn.png; sourceTree = "<group>"; };
-		1D357D1C1A0B08F3000C5C44 /* fastforward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fastforward.png; sourceTree = "<group>"; };
-		1D357D1D1A0B08F3000C5C44 /* retreatquickly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retreatquickly.png; sourceTree = "<group>"; };
-		1D357D1E1A0B08F3000C5C44 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
-		1D357D1F1A0B08F3000C5C44 /* play_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_btn.png; sourceTree = "<group>"; };
-		1D357D251A0B0900000C5C44 /* CustomVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomVideoPlayerView.h; sourceTree = "<group>"; };
-		1D357D261A0B0900000C5C44 /* CustomVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerView.m; sourceTree = "<group>"; };
-		1D357D271A0B0900000C5C44 /* CustomSVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSVProgressHUD.h; sourceTree = "<group>"; };
-		1D357D281A0B0900000C5C44 /* CustomSVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSVProgressHUD.m; sourceTree = "<group>"; };
-		1D357D291A0B0900000C5C44 /* CustomSVProgressHUD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomSVProgressHUD.xib; sourceTree = "<group>"; };
-		1D357D2A1A0B0900000C5C44 /* TouchVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchVIew.h; sourceTree = "<group>"; };
-		1D357D2B1A0B0900000C5C44 /* TouchVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchVIew.m; sourceTree = "<group>"; };
-		1D357D301A0B0928000C5C44 /* CustomVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomVideoPlayerController.h; sourceTree = "<group>"; };
-		1D357D311A0B0928000C5C44 /* CustomVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerController.m; sourceTree = "<group>"; };
 		1D357D341A0B2381000C5C44 /* DAAutoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAAutoScrollView.h; sourceTree = "<group>"; };
 		1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAAutoScrollView.m; sourceTree = "<group>"; };
 		1D4C35C219F5F8D800AC8F1E /* 001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001.png; sourceTree = "<group>"; };
@@ -1114,6 +1101,22 @@
 		1DED75BB1A0B59BF004ADBD1 /* jr_Variety.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jr_Variety.png; sourceTree = "<group>"; };
 		1DED75BC1A0B59BF004ADBD1 /* jr_Variety@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jr_Variety@2x.png"; sourceTree = "<group>"; };
 		1DED75BD1A0B59BF004ADBD1 /* zongyi@3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zongyi@3.png"; sourceTree = "<group>"; };
+		1DED761A1A0C5168004ADBD1 /* RMCustomNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCustomNavViewController.h; sourceTree = "<group>"; };
+		1DED761B1A0C5168004ADBD1 /* RMCustomNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCustomNavViewController.m; sourceTree = "<group>"; };
+		1DED761E1A0C51DB004ADBD1 /* CustomSVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSVProgressHUD.h; sourceTree = "<group>"; };
+		1DED761F1A0C51DB004ADBD1 /* CustomSVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSVProgressHUD.m; sourceTree = "<group>"; };
+		1DED76201A0C51DB004ADBD1 /* CustomSVProgressHUD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomSVProgressHUD.xib; sourceTree = "<group>"; };
+		1DED76211A0C51DB004ADBD1 /* CustomVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomVideoPlayerView.h; sourceTree = "<group>"; };
+		1DED76221A0C51DB004ADBD1 /* CustomVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerView.m; sourceTree = "<group>"; };
+		1DED76241A0C51DB004ADBD1 /* fastforward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fastforward.png; sourceTree = "<group>"; };
+		1DED76251A0C51DB004ADBD1 /* next_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next_btn.png; sourceTree = "<group>"; };
+		1DED76261A0C51DB004ADBD1 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		1DED76271A0C51DB004ADBD1 /* play_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_btn.png; sourceTree = "<group>"; };
+		1DED76281A0C51DB004ADBD1 /* retreatquickly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retreatquickly.png; sourceTree = "<group>"; };
+		1DED76291A0C51DB004ADBD1 /* TouchVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchVIew.h; sourceTree = "<group>"; };
+		1DED762A1A0C51DB004ADBD1 /* TouchVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchVIew.m; sourceTree = "<group>"; };
+		1DED76341A0C521C004ADBD1 /* CustomVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomVideoPlayerController.h; sourceTree = "<group>"; };
+		1DED76351A0C521C004ADBD1 /* CustomVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerController.m; sourceTree = "<group>"; };
 		910169981A00D7B70028A5EA /* CONSTURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CONSTURL.h; sourceTree = "<group>"; };
 		912C098C19F8D79E006B6305 /* movie_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie_selected.png; sourceTree = "<group>"; };
 		912C098D19F8D79E006B6305 /* movie_unSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie_unSelected.png; sourceTree = "<group>"; };
@@ -1384,40 +1387,14 @@
 			path = NetworkAndSQLite;
 			sourceTree = "<group>";
 		};
-		1D357D181A0B08B4000C5C44 /* CustomPlay */ = {
-			isa = PBXGroup;
-			children = (
-				1D357D1A1A0B08E4000C5C44 /* resources */,
-				1D357D251A0B0900000C5C44 /* CustomVideoPlayerView.h */,
-				1D357D261A0B0900000C5C44 /* CustomVideoPlayerView.m */,
-				1D357D271A0B0900000C5C44 /* CustomSVProgressHUD.h */,
-				1D357D281A0B0900000C5C44 /* CustomSVProgressHUD.m */,
-				1D357D291A0B0900000C5C44 /* CustomSVProgressHUD.xib */,
-				1D357D2A1A0B0900000C5C44 /* TouchVIew.h */,
-				1D357D2B1A0B0900000C5C44 /* TouchVIew.m */,
-			);
-			path = CustomPlay;
-			sourceTree = "<group>";
-		};
 		1D357D191A0B08BF000C5C44 /* RMCustomVideoPlay */ = {
 			isa = PBXGroup;
 			children = (
-				1D357D301A0B0928000C5C44 /* CustomVideoPlayerController.h */,
-				1D357D311A0B0928000C5C44 /* CustomVideoPlayerController.m */,
+				1DED76341A0C521C004ADBD1 /* CustomVideoPlayerController.h */,
+				1DED76351A0C521C004ADBD1 /* CustomVideoPlayerController.m */,
+				1DED761D1A0C51DB004ADBD1 /* CustomPlay */,
 			);
 			path = RMCustomVideoPlay;
-			sourceTree = "<group>";
-		};
-		1D357D1A1A0B08E4000C5C44 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				1D357D1B1A0B08F3000C5C44 /* next_btn.png */,
-				1D357D1C1A0B08F3000C5C44 /* fastforward.png */,
-				1D357D1D1A0B08F3000C5C44 /* retreatquickly.png */,
-				1D357D1E1A0B08F3000C5C44 /* pause.png */,
-				1D357D1F1A0B08F3000C5C44 /* play_btn.png */,
-			);
-			path = resources;
 			sourceTree = "<group>";
 		};
 		1D357D331A0B2378000C5C44 /* AutoScrollView */ = {
@@ -1543,7 +1520,6 @@
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
 				1D357D331A0B2378000C5C44 /* AutoScrollView */,
-				1D357D181A0B08B4000C5C44 /* CustomPlay */,
 				1D357C911A076A0F000C5C44 /* PulsingHalo */,
 				1D847F021A0324CF00A92879 /* umeng_ios_social_sdk_4.2_custom */,
 				913D15AC1A01E4BB000A50E2 /* SDWebImage */,
@@ -1794,6 +1770,8 @@
 				1DAB0D7119EBDBB10063A58E /* HJMTabBar.h */,
 				1DAB0D7219EBDBB10063A58E /* HJMTabBar.m */,
 				1DAB0D7319EBDBB10063A58E /* HJMTabBar.xib */,
+				1DED761A1A0C5168004ADBD1 /* RMCustomNavViewController.h */,
+				1DED761B1A0C5168004ADBD1 /* RMCustomNavViewController.m */,
 			);
 			path = Tabbar;
 			sourceTree = "<group>";
@@ -2855,6 +2833,33 @@
 			path = AFSoundManager;
 			sourceTree = "<group>";
 		};
+		1DED761D1A0C51DB004ADBD1 /* CustomPlay */ = {
+			isa = PBXGroup;
+			children = (
+				1DED76211A0C51DB004ADBD1 /* CustomVideoPlayerView.h */,
+				1DED76221A0C51DB004ADBD1 /* CustomVideoPlayerView.m */,
+				1DED761E1A0C51DB004ADBD1 /* CustomSVProgressHUD.h */,
+				1DED761F1A0C51DB004ADBD1 /* CustomSVProgressHUD.m */,
+				1DED76201A0C51DB004ADBD1 /* CustomSVProgressHUD.xib */,
+				1DED76291A0C51DB004ADBD1 /* TouchVIew.h */,
+				1DED762A1A0C51DB004ADBD1 /* TouchVIew.m */,
+				1DED76231A0C51DB004ADBD1 /* resources */,
+			);
+			path = CustomPlay;
+			sourceTree = "<group>";
+		};
+		1DED76231A0C51DB004ADBD1 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				1DED76241A0C51DB004ADBD1 /* fastforward.png */,
+				1DED76251A0C51DB004ADBD1 /* next_btn.png */,
+				1DED76261A0C51DB004ADBD1 /* pause.png */,
+				1DED76271A0C51DB004ADBD1 /* play_btn.png */,
+				1DED76281A0C51DB004ADBD1 /* retreatquickly.png */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		913D15AC1A01E4BB000A50E2 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -3043,7 +3048,6 @@
 				1D71171419ED27230007D393 /* teleplay_selected@2x.png in Resources */,
 				918DE7201A063A9B00287E06 /* hotPlay_yuebang@2x.png in Resources */,
 				1D357CA41A07AEB5000C5C44 /* RMStarSearchResultCell.xib in Resources */,
-				1D357D211A0B08F3000C5C44 /* fastforward.png in Resources */,
 				1D71170619ED26000007D393 /* loginOut@2x.png in Resources */,
 				1D4C365319F6051800AC8F1E /* SoHotList_black.png in Resources */,
 				1D71172319EE227B0007D393 /* mx_voiceBtn_img@2x.png in Resources */,
@@ -3077,7 +3081,6 @@
 				1D4C35DC19F5F8E000AC8F1E /* Default@2x.png in Resources */,
 				1DAB0D1619EB647E0063A58E /* refresh_bg.png in Resources */,
 				1D357CBD1A09D863000C5C44 /* 缓存电视剧.png in Resources */,
-				1D357D221A0B08F3000C5C44 /* retreatquickly.png in Resources */,
 				1D8481511A03633400A92879 /* RMSoHotListViewController.xib in Resources */,
 				918DE7221A063A9B00287E06 /* hotPlay_zhoubang.png in Resources */,
 				1D847F361A0324D000A92879 /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -3096,7 +3099,9 @@
 				1D4C362419F6050700AC8F1E /* 更多2.png in Resources */,
 				91908CDD19FA3C3300C3DF09 /* cancle_btn_image@2x.png in Resources */,
 				1D8481A31A03633400A92879 /* RMUserFeedbackViewController.xib in Resources */,
+				1DED762E1A0C51DB004ADBD1 /* fastforward.png in Resources */,
 				1D8481611A03633400A92879 /* RMMyChannelShouldSeeViewController.xib in Resources */,
+				1DED762C1A0C51DB004ADBD1 /* CustomSVProgressHUD.xib in Resources */,
 				91908CC719FA355A00C3DF09 /* finish_downLoad_noselectImage@2x.png in Resources */,
 				91B2C2441A07173D001F0220 /* undelect_all_btn@2x.png in Resources */,
 				1D4C367019F6054100AC8F1E /* tv_down_succes@2x.png in Resources */,
@@ -3140,7 +3145,6 @@
 				1D4C362919F6050700AC8F1E /* complete_img.png in Resources */,
 				1D7116FF19ED21270007D393 /* 3jr_teleplay@2x.png in Resources */,
 				1D8481591A03633400A92879 /* RMDailyTVViewController.xib in Resources */,
-				1D357D241A0B08F3000C5C44 /* play_btn.png in Resources */,
 				1D4C35FC19F5F91800AC8F1E /* tv_download-test.png in Resources */,
 				1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */,
 				1D84815F1A03633400A92879 /* RMMyChannelViewController.xib in Resources */,
@@ -3174,7 +3178,6 @@
 				1D4C362819F6050700AC8F1E /* cancel_img@2x.png in Resources */,
 				1D8481551A03633400A92879 /* RMDailyListViewController.xib in Resources */,
 				1D357CC91A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png in Resources */,
-				1D357D2E1A0B0900000C5C44 /* CustomSVProgressHUD.xib in Resources */,
 				1DAB0DB819ECC2EC0063A58E /* SoHotList_black@2x.png in Resources */,
 				91908CCD19FA355A00C3DF09 /* show_count_bg_image@2x.png in Resources */,
 				1D71170419ED26000007D393 /* cell_accessoryType_white.png in Resources */,
@@ -3197,6 +3200,7 @@
 				1D4FC51C19F8B08E00366F31 /* onVoice_2@2x.png in Resources */,
 				1D4C35F719F5F91800AC8F1E /* logo_tx@2x.png in Resources */,
 				91908CB219FA30E400C3DF09 /* Star_red@3x.png in Resources */,
+				1DED76301A0C51DB004ADBD1 /* pause.png in Resources */,
 				91908CC819FA355A00C3DF09 /* finish_downLoad_selectImage@2x.png in Resources */,
 				918DE70E1A062BFD00287E06 /* movie_unSelected@3x.png in Resources */,
 				1D71172919EE45180007D393 /* backup_img@2x.png in Resources */,
@@ -3210,6 +3214,7 @@
 				918DE7241A063A9B00287E06 /* hotPlay_zhoubang@3x.png in Resources */,
 				91908CCB19FA355A00C3DF09 /* open_all_back_image.png in Resources */,
 				912E0CE719F7B34D00CFBE77 /* RMLaunchScreen.xib in Resources */,
+				1DED762F1A0C51DB004ADBD1 /* next_btn.png in Resources */,
 				1D4C35DA19F5F8E000AC8F1E /* Default-568h@2x.png in Resources */,
 				912C099B19F8D79E006B6305 /* variety_unSelected.png in Resources */,
 				91908CDF19FA3C3300C3DF09 /* complete_btn_image@2x.png in Resources */,
@@ -3225,10 +3230,11 @@
 				91D4EC8919FB82E1005E9235 /* 图片上叠加的暂停.png in Resources */,
 				1DAB0D1019EB647E0063A58E /* blueArrow.png in Resources */,
 				1D71171819ED27230007D393 /* movie_unSelected@2x.png in Resources */,
+				1DED76321A0C51DB004ADBD1 /* retreatquickly.png in Resources */,
 				912C099619F8D79E006B6305 /* paly_bg_img.png in Resources */,
 				1D4C35F419F5F91800AC8F1E /* logo_ls@2x.png in Resources */,
+				1DED76311A0C51DB004ADBD1 /* play_btn.png in Resources */,
 				1D4C364119F6050700AC8F1E /* mx_rateFull_img.png in Resources */,
-				1D357D231A0B08F3000C5C44 /* pause.png in Resources */,
 				1D4C362519F6050700AC8F1E /* back@2x.png in Resources */,
 				1D4C35F319F5F91800AC8F1E /* logo_aqy@2x.png in Resources */,
 				91B2C23D1A07173D001F0220 /* delect_all_btn@3x.png in Resources */,
@@ -3273,7 +3279,6 @@
 				1DAB0D1319EB647E0063A58E /* blueArrow_up@2x.png in Resources */,
 				1D71171E19EE17A10007D393 /* mx_searchBar@2x.png in Resources */,
 				918DE72F1A0651D100287E06 /* select_all_btn.png in Resources */,
-				1D357D201A0B08F3000C5C44 /* next_btn.png in Resources */,
 				1D4C363619F6050700AC8F1E /* logo_td.png in Resources */,
 				91908CAD19FA30E400C3DF09 /* RecommendedDaily_black@3x.png in Resources */,
 				1D71175619EF9A2E0007D393 /* tv_back_imge@2x.png in Resources */,
@@ -3394,6 +3399,7 @@
 				1D8481961A03633400A92879 /* RMDownLoadingTableViewCell.m in Sources */,
 				1D8481661A03633400A92879 /* RMSearchViewController.m in Sources */,
 				1D84814C1A03633400A92879 /* RMRecommendedDailyTableViewCell.m in Sources */,
+				1DED76331A0C51DB004ADBD1 /* TouchVIew.m in Sources */,
 				1D4D47FD19D7B42800E3A50B /* UIProgressView+AFNetworking.m in Sources */,
 				1D8481471A03633400A92879 /* RMBaseViewController.m in Sources */,
 				1DA2AC6E19F65F5B0036C1AD /* SBJson4StreamParserState.m in Sources */,
@@ -3407,8 +3413,8 @@
 				1D84815C1A03633400A92879 /* RMMyChannelCell.m in Sources */,
 				913D15D11A01E4BB000A50E2 /* SDWebImageCompat.m in Sources */,
 				1D4D47B619D7B41C00E3A50B /* NSString+Base64.m in Sources */,
-				1D357D2F1A0B0900000C5C44 /* TouchVIew.m in Sources */,
 				1D99745D19E92D62007E53DB /* DBImageRequest.m in Sources */,
+				1DED762D1A0C51DB004ADBD1 /* CustomVideoPlayerView.m in Sources */,
 				1DA2AC7219F65F5B0036C1AD /* SBJson4Writer.m in Sources */,
 				1D8481821A03633400A92879 /* RMVideoCreativeStaffCell.m in Sources */,
 				1D357D111A0B07AD000C5C44 /* Database.m in Sources */,
@@ -3445,8 +3451,9 @@
 				1D4D47BB19D7B41C00E3A50B /* AFURLSessionManager.m in Sources */,
 				1D84818C1A03633400A92879 /* RMSetupViewController.m in Sources */,
 				1D4D47F819D7B42800E3A50B /* AFNetworkActivityIndicatorManager.m in Sources */,
+				1DED762B1A0C51DB004ADBD1 /* CustomSVProgressHUD.m in Sources */,
+				1DED76361A0C521C004ADBD1 /* CustomVideoPlayerController.m in Sources */,
 				1D4D47BE19D7B41C00E3A50B /* AFURLRequestSerialization.m in Sources */,
-				1D357D2D1A0B0900000C5C44 /* CustomSVProgressHUD.m in Sources */,
 				1D84814E1A03633400A92879 /* RMRecommendedDailyViewController.m in Sources */,
 				1D84818E1A03633400A92879 /* RMAboutAppViewController.m in Sources */,
 				1D16BC0619E66558008BBB08 /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -3461,7 +3468,6 @@
 				1D4D47B919D7B41C00E3A50B /* AFURLConnectionOperation.m in Sources */,
 				1D99741B19E90814007E53DB /* SDiPhoneVersion.m in Sources */,
 				1D8481441A03633400A92879 /* RMBaseLabel.m in Sources */,
-				1D357D321A0B0928000C5C44 /* CustomVideoPlayerController.m in Sources */,
 				1D84814B1A03633400A92879 /* UIButton+EnlargeEdge.m in Sources */,
 				1D8481AA1A03633400A92879 /* RightMenuViewController.m in Sources */,
 				1D8481A21A03633400A92879 /* RMUserFeedbackViewController.m in Sources */,
@@ -3476,7 +3482,6 @@
 				1D4D47BA19D7B41C00E3A50B /* AFHTTPSessionManager.m in Sources */,
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
 				913D15D91A01E4BB000A50E2 /* UIImage+MultiFormat.m in Sources */,
-				1D357D2C1A0B0900000C5C44 /* CustomVideoPlayerView.m in Sources */,
 				1D4D47ED19D7B42800E3A50B /* CUSFileStorage.m in Sources */,
 				1D99745E19E92D62007E53DB /* DBImageView.m in Sources */,
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
@@ -3534,6 +3539,7 @@
 				1D4D47BC19D7B41C00E3A50B /* AFNetworkReachabilityManager.m in Sources */,
 				1D7117AF19EFAB5B0007D393 /* RatingView.m in Sources */,
 				1D16BC0119E664D0008BBB08 /* MMDrawerController.m in Sources */,
+				1DED761C1A0C5168004ADBD1 /* RMCustomNavViewController.m in Sources */,
 				913D15D31A01E4BB000A50E2 /* SDWebImageDownloader.m in Sources */,
 				1D8481501A03633400A92879 /* RMSoHotListViewController.m in Sources */,
 				1D357C941A076A1C000C5C44 /* PulsingHaloLayer.m in Sources */,

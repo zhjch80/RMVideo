@@ -29,6 +29,7 @@
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
 #import "RMLoginViewController.h"
+#import "RMCustomNavViewController.h"
 
 typedef enum{
     requestStarListType = 1,
@@ -578,7 +579,7 @@ typedef enum{
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-        UINavigationController * loginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+        RMCustomNavViewController * loginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
         [self presentViewController:loginNav animated:YES completion:^{
         }];
         return;
@@ -864,7 +865,7 @@ typedef enum{
         [SVProgressHUD dismiss];
         RMStarSearchResultViewController * starSearchResultCtl = [[RMStarSearchResultViewController alloc] init];
         starSearchResultCtl.resultData = data;
-        UINavigationController * searchResultNav = [[UINavigationController alloc] initWithRootViewController:starSearchResultCtl];
+        RMCustomNavViewController * searchResultNav = [[RMCustomNavViewController alloc] initWithRootViewController:starSearchResultCtl];
         [self presentViewController:searchResultNav animated:YES completion:^{
             [self showStarVoiceView:NO WithShowVoiceImage:NO WithShowTableView:NO];
             ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;

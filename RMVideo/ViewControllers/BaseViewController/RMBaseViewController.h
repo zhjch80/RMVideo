@@ -21,6 +21,7 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 
+#define PLAYHISTORYLISTNAME @"PlayHistoryListname"
 
 @interface RMBaseViewController : UIViewController<RMAFNRequestManagerDelegate>{
     UIButton *leftBarButton;

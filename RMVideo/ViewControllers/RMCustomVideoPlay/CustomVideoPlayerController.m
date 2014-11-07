@@ -60,6 +60,14 @@
     [super viewDidLoad];
     [self createPlayerView];
     [self createTopTool];
+//    [self rotatingView:self.view];
+}
+
+- (UIView *)rotatingView:(UIView *)view {
+    CGAffineTransform transform = view.transform;
+    transform =  CGAffineTransformRotate(transform, (M_PI / 2.0));
+    view.transform = transform;
+    return view;
 }
 
 /**
@@ -116,6 +124,7 @@
         self.player.tintColor = [UIColor redColor];
         [self.view addSubview:self.player];
     }
+    NSLog(@"self.playURL:%@",self.playURL);
     [self playerWithURL:nil];
     NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     [self.player setSelectionEpisodeScrollViewWithArray:array];
@@ -124,8 +133,8 @@
 - (void)playerWithURL:(NSString *)url {
     NSLog(@"start play video!!!");
     
-    NSString * str = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
-    NSURL * _URL = [NSURL fileURLWithPath:str];
+    NSString * str = [NSString stringWithFormat:@"http://v.jxvdy.com/sendfile/uGQdmV1QnPUVbXGm3VJ93BePTmo26-5deMtQ4sfvjJpJ1OoyCA9yJv16Hs4QvkRqzjtPagtk_dt5nJecAj0xDzdhtvIMBA"];
+    NSURL * _URL = [NSURL URLWithString:str];
 
     [self.player contentURL:_URL];
     [self.player play];
@@ -135,7 +144,7 @@
     [self.player setIsFullScreenMode:YES];
     [self.player zoomButtonPressed];
     //跳转到2分10秒处播放
-    [self.player setAVPlayerWithTime:130];
+    //[self.player setAVPlayerWithTime:130];
 }
 -(void)playerFinishedPlayback:(CustomVideoPlayerView*)view{
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -160,14 +169,14 @@
     [super didReceiveMemoryWarning];
 }
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
 }
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
+//
+//#pragma mark -
+//
+- (BOOL)shouldAutorotate {
+    return NO;
 }
 
 @end

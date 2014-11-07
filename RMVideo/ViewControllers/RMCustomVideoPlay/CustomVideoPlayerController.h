@@ -10,4 +10,6 @@
 
 @interface CustomVideoPlayerController : UIViewController
 
+@property (nonatomic,copy) NSString *playURL;
+
 @end

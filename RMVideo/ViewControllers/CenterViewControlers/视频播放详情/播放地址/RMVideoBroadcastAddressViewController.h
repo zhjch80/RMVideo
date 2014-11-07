@@ -9,6 +9,7 @@
 #import "RMBaseViewController.h"
 
 @interface RMVideoBroadcastAddressViewController : RMBaseViewController
+@property (nonatomic, assign) id videoPlayDelegate;
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model;
 

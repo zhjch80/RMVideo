@@ -13,6 +13,7 @@
 #import "RMVideoCreativeStaffViewController.h"
 #import "UMSocial.h"
 #import "RMLoginViewController.h"
+#import "RMCustomNavViewController.h"
 
 typedef enum{
     requestVideoContentType = 1,
@@ -107,6 +108,7 @@ typedef enum{
                 }else if (IS_IPHONE_6p_SCREEN){
                 blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
+                blockSelf.videoBroadcastAddressCtl.videoPlayDelegate = blockSelf;
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
                 RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
                 [blockSelf refreshBroadcastAddressDate:model];
@@ -188,7 +190,7 @@ typedef enum{
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
                 RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-                UINavigationController * loginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+                RMCustomNavViewController * loginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
                 [self presentViewController:loginNav animated:YES completion:^{
                 }];
                 return;

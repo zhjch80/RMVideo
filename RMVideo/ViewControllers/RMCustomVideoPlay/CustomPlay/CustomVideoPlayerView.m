@@ -8,6 +8,7 @@
 #import "CustomVideoPlayerView.h"
 #import "UtilityFunc.h"
 #import "CustomSVProgressHUD.h"
+#import "SVProgressHUD.h"
 
 @interface CustomVideoPlayerView ()<TouchViewDelegate>
 
@@ -23,10 +24,13 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     CustomSVProgressHUD *customSVP;
 }
 
+
 //TODO:取消延迟方法，改延迟方法主要是隐藏导航栏和播放控制按钮的视图
 - (void)CustomViewWillDisappear{
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hiddenNavBarAndPlayerHudBottom) object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    [self.playerItem removeObserver:self forKeyPath:@"status"];
+    [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
 }
 - (id)initWithFrame:(CGRect)frame
 {
@@ -39,11 +43,15 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 }
 - (void)contentURL:(NSURL *)contentURL
 {
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     if (self.playerItem) {
         //[self.playerItem removeObserver:self forKeyPath:@"status"];
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:AVPlayerItemDidPlayToEndTimeNotification
                                                       object:self.playerItem];
+        [self.playerItem removeObserver:self forKeyPath:@"status"];
+        [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+
     }
     self.playerItem = [AVPlayerItem playerItemWithURL:contentURL];
     self.moviePlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
@@ -52,6 +60,9 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.moviePlayer seekToTime:kCMTimeZero];
     [self.layer addSublayer:self.playerLayer];
     self.contentURL = contentURL;
+    
+    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];// 监听status属性
+    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];// 监听loadedTimeRanges属性
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerFinishedPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
 
     [self initializePlayer:self.frame];
@@ -117,6 +128,10 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.playBackTotalTime setTextColor:[UIColor whiteColor]];
     self.playBackTotalTime.font = [UIFont systemFontOfSize:12*frameWidth/240];
     [self.playerHudBottom addSubview:self.playBackTotalTime];
+    
+    self.videoProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(150, 25, frameWidth-10, 30)];
+    [self.playerHudBottom addSubview:self.videoProgress];
+    
     //跟踪电影播放的进度条
     self.progressBar = [[UISlider alloc] init];
     self.progressBar.frame = CGRectMake(145, 10, frameWidth, 30);
@@ -292,6 +307,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         [self.delegate playerFinishedPlayback:self];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    [self.playerItem removeObserver:self forKeyPath:@"status"];
+    [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -503,5 +520,102 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     
     [self performSelector:@selector(delayPlay) withObject:self afterDelay:0.1];
     [self setHiddenView];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    AVPlayerItem *playerItem = (AVPlayerItem *)object;
+
+    if ([keyPath isEqualToString:@"status"]) {
+        
+        if ([playerItem status] == AVPlayerStatusReadyToPlay) {
+
+            NSLog(@"AVPlayerStatusReadyToPlay");
+
+            self.playPauseButton.enabled = YES;
+            [SVProgressHUD dismiss];
+
+//            CMTime duration = self.playerItem.duration;// 获取视频总长度
+
+//            CGFloat totalSecond = playerItem.duration.value / playerItem.duration.timescale;// 转换成秒
+
+//            NSString *totalTime = [self convertTime:totalSecond];// 转换成播放时间
+
+//            NSLog(@"movie total duration:%f",CMTimeGetSeconds(duration));
+
+//            [self monitoringPlayback:self.playerItem];// 监听播放状态
+
+        } else if ([playerItem status] == AVPlayerStatusFailed) {
+
+            NSLog(@"AVPlayerStatusFailed");
+            [SVProgressHUD showErrorWithStatus:@"加载失败"];
+
+
+        }
+
+    } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
+
+        NSTimeInterval timeInterval = [self availableDuration];// 计算缓冲进度
+
+//        NSLog(@"Time Interval:%f",timeInterval); 
+
+        CMTime duration = self.playerItem.duration;
+
+        CGFloat totalDuration = CMTimeGetSeconds(duration);
+        [self customVideoSlider:duration];
+
+        [self.videoProgress setProgress:timeInterval / totalDuration animated:YES];
+//        NSLog(@"totalDuration:%f",totalDuration);
+
+    }
+
+}
+
+- (NSTimeInterval)availableDuration {
+    NSArray *loadedTimeRanges = [[self.playerLayer.player currentItem] loadedTimeRanges];
+    CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域
+    float startSeconds = CMTimeGetSeconds(timeRange.start);
+    float durationSeconds = CMTimeGetSeconds(timeRange.duration);
+    NSTimeInterval result = startSeconds + durationSeconds;// 计算缓冲总进度
+    return result;
+}
+
+- (NSString *)convertTime:(CGFloat)second{
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    if (second/3600 >= 1) {
+        [formatter setDateFormat:@"HH:mm:ss"];
+    } else {
+        [formatter setDateFormat:@"mm:ss"];
+    }
+    NSString *showtimeNew = [formatter stringFromDate:d];
+    return showtimeNew;
+}
+//- (void)monitoringPlayback:(AVPlayerItem *)playerItem {
+//
+////    __unsafe_unretained CustomVideoPlayerView *weekSelf = self;
+////    [self.playerLayer.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
+////    
+////        CGFloat currentSecond = playerItem.currentTime.value/playerItem.currentTime.timescale;// 计算当前在第几秒
+////    
+////        NSLog(@"currentSecond:%f",currentSecond);
+////    
+////        NSString *timeString = [weekSelf convertTime:currentSecond];
+////    
+////        NSLog(@"%@",[NSString stringWithFormat:@"%@",timeString]);
+////    
+////    }];
+//    
+//}
+
+- (void)customVideoSlider:(CMTime)duration {
+    
+//    self.progressBar.maximumValue = CMTimeGetSeconds(duration);
+    UIGraphicsBeginImageContextWithOptions((CGSize){ 1, 1 }, NO, 0.0f);
+    UIImage *transparentImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self.progressBar setMinimumTrackImage:transparentImage forState:UIControlStateNormal];
+    [self.progressBar setMaximumTrackImage:transparentImage forState:UIControlStateNormal];
 }
 @end

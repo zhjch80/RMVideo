@@ -20,6 +20,7 @@
 #import "UMSocial.h"
 #import "SDImageCache.h"
 #import <StoreKit/StoreKit.h>
+#import "RMCustomNavViewController.h"
 
 @interface RMSetupViewController ()<UMSocialUIDelegate,SKStoreProductViewControllerDelegate>
 
@@ -253,7 +254,7 @@
     //登录
     if(sender.tag == 1){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-        UINavigationController * LoginNav = [[UINavigationController alloc] initWithRootViewController:loginCtl];
+        RMCustomNavViewController * LoginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
         
         [self presentViewController:LoginNav animated:YES completion:^{
             

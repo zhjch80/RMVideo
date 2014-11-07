@@ -11,11 +11,9 @@
 #import "RMBaseTextField.h"
 #import "RMSearchRecordsCell.h"
 #import "RMSearchResultViewController.h"
-
 //搜索
 #import "AMBlurView.h"
 #import "RMHistoricalRecordsView.h"
-
 //语音
 #import "iflyMSC/IFlySpeechRecognizerDelegate.h"
 #import "iflyMSC/IFlySpeechUtility.h"
@@ -25,6 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
+#import "RMCustomNavViewController.h"
 
 #define searchTextField_TAG             101
 #define cancelBtn_TAG                   102
@@ -363,7 +362,7 @@
     [SVProgressHUD dismiss];
     RMSearchResultViewController * searchResultCtl = [[RMSearchResultViewController alloc] init];
     searchResultCtl.resultData = data;
-    UINavigationController * searchResultNav = [[UINavigationController alloc] initWithRootViewController:searchResultCtl];
+    RMCustomNavViewController * searchResultNav = [[RMCustomNavViewController alloc] initWithRootViewController:searchResultCtl];
     [self presentViewController:searchResultNav animated:YES completion:^{
         [self showVoiceView:NO];
     }];

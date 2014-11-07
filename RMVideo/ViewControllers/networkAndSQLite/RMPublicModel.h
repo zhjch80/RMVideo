@@ -42,4 +42,6 @@
 @property (nonatomic, strong) NSString * is_favorite;
 @property (nonatomic, strong) NSString * keyword;
 @property (nonatomic, strong) NSMutableArray * list;
+@property (nonatomic, strong) NSString *playTime;
+
 @end
