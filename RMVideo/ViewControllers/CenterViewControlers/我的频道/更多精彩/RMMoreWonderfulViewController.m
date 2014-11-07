@@ -7,8 +7,7 @@
 //
 
 #import "RMMoreWonderfulViewController.h"
-#import "RMAddRecommendView.h"
-#import "ZYQSphereView.h"
+#import "AOTagList.h"
 
 /**
  *区分请求类型
@@ -22,14 +21,20 @@ typedef enum{
     requestCustom
 }LoadType;
 
-@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,AddRecommendDelegate,UITextFieldDelegate,RMAFNRequestManagerDelegate> {
+@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,UITextFieldDelegate,RMAFNRequestManagerDelegate,AOTagDelegate> {
     NSMutableArray * dataArr;
     RMAFNRequestManager * request;
     NSInteger pageCount;
     
     LoadType loadType;
-    ZYQSphereView *sphereView;
+    AOTagList *tagList;
 }
+@property (nonatomic, strong) UIScrollView * bgScrView;
+@property (nonatomic, strong) NSMutableArray * tagArr;
+@property (nonatomic, strong) NSMutableArray *randomTag;
+@property (nonatomic, strong) UIButton * changeBtn;
+@property (nonatomic, strong) UIButton * customBtn;
+
 @end
 
 @implementation RMMoreWonderfulViewController
@@ -37,123 +42,84 @@ typedef enum{
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
     loadType = requestListType;
 
     dataArr = [[NSMutableArray alloc] init];
     pageCount = 1;
     
-    [self setTitle:@"我的频道"];
+    [self setTitle:@"更多精彩"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
-    UIScrollView * bgScrView = [[UIScrollView alloc] init];
-    bgScrView.backgroundColor = [UIColor clearColor];
-    bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44);
-    bgScrView.userInteractionEnabled = YES;
-    bgScrView.showsVerticalScrollIndicator = YES;
-    bgScrView.showsHorizontalScrollIndicator = YES;
-    bgScrView.delegate = self;
-    bgScrView.backgroundColor = [UIColor clearColor];
-    [bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
-    [self.view addSubview:bgScrView];
+    self.bgScrView = [[UIScrollView alloc] init];
+    self.bgScrView.backgroundColor = [UIColor clearColor];
+    self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44);
+    self.bgScrView.userInteractionEnabled = YES;
+    self.bgScrView.showsVerticalScrollIndicator = YES;
+    self.bgScrView.showsHorizontalScrollIndicator = YES;
+    self.bgScrView.delegate = self;
+    self.bgScrView.backgroundColor = [UIColor clearColor];
+    [self.bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
+    [self.view addSubview:self.bgScrView];
     
-    sphereView = [[ZYQSphereView alloc] initWithFrame:CGRectMake(10, 60, 300, 300)];
-    sphereView.center=CGPointMake(self.view.center.x, self.view.center.y-30);
-    NSMutableArray *views = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 10; i++) {
-        //		UIButton *subV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        //		subV.backgroundColor = [UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1];
-        //        [subV setTitle:[NSString stringWithFormat:@"天天开心天天开心%d",i] forState:UIControlStateNormal];
-        //        subV.layer.masksToBounds=YES;
-        //        subV.layer.cornerRadius=3;
-        //        [subV addTarget:self action:@selector(subVClick:) forControlEvents:UIControlEventTouchUpInside];
-        //        [views addObject:subV];
-        //		[subV release];
-        
-        
-        UILabel *subV = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
-        subV.text = [NSString stringWithFormat:@"天天天天天天天天天天"];
-        subV.numberOfLines = 2;
-        subV.adjustsFontSizeToFitWidth = YES;
-        subV.backgroundColor = [UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1];
-        //        [subV setTitle:[NSString stringWithFormat:@"天天开心天天开心%d",i] forState:UIControlStateNormal];
-        subV.layer.masksToBounds=YES;
-        subV.layer.cornerRadius=3;
-        //        [subV addTarget:self action:@selector(subVClick:) forControlEvents:UIControlEventTouchUpInside];
-        [views addObject:subV];
-    }
+    self.changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.changeBtn.tag = 101;
+    [self.changeBtn setBackgroundImage:LOADIMAGE(@"changeBtn_img", kImageTypePNG) forState:UIControlStateNormal];
+    [self.changeBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bgScrView addSubview:self.changeBtn];
+    
+    self.customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.customBtn setBackgroundImage:LOADIMAGE(@"customBtn_img", kImageTypePNG) forState:UIControlStateNormal];
+    [self.customBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.customBtn.tag = 102;
+    [self.bgScrView addSubview:self.customBtn];
 
-    [sphereView setItems:views];
-    
-    sphereView.isPanTimerStart=YES;
-    
-    [self.view addSubview:sphereView];
-    [sphereView timerStart];
-    
-
-    
-//    NSInteger value = 1001;
-//    for (int i=0; i<3; i++) {
-//        for (int j=0; j<3; j++) {
-//            RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
-//            addRecommendView.delegate = self;
-//            addRecommendView.tag = value;
-//            addRecommendView.userInteractionEnabled = YES;
-//            [bgScrView addSubview:addRecommendView];
-//            value ++;
-//        }
-//    }
-
-    
-    UILabel * changeTitle = [[UILabel alloc] init];
-    changeTitle.frame = CGRectMake(15, 400, 90, 30);
-    changeTitle.userInteractionEnabled = YES;
-    changeTitle.text = @"换一批";
-    changeTitle.font = [UIFont systemFontOfSize:12.0];
-    changeTitle.textColor = [UIColor colorWithRed:0.8 green:0.08 blue:0.13 alpha:1];
-    changeTitle.textAlignment = NSTextAlignmentCenter;
-    changeTitle.backgroundColor = [UIColor clearColor];
-    [bgScrView addSubview:changeTitle];
-    
-    UIButton * changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    changeBtn.tag = 101;
-    changeBtn.frame = CGRectMake(15, 400, 90, 30);
-    [changeBtn setBackgroundImage:LOADIMAGE(@"re_redFrame", kImageTypePNG) forState:UIControlStateNormal];
-    [changeBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [bgScrView addSubview:changeBtn];
-    
-    UIButton * customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    customBtn.frame = CGRectMake(120, 400, 90, 30);
-    [customBtn setBackgroundImage:LOADIMAGE(@"re_redFrame", kImageTypePNG) forState:UIControlStateNormal];
-    [customBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    customBtn.tag = 102;
-    [bgScrView addSubview:customBtn];
-
+    [self loadTagList];
     
     request = [[RMAFNRequestManager alloc] init];
-    [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"9"];
+    [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"15"];
     request.delegate = self;
-    
 }
 
--(void)subVClick:(UIButton*)sender{
-    NSLog(@"%@",sender.titleLabel.text);
+- (void)resetRandomTagsName {
+    [tagList removeAllTag];
+    self.randomTag = [NSMutableArray arrayWithArray:
+                      @[@{@"title": @"速度发生的"},
+                        @{@"title": @"阿萨德是的"},
+                        @{@"title": @"大师大师大"},
+                        @{@"title": @"阿三打"},
+                        @{@"title": @"撒旦"},
+                        @{@"title": @"阿三达到阿达"},
+                        @{@"title": @"阿三啊大大的撒上撒旦撒旦"},
+                        @{@"title": @"就开工开广东省撒旦士大士大夫"},
+                        @{@"title": @"的发生收到过时尚大方士大夫"},
+                        @{@"title": @"速度发生的士大夫士大夫士大夫"},
+                        @{@"title": @"士大夫士大夫"},
+                        @{@"title": @"士大夫"},
+                        @{@"title": @"士大发夫"},
+                        @{@"title": @"第三方"},
+                        @{@"title": @"士大夫"}]];
+}
+
+- (void)loadTagList {
+    [self resetRandomTagsName];
     
-    BOOL isStart=[sphereView isTimerStart];
+    tagList = [[AOTagList alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 100.0f)];
+    tagList.backgroundColor = [UIColor clearColor];
+    [tagList setDelegate:self];
+    [tagList sizeToFit];
+    [self.bgScrView addSubview:tagList];
     
-    [sphereView timerStop];
+    [self updataTagList];
+}
+
+- (void)updataTagList {
+    [self resetRandomTagsName];
+    [tagList addTags:self.randomTag];
+    [self.randomTag removeAllObjects];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        sender.transform=CGAffineTransformMakeScale(1.5, 1.5);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2 animations:^{
-            sender.transform=CGAffineTransformMakeScale(1, 1);
-            if (isStart) {
-                [sphereView timerStart];
-            }
-        }];
-    }];
+    self.changeBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - ([UtilityFunc shareInstance].globleWidth-25), tagList.frame.size.height+64, 117, 39);
+    self.customBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-25-117, tagList.frame.size.height+64, 117, 39);
 }
 
 #pragma mark - 
@@ -163,7 +129,7 @@ typedef enum{
         case 101:{
             loadType = requestReplace;
             pageCount ++;
-            [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"9"];
+            [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"15"];
             break;
         }
         case 102:{
@@ -201,10 +167,6 @@ typedef enum{
     }
 }
 
-- (void)searchHotTaglibWithKeyWord:(NSString *)keyWords {
-    NSLog(@"keyWords:%@",keyWords);
-}
-
 #pragma mark - AddRecommendDelegate
 
 - (void)startAddDidSelectWithIndex:(NSInteger)index {
@@ -230,25 +192,15 @@ typedef enum{
     }
 }
 
-- (void)refreshTagList {
-    for (int i=1001; i<=1009; i++) {    
-        RMPublicModel *model = [dataArr objectAtIndex:i-1001];
-        RMAddRecommendView * addRecomendView = (RMAddRecommendView *)[self.view viewWithTag:i];
-        addRecomendView.tagTitle.text = model.name;
-        addRecomendView.tagBtn.tag = model.tag_id.integerValue;
-        [addRecomendView.tagTitle sizeToFit];
-    }
-}
-
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestListType){
         dataArr = data;
-        [self refreshTagList];
+        [self updataTagList];
     }else if (loadType == requestReplace){
         dataArr = data;
-        [self refreshTagList];
+        [self updataTagList];
     }else if (loadType == requestCustom){
         RMPublicModel *model = [data objectAtIndex:0];
         if ([model.code integerValue] == 4001) {
@@ -259,7 +211,36 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
-    NSLog(@"更多精彩：error;%@",error);
+    NSLog(@"error;%@",error);
+}
+
+#pragma mark - Tag delegate
+
+- (void)tagDidAddTag:(AOTag *)tag
+{
+    NSLog(@"Tag > %@ has been added", tag);
+}
+
+- (void)tagDidRemoveTag:(AOTag *)tag
+{
+    NSLog(@"Tag > %@ has been removed", tag);
+}
+
+- (void)tagDidSelectTag:(AOTag *)tag
+{
+    NSLog(@"Tag > %@ has been selected", tag);
+}
+
+#pragma mark - Tag delegate
+
+- (void)tagDistantImageDidLoad:(AOTag *)tag
+{
+    NSLog(@"Distant image has been downloaded for tag > %@", tag);
+}
+
+- (void)tagDistantImageDidFailLoad:(AOTag *)tag withError:(NSError *)error
+{
+    NSLog(@"Distant image has failed to download > %@ for tag > %@", error, tag);
 }
 
 - (void)didReceiveMemoryWarning {

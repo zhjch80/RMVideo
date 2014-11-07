@@ -9,7 +9,7 @@
 #import "RMLoginRecommendViewController.h"
 #import "RMAddRecommendView.h"
 
-@interface RMLoginRecommendViewController ()<UIScrollViewDelegate,AddRecommendDelegate>
+@interface RMLoginRecommendViewController ()<UIScrollViewDelegate>
 
 @end
 
@@ -38,14 +38,14 @@
     [bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
     [self.view addSubview:bgScrView];
     
-    for (int i=0; i<3; i++) {
-        for (int j=0; j<3; j++) {
-            RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
-            addRecommendView.delegate = self;
-            addRecommendView.userInteractionEnabled = YES;
-            [bgScrView addSubview:addRecommendView];
-        }
-    }
+//    for (int i=0; i<3; i++) {
+//        for (int j=0; j<3; j++) {
+//            RMAddRecommendView * addRecommendView = [[RMAddRecommendView alloc] initWithFrame:CGRectMake(15 + i*100, 15 + j*60, 90, 30)];
+//            addRecommendView.delegate = self;
+//            addRecommendView.userInteractionEnabled = YES;
+//            [bgScrView addSubview:addRecommendView];
+//        }
+//    }
     
 //TODO:未完成
     
