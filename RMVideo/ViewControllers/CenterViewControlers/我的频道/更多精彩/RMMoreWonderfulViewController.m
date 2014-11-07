@@ -8,6 +8,7 @@
 
 #import "RMMoreWonderfulViewController.h"
 #import "RMAddRecommendView.h"
+#import "ZYQSphereView.h"
 
 /**
  *区分请求类型
@@ -27,6 +28,7 @@ typedef enum{
     NSInteger pageCount;
     
     LoadType loadType;
+    ZYQSphereView *sphereView;
 }
 @end
 
@@ -45,7 +47,6 @@ typedef enum{
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
-    
     UIScrollView * bgScrView = [[UIScrollView alloc] init];
     bgScrView.backgroundColor = [UIColor clearColor];
     bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44);
@@ -57,6 +58,40 @@ typedef enum{
     [bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
     [self.view addSubview:bgScrView];
     
+    sphereView = [[ZYQSphereView alloc] initWithFrame:CGRectMake(10, 60, 300, 300)];
+    sphereView.center=CGPointMake(self.view.center.x, self.view.center.y-30);
+    NSMutableArray *views = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 10; i++) {
+        //		UIButton *subV = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        //		subV.backgroundColor = [UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1];
+        //        [subV setTitle:[NSString stringWithFormat:@"天天开心天天开心%d",i] forState:UIControlStateNormal];
+        //        subV.layer.masksToBounds=YES;
+        //        subV.layer.cornerRadius=3;
+        //        [subV addTarget:self action:@selector(subVClick:) forControlEvents:UIControlEventTouchUpInside];
+        //        [views addObject:subV];
+        //		[subV release];
+        
+        
+        UILabel *subV = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 50)];
+        subV.text = [NSString stringWithFormat:@"天天天天天天天天天天"];
+        subV.numberOfLines = 2;
+        subV.adjustsFontSizeToFitWidth = YES;
+        subV.backgroundColor = [UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1];
+        //        [subV setTitle:[NSString stringWithFormat:@"天天开心天天开心%d",i] forState:UIControlStateNormal];
+        subV.layer.masksToBounds=YES;
+        subV.layer.cornerRadius=3;
+        //        [subV addTarget:self action:@selector(subVClick:) forControlEvents:UIControlEventTouchUpInside];
+        [views addObject:subV];
+    }
+
+    [sphereView setItems:views];
+    
+    sphereView.isPanTimerStart=YES;
+    
+    [self.view addSubview:sphereView];
+    [sphereView timerStart];
+    
+
     
 //    NSInteger value = 1001;
 //    for (int i=0; i<3; i++) {
@@ -100,6 +135,25 @@ typedef enum{
     [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"9"];
     request.delegate = self;
     
+}
+
+-(void)subVClick:(UIButton*)sender{
+    NSLog(@"%@",sender.titleLabel.text);
+    
+    BOOL isStart=[sphereView isTimerStart];
+    
+    [sphereView timerStop];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        sender.transform=CGAffineTransformMakeScale(1.5, 1.5);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2 animations:^{
+            sender.transform=CGAffineTransformMakeScale(1, 1);
+            if (isStart) {
+                [sphereView timerStart];
+            }
+        }];
+    }];
 }
 
 #pragma mark - 
