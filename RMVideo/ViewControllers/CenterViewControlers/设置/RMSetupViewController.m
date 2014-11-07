@@ -21,6 +21,8 @@
 #import "SDImageCache.h"
 #import <StoreKit/StoreKit.h>
 #import "RMCustomNavViewController.h"
+#import "RMLoginRecommendViewController.h"
+#import "RMCustomNavViewController.h"
 
 @interface RMSetupViewController ()<UMSocialUIDelegate,SKStoreProductViewControllerDelegate>
 
@@ -50,9 +52,19 @@
     }
 }
 
+#pragma mark - 登录后即推荐
+
+- (void)loginSuccessRecommendmethod {
+    RMLoginRecommendViewController * loginRecommendCtl = [[RMLoginRecommendViewController alloc] init];
+    RMCustomNavViewController * loginRecommendNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginRecommendCtl];
+    [self presentViewController:loginRecommendNav animated:YES completion:^{
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessRecommendmethod) name:@"loginSuccessRecommendmethod" object:nil];
     
     self.title = @"设置";
     self.headImageView.layer.masksToBounds = YES;

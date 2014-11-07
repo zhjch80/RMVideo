@@ -16,6 +16,7 @@
     RMAFNRequestManager *manager;
 }
 @end
+
 @implementation RMLoginViewController
 
 - (void)viewDidLoad {
@@ -134,9 +135,12 @@
     NSLog(@"error:%@",error);
 }
 
+#pragma mark - 返回上个CTL 并且登录后即推荐
+
 - (void)dissmissCurrentCtl {
     [SVProgressHUD dismiss];
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
     }];
 }
 

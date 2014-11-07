@@ -34,7 +34,6 @@
     return self;
 }
 
-
 - (void)dealloc {
     self.player    = nil;
     self.title     = nil;
@@ -151,10 +150,12 @@
         [UIView animateWithDuration:0.44 animations:^{
             self.topTool.frame = CGRectMake(0, -kTopToolHeight-44, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight);
             [UIApplication sharedApplication].statusBarHidden = YES;
+        } completion:^(BOOL finished) {
         }];
     }else{
         [UIView animateWithDuration:0.44 animations:^{
             self.topTool.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight);
+        } completion:^(BOOL finished) {
             [UIApplication sharedApplication].statusBarHidden = NO;
         }];
     }

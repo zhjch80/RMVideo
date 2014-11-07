@@ -17,6 +17,8 @@
 #import "RMMyChannelShouldSeeViewController.h"
 #import "PullToRefreshTableView.h"
 #import "UMSocial.h"
+#import "RMLoginRecommendViewController.h"
+#import "RMCustomNavViewController.h"
 
 typedef enum{
     usingSinaLogin = 1,
@@ -484,6 +486,7 @@ typedef enum{
         [storage endUpdates];
         [SVProgressHUD dismiss];
         [self refreshCurrentCtl];
+        [self performSelector:@selector(myChannelLoginSuccessRecommendmethod) withObject:nil afterDelay:1];
     }else if (loadType == requestDeleteMyChannel){
         [dataArr removeObjectAtIndex:GetDeleteRow];
         NSIndexPath * indexPath = [NSIndexPath indexPathForRow:GetDeleteRow inSection:0];
@@ -494,6 +497,15 @@ typedef enum{
 
 - (void)requestError:(NSError *)error {
     NSLog(@"error:%@",error);
+}
+
+#pragma mark - 登录后即推荐
+
+- (void)myChannelLoginSuccessRecommendmethod{
+    RMLoginRecommendViewController * loginRecommendCtl = [[RMLoginRecommendViewController alloc] init];
+    RMCustomNavViewController * loginRecommendNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginRecommendCtl];
+    [self presentViewController:loginRecommendNav animated:YES completion:^{
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
