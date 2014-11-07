@@ -138,12 +138,12 @@
 //    return YES;
 //}
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
-}
-
-- (BOOL)shouldAutorotate {
-    return NO;
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+//    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
+//}
+//
+//- (BOOL)shouldAutorotate {
+//    return NO;
+//}
 
 @end

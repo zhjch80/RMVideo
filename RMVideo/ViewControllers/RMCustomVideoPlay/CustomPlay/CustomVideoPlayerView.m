@@ -197,7 +197,6 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         [self.delegate playViewTouchesEnded];
     }
     [self showHud:!viewIsShowing];
-
 }
 
 //弹出选集视图

@@ -10,7 +10,7 @@
 #import "CustomVideoPlayerView.h"
 #import "UtilityFunc.h"
 
-#define kTopToolHeight 44
+#define kTopToolHeight 49
 #define kTopToolTitleHeight 35
 
 #define kVideoTitleX 50
@@ -41,33 +41,15 @@
     self.playList  = nil;
 }
 
-/**
- 播放界面隐藏 statusbar
- */
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        [self prefersStatusBarHidden];
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    }
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return YES;
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createPlayerView];
     [self createTopTool];
-//    [self rotatingView:self.view];
-}
-
-- (UIView *)rotatingView:(UIView *)view {
-    CGAffineTransform transform = view.transform;
-    transform =  CGAffineTransformRotate(transform, (M_PI / 2.0));
-    view.transform = transform;
-    return view;
 }
 
 /**
@@ -83,17 +65,17 @@
     [self.view addSubview:self.topTool];
     
     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"fanhui"]
+    [button setFrame:CGRectMake(10, 18, 25, 25)];
+    [button setImage:[UIImage imageNamed:@"backup_img"]
                   forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"fanhui"]
+    [button setImage:[UIImage imageNamed:@"backup_img"]
                   forState:UIControlStateHighlighted];
-    [button setFrame:CGRectMake(10, 8, 25, 25)];
     [button addTarget:self action:@selector(buttonClick:)
            forControlEvents:UIControlEventTouchUpInside];
     [self.topTool addSubview:button];
     
     self.videoTitle = [[UILabel alloc] init];
-    [self.videoTitle setFrame:CGRectMake(kVideoTitleX, 5, [UtilityFunc shareInstance].globleWidth - kVideoTitleX - 10, kTopToolTitleHeight)];
+    [self.videoTitle setFrame:CGRectMake(kVideoTitleX, 15, [UtilityFunc shareInstance].globleWidth - kVideoTitleX - 10, kTopToolTitleHeight)];
     self.videoTitle.font = [UIFont systemFontOfSize:16.0];
     self.videoTitle.backgroundColor = [UIColor clearColor];
     self.videoTitle.userInteractionEnabled = YES;
@@ -107,7 +89,10 @@
 
 - (void)buttonClick:(UIButton *)sender {
     [self.player CustomViewWillDisappear];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        [self.player pause];
+    }];
 }
 
 /**
@@ -131,12 +116,23 @@
 }
 
 - (void)playerWithURL:(NSString *)url {
-    NSLog(@"start play video!!!");
+    if ([url hasPrefix:@"\n"]) {
+        url = [url stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    }
     
-    NSString * str = [NSString stringWithFormat:@"http://v.jxvdy.com/sendfile/uGQdmV1QnPUVbXGm3VJ93BePTmo26-5deMtQ4sfvjJpJ1OoyCA9yJv16Hs4QvkRqzjtPagtk_dt5nJecAj0xDzdhtvIMBA"];
-    NSURL * _URL = [NSURL URLWithString:str];
+    NSString * str = [NSString stringWithFormat:@"http://106.38.249.114/youku/656E038DFE447BC536B83461/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4"];
+    
+#if 1
+    NSURL * URL = [NSURL URLWithString:str];
 
-    [self.player contentURL:_URL];
+//    NSURL * URL=[[NSURL alloc] initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    NSURL * URL = [NSURL URLWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+#else
+    NSString * str = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
+    NSURL * URL = [NSURL fileURLWithPath:str];
+#endif
+
+    [self.player contentURL:URL];
     [self.player play];
     self.player.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth);
     self.videoTitle.frame = CGRectMake(kVideoTitleX, kVideoTitleY, [UtilityFunc shareInstance].globleAllHeight - kVideoTitleX - 10, kTopToolTitleHeight);
@@ -152,12 +148,14 @@
 }
 -(void)playViewTouchesEnded{
     if(self.topTool.frame.origin.y==0){
-        [UIView animateWithDuration:0.3 animations:^{
-            self.topTool.frame = CGRectMake(0, -kTopToolHeight, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight);
+        [UIView animateWithDuration:0.44 animations:^{
+            self.topTool.frame = CGRectMake(0, -kTopToolHeight-44, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight);
+            [UIApplication sharedApplication].statusBarHidden = YES;
         }];
     }else{
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.44 animations:^{
             self.topTool.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight);
+            [UIApplication sharedApplication].statusBarHidden = NO;
         }];
     }
 }
@@ -165,6 +163,7 @@
 -(void)selectTVEpisodeWithIndex:(NSInteger)index{
     
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -172,11 +171,13 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
 }
-//
-//#pragma mark -
-//
+
 - (BOOL)shouldAutorotate {
     return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskLandscape;//只支持这一个方向(正常的方向)
 }
 
 @end

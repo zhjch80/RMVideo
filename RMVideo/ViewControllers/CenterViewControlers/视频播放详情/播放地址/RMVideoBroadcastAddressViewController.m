@@ -55,10 +55,18 @@
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
     CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
     playContro.playURL = [dic objectForKey:@"jumpurl"];
-    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:nil];
-
-    
+    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
+//        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+//            // iOS 7
+//            [self prefersStatusBarHidden];
+//            [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+//        }
+    }];
 }
+
+//- (BOOL)prefersStatusBarHidden {
+//    return YES;//隐藏为YES，显示为NO
+//}
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {
     dataArr = model.playurlArr;

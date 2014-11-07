@@ -685,6 +685,10 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     return NO;
 }
 
+//- (NSUInteger)supportedInterfaceOrientations{
+//    return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
+//}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
