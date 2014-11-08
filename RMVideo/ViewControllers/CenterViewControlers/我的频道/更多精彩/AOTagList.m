@@ -24,10 +24,11 @@
 // THE SOFTWARE.
 
 #import "AOTagList.h"
+#import "UtilityFunc.h"
 
-#define tagFontSize         14.0f
+#define tagFontSize         18
 #define tagFontType         @"Helvetica-Light"
-#define tagMargin           5.0f
+#define tagMargin           15.0f
 #define tagHeight           25.0f
 #define tagCornerRadius     3.0f
 #define tagCloseButton      7.0f
@@ -77,8 +78,9 @@
     }
     
     CGRect r = [self frame];
-    r.size.height = y + tagHeight;
+    r.size.height = y + tagHeight + 30;
     [self setFrame:r];
+    [self.heightDelegate clickChangeBtnWithTagListHeight:self.frame.size.height];
 }
 
 - (AOTag *)generateTagWithLabel:(NSString *)tTitle withImage:(NSString *)tImage
@@ -170,7 +172,8 @@ withCloseButtonColor:(UIColor *)closeColor
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.tBackgroundColor = [UIColor colorWithRed:0.204 green:0.588 blue:0.855 alpha:1.000];
+//        self.tBackgroundColor = [UIColor colorWithRed:0.204 green:0.588 blue:0.855 alpha:1.000];
+        self.tBackgroundColor = [UIColor whiteColor];
         self.tLabelColor = [UIColor whiteColor];
         self.tCloseButtonColor = [UIColor colorWithRed:0.710 green:0.867 blue:0.953 alpha:1.000];
         
@@ -190,7 +193,7 @@ withCloseButtonColor:(UIColor *)closeColor
 {
     CGSize tSize = [self.tTitle sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:tagFontType size:tagFontSize]}];
     
-    return CGSizeMake(tagMargin + tSize.width + tagMargin, tagHeight);//+ tagCloseButton  tagHeight + + tagMargin
+    return CGSizeMake(tagMargin + tSize.width + tagMargin - 20, tagHeight+8);
 }
 
 - (void)drawRect:(CGRect)rect
@@ -198,18 +201,54 @@ withCloseButtonColor:(UIColor *)closeColor
     [super drawRect:rect];
     
     self.layer.backgroundColor = [self.tBackgroundColor CGColor];
+    CALayer *layer = [self layer];
+    [layer setCornerRadius:3.0];
+//    layer.borderColor = [[UIColor colorWithRed:0.47 green:0.47 blue:0.47 alpha:1] CGColor];
+//    layer.borderWidth = 1.0f;
     
-    self.tImageURL = [[EGOImageView alloc] initWithPlaceholderImage:self.tImage delegate:self];
-    [self.tImageURL setBackgroundColor:[UIColor purpleColor]];
-    [self.tImageURL setFrame:CGRectMake(0.0f, 0.0f, [self getTagSize].height, [self getTagSize].height)];
-    if (self.tURL) [self.tImageURL setImageURL:[self tURL]];
+//    self.tImageURL = [[EGOImageView alloc] initWithPlaceholderImage:self.tImage delegate:self];
+//    [self.tImageURL setBackgroundColor:[UIColor purpleColor]];
+//    [self.tImageURL setFrame:CGRectMake(0.0f, 0.0f, [self getTagSize].height, [self getTagSize].height)];
+//    if (self.tURL) [self.tImageURL setImageURL:[self tURL]];
 //    [self addSubview:self.tImageURL];
     
+    NSArray * colorArr = [NSArray arrayWithObjects:
+                       [UtilityFunc colorWithHexString:@"b9090b"],
+                       [UtilityFunc colorWithHexString:@"df5f12"],
+                       [UtilityFunc colorWithHexString:@"4e5bd2"],
+                       [UtilityFunc colorWithHexString:@"109f71"],
+                       [UtilityFunc colorWithHexString:@"a89114"],
+                       [UtilityFunc colorWithHexString:@"312f2f"],
+                       [UtilityFunc colorWithHexString:@"cc2175"],
+                       [UtilityFunc colorWithHexString:@"7e15ea"],
+                       [UtilityFunc colorWithHexString:@"5c0cc9"],
+                       [UtilityFunc colorWithHexString:@"882558"],
+                       [UtilityFunc colorWithHexString:@"f4775b"],
+                       [UtilityFunc colorWithHexString:@"5abcbb"],
+                       [UtilityFunc colorWithHexString:@"a784d4"],
+                       [UtilityFunc colorWithHexString:@"117bac"],
+                       [UtilityFunc colorWithHexString:@"20a520"],
+                       [UtilityFunc colorWithHexString:@"83329e"],
+                       [UtilityFunc colorWithHexString:@"0987ff"],
+                       [UtilityFunc colorWithHexString:@"a18190"],
+                       [UtilityFunc colorWithHexString:@"f97314"],
+                       [UtilityFunc colorWithHexString:@"fc0cab"],
+                       [UtilityFunc colorWithHexString:@"70e000"],
+                       [UtilityFunc colorWithHexString:@"11c100"],
+                       [UtilityFunc colorWithHexString:@"fb7367"],
+                       [UtilityFunc colorWithHexString:@"a82ee8"],
+                       [UtilityFunc colorWithHexString:@"f757d1"],
+                       [UtilityFunc colorWithHexString:@"0478ff"],
+                       [UtilityFunc colorWithHexString:@"2bc28b"],
+                       nil];
+        
     CGSize tSize = [self.tTitle sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:tagFontType size:tagFontSize]}];
     //tagHeight + tagMargin
     [self.tTitle drawInRect:CGRectMake(5, ([self getTagSize].height / 2.0f) - (tSize.height / 2.0f), tSize.width, tSize.height)
-             withAttributes:@{NSFontAttributeName:[UIFont fontWithName:tagFontType size:tagFontSize], NSForegroundColorAttributeName:[UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1]}];//self.tLabelColor
-
+             withAttributes:@{NSFontAttributeName:[UIFont fontWithName:tagFontType size:tagFontSize], NSForegroundColorAttributeName:[colorArr objectAtIndex:arc4random()%colorArr.count]}];
+    //self.tLabelColor
+//[UIColor colorWithRed:arc4random_uniform(100)/100. green:arc4random_uniform(100)/100. blue:arc4random_uniform(100)/100. alpha:1]
+    
 //    AOTagCloseButton *close = [[AOTagCloseButton alloc] initWithFrame:CGRectMake([self getTagSize].width - tagHeight, 0.0, tagHeight, tagHeight)
 //                                                            withColor:self.tCloseButtonColor];
 //    [self addSubview:close];
@@ -272,19 +311,11 @@ withCloseButtonColor:(UIColor *)closeColor
 {
     [super drawRect:rect];
     
-    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint:CGPointMake(rect.size.width - tagCloseButton + 1.0, (rect.size.height - tagCloseButton) / 2.0)];
-    [bezierPath addLineToPoint:CGPointMake(rect.size.width - (tagCloseButton * 2.0) + 1.0, ((rect.size.height - tagCloseButton) / 2.0) + tagCloseButton)];
-    [self.cColor setStroke];
-    bezierPath.lineWidth = 2.0;
-    [bezierPath stroke];
-    
-    UIBezierPath *bezier2Path = [UIBezierPath bezierPath];
-    [bezier2Path moveToPoint:CGPointMake(rect.size.width - tagCloseButton + 1.0, ((rect.size.height - tagCloseButton) / 2.0) + tagCloseButton)];
-    [bezier2Path addLineToPoint:CGPointMake(rect.size.width - (tagCloseButton * 2.0) + 1.0, (rect.size.height - tagCloseButton) / 2.0)];
-    [self.cColor setStroke];
-    bezier2Path.lineWidth = 2.0;
-    [bezier2Path stroke];
+//    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 15, 15)];
+//    image.backgroundColor = [UIColor clearColor];
+//    image.userInteractionEnabled = YES;
+//    image.image = [UIImage imageNamed:@"mx_add_img"];
+//    [self addSubview:image];
     
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tagClose:)];
     [recognizer setNumberOfTapsRequired:1];

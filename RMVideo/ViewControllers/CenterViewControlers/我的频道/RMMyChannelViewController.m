@@ -13,11 +13,9 @@
 #import "RMSearchViewController.h"
 #import "RMImageView.h"
 #import "RMVideoPlaybackDetailsViewController.h"
-#import "RMLoginRecommendViewController.h"
 #import "RMMyChannelShouldSeeViewController.h"
 #import "PullToRefreshTableView.h"
 #import "UMSocial.h"
-#import "RMLoginRecommendViewController.h"
 #import "RMCustomNavViewController.h"
 
 typedef enum{
@@ -273,6 +271,7 @@ typedef enum{
 - (void)moreWonderfulMethod {
     RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
     [self.navigationController pushViewController:moreWonderfulCtl animated:YES];
+    [moreWonderfulCtl setupNavTitle:@"更多精彩" SwitchingBarButtonDirection:@"left"];
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 }
 
@@ -502,10 +501,11 @@ typedef enum{
 #pragma mark - 登录后即推荐
 
 - (void)myChannelLoginSuccessRecommendmethod{
-    RMLoginRecommendViewController * loginRecommendCtl = [[RMLoginRecommendViewController alloc] init];
-    RMCustomNavViewController * loginRecommendNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginRecommendCtl];
-    [self presentViewController:loginRecommendNav animated:YES completion:^{
+    RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
+    RMCustomNavViewController * moreWonderfulNav = [[RMCustomNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
+    [self presentViewController:moreWonderfulNav animated:YES completion:^{
     }];
+    [moreWonderfulCtl setupNavTitle:@"你可能喜欢的内容" SwitchingBarButtonDirection:@"right"];
 }
 
 - (void)didReceiveMemoryWarning {

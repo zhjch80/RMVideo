@@ -40,9 +40,17 @@
 
 @end
 
+@protocol TagListViewHeightDelegate <NSObject>
+
+- (void)clickChangeBtnWithTagListHeight:(float)height;
+
+@end
+
+
 @interface AOTagList : UIView
 
 @property (nonatomic, weak) id <AOTagDelegate> delegate;
+@property (assign, nonatomic) id<TagListViewHeightDelegate> heightDelegate;
 
 @property (nonatomic, strong) NSMutableArray *tags;
 

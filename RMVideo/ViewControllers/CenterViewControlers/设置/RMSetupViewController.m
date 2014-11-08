@@ -21,7 +21,7 @@
 #import "SDImageCache.h"
 #import <StoreKit/StoreKit.h>
 #import "RMCustomNavViewController.h"
-#import "RMLoginRecommendViewController.h"
+#import "RMMoreWonderfulViewController.h"
 #import "RMCustomNavViewController.h"
 
 @interface RMSetupViewController ()<UMSocialUIDelegate,SKStoreProductViewControllerDelegate>
@@ -55,10 +55,11 @@
 #pragma mark - 登录后即推荐
 
 - (void)loginSuccessRecommendmethod {
-    RMLoginRecommendViewController * loginRecommendCtl = [[RMLoginRecommendViewController alloc] init];
-    RMCustomNavViewController * loginRecommendNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginRecommendCtl];
-    [self presentViewController:loginRecommendNav animated:YES completion:^{
+    RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
+    RMCustomNavViewController * moreWonderfulNav = [[RMCustomNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
+    [self presentViewController:moreWonderfulNav animated:YES completion:^{
     }];
+    [moreWonderfulCtl setupNavTitle:@"你可能喜欢的内容" SwitchingBarButtonDirection:@"right"];
 }
 
 - (void)viewDidLoad {

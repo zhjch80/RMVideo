@@ -17,27 +17,47 @@
  */
 typedef enum{
     requestListType = 1,
-    requestReplace,
-    requestCustom
+    requestReplaceType,
+    requestCustomType,
+    requestAddTagToMyChannelType
 }LoadType;
 
-@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,UITextFieldDelegate,RMAFNRequestManagerDelegate,AOTagDelegate> {
+@interface RMMoreWonderfulViewController ()<UIScrollViewDelegate,UITextFieldDelegate,RMAFNRequestManagerDelegate,AOTagDelegate,TagListViewHeightDelegate> {
     NSMutableArray * dataArr;
     RMAFNRequestManager * request;
     NSInteger pageCount;
     
     LoadType loadType;
     AOTagList *tagList;
+    AOTag * AOView;
 }
 @property (nonatomic, strong) UIScrollView * bgScrView;
 @property (nonatomic, strong) NSMutableArray * tagArr;
 @property (nonatomic, strong) NSMutableArray *randomTag;
 @property (nonatomic, strong) UIButton * changeBtn;
 @property (nonatomic, strong) UIButton * customBtn;
+@property (nonatomic, assign) NSInteger willAddMyChannelTag_id;
+@property (nonatomic, strong) NSString * BarButtonDirection;
 
 @end
 
 @implementation RMMoreWonderfulViewController
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([self.BarButtonDirection isEqualToString:@"left"]){
+        [self setTitle:@"更多精彩"];
+        leftBarButton.frame = CGRectMake(0, 0, 22, 22);
+        [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
+        rightBarButton.hidden = YES;
+    }else{
+        self.BarButtonDirection = @"right";
+        [self setTitle:@"您可能喜欢的内容"];
+        leftBarButton.hidden = YES;
+        rightBarButton.frame = CGRectMake(0, 0, 35, 20);
+        [rightBarButton setBackgroundImage:LOADIMAGE(@"complete_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,32 +67,28 @@ typedef enum{
     dataArr = [[NSMutableArray alloc] init];
     pageCount = 1;
     
-    [self setTitle:@"更多精彩"];
-    [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
-    rightBarButton.hidden = YES;
-    
     self.bgScrView = [[UIScrollView alloc] init];
-    self.bgScrView.backgroundColor = [UIColor clearColor];
-    self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44);
+    self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 130);
     self.bgScrView.userInteractionEnabled = YES;
     self.bgScrView.showsVerticalScrollIndicator = YES;
     self.bgScrView.showsHorizontalScrollIndicator = YES;
     self.bgScrView.delegate = self;
     self.bgScrView.backgroundColor = [UIColor clearColor];
-    [self.bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 43)];
     [self.view addSubview:self.bgScrView];
     
     self.changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.changeBtn.tag = 101;
+    self.changeBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - ([UtilityFunc shareInstance].globleWidth-25), [UtilityFunc shareInstance].globleAllHeight-69-64, 117, 39);
     [self.changeBtn setBackgroundImage:LOADIMAGE(@"changeBtn_img", kImageTypePNG) forState:UIControlStateNormal];
     [self.changeBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bgScrView addSubview:self.changeBtn];
+    [self.view addSubview:self.changeBtn];
     
     self.customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.customBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-25-117, [UtilityFunc shareInstance].globleAllHeight-69-64, 117, 39);
     [self.customBtn setBackgroundImage:LOADIMAGE(@"customBtn_img", kImageTypePNG) forState:UIControlStateNormal];
     [self.customBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.customBtn.tag = 102;
-    [self.bgScrView addSubview:self.customBtn];
+    [self.view addSubview:self.customBtn];
 
     [self loadTagList];
     
@@ -81,45 +97,65 @@ typedef enum{
     request.delegate = self;
 }
 
+- (void)setupNavTitle:(NSString *)title SwitchingBarButtonDirection:(NSString *)direction {
+    self.BarButtonDirection = direction;
+}
+
 - (void)resetRandomTagsName {
     [tagList removeAllTag];
+    if (dataArr.count == 0){
+        return ;
+    }
     self.randomTag = [NSMutableArray arrayWithArray:
-                      @[@{@"title": @"速度发生的"},
-                        @{@"title": @"阿萨德是的"},
-                        @{@"title": @"大师大师大"},
-                        @{@"title": @"阿三打"},
-                        @{@"title": @"撒旦"},
-                        @{@"title": @"阿三达到阿达"},
-                        @{@"title": @"阿三啊大大的撒上撒旦撒旦"},
-                        @{@"title": @"就开工开广东省撒旦士大士大夫"},
-                        @{@"title": @"的发生收到过时尚大方士大夫"},
-                        @{@"title": @"速度发生的士大夫士大夫士大夫"},
-                        @{@"title": @"士大夫士大夫"},
-                        @{@"title": @"士大夫"},
-                        @{@"title": @"士大发夫"},
-                        @{@"title": @"第三方"},
-                        @{@"title": @"士大夫"}]];
+                      @[@{@"title": ((RMPublicModel *)[dataArr objectAtIndex:0]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:1]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:2]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:3]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:4]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:5]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:6]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:7]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:8]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:9]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:10]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:11]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:12]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:13]).name},
+                        @{@"title": ((RMPublicModel *)[dataArr objectAtIndex:14]).name}]];
 }
 
 - (void)loadTagList {
-    [self resetRandomTagsName];
-    
-    tagList = [[AOTagList alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 300.0f, 100.0f)];
+    if (!tagList){
+        tagList = [[AOTagList alloc] init];
+    }
+    tagList.frame = CGRectMake(-10.0f, 20.0f, 330.0f, 100.0f);
+    tagList.heightDelegate = self;
     tagList.backgroundColor = [UIColor clearColor];
     [tagList setDelegate:self];
-    [tagList sizeToFit];
     [self.bgScrView addSubview:tagList];
     
-    [self updataTagList];
+}
+
+- (void)clickChangeBtnWithTagListHeight:(float)height {
+    [self.bgScrView setContentSize:CGSizeMake([UtilityFunc shareInstance].globleWidth, height + 20)];
 }
 
 - (void)updataTagList {
     [self resetRandomTagsName];
     [tagList addTags:self.randomTag];
+    [tagList sizeToFit];
     [self.randomTag removeAllObjects];
-    
-    self.changeBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - ([UtilityFunc shareInstance].globleWidth-25), tagList.frame.size.height+64, 117, 39);
-    self.customBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-25-117, tagList.frame.size.height+64, 117, 39);
+}
+
+- (NSInteger)getTagIdFromTag:(NSString *)str {
+    for (int i=0; i<dataArr.count; i++){
+        if ([((RMPublicModel *)[dataArr objectAtIndex:i]).name isEqualToString:str]){
+            NSLog(@"%@",((RMPublicModel *)[dataArr objectAtIndex:i]).tag_id);
+            return [((RMPublicModel *)[dataArr objectAtIndex:i]).tag_id integerValue];
+            break;
+        }
+    }
+    return 0;
 }
 
 #pragma mark - 
@@ -127,7 +163,7 @@ typedef enum{
 - (void)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
-            loadType = requestReplace;
+            loadType = requestReplaceType;
             pageCount ++;
             [request getMoreWonderfulVideoListWithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"15"];
             break;
@@ -139,7 +175,7 @@ typedef enum{
                                                          cancelButtonTitle:@"取消"
                                                          otherButtonTitles:@"添加", nil];
             [addAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            
+            addAlertView.tag = 201;
             UITextField *textField = [addAlertView textFieldAtIndex:0];
             [textField setPlaceholder:@"标签"];
             [addAlertView show];
@@ -154,23 +190,39 @@ typedef enum{
 #pragma mark - UIAlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != alertView.cancelButtonIndex) {
-        if (buttonIndex == 1) {
-            //添加
-            loadType = requestCustom;
-            NSString *str = [alertView textFieldAtIndex:0].text;
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-            [request getCustomTagWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] tagName:str];
-        }else{
+    switch (alertView.tag) {
+        case 201:{
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                if (buttonIndex == 1) {
+                    //添加
+                    loadType = requestCustomType;
+                    NSString *str = [alertView textFieldAtIndex:0].text;
+                    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                    [request getCustomTagWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] tagName:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                }else{
+                }
+            }
+            break;
         }
+        case 202:{
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                if (buttonIndex == 1) {
+                    //添加
+                    loadType = requestAddTagToMyChannelType;
+                    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+                    [request getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:[NSString stringWithFormat:@"%d",self.willAddMyChannelTag_id]];
+                }else{
+                }
+            }
+
+            break;
+        }
+            
+        default:
+            break;
     }
-}
-
-#pragma mark - AddRecommendDelegate
-
-- (void)startAddDidSelectWithIndex:(NSInteger)index {
-    NSLog(@"我的频道 添加%d",index);
 }
 
 #pragma mark - Base Method
@@ -183,7 +235,8 @@ typedef enum{
             break;
         }
         case 2:{
-            
+            [self dismissViewControllerAnimated:YES completion:^{
+            }];
             break;
         }
             
@@ -198,15 +251,17 @@ typedef enum{
     if (loadType == requestListType){
         dataArr = data;
         [self updataTagList];
-    }else if (loadType == requestReplace){
+    }else if (loadType == requestReplaceType){
         dataArr = data;
         [self updataTagList];
-    }else if (loadType == requestCustom){
+    }else if (loadType == requestCustomType){
         RMPublicModel *model = [data objectAtIndex:0];
         if ([model.code integerValue] == 4001) {
             NSLog(@"增加新的tag成功");
             //TODO:添加到 我的频道
         }
+    }else if (loadType == requestAddTagToMyChannelType){
+        
     }
 }
 
@@ -216,30 +271,32 @@ typedef enum{
 
 #pragma mark - Tag delegate
 
-- (void)tagDidAddTag:(AOTag *)tag
-{
+- (void)tagDidAddTag:(AOTag *)tag {
     NSLog(@"Tag > %@ has been added", tag);
 }
 
-- (void)tagDidRemoveTag:(AOTag *)tag
-{
+- (void)tagDidRemoveTag:(AOTag *)tag {
     NSLog(@"Tag > %@ has been removed", tag);
 }
 
-- (void)tagDidSelectTag:(AOTag *)tag
-{
-    NSLog(@"Tag > %@ has been selected", tag);
+- (void)tagDidSelectTag:(AOTag *)tag {
+    self.willAddMyChannelTag_id = [self getTagIdFromTag:tag.tTitle];
+    UIAlertView *addAlertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"亲，确定要添加 %@ 到我的频道么？",tag.tTitle]
+                                                           message:nil
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                                 otherButtonTitles:@"添加", nil];
+    addAlertView.tag = 202;
+    [addAlertView show];
 }
 
 #pragma mark - Tag delegate
 
-- (void)tagDistantImageDidLoad:(AOTag *)tag
-{
+- (void)tagDistantImageDidLoad:(AOTag *)tag {
     NSLog(@"Distant image has been downloaded for tag > %@", tag);
 }
 
-- (void)tagDistantImageDidFailLoad:(AOTag *)tag withError:(NSError *)error
-{
+- (void)tagDistantImageDidFailLoad:(AOTag *)tag withError:(NSError *)error {
     NSLog(@"Distant image has failed to download > %@ for tag > %@", error, tag);
 }
 

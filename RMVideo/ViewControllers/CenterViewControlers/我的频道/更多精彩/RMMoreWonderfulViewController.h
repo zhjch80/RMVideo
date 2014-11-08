@@ -11,4 +11,6 @@
 @interface RMMoreWonderfulViewController : RMBaseViewController{
   
 }
+- (void)setupNavTitle:(NSString *)title SwitchingBarButtonDirection:(NSString *)direction;
+
 @end
