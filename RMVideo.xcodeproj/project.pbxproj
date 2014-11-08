@@ -183,6 +183,13 @@
 		1D4FC51C19F8B08E00366F31 /* onVoice_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4FC51819F8B08E00366F31 /* onVoice_2@2x.png */; };
 		1D4FC51D19F8B08E00366F31 /* onVoice_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4FC51919F8B08E00366F31 /* onVoice_3@2x.png */; };
 		1D4FC51E19F8B08E00366F31 /* onVoice_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4FC51A19F8B08E00366F31 /* onVoice_4@2x.png */; };
+		1D5B82951A0E201C00A4A29B /* cell_white_Color_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B828E1A0E201C00A4A29B /* cell_white_Color_image.png */; };
+		1D5B82961A0E201C00A4A29B /* DropDownListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5B82911A0E201C00A4A29B /* DropDownListView.m */; };
+		1D5B82971A0E201C00A4A29B /* DropDownTabelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5B82931A0E201C00A4A29B /* DropDownTabelViewCell.m */; };
+		1D5B82981A0E201C00A4A29B /* DropDownTabelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B82941A0E201C00A4A29B /* DropDownTabelViewCell.xib */; };
+		1D5B829C1A0E202500A4A29B /* down_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B82991A0E202500A4A29B /* down_dark.png */; };
+		1D5B829D1A0E202500A4A29B /* down_dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B829A1A0E202500A4A29B /* down_dark@2x.png */; };
+		1D5B829E1A0E202500A4A29B /* down_dark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B829B1A0E202500A4A29B /* down_dark@3x.png */; };
 		1D6063E119FBAAAA008F116D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D6063E319FBAAAA008F116D /* InfoPlist.strings */; };
 		1D71155119ED02E30007D393 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D71155019ED02E30007D393 /* HMSegmentedControl.m */; };
 		1D7116FE19ED21270007D393 /* rjr_movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D7116F819ED21270007D393 /* rjr_movie@2x.png */; };
@@ -776,6 +783,16 @@
 		1D4FC51819F8B08E00366F31 /* onVoice_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "onVoice_2@2x.png"; sourceTree = "<group>"; };
 		1D4FC51919F8B08E00366F31 /* onVoice_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "onVoice_3@2x.png"; sourceTree = "<group>"; };
 		1D4FC51A19F8B08E00366F31 /* onVoice_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "onVoice_4@2x.png"; sourceTree = "<group>"; };
+		1D5B828E1A0E201C00A4A29B /* cell_white_Color_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_white_Color_image.png; sourceTree = "<group>"; };
+		1D5B828F1A0E201C00A4A29B /* DropDownChooseProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownChooseProtocol.h; sourceTree = "<group>"; };
+		1D5B82901A0E201C00A4A29B /* DropDownListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownListView.h; sourceTree = "<group>"; };
+		1D5B82911A0E201C00A4A29B /* DropDownListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownListView.m; sourceTree = "<group>"; };
+		1D5B82921A0E201C00A4A29B /* DropDownTabelViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownTabelViewCell.h; sourceTree = "<group>"; };
+		1D5B82931A0E201C00A4A29B /* DropDownTabelViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownTabelViewCell.m; sourceTree = "<group>"; };
+		1D5B82941A0E201C00A4A29B /* DropDownTabelViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownTabelViewCell.xib; sourceTree = "<group>"; };
+		1D5B82991A0E202500A4A29B /* down_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_dark.png; sourceTree = "<group>"; };
+		1D5B829A1A0E202500A4A29B /* down_dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_dark@2x.png"; sourceTree = "<group>"; };
+		1D5B829B1A0E202500A4A29B /* down_dark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_dark@3x.png"; sourceTree = "<group>"; };
 		1D6063E219FBAAAA008F116D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D6063E419FBAAAD008F116D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1D71154F19ED02E30007D393 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
@@ -1506,6 +1523,7 @@
 			children = (
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
+				1D5B828D1A0E200A00A4A29B /* DropDownListView */,
 				1DDBB6A31A0CD9DE003B9845 /* EGOCache */,
 				1DDBB6A61A0CD9DE003B9845 /* EGOImageLoader */,
 				1DDBB6AB1A0CD9DE003B9845 /* EGOImageView */,
@@ -1764,6 +1782,23 @@
 				1DED761B1A0C5168004ADBD1 /* RMCustomNavViewController.m */,
 			);
 			path = Tabbar;
+			sourceTree = "<group>";
+		};
+		1D5B828D1A0E200A00A4A29B /* DropDownListView */ = {
+			isa = PBXGroup;
+			children = (
+				1D5B82991A0E202500A4A29B /* down_dark.png */,
+				1D5B829A1A0E202500A4A29B /* down_dark@2x.png */,
+				1D5B829B1A0E202500A4A29B /* down_dark@3x.png */,
+				1D5B828E1A0E201C00A4A29B /* cell_white_Color_image.png */,
+				1D5B828F1A0E201C00A4A29B /* DropDownChooseProtocol.h */,
+				1D5B82901A0E201C00A4A29B /* DropDownListView.h */,
+				1D5B82911A0E201C00A4A29B /* DropDownListView.m */,
+				1D5B82921A0E201C00A4A29B /* DropDownTabelViewCell.h */,
+				1D5B82931A0E201C00A4A29B /* DropDownTabelViewCell.m */,
+				1D5B82941A0E201C00A4A29B /* DropDownTabelViewCell.xib */,
+			);
+			path = DropDownListView;
 			sourceTree = "<group>";
 		};
 		1D71154E19ED02D80007D393 /* HMSegmentedControl */ = {
@@ -3074,6 +3109,7 @@
 				1D357CB81A09D863000C5C44 /* 更多头像loading.png in Resources */,
 				1D4C363B19F6050700AC8F1E /* logo_xlkk@2x.png in Resources */,
 				1D357CBA1A09D863000C5C44 /* 演员导演loading.png in Resources */,
+				1D5B82981A0E201C00A4A29B /* DropDownTabelViewCell.xib in Resources */,
 				1D4C365419F6051800AC8F1E /* SoHotList_red.png in Resources */,
 				1D84818F1A03633400A92879 /* RMAboutAppViewController.xib in Resources */,
 				91908CD119FA355A00C3DF09 /* 图片上叠加的暂停@2x.png in Resources */,
@@ -3126,6 +3162,7 @@
 				918DE71D1A063A9B00287E06 /* hotPlay_ribang@2x.png in Resources */,
 				1D357CC81A0A1CDF000C5C44 /* vd_collectionWhiteImg@2x.png in Resources */,
 				1D8481A51A03633400A92879 /* RMDownLoadTVSeriesDetailViewController.xib in Resources */,
+				1D5B829E1A0E202500A4A29B /* down_dark@3x.png in Resources */,
 				1D4C365F19F6052E00AC8F1E /* mx_fold.png in Resources */,
 				1D71171519ED27230007D393 /* variety_selected@2x.png in Resources */,
 				918DE72D1A0651D100287E06 /* delect_all_btn.png in Resources */,
@@ -3137,6 +3174,7 @@
 				1DED75C51A0B59BF004ADBD1 /* jr_Variety@2x.png in Resources */,
 				1DAB0DBA19ECC2EC0063A58E /* Star_black@2x.png in Resources */,
 				918DE7111A062BFD00287E06 /* variety_selected@3x.png in Resources */,
+				1D5B82951A0E201C00A4A29B /* cell_white_Color_image.png in Resources */,
 				1DAB0D0C19EB647E0063A58E /* arrow_downipad.png in Resources */,
 				1D71172B19EE67E70007D393 /* mx_unfold@2x.png in Resources */,
 				912C099F19F8ECC1006B6305 /* file_bg_Image@2x.png in Resources */,
@@ -3279,6 +3317,7 @@
 				91908CC919FA355A00C3DF09 /* no-select_cellImage@2x.png in Resources */,
 				1D357CB61A09D863000C5C44 /* rb_loadingImg.png in Resources */,
 				1D4C35F819F5F91800AC8F1E /* logo_weibo@2x.png in Resources */,
+				1D5B829C1A0E202500A4A29B /* down_dark.png in Resources */,
 				91908CAB19FA30E400C3DF09 /* MyChannel_black@3x.png in Resources */,
 				1D4C363819F6050700AC8F1E /* logo_tx.png in Resources */,
 				1D84815B1A03633400A92879 /* RMDailyVarietyViewController.xib in Resources */,
@@ -3371,6 +3410,7 @@
 				1DAB0DB919ECC2EC0063A58E /* SoHotList_red@2x.png in Resources */,
 				1D4C364519F6050700AC8F1E /* rotating_img.png in Resources */,
 				1D84819D1A03633400A92879 /* RMVideoPlayHistoryViewController.xib in Resources */,
+				1D5B829D1A0E202500A4A29B /* down_dark@2x.png in Resources */,
 				9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */,
 				918DE7211A063A9B00287E06 /* hotPlay_yuebang@3x.png in Resources */,
 				1D847F3A1A0324D000A92879 /* UMSnsAccountViewController.xib in Resources */,
@@ -3416,6 +3456,7 @@
 				1D8481521A03633400A92879 /* RMDailyListTableViewCell.m in Sources */,
 				913D15DA1A01E4BB000A50E2 /* UIImage+WebP.m in Sources */,
 				1DD2BFEF19D919950073D9F8 /* AFAudioRouter.m in Sources */,
+				1D5B82971A0E201C00A4A29B /* DropDownTabelViewCell.m in Sources */,
 				1D4D47FC19D7B42800E3A50B /* UIImageView+AFNetworking.m in Sources */,
 				1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */,
 				1D8481921A03633400A92879 /* RMFinishDownTableViewCell.m in Sources */,
@@ -3494,6 +3535,7 @@
 				1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */,
 				1D4D47BA19D7B41C00E3A50B /* AFHTTPSessionManager.m in Sources */,
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
+				1D5B82961A0E201C00A4A29B /* DropDownListView.m in Sources */,
 				913D15D91A01E4BB000A50E2 /* UIImage+MultiFormat.m in Sources */,
 				1D4D47ED19D7B42800E3A50B /* CUSFileStorage.m in Sources */,
 				1D99745E19E92D62007E53DB /* DBImageView.m in Sources */,
