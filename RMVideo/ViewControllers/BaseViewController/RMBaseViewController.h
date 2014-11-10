@@ -20,8 +20,10 @@
 #import "RMAFNRequestManager.h"
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
+#import "Database.h"
 
 #define PLAYHISTORYLISTNAME @"PlayHistoryListname"
+#define DOWNLOADLISTNAME @"DownLoadListname"
 
 @interface RMBaseViewController : UIViewController<RMAFNRequestManagerDelegate>{
     UIButton *leftBarButton;

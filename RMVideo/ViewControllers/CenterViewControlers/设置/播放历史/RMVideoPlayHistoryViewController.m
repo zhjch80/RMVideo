@@ -20,7 +20,7 @@
     [super viewDidLoad];
     isSeleltAllCell = YES;
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
-    self.dataArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readitemFromListName:PLAYHISTORYLISTNAME]];
     selectCellArray = [NSMutableArray array];
     [showMemoryLable removeFromSuperview];
     cellEditingImageArray = [NSMutableArray array];
@@ -71,8 +71,10 @@
         }
         for(int i=0;i<sort.count;i++){
             NSNumber *number = [sort objectAtIndex:i];
-            [self.dataArray removeObjectAtIndex:number.integerValue];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+            RMPublicModel *model = [self.dataArray objectAtIndex:number.integerValue];
+            [[Database sharedDatabase] deleteItem:model fromListName:PLAYHISTORYLISTNAME];
+            [self.dataArray removeObjectAtIndex:number.integerValue];
         }
         
         [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
@@ -122,6 +124,24 @@
         }
         isEditing = !isEditing;
     }
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *identifier = @"cellIIdentifier";
+    RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(cell==nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
+        if(isEditing)
+            [cell setCellViewFrame];
+    }
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic_url]];
+    cell.movieName.text = model.name;
+    cell.memoryCount.hidden = YES;
+    cell.movieCount.hidden = YES;
+    return cell;
+    
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

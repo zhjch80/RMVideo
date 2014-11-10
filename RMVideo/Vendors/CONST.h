@@ -91,6 +91,9 @@
 #define UserLoginInformation_KEY                    @"userLoginInformation_KEY"
 #define UserSearchRecordData_KEY                    @"userSearchRecordData_KEY"
 #define UserSearchStarRecordData_KEY                @"userSearchSatrRecordData_KEY"
+#define DownLoadDataArray_KEY                       @"downLoadDataArray_KEY"
+#define Downloadstatus_KEY                          @"downloadstatus"
+#define DownLoadSuccess_KEY                         @"downLoadSuccess_KEY"
 
 /*
  loginStatus  value为:islogin  表示登录    value为:notlogin  表示未登录

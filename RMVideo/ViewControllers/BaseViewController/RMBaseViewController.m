@@ -77,7 +77,12 @@
 }
 
 //- (NSUInteger)supportedInterfaceOrientations{
+////    return UIInterfaceOrientationMaskPortrait;
+////    return UIInterfaceOrientationIsPortrait(UIInterfaceOrientationPortrait);
 //    return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
 //}
+
+//#define UIInterfaceOrientationIsPortrait(orientation)  ((orientation) == UIInterfaceOrientationPortrait || (orientation) == UIInterfaceOrientationPortraitUpsideDown)
+
 
 @end

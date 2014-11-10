@@ -47,8 +47,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createPlayerView];
-    [self createTopTool];
+//    [self createPlayerView];
+//    [self createTopTool];
 }
 
 /**
@@ -99,8 +99,19 @@
  * 播放器
  *
  ***/
-- (void)createPlayerView
-{
+- (void)createPlayerViewWithURL:(NSString *)url {
+//    [self.view setBackgroundColor:[UIColor blackColor]];
+//    if (self.player == nil) {
+//        self.player = [[CustomVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight)];
+//        self.player.delegate = self;
+//        self.player.tintColor = [UIColor redColor];
+//        [self.view addSubview:self.player];
+//    }
+//    NSLog(@"self.playURL:%@",self.playURL);
+//    [self playerWithURL:nil];
+//    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+//    [self.player setSelectionEpisodeScrollViewWithArray:array];
+    
     [self.view setBackgroundColor:[UIColor blackColor]];
     if (self.player == nil) {
         self.player = [[CustomVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight)];
@@ -108,29 +119,34 @@
         self.player.tintColor = [UIColor redColor];
         [self.view addSubview:self.player];
     }
-    NSLog(@"self.playURL:%@",self.playURL);
-    [self playerWithURL:nil];
+    [self playerWithURL:url];
     NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     [self.player setSelectionEpisodeScrollViewWithArray:array];
+    
+    
 }
 
 - (void)playerWithURL:(NSString *)url {
-    if ([url hasPrefix:@"\n"]) {
-        url = [url stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    }
+//    if ([url hasPrefix:@"\n"]) {
+//        url = [url stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//    }
     
-    NSString * str = [NSString stringWithFormat:@"http://106.38.249.114/youku/656E038DFE447BC536B83461/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4"];
-    
-#if 1
-    NSURL * URL = [NSURL URLWithString:str];
+//    NSString * str = [NSString stringWithFormat:@"http://106.38.249.114/youku/656E038DFE447BC536B83461/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4"];
+//    
+//#if 1
+//    NSURL * URL = [NSURL URLWithString:str];
 
 //    NSURL * URL=[[NSURL alloc] initWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 //    NSURL * URL = [NSURL URLWithString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-#else
-    NSString * str = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
-    NSURL * URL = [NSURL fileURLWithPath:str];
-#endif
+//#else
+//    NSString * str = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
+//    NSURL * URL = [NSURL fileURLWithPath:str];
+//#endif
+    
+    NSURL * URL = [NSURL fileURLWithPath:url];
 
+    
+    
     [self.player contentURL:URL];
     [self.player play];
     self.player.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth);

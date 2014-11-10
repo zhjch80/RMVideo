@@ -16,29 +16,43 @@
 
 @implementation RMFinishDownViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readItemFromDownLoadList]];
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginAnimation) name:kFinishViewControStartEditing object:nil];
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(endAnimation) name:kFinishViewControEndEditing object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downLoadSuccess) name:DownLoadSuccess_KEY object:nil];
+    
     selectCellArray = [NSMutableArray array];
     cellEditingImageArray = [NSMutableArray array];
     for (int i=0; i<self.dataArray.count; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
-//    if (self.dataArray.count==0) {
-//        self.maiTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    }else{
-//        self.maiTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    }
+
     [self setExtraCellLineHidden:self.maiTableView];
+    
+
+    NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+    
+    NSFileManager* fileManeger = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *array = [fileManeger contentsOfDirectoryAtPath:path error:&error];
+    NSLog(@"array:%@",array);
+    
+//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"backspace" ofType:@"mov"];
+//    NSURL *sourceMovieURL = [NSURL fileURLWithPath:filePath];
+    
 }
 
+//开启编辑状态
 - (void)beginAnimation{
     isBegingEditing = YES;
     self.maiTableView.frame = CGRectMake(self.maiTableView.frame.origin.x, self.maiTableView.frame.origin.y, self.maiTableView.frame.size.width, self.maiTableView.frame.size.height-25);
 }
-
+//关闭编辑状态
 - (void)endAnimation{
     isBegingEditing = NO;
     for(int i=0;i<selectCellArray.count;i++){
@@ -50,6 +64,16 @@
     }
     [selectCellArray removeAllObjects];
     self.maiTableView.frame = CGRectMake(self.maiTableView.frame.origin.x, self.maiTableView.frame.origin.y, self.maiTableView.frame.size.width, self.maiTableView.frame.size.height+25);
+}
+//电影下载成功。更新界面
+- (void)downLoadSuccess{
+    [self.dataArray removeAllObjects];
+    self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readItemFromDownLoadList]];
+    [self.maiTableView reloadData];
+    [cellEditingImageArray removeAllObjects];
+    for (int i=0; i<self.dataArray.count; i++) {
+        [cellEditingImageArray addObject:@"no-select_cellImage"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,8 +96,11 @@
         }
         
     }
+    RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
-   
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
+    cell.movieName.text = model.name;
+    cell.memoryCount.text = model.totalMemory;
     return cell;
     
 }
@@ -101,10 +128,13 @@
         [self.maiTableView reloadData];
     }
     else{
-        selectIndex(indexPath.row);
+        RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        selectIndex(model.name);
     }
     
 }
+
+#pragma mark 全选
 - (void)selectAllTableViewCellWithState:(BOOL)state{
     [selectCellArray removeAllObjects];
     if(state){
@@ -121,7 +151,7 @@
     [self.maiTableView reloadData];
     
 }
-
+#pragma mark 删除
 - (void)deleteAllTableViewCell{
     
     NSMutableArray *deleteArray = [NSMutableArray array];
@@ -133,8 +163,19 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
         [deleteArray addObject:indexPath];
     }
+    NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+    
     for(int i=0;i<sort.count;i++){
         NSNumber *number = [sort objectAtIndex:i];
+        RMPublicModel *model = [self.dataArray objectAtIndex:number.intValue];
+        NSString *removePath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+        NSError *error = nil;
+        BOOL remove = [[NSFileManager defaultManager] removeItemAtPath:removePath error:&error];
+        [[Database sharedDatabase] deleteItem:model fromListName:DOWNLOADLISTNAME];
+        if(remove){
+            NSLog(@"删除成功");
+        }
         [self.dataArray removeObjectAtIndex:number.integerValue];
         [cellEditingImageArray removeObjectAtIndex:number.integerValue];
     }
@@ -144,7 +185,9 @@
     [selectCellArray removeAllObjects];
     [[NSNotificationCenter defaultCenter] postNotificationName:kFinishViewControEndEditing object:nil];
 }
-- (void)selectTableViewCellWithIndex:(void (^)(NSInteger))block{
+
+//回调 ，
+- (void)selectTableViewCellWithIndex:(void (^)(NSString *))block{
     selectIndex = block;
 }
 - (void)delectCellArray:(void (^)(NSMutableArray *))block{

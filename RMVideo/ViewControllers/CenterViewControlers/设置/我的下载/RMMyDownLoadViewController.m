@@ -8,6 +8,7 @@
 
 #import "RMMyDownLoadViewController.h"
 #import "RMDownLoadTVSeriesDetailViewController.h"
+#import "CustomVideoPlayerController.h"
 
 @interface RMMyDownLoadViewController ()
 
@@ -22,19 +23,16 @@
     isEditing = YES; //编辑按钮为关闭状态
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     
-    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18", nil];
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18", nil];
     sunSliderSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-69)];
     sunSliderSwitchView.slideSwitchViewDelegate = self;
     //downLoading_noselectImage  downLoading_selectImage finish_downLoad_noselectImage finish_downLoad_selectImage
     sunSliderSwitchView.BGImgArr = [NSMutableArray arrayWithObjects:@"finish_downLoad_noselectImage",@"downLoading_noselectImage",nil];
     sunSliderSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"finish_downLoad_selectImage",@"downLoading_selectImage", nil];
     downLoadingViewContr = [[RMDownLoadingViewController shared] init];
-    downLoadingViewContr.dataArray = array1;
-    __unsafe_unretained RMMyDownLoadViewController *weekSelf = self;
+//    __unsafe_unretained RMMyDownLoadViewController *weekSelf = self;
     [downLoadingViewContr selectTableViewCellWithIndex:^(NSInteger index) {
-        RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
-        [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
+//        RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
+//        [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
     }];
     [downLoadingViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];
@@ -48,10 +46,16 @@
 
     }];
     finishDownViewContr = [[RMFinishDownViewController alloc] init];
-    finishDownViewContr.dataArray = array;
-    [finishDownViewContr selectTableViewCellWithIndex:^(NSInteger index) {
-        RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
-        [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
+    [finishDownViewContr selectTableViewCellWithIndex:^(NSString *movieName) {
+        
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+        NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,movieName];
+
+        CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
+        [customVideo createPlayerViewWithURL:str];
+        [customVideo createTopTool];
+        [self presentViewController:customVideo animated:YES completion:nil];
     }];
     [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];
@@ -78,8 +82,8 @@
 }
 
 - (void)creatDownLoadDetailViewControllerWithController:(UIViewController *)viewControl{
-    RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
-    [viewControl.navigationController pushViewController:TVSeriesDetailView animated:YES];
+//    RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
+//    [viewControl.navigationController pushViewController:TVSeriesDetailView animated:YES];
 }
 
 - (void)EditingViewBtnClick:(UIButton *)sender{

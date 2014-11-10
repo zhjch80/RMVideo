@@ -8,6 +8,7 @@
 
 #import "RMLoginViewController.h"
 #import "UMSocial.h"
+#import "RMCustomNavViewController.h"
 
 @interface RMLoginViewController ()<UMSocialUIDelegate,RMAFNRequestManagerDelegate>
 {

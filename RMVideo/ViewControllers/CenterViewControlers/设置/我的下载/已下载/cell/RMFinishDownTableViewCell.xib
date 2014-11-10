@@ -40,7 +40,7 @@
                         <rect key="frame" x="-20" y="32" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="003.png" id="sbJ-sl-aMM">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="sbJ-sl-aMM">
                         <rect key="frame" x="15" y="8" width="65" height="65"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -58,7 +58,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="003.png" width="640" height="1136"/>
         <image name="search.png" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

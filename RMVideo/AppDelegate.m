@@ -26,6 +26,7 @@
 #import "iflyMSC/iflySetting.h"
 #import "iflyMSC/IFlySpeechUtility.h"
 #import "RMCustomNavViewController.h"
+#import "RMDownLoadingViewController.h"
 
 #define COLOR_RGB(r,g,b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1]
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
@@ -264,6 +265,15 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    RMDownLoadingViewController *downLoading = [RMDownLoadingViewController shared];
+    
+    if(downLoading.dataArray.count>0){
+        
+        [downLoading saveData];
+        NSData * data = [NSKeyedArchiver archivedDataWithRootObject:downLoading.dataArray];
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:DownLoadDataArray_KEY];
+    }
+
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url

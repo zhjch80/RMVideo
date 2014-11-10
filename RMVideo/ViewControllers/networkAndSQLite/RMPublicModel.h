@@ -42,6 +42,15 @@
 @property (nonatomic, strong) NSString * is_favorite;
 @property (nonatomic, strong) NSString * keyword;
 @property (nonatomic, strong) NSMutableArray * list;
-@property (nonatomic, strong) NSString *playTime;
+@property (nonatomic, strong) NSString *playTime;       //表示播放的时间，方便下次进来可以继续播放，用在数据库中
+
+
+
+
+@property (nonatomic, copy) NSString *downLoadURL; //下载链接
+@property (nonatomic, copy) NSString *downLoadState; //当前下载状态（等待下载，暂停）
+@property (nonatomic ,copy) NSString *cacheProgress; //缓存进度，用在下载过程中
+@property (nonatomic ,copy) NSString *totalMemory;
+@property (nonatomic, copy) NSString *alreadyCasheMemory;
 
 @end

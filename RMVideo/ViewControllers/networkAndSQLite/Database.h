@@ -22,26 +22,32 @@
 +(Database *)sharedDatabase;
 
 -(id)init;
-//省名称数据插入
+//称数据插入
 -(void)insertProvinceItem:(RMPublicModel *)item andListName:(NSString *)listName;
 
-//-(void)updatecountnum:(NSString *)itemID count:(NSString *)count;
+//更新数据
+//-(void)updateWithItem:(RMPublicModel *)item fromListName:(NSString *)listName;
 
 //删除表中所有数据
 -(void)deleteAllDataSourceFromListName:(NSString *)listName;
 
-//多条数据插入 只有在cityName数据插入的时候需要传provinceID，其余传nil就可以
--(void)insertArray:(NSArray *)array toListName:(NSString *)listName andProvinveID:(NSString *)provinceID;
+-(void)deleteItem:(RMPublicModel *)item fromListName:(NSString *)listName;
 
-//读取表中的数据个数 查询cityName的个数时需要传入provinceID
--(NSInteger)itemcountFromListName:(NSString *)listName andProvinceID:(NSString *)provinceID;
+//多条数据插入 
+-(void)insertArray:(NSArray *)array toListName:(NSString *)listName;
 
-//查询当条件满足genre的结果
-- (NSString *)selectMovieGenre:(NSString *)genre forListName:(NSString *)name;
+//下载数据多条插入
+- (void)insertDownLoadArray:(NSArray *)array;
+//下载数据单挑插入
+- (void)insertDownLoadItem:(RMPublicModel *)item;
 
-//-(NSInteger)itemcountnumber:(NSString *)ItemID;
+//读取表中的数据个数
+-(NSInteger)itemcountFromListName:(NSString *)listName ;
 
 //从数据库中读取数据
--(NSArray *)readitemFromListName:(NSString *)listName andProvinceID:(NSString *)provinceID;
+-(NSArray *)readitemFromListName:(NSString *)listName;
+//已下载电影数据读取
+- (NSArray *)readItemFromDownLoadList;
+- (void)deletFristItem;
 
 @end

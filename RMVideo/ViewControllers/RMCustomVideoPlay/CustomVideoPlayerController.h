@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomVideoPlayerController : UIViewController
-
 @property (nonatomic,copy) NSString *playURL;
+
+- (void)createPlayerViewWithURL:(NSString *)url;
+- (void)createTopTool;
 
 @end

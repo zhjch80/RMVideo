@@ -680,7 +680,7 @@ typedef enum{
     switch (sender.tag) {
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
-            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];

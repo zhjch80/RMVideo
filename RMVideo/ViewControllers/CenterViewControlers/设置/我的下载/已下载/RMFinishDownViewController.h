@@ -11,14 +11,14 @@
 @interface RMFinishDownViewController : RMBaseViewController{
     NSMutableArray *selectCellArray;
     NSMutableArray *cellEditingImageArray;
-    void(^selectIndex)(NSInteger index);
+    void(^selectIndex)(NSString *movieName);
     void(^selectArray)(NSMutableArray *array);
     BOOL isBegingEditing;
 }
 @property (weak, nonatomic) IBOutlet UITableView *maiTableView;
 @property (nonatomic ,strong) NSMutableArray *dataArray;
 
-- (void) selectTableViewCellWithIndex:(void(^)(NSInteger index))block;
+- (void) selectTableViewCellWithIndex:(void(^)(NSString *movieString))block;
 
 - (void)delectCellArray:(void(^)(NSMutableArray *array))block;
 

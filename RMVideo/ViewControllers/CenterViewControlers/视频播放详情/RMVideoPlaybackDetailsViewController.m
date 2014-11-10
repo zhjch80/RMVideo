@@ -14,6 +14,7 @@
 #import "UMSocial.h"
 #import "RMLoginViewController.h"
 #import "RMCustomNavViewController.h"
+#import "RMDownLoadingViewController.h"
 
 typedef enum{
     requestVideoContentType = 1,
@@ -182,6 +183,11 @@ typedef enum{
         case 101:{
             //下载
             NSLog(@"下载");
+            RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+            if(![rmDownLoading.dataArray containsObject:[self.dataArr objectAtIndex:0]]){
+//                [rmDownLoading.dataArray addObject:[self.dataArr objectAtIndex:0]];
+                [rmDownLoading BeginDownLoad];
+            }
             
             break;
         }

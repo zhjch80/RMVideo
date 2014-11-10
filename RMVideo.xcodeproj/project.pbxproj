@@ -40,7 +40,6 @@
 		1D357CC71A0A1CDF000C5C44 /* vd_collectionWhiteImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357CC11A0A1CDF000C5C44 /* vd_collectionWhiteImg.png */; };
 		1D357CC81A0A1CDF000C5C44 /* vd_collectionWhiteImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357CC21A0A1CDF000C5C44 /* vd_collectionWhiteImg@2x.png */; };
 		1D357CC91A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357CC31A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png */; };
-		1D357D111A0B07AD000C5C44 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D0C1A0B07AD000C5C44 /* Database.m */; };
 		1D357D121A0B07AD000C5C44 /* RMAFNRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D0E1A0B07AD000C5C44 /* RMAFNRequestManager.m */; };
 		1D357D131A0B07AD000C5C44 /* RMPublicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D101A0B07AD000C5C44 /* RMPublicModel.m */; };
 		1D357D161A0B07D9000C5C44 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D141A0B07D9000C5C44 /* MediaPlayer.framework */; };
@@ -314,18 +313,8 @@
 		1D84818F1A03633400A92879 /* RMAboutAppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84810A1A03633400A92879 /* RMAboutAppViewController.xib */; };
 		1D8481901A03633400A92879 /* RMMyDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84810D1A03633400A92879 /* RMMyDownLoadViewController.m */; };
 		1D8481911A03633400A92879 /* RMMyDownLoadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84810E1A03633400A92879 /* RMMyDownLoadViewController.xib */; };
-		1D8481921A03633400A92879 /* RMFinishDownTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8481121A03633400A92879 /* RMFinishDownTableViewCell.m */; };
-		1D8481931A03633400A92879 /* RMFinishDownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8481131A03633400A92879 /* RMFinishDownTableViewCell.xib */; };
-		1D8481941A03633400A92879 /* RMFinishDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8481151A03633400A92879 /* RMFinishDownViewController.m */; };
-		1D8481951A03633400A92879 /* RMFinishDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8481161A03633400A92879 /* RMFinishDownViewController.xib */; };
-		1D8481961A03633400A92879 /* RMDownLoadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84811A1A03633400A92879 /* RMDownLoadingTableViewCell.m */; };
-		1D8481971A03633400A92879 /* RMDownLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84811B1A03633400A92879 /* RMDownLoadingTableViewCell.xib */; };
-		1D8481981A03633400A92879 /* RMDownLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84811D1A03633400A92879 /* RMDownLoadingViewController.m */; };
-		1D8481991A03633400A92879 /* RMDownLoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84811E1A03633400A92879 /* RMDownLoadingViewController.xib */; };
 		1D84819A1A03633400A92879 /* RMDownMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8481211A03633400A92879 /* RMDownMoreViewController.m */; };
 		1D84819B1A03633400A92879 /* RMDownMoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8481221A03633400A92879 /* RMDownMoreViewController.xib */; };
-		1D84819C1A03633400A92879 /* RMVideoPlayHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8481251A03633400A92879 /* RMVideoPlayHistoryViewController.m */; };
-		1D84819D1A03633400A92879 /* RMVideoPlayHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8481261A03633400A92879 /* RMVideoPlayHistoryViewController.xib */; };
 		1D84819E1A03633400A92879 /* RMMoreAPPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84812A1A03633400A92879 /* RMMoreAPPTableViewCell.m */; };
 		1D84819F1A03633400A92879 /* RMMoreAPPTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84812B1A03633400A92879 /* RMMoreAPPTableViewCell.xib */; };
 		1D8481A01A03633400A92879 /* RMMoreAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84812D1A03633400A92879 /* RMMoreAppViewController.m */; };
@@ -346,6 +335,17 @@
 		1D9CB9B01A1053D200F185B1 /* RMStarCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */; };
 		1D9CB9B21A10556E00F185B1 /* RMStarDetailsCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */; };
 		1D9CB9B41A10655A00F185B1 /* RMMyChannelCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */; };
+		1D9CB9B71A10824B00F185B1 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9B61A10824B00F185B1 /* Database.m */; };
+		1D9CB9BF1A1084BF00F185B1 /* RMFinishDownTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9BD1A1084BF00F185B1 /* RMFinishDownTableViewCell.m */; };
+		1D9CB9C01A1084BF00F185B1 /* RMFinishDownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9BE1A1084BF00F185B1 /* RMFinishDownTableViewCell.xib */; };
+		1D9CB9C41A1084C800F185B1 /* RMFinishDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9C21A1084C800F185B1 /* RMFinishDownViewController.m */; };
+		1D9CB9C51A1084C800F185B1 /* RMFinishDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9C31A1084C800F185B1 /* RMFinishDownViewController.xib */; };
+		1D9CB9CA1A1084F200F185B1 /* RMDownLoadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9C81A1084F200F185B1 /* RMDownLoadingTableViewCell.m */; };
+		1D9CB9CB1A1084F200F185B1 /* RMDownLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9C91A1084F200F185B1 /* RMDownLoadingTableViewCell.xib */; };
+		1D9CB9CF1A1084F900F185B1 /* RMDownLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9CD1A1084F900F185B1 /* RMDownLoadingViewController.m */; };
+		1D9CB9D01A1084F900F185B1 /* RMDownLoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9CE1A1084F900F185B1 /* RMDownLoadingViewController.xib */; };
+		1D9CB9D51A10855900F185B1 /* RMVideoPlayHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CB9D31A10855900F185B1 /* RMVideoPlayHistoryViewController.m */; };
+		1D9CB9D61A10855900F185B1 /* RMVideoPlayHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9D41A10855900F185B1 /* RMVideoPlayHistoryViewController.xib */; };
 		1DA2AC5219F65C810036C1AD /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA2AC5119F65C810036C1AD /* iflyMSC.framework */; };
 		1DA2AC5419F65CAA0036C1AD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA2AC5319F65CAA0036C1AD /* AddressBook.framework */; };
 		1DA2AC5819F65F160036C1AD /* RecognizerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC5719F65F160036C1AD /* RecognizerFactory.m */; };
@@ -598,8 +598,6 @@
 		1D357CC11A0A1CDF000C5C44 /* vd_collectionWhiteImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vd_collectionWhiteImg.png; sourceTree = "<group>"; };
 		1D357CC21A0A1CDF000C5C44 /* vd_collectionWhiteImg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vd_collectionWhiteImg@2x.png"; sourceTree = "<group>"; };
 		1D357CC31A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vd_collectionWhiteImg@3x.png"; sourceTree = "<group>"; };
-		1D357D0B1A0B07AD000C5C44 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
-		1D357D0C1A0B07AD000C5C44 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		1D357D0D1A0B07AD000C5C44 /* RMAFNRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAFNRequestManager.h; sourceTree = "<group>"; };
 		1D357D0E1A0B07AD000C5C44 /* RMAFNRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAFNRequestManager.m; sourceTree = "<group>"; };
 		1D357D0F1A0B07AD000C5C44 /* RMPublicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPublicModel.h; sourceTree = "<group>"; };
@@ -986,24 +984,9 @@
 		1D84810C1A03633400A92879 /* RMMyDownLoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMyDownLoadViewController.h; sourceTree = "<group>"; };
 		1D84810D1A03633400A92879 /* RMMyDownLoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMyDownLoadViewController.m; sourceTree = "<group>"; };
 		1D84810E1A03633400A92879 /* RMMyDownLoadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMyDownLoadViewController.xib; sourceTree = "<group>"; };
-		1D8481111A03633400A92879 /* RMFinishDownTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFinishDownTableViewCell.h; sourceTree = "<group>"; };
-		1D8481121A03633400A92879 /* RMFinishDownTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFinishDownTableViewCell.m; sourceTree = "<group>"; };
-		1D8481131A03633400A92879 /* RMFinishDownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMFinishDownTableViewCell.xib; sourceTree = "<group>"; };
-		1D8481141A03633400A92879 /* RMFinishDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFinishDownViewController.h; sourceTree = "<group>"; };
-		1D8481151A03633400A92879 /* RMFinishDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFinishDownViewController.m; sourceTree = "<group>"; };
-		1D8481161A03633400A92879 /* RMFinishDownViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMFinishDownViewController.xib; sourceTree = "<group>"; };
-		1D8481191A03633400A92879 /* RMDownLoadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownLoadingTableViewCell.h; sourceTree = "<group>"; };
-		1D84811A1A03633400A92879 /* RMDownLoadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownLoadingTableViewCell.m; sourceTree = "<group>"; };
-		1D84811B1A03633400A92879 /* RMDownLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMDownLoadingTableViewCell.xib; sourceTree = "<group>"; };
-		1D84811C1A03633400A92879 /* RMDownLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownLoadingViewController.h; sourceTree = "<group>"; };
-		1D84811D1A03633400A92879 /* RMDownLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownLoadingViewController.m; sourceTree = "<group>"; };
-		1D84811E1A03633400A92879 /* RMDownLoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMDownLoadingViewController.xib; sourceTree = "<group>"; };
 		1D8481201A03633400A92879 /* RMDownMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownMoreViewController.h; sourceTree = "<group>"; };
 		1D8481211A03633400A92879 /* RMDownMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownMoreViewController.m; sourceTree = "<group>"; };
 		1D8481221A03633400A92879 /* RMDownMoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMDownMoreViewController.xib; sourceTree = "<group>"; };
-		1D8481241A03633400A92879 /* RMVideoPlayHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVideoPlayHistoryViewController.h; sourceTree = "<group>"; };
-		1D8481251A03633400A92879 /* RMVideoPlayHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVideoPlayHistoryViewController.m; sourceTree = "<group>"; };
-		1D8481261A03633400A92879 /* RMVideoPlayHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMVideoPlayHistoryViewController.xib; sourceTree = "<group>"; };
 		1D8481291A03633400A92879 /* RMMoreAPPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMoreAPPTableViewCell.h; sourceTree = "<group>"; };
 		1D84812A1A03633400A92879 /* RMMoreAPPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMoreAPPTableViewCell.m; sourceTree = "<group>"; };
 		1D84812B1A03633400A92879 /* RMMoreAPPTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMoreAPPTableViewCell.xib; sourceTree = "<group>"; };
@@ -1035,6 +1018,23 @@
 		1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarCell_6.xib; sourceTree = "<group>"; };
 		1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarDetailsCell_6.xib; sourceTree = "<group>"; };
 		1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMyChannelCell_6.xib; sourceTree = "<group>"; };
+		1D9CB9B51A10824B00F185B1 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
+		1D9CB9B61A10824B00F185B1 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
+		1D9CB9BC1A1084BF00F185B1 /* RMFinishDownTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFinishDownTableViewCell.h; sourceTree = "<group>"; };
+		1D9CB9BD1A1084BF00F185B1 /* RMFinishDownTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFinishDownTableViewCell.m; sourceTree = "<group>"; };
+		1D9CB9BE1A1084BF00F185B1 /* RMFinishDownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMFinishDownTableViewCell.xib; sourceTree = "<group>"; };
+		1D9CB9C11A1084C800F185B1 /* RMFinishDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFinishDownViewController.h; sourceTree = "<group>"; };
+		1D9CB9C21A1084C800F185B1 /* RMFinishDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFinishDownViewController.m; sourceTree = "<group>"; };
+		1D9CB9C31A1084C800F185B1 /* RMFinishDownViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMFinishDownViewController.xib; sourceTree = "<group>"; };
+		1D9CB9C71A1084F200F185B1 /* RMDownLoadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownLoadingTableViewCell.h; sourceTree = "<group>"; };
+		1D9CB9C81A1084F200F185B1 /* RMDownLoadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownLoadingTableViewCell.m; sourceTree = "<group>"; };
+		1D9CB9C91A1084F200F185B1 /* RMDownLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMDownLoadingTableViewCell.xib; sourceTree = "<group>"; };
+		1D9CB9CC1A1084F900F185B1 /* RMDownLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownLoadingViewController.h; sourceTree = "<group>"; };
+		1D9CB9CD1A1084F900F185B1 /* RMDownLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownLoadingViewController.m; sourceTree = "<group>"; };
+		1D9CB9CE1A1084F900F185B1 /* RMDownLoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMDownLoadingViewController.xib; sourceTree = "<group>"; };
+		1D9CB9D21A10855900F185B1 /* RMVideoPlayHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVideoPlayHistoryViewController.h; sourceTree = "<group>"; };
+		1D9CB9D31A10855900F185B1 /* RMVideoPlayHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVideoPlayHistoryViewController.m; sourceTree = "<group>"; };
+		1D9CB9D41A10855900F185B1 /* RMVideoPlayHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMVideoPlayHistoryViewController.xib; sourceTree = "<group>"; };
 		1DA2AC5119F65C810036C1AD /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		1DA2AC5319F65CAA0036C1AD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1DA2AC5619F65F160036C1AD /* RecognizerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognizerFactory.h; sourceTree = "<group>"; };
@@ -1403,8 +1403,8 @@
 		1D357D0A1A0B07AD000C5C44 /* NetworkAndSQLite */ = {
 			isa = PBXGroup;
 			children = (
-				1D357D0B1A0B07AD000C5C44 /* Database.h */,
-				1D357D0C1A0B07AD000C5C44 /* Database.m */,
+				1D9CB9B51A10824B00F185B1 /* Database.h */,
+				1D9CB9B61A10824B00F185B1 /* Database.m */,
 				1D357D0D1A0B07AD000C5C44 /* RMAFNRequestManager.h */,
 				1D357D0E1A0B07AD000C5C44 /* RMAFNRequestManager.m */,
 				1D357D0F1A0B07AD000C5C44 /* RMPublicModel.h */,
@@ -2455,6 +2455,7 @@
 		1D8480FF1A03633400A92879 /* 设置 */ = {
 			isa = PBXGroup;
 			children = (
+				1D9CB9D11A10855000F185B1 /* 播放历史 */,
 				1D8481001A03633400A92879 /* cell */,
 				1D8481041A03633400A92879 /* RMSetupViewController.h */,
 				1D8481051A03633400A92879 /* RMSetupViewController.m */,
@@ -2462,7 +2463,6 @@
 				1D8481071A03633400A92879 /* 关于 */,
 				1D84810B1A03633400A92879 /* 我的下载 */,
 				1D84811F1A03633400A92879 /* 我的收藏 */,
-				1D8481231A03633400A92879 /* 播放历史 */,
 				1D8481271A03633400A92879 /* 更多应用 */,
 				1D84812F1A03633400A92879 /* 用户反馈 */,
 				1D8481331A03633400A92879 /* 电视剧下载详情 */,
@@ -2505,43 +2505,23 @@
 		1D84810F1A03633400A92879 /* 已下载 */ = {
 			isa = PBXGroup;
 			children = (
-				1D8481101A03633400A92879 /* cell */,
-				1D8481141A03633400A92879 /* RMFinishDownViewController.h */,
-				1D8481151A03633400A92879 /* RMFinishDownViewController.m */,
-				1D8481161A03633400A92879 /* RMFinishDownViewController.xib */,
+				1D9CB9BB1A1084B500F185B1 /* cell */,
+				1D9CB9C11A1084C800F185B1 /* RMFinishDownViewController.h */,
+				1D9CB9C21A1084C800F185B1 /* RMFinishDownViewController.m */,
+				1D9CB9C31A1084C800F185B1 /* RMFinishDownViewController.xib */,
 			);
 			path = "已下载";
-			sourceTree = "<group>";
-		};
-		1D8481101A03633400A92879 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				1D8481111A03633400A92879 /* RMFinishDownTableViewCell.h */,
-				1D8481121A03633400A92879 /* RMFinishDownTableViewCell.m */,
-				1D8481131A03633400A92879 /* RMFinishDownTableViewCell.xib */,
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 		1D8481171A03633400A92879 /* 正下载 */ = {
 			isa = PBXGroup;
 			children = (
-				1D8481181A03633400A92879 /* cell */,
-				1D84811C1A03633400A92879 /* RMDownLoadingViewController.h */,
-				1D84811D1A03633400A92879 /* RMDownLoadingViewController.m */,
-				1D84811E1A03633400A92879 /* RMDownLoadingViewController.xib */,
+				1D9CB9C61A1084E900F185B1 /* cell */,
+				1D9CB9CC1A1084F900F185B1 /* RMDownLoadingViewController.h */,
+				1D9CB9CD1A1084F900F185B1 /* RMDownLoadingViewController.m */,
+				1D9CB9CE1A1084F900F185B1 /* RMDownLoadingViewController.xib */,
 			);
 			path = "正下载";
-			sourceTree = "<group>";
-		};
-		1D8481181A03633400A92879 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				1D8481191A03633400A92879 /* RMDownLoadingTableViewCell.h */,
-				1D84811A1A03633400A92879 /* RMDownLoadingTableViewCell.m */,
-				1D84811B1A03633400A92879 /* RMDownLoadingTableViewCell.xib */,
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 		1D84811F1A03633400A92879 /* 我的收藏 */ = {
@@ -2552,16 +2532,6 @@
 				1D8481221A03633400A92879 /* RMDownMoreViewController.xib */,
 			);
 			path = "我的收藏";
-			sourceTree = "<group>";
-		};
-		1D8481231A03633400A92879 /* 播放历史 */ = {
-			isa = PBXGroup;
-			children = (
-				1D8481241A03633400A92879 /* RMVideoPlayHistoryViewController.h */,
-				1D8481251A03633400A92879 /* RMVideoPlayHistoryViewController.m */,
-				1D8481261A03633400A92879 /* RMVideoPlayHistoryViewController.xib */,
-			);
-			path = "播放历史";
 			sourceTree = "<group>";
 		};
 		1D8481271A03633400A92879 /* 更多应用 */ = {
@@ -2647,6 +2617,36 @@
 				1D99745B19E92D62007E53DB /* DBImageViewCache.m */,
 			);
 			path = DBImageView;
+			sourceTree = "<group>";
+		};
+		1D9CB9BB1A1084B500F185B1 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D9CB9BC1A1084BF00F185B1 /* RMFinishDownTableViewCell.h */,
+				1D9CB9BD1A1084BF00F185B1 /* RMFinishDownTableViewCell.m */,
+				1D9CB9BE1A1084BF00F185B1 /* RMFinishDownTableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		1D9CB9C61A1084E900F185B1 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				1D9CB9C71A1084F200F185B1 /* RMDownLoadingTableViewCell.h */,
+				1D9CB9C81A1084F200F185B1 /* RMDownLoadingTableViewCell.m */,
+				1D9CB9C91A1084F200F185B1 /* RMDownLoadingTableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		1D9CB9D11A10855000F185B1 /* 播放历史 */ = {
+			isa = PBXGroup;
+			children = (
+				1D9CB9D21A10855900F185B1 /* RMVideoPlayHistoryViewController.h */,
+				1D9CB9D31A10855900F185B1 /* RMVideoPlayHistoryViewController.m */,
+				1D9CB9D41A10855900F185B1 /* RMVideoPlayHistoryViewController.xib */,
+			);
+			path = "播放历史";
 			sourceTree = "<group>";
 		};
 		1DA2AC5519F65F0E0036C1AD /* MSC */ = {
@@ -3130,7 +3130,6 @@
 				1D4C363419F6050700AC8F1E /* logo_sgw.png in Resources */,
 				1DAB0D7519EBDBB10063A58E /* HJMTabBar.xib in Resources */,
 				1D847F401A0324D000A92879 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				1D8481951A03633400A92879 /* RMFinishDownViewController.xib in Resources */,
 				918DE7101A062BFD00287E06 /* teleplay_unSelected@3x.png in Resources */,
 				1D4C35E519F5F8F500AC8F1E /* tv-down_all.png in Resources */,
 				91908CCE19FA355A00C3DF09 /* start_all_downLoad_image@2x.png in Resources */,
@@ -3167,6 +3166,7 @@
 				1D4C367019F6054100AC8F1E /* tv_down_succes@2x.png in Resources */,
 				91908CE119FA3C3300C3DF09 /* editing_btn_image@2x.png in Resources */,
 				912C099819F8D79E006B6305 /* teleplay_unSelected.png in Resources */,
+				1D9CB9C51A1084C800F185B1 /* RMFinishDownViewController.xib in Resources */,
 				1D4C363219F6050700AC8F1E /* logo_pptv@2x.png in Resources */,
 				1DAB0DB519ECC2EC0063A58E /* MyChannel_red@2x.png in Resources */,
 				918DE71D1A063A9B00287E06 /* hotPlay_ribang@2x.png in Resources */,
@@ -3225,16 +3225,18 @@
 				1DED75C21A0B59BF004ADBD1 /* jr_movie@2x.png in Resources */,
 				1D847F381A0324D000A92879 /* UMShareEditViewControlleriPad.xib in Resources */,
 				1D847F321A0324D000A92879 /* UMSocialLocalizable.strings in Resources */,
+				1D9CB9CB1A1084F200F185B1 /* RMDownLoadingTableViewCell.xib in Resources */,
 				1D71171319ED27230007D393 /* movie_selected@2x.png in Resources */,
 				91D4EC7C19FB7F98005E9235 /* toppaiming@2x.png in Resources */,
+				1D9CB9D61A10855900F185B1 /* RMVideoPlayHistoryViewController.xib in Resources */,
 				1D4C363A19F6050700AC8F1E /* logo_xlkk.png in Resources */,
 				1DAB0D0E19EB647E0063A58E /* arrow_up@2x.png in Resources */,
 				1D8481531A03633400A92879 /* RMDailyListTableViewCell.xib in Resources */,
 				1D4FC50E19F8ACAD00366F31 /* mx_voice_img.png in Resources */,
 				1D4FC51D19F8B08E00366F31 /* onVoice_3@2x.png in Resources */,
+				1D9CB9C01A1084BF00F185B1 /* RMFinishDownTableViewCell.xib in Resources */,
 				1D4C362D19F6050700AC8F1E /* logo_fx.png in Resources */,
 				91908CCF19FA355A00C3DF09 /* user_head-Image.png in Resources */,
-				1D8481971A03633400A92879 /* RMDownLoadingTableViewCell.xib in Resources */,
 				1D4C362819F6050700AC8F1E /* cancel_img@2x.png in Resources */,
 				1D8481551A03633400A92879 /* RMDailyListViewController.xib in Resources */,
 				1D357CC91A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png in Resources */,
@@ -3299,6 +3301,7 @@
 				1D4C35F319F5F91800AC8F1E /* logo_aqy@2x.png in Resources */,
 				91B2C23D1A07173D001F0220 /* delect_all_btn@3x.png in Resources */,
 				1DAB0D0D19EB647E0063A58E /* arrow_up1.png in Resources */,
+				1D9CB9D01A1084F900F185B1 /* RMDownLoadingViewController.xib in Resources */,
 				1D4C362A19F6050700AC8F1E /* complete_img@2x.png in Resources */,
 				1D8481721A03633400A92879 /* RMStarFilmListViewController.xib in Resources */,
 				1D4FC51619F8B08200366F31 /* onVoice_4.png in Resources */,
@@ -3311,7 +3314,6 @@
 				1D4C364419F6050700AC8F1E /* re_redFrame.png in Resources */,
 				1D4C363E19F6050700AC8F1E /* mx_more_img@2x.png in Resources */,
 				1D4FC51419F8B08200366F31 /* onVoice_2.png in Resources */,
-				1D8481931A03633400A92879 /* RMFinishDownTableViewCell.xib in Resources */,
 				1D84819F1A03633400A92879 /* RMMoreAPPTableViewCell.xib in Resources */,
 				1D4C362619F6050700AC8F1E /* backup_img.png in Resources */,
 				1DDBB6BE1A0CFB2D003B9845 /* customBtn_img.png in Resources */,
@@ -3410,7 +3412,6 @@
 				1DDBB6BF1A0CFB2D003B9845 /* customBtn_img@2x.png in Resources */,
 				1D7117B719EFBD3D0007D393 /* pd_accessoryType_gray@2x.png in Resources */,
 				1D4C363C19F6050700AC8F1E /* logo_yk.png in Resources */,
-				1D8481991A03633400A92879 /* RMDownLoadingViewController.xib in Resources */,
 				91908CE019FA3C3300C3DF09 /* editing_btn_image.png in Resources */,
 				91908CD019FA355A00C3DF09 /* 图片上叠加的播放@2x.png in Resources */,
 				1D4C366119F6052E00AC8F1E /* mx_unfold.png in Resources */,
@@ -3421,7 +3422,6 @@
 				1D4C366F19F6054100AC8F1E /* tv_back_imge.png in Resources */,
 				1DAB0DB919ECC2EC0063A58E /* SoHotList_red@2x.png in Resources */,
 				1D4C364519F6050700AC8F1E /* rotating_img.png in Resources */,
-				1D84819D1A03633400A92879 /* RMVideoPlayHistoryViewController.xib in Resources */,
 				1D5B829D1A0E202500A4A29B /* down_dark@2x.png in Resources */,
 				9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */,
 				918DE7211A063A9B00287E06 /* hotPlay_yuebang@3x.png in Resources */,
@@ -3458,7 +3458,6 @@
 			files = (
 				1D71181E19F12DB10007D393 /* SUNSlideSwitchView.m in Sources */,
 				1D722AC619F762F400424446 /* AMBlurView.m in Sources */,
-				1D8481961A03633400A92879 /* RMDownLoadingTableViewCell.m in Sources */,
 				1D8481661A03633400A92879 /* RMSearchViewController.m in Sources */,
 				1D84814C1A03633400A92879 /* RMRecommendedDailyTableViewCell.m in Sources */,
 				1DED76331A0C51DB004ADBD1 /* TouchVIew.m in Sources */,
@@ -3471,7 +3470,6 @@
 				1D5B82971A0E201C00A4A29B /* DropDownTabelViewCell.m in Sources */,
 				1D4D47FC19D7B42800E3A50B /* UIImageView+AFNetworking.m in Sources */,
 				1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */,
-				1D8481921A03633400A92879 /* RMFinishDownTableViewCell.m in Sources */,
 				1D4D47F719D7B42800E3A50B /* Reachability.m in Sources */,
 				1D84815C1A03633400A92879 /* RMMyChannelCell.m in Sources */,
 				913D15D11A01E4BB000A50E2 /* SDWebImageCompat.m in Sources */,
@@ -3480,7 +3478,6 @@
 				1DED762D1A0C51DB004ADBD1 /* CustomVideoPlayerView.m in Sources */,
 				1DA2AC7219F65F5B0036C1AD /* SBJson4Writer.m in Sources */,
 				1D8481821A03633400A92879 /* RMVideoCreativeStaffCell.m in Sources */,
-				1D357D111A0B07AD000C5C44 /* Database.m in Sources */,
 				1D4D483519D7E16D00E3A50B /* UtilityFunc.m in Sources */,
 				913D15DD1A01E4BB000A50E2 /* UIView+WebCacheOperation.m in Sources */,
 				1DA2AC7119F65F5B0036C1AD /* SBJson4StreamWriterState.m in Sources */,
@@ -3491,7 +3488,7 @@
 				913D15D61A01E4BB000A50E2 /* SDWebImagePrefetcher.m in Sources */,
 				1D4D47EF19D7B42800E3A50B /* FMDatabase.m in Sources */,
 				1D84815E1A03633400A92879 /* RMMyChannelViewController.m in Sources */,
-				1D84819C1A03633400A92879 /* RMVideoPlayHistoryViewController.m in Sources */,
+				1D9CB9CF1A1084F900F185B1 /* RMDownLoadingViewController.m in Sources */,
 				1D8481481A03633400A92879 /* RMDownLoadBaseViewController.m in Sources */,
 				1D84818A1A03633400A92879 /* RMSetUpTableViewCell.m in Sources */,
 				1DDBB6AF1A0CD9DE003B9845 /* EGOImageLoadConnection.m in Sources */,
@@ -3507,7 +3504,7 @@
 				1D8481601A03633400A92879 /* RMMyChannelShouldSeeViewController.m in Sources */,
 				913D15CE1A01E4BB000A50E2 /* MKAnnotationView+WebCache.m in Sources */,
 				1D4D47B519D7B41C00E3A50B /* NSData+CommonCrypto.m in Sources */,
-				1D8481941A03633400A92879 /* RMFinishDownViewController.m in Sources */,
+				1D9CB9BF1A1084BF00F185B1 /* RMFinishDownTableViewCell.m in Sources */,
 				1D4D47F919D7B42800E3A50B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				1D4D47BF19D7B41C00E3A50B /* AFURLResponseSerialization.m in Sources */,
 				913D15DC1A01E4BB000A50E2 /* UIImageView+WebCache.m in Sources */,
@@ -3519,6 +3516,7 @@
 				1DED762B1A0C51DB004ADBD1 /* CustomSVProgressHUD.m in Sources */,
 				1DED76361A0C521C004ADBD1 /* CustomVideoPlayerController.m in Sources */,
 				1D4D47BE19D7B41C00E3A50B /* AFURLRequestSerialization.m in Sources */,
+				1D9CB9D51A10855900F185B1 /* RMVideoPlayHistoryViewController.m in Sources */,
 				1D84814E1A03633400A92879 /* RMRecommendedDailyViewController.m in Sources */,
 				1D84818E1A03633400A92879 /* RMAboutAppViewController.m in Sources */,
 				1D16BC0619E66558008BBB08 /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -3545,6 +3543,7 @@
 				1D84819E1A03633400A92879 /* RMMoreAPPTableViewCell.m in Sources */,
 				1D4D476619D7AAD900E3A50B /* main.m in Sources */,
 				1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */,
+				1D9CB9CA1A1084F200F185B1 /* RMDownLoadingTableViewCell.m in Sources */,
 				1D4D47BA19D7B41C00E3A50B /* AFHTTPSessionManager.m in Sources */,
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
 				1D5B82961A0E201C00A4A29B /* DropDownListView.m in Sources */,
@@ -3552,6 +3551,7 @@
 				1D4D47ED19D7B42800E3A50B /* CUSFileStorage.m in Sources */,
 				1D99745E19E92D62007E53DB /* DBImageView.m in Sources */,
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
+				1D9CB9C41A1084C800F185B1 /* RMFinishDownViewController.m in Sources */,
 				913D15D21A01E4BB000A50E2 /* SDWebImageDecoder.m in Sources */,
 				1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */,
 				1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */,
@@ -3599,6 +3599,7 @@
 				1D4D47F519D7B42800E3A50B /* JDStatusBarStyle.m in Sources */,
 				1D357D131A0B07AD000C5C44 /* RMPublicModel.m in Sources */,
 				1D357C9E1A07AE8F000C5C44 /* RMStarSearchResultViewController.m in Sources */,
+				1D9CB9B71A10824B00F185B1 /* Database.m in Sources */,
 				1D8481841A03633400A92879 /* RMVideoCreativeStaffViewController.m in Sources */,
 				1D16BC0019E664D0008BBB08 /* MMDrawerBarButtonItem.m in Sources */,
 				1D8481901A03633400A92879 /* RMMyDownLoadViewController.m in Sources */,
@@ -3614,7 +3615,6 @@
 				1DAB0D7419EBDBB10063A58E /* HJMTabBar.m in Sources */,
 				1DA2AC6C19F65F5B0036C1AD /* SBJson4Parser.m in Sources */,
 				1D8481881A03633400A92879 /* RMVideoBroadcastAddressViewController.m in Sources */,
-				1D8481981A03633400A92879 /* RMDownLoadingViewController.m in Sources */,
 				1D4D47B719D7B41C00E3A50B /* AFHTTPRequestOperation.m in Sources */,
 				913D15DB1A01E4BB000A50E2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				1D71173619EF981B0007D393 /* SwipeView.m in Sources */,
