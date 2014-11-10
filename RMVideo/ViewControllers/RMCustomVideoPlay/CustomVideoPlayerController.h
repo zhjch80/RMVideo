@@ -11,7 +11,7 @@
 @interface CustomVideoPlayerController : UIViewController
 @property (nonatomic,copy) NSString *playURL;
 
-- (void)createPlayerViewWithURL:(NSString *)url;
+- (void)createPlayerViewWithURL:(NSString *)url isPlayLocalVideo:(BOOL)isLocal;
 - (void)createTopTool;
 
 @end

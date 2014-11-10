@@ -53,7 +53,7 @@
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,movieName];
 
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
-        [customVideo createPlayerViewWithURL:str];
+        [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
         [customVideo createTopTool];
         [self presentViewController:customVideo animated:YES completion:nil];
     }];

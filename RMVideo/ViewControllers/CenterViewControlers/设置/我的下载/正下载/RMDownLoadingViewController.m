@@ -62,16 +62,16 @@ static id _instance;
     if(data==nil){
         //**********************测试代码*****************************
         NSArray *array = [NSArray arrayWithObjects:
-                          @"http://220.181.185.11/youku/65731ACC75844831216E3C4844/0300200100544E32020A2D0014D61B004A5863-6A4D-E160-C56E-827D4238A6CE.mp4",
-                          @"http://220.181.154.16/youku/656B30CDEB4483119528C6ED4/030020010053FB3BCE67EF05CF07DD52B74D26-EF08-8769-2598-9D1A5CE6E429.mp4",
-                          @"http://220.181.185.19/youku/67727438CB34683298E27F55BF/0300200100513DD205D938055EEB3E16881E52-345A-B3E8-2FA8-FEEBDC4DE258.mp4",
-                          @"http://106.38.249.111/youku/6572F43C9913E7AB76FC8341D/030020010050DF50204722055EEB3EEEFEA7BC-55AD-EED3-7D4A-675DFBC92E6B.mp4",
-                          @"http://106.38.249.78/youku/69722980B683378C8B18348B1/030020010050B4DD0D8561055EEB3E385E6FED-6204-8E1F-0267-F7940EF9D418.mp4", nil];
-        NSArray *nameArray = [NSArray arrayWithObjects:@"绣春刀",@"庞贝末日",@"神笔马良",@"幻影车神",@"分手大师", nil];
+                          @"http://220.181.185.11/youku/697635D8C5847833549B846954/0300200100544E32020A2D0014D61B004A5863-6A4D-E160-C56E-827D4238A6CE.mp4132412",
+                          @"http://220.181.185.11/youku/697756E8B683F82D76D2E461A1/030020010052A84E8B5217055EEB3E4DC7771E-B14F-EB8E-CB90-E28B72954460.mp4",
+                          @"http://220.181.185.19/youku/67727468CCD4082E328DF02A2F/0300200100513DD205D938055EEB3E16881E52-345A-B3E8-2FA8-FEEBDC4DE258.mp4",
+                          @"http://106.38.249.19/youku/656267845D31786EB54A4961/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4",
+                          @"http://220.181.154.41/youku/6772289061C3982909BAFC2B08/03002001005431D9F2FCD70014D61B7DD3F133-BB28-9B83-58C7-C14FADFC0F4E.mp4", nil];
+        self.movieTitleArray = [NSMutableArray arrayWithObjects:@"绣春刀",@"庞贝末日",@"神笔马良",@"幻影车神",@"分手大师", nil];
         for(int i=0;i<5;i++){
             RMPublicModel *model = [[RMPublicModel alloc] init];
             model.downLoadURL = [array objectAtIndex:i];
-            model.name = [nameArray objectAtIndex:i];
+            model.name = [self.movieTitleArray objectAtIndex:i];
             model.pic = @"http://a.hiphotos.baidu.com/image/w%3D310/sign=d372b7e38544ebf86d71623ee9f8d736/30adcbef76094b3614bd950da1cc7cd98d109d27.jpg";
             model.downLoadState = @"等待缓存";
             model.totalMemory = @"0M";
@@ -337,6 +337,10 @@ static id _instance;
     [[NSNotificationCenter defaultCenter ] postNotificationName:kDownLoadingControEndEditing object:nil];
 }
 - (void) BeginDownLoad{
+    [self.mainTableView reloadData];
+    if(cellEditingImageArray.count<self.dataArray.count){
+        [cellEditingImageArray addObject:@"no-select_cellImage"];
+    }
     if(!isCLickPauseCell){
         for (RMPublicModel *model in self.dataArray) {
             if([self.downLoadIDArray containsObject: model]){
@@ -450,11 +454,21 @@ static id _instance;
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        RMDownLoadingTableViewCell *cell = (RMDownLoadingTableViewCell *)[weekSelf.mainTableView cellForRowAtIndexPath:indexPath];
-        cell.showDownLoadingState.text = @"下载失败";
-        weekSelf.downLoadSpeed = 0;
-
+        [NSObject cancelPreviousPerformRequestsWithTarget:weekSelf selector:@selector(showNetWorkingspeed) object:nil];
+        [weekOperation pause];
+        RMPublicModel *model = [weekSelf.dataArray objectAtIndex:index];
+        model.downLoadState = @"下载失败";
+        model.cacheProgress = @"0";
+        model.totalMemory = @"0M";
+        [weekSelf.downLoadIDArray removeObject:model];
+        [weekSelf.mainTableView reloadData];
+        if(weekSelf.downLoadIDArray.count==0){
+            weekSelf.isDownLoadNow = YES;
+        }else{
+            weekSelf.isDownLoadNow = NO;
+        }
+        
+        [weekSelf BeginDownLoad];
     }];
     [operation start];
     
@@ -533,10 +547,12 @@ static id _instance;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)dealloc{
-    NSLog(@"进来没");
-    /*
-         }
-     */
+- (BOOL)dataArrayContainsModel:(RMPublicModel *)model{
+    for (RMPublicModel *tmpModel in self.dataArray){
+        if([tmpModel.name isEqualToString:model.name]){
+            return YES;
+        }
+    }
+    return NO;
 }
 @end

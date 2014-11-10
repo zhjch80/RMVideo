@@ -217,24 +217,46 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //跳转下一集
 - (void)playNextButtonAction:(UIButton *)sender{
     
-    NSString * str = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
-    NSURL * _URL = [NSURL fileURLWithPath:str];
+    NSString * str = @"http://220.181.185.11/youku/697756E8B683F82D76D2E461A1/030020010052A84E8B5217055EEB3E4DC7771E-B14F-EB8E-CB90-E28B72954460.mp4";
+    NSURL * _URL = [NSURL URLWithString:str];
+//    self.playerItem = nil;
+//    [self.playerItem removeObserver:self forKeyPath:@"status"];
+//    [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+//    
+//    self.playerItem = [AVPlayerItem playerItemWithURL:_URL];
+//    self.moviePlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
+//    self.playerLayer.player = self.moviePlayer;
+//    
+//    CMTime interval = CMTimeMake(33, 1000);
+//    __weak __typeof(self) weakself = self;
+//    playbackObserver = [self.moviePlayer addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock: ^(CMTime time) {
+//        CMTime endTime = CMTimeConvertScale (weakself.moviePlayer.currentItem.asset.duration, weakself.moviePlayer.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
+//        if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
+//            double normalizedTime = (double) weakself.moviePlayer.currentTime.value / (double) endTime.value;
+//            weakself.progressBar.value = normalizedTime;
+//        }
+//        weakself.playBackTime.text = [weakself getStringFromCMTime:weakself.moviePlayer.currentTime];
+//    }];
+//    [self play];
+//    [self setHiddenView];
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    if (self.playerItem) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVPlayerItemDidPlayToEndTimeNotification
+                                                      object:self.playerItem];
+        [self.playerItem removeObserver:self forKeyPath:@"status"];
+        [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        
+    }
     self.playerItem = [AVPlayerItem playerItemWithURL:_URL];
     self.moviePlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.playerLayer.player = self.moviePlayer;
+    self.contentURL = _URL;
     
-    CMTime interval = CMTimeMake(33, 1000);
-    __weak __typeof(self) weakself = self;
-    playbackObserver = [self.moviePlayer addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock: ^(CMTime time) {
-        CMTime endTime = CMTimeConvertScale (weakself.moviePlayer.currentItem.asset.duration, weakself.moviePlayer.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
-        if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
-            double normalizedTime = (double) weakself.moviePlayer.currentTime.value / (double) endTime.value;
-            weakself.progressBar.value = normalizedTime;
-        }
-        weakself.playBackTime.text = [weakself getStringFromCMTime:weakself.moviePlayer.currentTime];
-    }];
+    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];// 监听status属性
+    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];// 监听loadedTimeRanges属性
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerFinishedPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
     [self play];
-    [self setHiddenView];
 }
 //设置选集的视图大小
 - (void)setSelectionEpisodeScrollViewWithArray:(NSMutableArray *)tvArray{
@@ -531,7 +553,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 
             NSLog(@"AVPlayerStatusReadyToPlay");
 
-            self.playPauseButton.enabled = YES;
+//            self.playPauseButton.enabled = YES;
             [SVProgressHUD dismiss];
 
 //            CMTime duration = self.playerItem.duration;// 获取视频总长度

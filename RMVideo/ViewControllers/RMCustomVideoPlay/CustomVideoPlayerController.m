@@ -99,7 +99,7 @@
  * 播放器
  *
  ***/
-- (void)createPlayerViewWithURL:(NSString *)url {
+- (void)createPlayerViewWithURL:(NSString *)url isPlayLocalVideo:(BOOL)isLocal{
 //    [self.view setBackgroundColor:[UIColor blackColor]];
 //    if (self.player == nil) {
 //        self.player = [[CustomVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight)];
@@ -119,14 +119,14 @@
         self.player.tintColor = [UIColor redColor];
         [self.view addSubview:self.player];
     }
-    [self playerWithURL:url];
+    [self playerWithURL:url isPlayLocalVideo:isLocal];
     NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     [self.player setSelectionEpisodeScrollViewWithArray:array];
     
     
 }
 
-- (void)playerWithURL:(NSString *)url {
+- (void)playerWithURL:(NSString *)url isPlayLocalVideo:(BOOL)isPlayLocalVideo{
 //    if ([url hasPrefix:@"\n"]) {
 //        url = [url stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 //    }
@@ -143,9 +143,14 @@
 //    NSURL * URL = [NSURL fileURLWithPath:str];
 //#endif
     
-    NSURL * URL = [NSURL fileURLWithPath:url];
+    NSURL * URL = nil;
+    if(isPlayLocalVideo){
+        URL = [NSURL fileURLWithPath:url];
+    }else{
+        URL = [NSURL URLWithString:url];
+    }
 
-    
+
     
     [self.player contentURL:URL];
     [self.player play];

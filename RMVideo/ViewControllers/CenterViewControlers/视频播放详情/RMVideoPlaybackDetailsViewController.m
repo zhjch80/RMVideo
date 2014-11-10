@@ -194,11 +194,24 @@ typedef enum{
     switch (sender.tag) {
         case 101:{
             //下载
+            NSLog(@"下载");
             RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-            if(![rmDownLoading.dataArray containsObject:[self.dataArr objectAtIndex:0]]){
-//                [rmDownLoading.dataArray addObject:[self.dataArr objectAtIndex:0]];
+            RMPublicModel *model = [[RMPublicModel alloc] init];
+            model.downLoadURL = @"http://106.38.249.114/youku/656E17093F487C793121357A/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+            model.name = @"新影片";
+            model.pic = @"http://a.hiphotos.baidu.com/image/w%3D310/sign=d372b7e38544ebf86d71623ee9f8d736/30adcbef76094b3614bd950da1cc7cd98d109d27.jpg";
+            model.downLoadState = @"等待缓存";
+            model.totalMemory = @"0M";
+            model.alreadyCasheMemory = @"0M";
+            model.cacheProgress = @"0.0";
+            
+            if(![rmDownLoading dataArrayContainsModel:model]){
+                
+                [rmDownLoading.dataArray addObject:model];
+                
                 [rmDownLoading BeginDownLoad];
             }
+
             break;
         }
         case 102:{

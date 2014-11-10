@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *dataArray;  //tableview 的数据源
 @property (strong, nonatomic) NSMutableArray *downLoadIDArray; //正在下载的数组
 @property (strong, nonatomic) NSMutableArray *pauseLoadingArray;//暂停中的数组
+@property (strong, nonatomic) NSMutableArray *movieTitleArray;
 @property (nonatomic)BOOL isDownLoadNow; //判断当前是否有下载任务
 @property (nonatomic)NSUInteger downLoadSpeed;
 @property (nonatomic)long long haveReadTheSchedule;
@@ -49,4 +50,6 @@
 - (void)BeginDownLoad;
 
 - (void)saveData;
+
+- (BOOL)dataArrayContainsModel:(RMPublicModel *)model;
 @end

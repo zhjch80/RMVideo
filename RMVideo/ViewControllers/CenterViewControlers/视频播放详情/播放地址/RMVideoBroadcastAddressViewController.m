@@ -37,6 +37,9 @@
                @"logo_aqy", @"6",
                @"logo_td", @"7",
                nil];
+    publicModel = [[RMPublicModel alloc] init];
+    publicModel.pic_url = @"http://f.hiphotos.baidu.com/image/w%3D310/sign=7437de58d2a20cf44690f8de460b4b0c/e1fe9925bc315c60191d32308fb1cb1348547760.jpg";
+    publicModel.name = @"新影片";
 }
 
 - (void)subButtonClick:(UIButton *)sender {
@@ -47,14 +50,16 @@
     
     RMPublicModel *insertModel = [[RMPublicModel alloc] init];
     insertModel.name = publicModel.name;
-    insertModel.pic_url = publicModel.pic;
+    insertModel.pic_url = publicModel.pic_url;
     insertModel.reurl = [dic objectForKey:@"jumpurl"];
     insertModel.playTime = @"0";
     [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
     
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
     CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-    playContro.playURL = [dic objectForKey:@"jumpurl"];
+//    [playContro createPlayerViewWithURL:[dic objectForKey:@"jumpurl"] isPlayLocalVideo:NO];
+    [playContro createPlayerViewWithURL:@"http://106.38.249.115/youku/6571A120949307841CDD82F2D/0300200100541051355CC105CF07DD1B1058E5-6200-DC5A-6294-C5EA5EB2CC63.mp4" isPlayLocalVideo:NO];
+    [playContro createTopTool];
     [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
 //        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
 //            // iOS 7
