@@ -343,6 +343,9 @@
 		1D99745D19E92D62007E53DB /* DBImageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99745719E92D62007E53DB /* DBImageRequest.m */; };
 		1D99745E19E92D62007E53DB /* DBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99745919E92D62007E53DB /* DBImageView.m */; };
 		1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99745B19E92D62007E53DB /* DBImageViewCache.m */; };
+		1D9CB9B01A1053D200F185B1 /* RMStarCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */; };
+		1D9CB9B21A10556E00F185B1 /* RMStarDetailsCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */; };
+		1D9CB9B41A10655A00F185B1 /* RMMyChannelCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */; };
 		1DA2AC5219F65C810036C1AD /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA2AC5119F65C810036C1AD /* iflyMSC.framework */; };
 		1DA2AC5419F65CAA0036C1AD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA2AC5319F65CAA0036C1AD /* AddressBook.framework */; };
 		1DA2AC5819F65F160036C1AD /* RecognizerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC5719F65F160036C1AD /* RecognizerFactory.m */; };
@@ -1029,6 +1032,9 @@
 		1D99745919E92D62007E53DB /* DBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBImageView.m; sourceTree = "<group>"; };
 		1D99745A19E92D62007E53DB /* DBImageViewCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBImageViewCache.h; sourceTree = "<group>"; };
 		1D99745B19E92D62007E53DB /* DBImageViewCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBImageViewCache.m; sourceTree = "<group>"; };
+		1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarCell_6.xib; sourceTree = "<group>"; };
+		1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarDetailsCell_6.xib; sourceTree = "<group>"; };
+		1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMyChannelCell_6.xib; sourceTree = "<group>"; };
 		1DA2AC5119F65C810036C1AD /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		1DA2AC5319F65CAA0036C1AD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1DA2AC5619F65F160036C1AD /* RecognizerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognizerFactory.h; sourceTree = "<group>"; };
@@ -2255,6 +2261,7 @@
 				1D8480A91A03633400A92879 /* RMMyChannelCell.h */,
 				1D8480AA1A03633400A92879 /* RMMyChannelCell.m */,
 				1D8480AB1A03633400A92879 /* RMMyChannelCell.xib */,
+				1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */,
 				1D8480AC1A03633400A92879 /* RMMyChannelViewController.h */,
 				1D8480AD1A03633400A92879 /* RMMyChannelViewController.m */,
 				1D8480AE1A03633400A92879 /* RMMyChannelViewController.xib */,
@@ -2311,6 +2318,7 @@
 				1D8480C11A03633400A92879 /* RMStarCell.h */,
 				1D8480C21A03633400A92879 /* RMStarCell.m */,
 				1D8480C31A03633400A92879 /* RMStarCell.xib */,
+				1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */,
 				1D8480C41A03633400A92879 /* RMStarViewController.h */,
 				1D8480C51A03633400A92879 /* RMStarViewController.m */,
 				1D8480C61A03633400A92879 /* RMStarViewController.xib */,
@@ -2326,6 +2334,7 @@
 				1D8480C81A03633400A92879 /* RMStarDetailsCell.h */,
 				1D8480C91A03633400A92879 /* RMStarDetailsCell.m */,
 				1D8480CA1A03633400A92879 /* RMStarDetailsCell.xib */,
+				1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */,
 				1D8480CB1A03633400A92879 /* RMStarDetailsViewController.h */,
 				1D8480CC1A03633400A92879 /* RMStarDetailsViewController.m */,
 				1D8480CD1A03633400A92879 /* RMStarDetailsViewController.xib */,
@@ -3146,6 +3155,7 @@
 				91D4EC8B19FB82E1005E9235 /* pause_all_downLoad_Image.png in Resources */,
 				1D4C35E219F5F8F500AC8F1E /* 下载@2x.png in Resources */,
 				1D357CC51A0A1CDF000C5C44 /* vd_collectionRedImg@2x.png in Resources */,
+				1D9CB9B01A1053D200F185B1 /* RMStarCell_6.xib in Resources */,
 				1D4C362419F6050700AC8F1E /* 更多2.png in Resources */,
 				91908CDD19FA3C3300C3DF09 /* cancle_btn_image@2x.png in Resources */,
 				1D8481A31A03633400A92879 /* RMUserFeedbackViewController.xib in Resources */,
@@ -3362,9 +3372,11 @@
 				1D84815D1A03633400A92879 /* RMMyChannelCell.xib in Resources */,
 				9195B4CE1A037663005ED51B /* RMShouldSeeMovieViewController.xib in Resources */,
 				1D4C364619F6050700AC8F1E /* setup.png in Resources */,
+				1D9CB9B21A10556E00F185B1 /* RMStarDetailsCell_6.xib in Resources */,
 				1DAB0D1119EB647E0063A58E /* blueArrow@2x.png in Resources */,
 				918DE7051A0628D500287E06 /* tijiao@2x.png in Resources */,
 				1D8481811A03633400A92879 /* RMVideoPlaybackDetailsViewController.xib in Resources */,
+				1D9CB9B41A10655A00F185B1 /* RMMyChannelCell_6.xib in Resources */,
 				1D84814D1A03633400A92879 /* RMRecommendedDailyTableViewCell.xib in Resources */,
 				91D4EC8A19FB82E1005E9235 /* downLoad_more_image.png in Resources */,
 				1D357CB51A09D863000C5C44 /* sp_loadingImg.png in Resources */,
@@ -3687,7 +3699,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -3724,7 +3736,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -3755,7 +3767,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 			};
 			name = Debug;
 		};
@@ -3782,7 +3794,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 			};
 			name = Release;
 		};

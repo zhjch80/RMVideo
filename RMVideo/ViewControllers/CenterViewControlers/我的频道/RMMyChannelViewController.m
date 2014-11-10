@@ -61,7 +61,7 @@ typedef enum{
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     self.kLoginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];    
-    
+
     if ([self.kLoginStatus isEqualToString:@"islogin"]){
         [self setTitle:@"我的频道"];
         self.moreWonderfulImg.hidden = NO;
@@ -150,16 +150,16 @@ typedef enum{
     
     for (int i=0; i<2; i++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(85 + i*100, 50, 50, 50);
+        button.frame = CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50, 50, 50, 50);
         [button setBackgroundImage:LOADIMAGE([self.btnImgWithTitleArr objectAtIndex:i], kImageTypePNG) forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonMethod:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = 101+i;
         button.backgroundColor = [UIColor clearColor];
         [self.view addSubview:button];
         
-        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake(62 + i*100, 100, 100, 40)];
+        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50, 100, 100, 40)];
         title.text = [self.btnImgWithTitleArr objectAtIndex:2+i];
-        title.textAlignment = NSTextAlignmentCenter;
+        title.textAlignment = NSTextAlignmentLeft;
         title.font = [UIFont systemFontOfSize:14.0];
         title.tag = 201+i;
         title.textColor = [UIColor colorWithRed:0.38 green:0.38 blue:0.38 alpha:1];
@@ -181,12 +181,20 @@ typedef enum{
     NSString * CellIdentifier = [NSString stringWithFormat:@"RMMyChannelCellIdentifier%d",indexPath.row];
     RMMyChannelCell * cell = (RMMyChannelCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (! cell) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMMyChannelCell" owner:self options:nil];
+        NSArray *array;
+        if (IS_IPHONE_6_SCREEN){
+            array= [[NSBundle mainBundle] loadNibNamed:@"RMMyChannelCell_6" owner:self options:nil];
+        }else if (IS_IPHONE_6p_SCREEN){
+            
+        }else{
+            array = [[NSBundle mainBundle] loadNibNamed:@"RMMyChannelCell" owner:self options:nil];
+        }
         cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         cell.backgroundColor = [UIColor clearColor];
         cell.delegate = self;
     }
+
     RMPublicModel *model = [dataArr objectAtIndex:indexPath.row];    
     CGFloat width = [UtilityFunc boundingRectWithSize:CGSizeMake(0, 30) font:[UIFont systemFontOfSize:14.0] text:model.name].width;
     cell.tag_title.frame = CGRectMake(2, 0, width + 30, 30);

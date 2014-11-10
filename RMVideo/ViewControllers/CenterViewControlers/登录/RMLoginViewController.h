@@ -17,9 +17,5 @@ typedef enum{
 @interface RMLoginViewController : RMBaseViewController{
     LoginType loginType;
 }
-@property (weak, nonatomic) IBOutlet UILabel *line;
-
-- (IBAction)weiboLogin:(UIButton *)sender;
-- (IBAction)tencentLogin:(UIButton *)sender;
 
 @end

@@ -430,7 +430,14 @@ typedef enum{
         NSString * CellIdentifier = [NSString stringWithFormat:@"RMStarCellIdentifier%d",indexPath.row];
         RMStarCell * cell = (RMStarCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (! cell) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
+            NSArray *array;
+            if (IS_IPHONE_6_SCREEN){
+                array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell_6" owner:self options:nil];
+            }else if (IS_IPHONE_6p_SCREEN){
+                
+            }else {
+                array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
+            }
             cell = [array objectAtIndex:0];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             cell.backgroundColor = [UIColor clearColor];

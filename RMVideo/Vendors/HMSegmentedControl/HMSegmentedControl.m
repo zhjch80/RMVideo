@@ -71,7 +71,14 @@
     //NSLog(@"identifierType:%@",self.identifierType);
     if ([self.identifierType isEqualToString:@"starIdentifier"]){
         for (int i=0; i<self.sectionTitles.count; i++) {
-            UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(22.5 + i * 92, 0, 93, 30)];
+            UIImageView * image;
+            if (IS_IPHONE_6_SCREEN){
+                image = [[UIImageView alloc] initWithFrame:CGRectMake(50.5 + i * 92, 0, 93, 30)];
+            }else if (IS_IPHONE_6p_SCREEN){
+                
+            }else{
+                image = [[UIImageView alloc] initWithFrame:CGRectMake(22.5 + i * 92, 0, 93, 30)];
+            }
             image.tag = FixValue_TAG+i;
             image.userInteractionEnabled = YES;
             if (i==0){
