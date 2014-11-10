@@ -56,7 +56,19 @@ typedef enum{
         self.videoHeadBGView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 205);
         self.videoImg.frame = CGRectMake(10, 10, 128, 175);
     }else if (IS_IPHONE_6_SCREEN){
-        
+        self.videoHeadBGView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 210);
+        self.videoImg.frame = CGRectMake(20, 17, 128, 175);
+        self.videoTitle.frame = CGRectMake(155, 25, 210, 21);
+        self.videoRateView.frame = CGRectMake(155, 55, 84, 20);
+        self.videoPlayImg.frame = CGRectMake(155, 80, 10, 10);
+        self.videoPlayCount.frame = CGRectMake(180, 75, 210, 20);
+        self.videoUpLine.frame = CGRectMake(155, 130, 210, 2);
+        self.videoDownLine.frame = CGRectMake(155, 170, 210, 2);
+        self.videoLeftLine.frame = CGRectMake(220, 135, 2, 30);
+        self.videoRightLine.frame = CGRectMake(295, 135, 2, 30);
+        self.videoDownloadBtn.frame = CGRectMake(165, 140, 25, 25);
+        self.videoCollectionBtn.frame = CGRectMake(245, 140, 25, 25);
+        self.videoShareBtn.frame = CGRectMake(325, 140, 25, 25);
     }else if (IS_IPHONE_6p_SCREEN){
         self.videoHeadBGView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 267);
         self.videoImg.frame = CGRectMake(20, 17, 167, 233);
@@ -91,7 +103,7 @@ typedef enum{
                 if (IS_IPHONE_4_SCREEN |IS_IPHONE_5_SCREEN){
                     blockSelf.videoPlotIntroducedCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6_SCREEN){
-                    
+                    blockSelf.videoPlotIntroducedCtl.view.frame = CGRectMake(0, 250, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 235);
                 }else if (IS_IPHONE_6p_SCREEN){
                     blockSelf.videoPlotIntroducedCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
@@ -105,7 +117,7 @@ typedef enum{
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
                 blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6_SCREEN){
-                    
+                    blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 250, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6p_SCREEN){
                 blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
@@ -122,7 +134,7 @@ typedef enum{
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
                     blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6_SCREEN){
-                    
+                    blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 250, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 235);
                 }else if (IS_IPHONE_6p_SCREEN){
                     blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
@@ -139,7 +151,7 @@ typedef enum{
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         _segmentedControl.frame = CGRectMake(0, 205, [UtilityFunc shareInstance].globleWidth, 40);
     }else if (IS_IPHONE_6_SCREEN){
-        
+        _segmentedControl.frame = CGRectMake(0, 210, [UtilityFunc shareInstance].globleWidth, 40);
     }else if (IS_IPHONE_6p_SCREEN){
         _segmentedControl.frame = CGRectMake(0, 267, [UtilityFunc shareInstance].globleWidth, 40);
     }
@@ -182,13 +194,11 @@ typedef enum{
     switch (sender.tag) {
         case 101:{
             //下载
-            NSLog(@"下载");
             RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
             if(![rmDownLoading.dataArray containsObject:[self.dataArr objectAtIndex:0]]){
 //                [rmDownLoading.dataArray addObject:[self.dataArr objectAtIndex:0]];
                 [rmDownLoading BeginDownLoad];
             }
-            
             break;
         }
         case 102:{

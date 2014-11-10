@@ -26,7 +26,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     dataArr = [[NSMutableArray alloc] init];
-    PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180)];
+    PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] init];
+    if (IS_IPHONE_6_SCREEN){
+        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
+    }else if (IS_IPHONE_6p_SCREEN){
+        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
+    }else{
+        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
+    }
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.tag = 202;
@@ -63,7 +70,7 @@
         if (IS_IPHONE_6_SCREEN){
             array = [[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell_6" owner:self options:nil];
         }else if (IS_IPHONE_6p_SCREEN){
-            
+            array = [[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell_6p" owner:self options:nil];
         }else{
             array = [[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil];
         }

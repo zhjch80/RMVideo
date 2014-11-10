@@ -86,6 +86,14 @@ typedef enum{
         self.foldMarkTitle.frame = CGRectMake(170, 96, 31, 21);
         self.foldImg.frame = CGRectMake(204, 102, 12, 8);
         self.foldBtn.frame = CGRectMake(170, 93, 56, 28);
+    }else if (IS_IPHONE_6p_SCREEN){
+        self.starIntrduce.frame = CGRectMake(0, 20, 280, 60);
+        [self.starIntrduce setContentOffset:CGPointMake(0, 0) animated:YES];
+        self.starIntrduce.bouncesZoom = NO;
+        self.headSubView.frame = CGRectMake(120, 10, 284, 129);
+        self.foldMarkTitle.frame = CGRectMake(210, 96, 31, 21);
+        self.foldImg.frame = CGRectMake(244, 102, 12, 8);
+        self.foldBtn.frame = CGRectMake(210, 93, 56, 28);
     }
     
     [self.headSubChannelView.layer setCornerRadius:8.0];
@@ -113,7 +121,13 @@ typedef enum{
                 if (! blockSelf.starFilmListCtl){
                     blockSelf.starFilmListCtl = [[RMStarFilmListViewController alloc] init];
                 }
-                blockSelf.starFilmListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                if (IS_IPHONE_6_SCREEN){
+                    blockSelf.starFilmListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else if (IS_IPHONE_6p_SCREEN){
+                    blockSelf.starFilmListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else{
+                    blockSelf.starFilmListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }
                 blockSelf.starFilmListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starFilmListCtl.view belowSubview:maskView];
                 break;
@@ -122,7 +136,13 @@ typedef enum{
                 if (! blockSelf.starTeleplayListCtl){
                     blockSelf.starTeleplayListCtl = [[RMStarTeleplayListViewController alloc] init];
                 }
-                blockSelf.starTeleplayListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                if (IS_IPHONE_6_SCREEN){
+                    blockSelf.starTeleplayListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else if (IS_IPHONE_6p_SCREEN){
+                    blockSelf.starTeleplayListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else{
+                    blockSelf.starTeleplayListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }
                 blockSelf.starTeleplayListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starTeleplayListCtl.view belowSubview:maskView];
                 break;
@@ -131,7 +151,13 @@ typedef enum{
                 if (! blockSelf.starVarietyListCtl){
                     blockSelf.starVarietyListCtl = [[RMStarVarietyListViewController alloc] init];
                 }
-                blockSelf.starVarietyListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                if (IS_IPHONE_6_SCREEN){
+                    blockSelf.starVarietyListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else if (IS_IPHONE_6p_SCREEN){
+                    blockSelf.starVarietyListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }else{
+                    blockSelf.starVarietyListCtl.view.frame = CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 175);
+                }
                 blockSelf.starVarietyListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starVarietyListCtl.view belowSubview:maskView];
                 break;
@@ -141,7 +167,9 @@ typedef enum{
                 break;
         }
     }];
+    
     _segmentedControl.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 40);
+
     [_segmentedControl setSelectedIndex:0];
     [_segmentedControl setBackgroundColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1]];
     [_segmentedControl setTextColor:[UIColor clearColor]];
@@ -226,7 +254,12 @@ typedef enum{
                         self.foldMarkTitle.frame = CGRectMake(170, 96, 31, 21);
                         self.foldImg.frame = CGRectMake(204, 102, 12, 8);
                         self.foldBtn.frame = CGRectMake(170, 93, 56, 28);
-                    }
+                    }else if (IS_IPHONE_6p_SCREEN){
+                        self.starIntrduce.frame = CGRectMake(0, 20, 280, 60);
+                        self.headSubView.frame = CGRectMake(120, 10, 284, 129);
+                        self.foldMarkTitle.frame = CGRectMake(210, 96, 31, 21);
+                        self.foldImg.frame = CGRectMake(244, 102, 12, 8);
+                        self.foldBtn.frame = CGRectMake(210, 93, 56, 28);                    }
                 } completion:^(BOOL finished) {
                     self.foldMarkTitle.text = @"展开";
                     self.foldImg.image = LOADIMAGE(@"mx_unfold",kImageTypePNG);
@@ -252,6 +285,12 @@ typedef enum{
                         self.foldMarkTitle.frame = CGRectMake(170, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
                         self.foldImg.frame = CGRectMake(204, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
                         self.foldBtn.frame = CGRectMake(170, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
+                    }else if (IS_IPHONE_6p_SCREEN){
+                        self.starIntrduce.frame = CGRectMake(0, 20, 280, [UtilityFunc shareInstance].globleHeight - 110);
+                        self.headSubView.frame = CGRectMake(120, 10, 284, [UtilityFunc shareInstance].globleHeight - 54);
+                        self.foldMarkTitle.frame = CGRectMake(210, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
+                        self.foldImg.frame = CGRectMake(244, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
+                        self.foldBtn.frame = CGRectMake(210, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
                     }
                 } completion:^(BOOL finished) {
                     self.foldMarkTitle.text = @"收起";

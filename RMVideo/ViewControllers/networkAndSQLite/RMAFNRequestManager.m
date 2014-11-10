@@ -25,7 +25,7 @@
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 30;//超市
+    manager.requestSerializer.timeoutInterval = 10;//超市
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
     return manager;
 }
@@ -290,6 +290,7 @@
     NSString *url = [self urlPathadress:Http_getMyChannelVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit_tag=%@&offset_tag=%@",url,token,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"tag_list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];

@@ -75,7 +75,7 @@
             if (IS_IPHONE_6_SCREEN){
                 image = [[UIImageView alloc] initWithFrame:CGRectMake(50.5 + i * 92, 0, 93, 30)];
             }else if (IS_IPHONE_6p_SCREEN){
-                
+                image = [[UIImageView alloc] initWithFrame:CGRectMake(65.5 + i * 92, 0, 93, 30)];
             }else{
                 image = [[UIImageView alloc] initWithFrame:CGRectMake(22.5 + i * 92, 0, 93, 30)];
             }
@@ -93,7 +93,6 @@
         }
     }else if ([self.identifierType isEqualToString:@"videoIdentifier"]){
         NSArray * titleArr = [NSArray arrayWithObjects:@"剧情介绍", @"播放地址", @"主创人员", nil];
-        //NSLog(@"VIDEO");
         for (int i=1; i<3; i++) {
             UIView * verticalLine = [[UIView alloc] init];
             verticalLine.backgroundColor = [UIColor colorWithRed:0.31 green:0.31 blue:0.31 alpha:1];
@@ -104,7 +103,13 @@
         for (int i=0; i<self.sectionTitles.count; i++) {
             
             UILabel * title = [[UILabel alloc] init];
-            title.frame = CGRectMake(0 + [UtilityFunc shareInstance].globleWidth/3 * i, 0, [UtilityFunc shareInstance].globleWidth/3, 40);
+            if (IS_IPHONE_6_SCREEN){
+                title.frame = CGRectMake(0 + [UtilityFunc shareInstance].globleWidth/3 * i, 0, [UtilityFunc shareInstance].globleWidth/3, 40);
+            }else if (IS_IPHONE_6p_SCREEN){
+                title.frame = CGRectMake(0 + [UtilityFunc shareInstance].globleWidth/3 * i, 0, [UtilityFunc shareInstance].globleWidth/3, 40);
+            }else{
+                title.frame = CGRectMake(0 + [UtilityFunc shareInstance].globleWidth/3 * i, 0, [UtilityFunc shareInstance].globleWidth/3, 40);
+            }
             if (i==0){
                 title.backgroundColor = [UIColor colorWithRed:0.76 green:0.03 blue:0.09 alpha:1];
                 title.textColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.95 alpha:1];

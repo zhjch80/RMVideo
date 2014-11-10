@@ -25,7 +25,7 @@
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN) {
         self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 205 - 84);
     }else if (IS_IPHONE_6_SCREEN){
-        
+        self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 295);
     }else if (IS_IPHONE_6p_SCREEN){
         self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 267 - 84);
     }

@@ -35,7 +35,8 @@ typedef enum{
     requestStarListType = 1,
     requestAddStarMyChannelType,
     requestDeleteStarMyChannelType,
-    requestSearchStarType
+    requestSearchStarType,
+    requestSuccessType
 }LoadType;
 
 #define searchTextField_TAG         101
@@ -434,7 +435,7 @@ typedef enum{
             if (IS_IPHONE_6_SCREEN){
                 array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell_6" owner:self options:nil];
             }else if (IS_IPHONE_6p_SCREEN){
-                
+                array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell_6p" owner:self options:nil];
             }else {
                 array = [[NSBundle mainBundle] loadNibNamed:@"RMStarCell" owner:self options:nil];
             }
@@ -878,6 +879,7 @@ typedef enum{
             ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
         }];
     }
+    loadType = requestSuccessType;
 }
 
 - (void)requestError:(NSError *)error {

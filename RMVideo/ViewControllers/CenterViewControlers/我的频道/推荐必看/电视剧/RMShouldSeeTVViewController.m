@@ -26,9 +26,7 @@
     manager.delegate = self;
     //视频类型（1：电影 2：电视剧 3：综艺）
     //排行类型（1：日榜 2：周榜 3：月榜）
-    NSLog(@"------22self.downLoadID:%@",self.downLoadID);
-    //TODO:  换成动态的id
-    [manager getTagOfVideoListWithID:@"25155" andVideoType:@"2"];
+    [manager getTagOfVideoListWithID:self.downLoadID andVideoType:@"2"];
     [self setExtraCellLineHidden:self.mainTableView];
 
 }
@@ -51,7 +49,13 @@
     static NSString *cellName = @"RMStarDetailsCellIdentifier";
     RMStarDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     if(cell ==nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil] lastObject];
+        if (IS_IPHONE_6_SCREEN){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell_6" owner:self options:nil] lastObject];
+        }else if (IS_IPHONE_6p_SCREEN){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell_6p" owner:self options:nil] lastObject];
+        }else{
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"RMStarDetailsCell" owner:self options:nil] lastObject];
+        }
         cell.backgroundColor = [UIColor clearColor];
     }
     cell.delegate = self;

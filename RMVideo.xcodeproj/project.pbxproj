@@ -189,6 +189,11 @@
 		1D5B829C1A0E202500A4A29B /* down_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B82991A0E202500A4A29B /* down_dark.png */; };
 		1D5B829D1A0E202500A4A29B /* down_dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B829A1A0E202500A4A29B /* down_dark@2x.png */; };
 		1D5B829E1A0E202500A4A29B /* down_dark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D5B829B1A0E202500A4A29B /* down_dark@3x.png */; };
+		1D5D0D101A10B55800C83C49 /* RMVideoCreativeStaffCell_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5D0D0F1A10B55800C83C49 /* RMVideoCreativeStaffCell_6.xib */; };
+		1D5D0D121A10BE9E00C83C49 /* RMStarCell_6p.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5D0D111A10BE9E00C83C49 /* RMStarCell_6p.xib */; };
+		1D5D0D141A10BF7D00C83C49 /* RMMyChannelCell_6p.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5D0D131A10BF7D00C83C49 /* RMMyChannelCell_6p.xib */; };
+		1D5D0D161A10C27300C83C49 /* RMStarDetailsCell_6p.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5D0D151A10C27300C83C49 /* RMStarDetailsCell_6p.xib */; };
+		1D5D0D181A10C30000C83C49 /* RMVideoCreativeStaffCell_6p.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D5D0D171A10C30000C83C49 /* RMVideoCreativeStaffCell_6p.xib */; };
 		1D6063E119FBAAAA008F116D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D6063E319FBAAAA008F116D /* InfoPlist.strings */; };
 		1D71155119ED02E30007D393 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D71155019ED02E30007D393 /* HMSegmentedControl.m */; };
 		1D7116FE19ED21270007D393 /* rjr_movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D7116F819ED21270007D393 /* rjr_movie@2x.png */; };
@@ -794,6 +799,11 @@
 		1D5B82991A0E202500A4A29B /* down_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_dark.png; sourceTree = "<group>"; };
 		1D5B829A1A0E202500A4A29B /* down_dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_dark@2x.png"; sourceTree = "<group>"; };
 		1D5B829B1A0E202500A4A29B /* down_dark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_dark@3x.png"; sourceTree = "<group>"; };
+		1D5D0D0F1A10B55800C83C49 /* RMVideoCreativeStaffCell_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMVideoCreativeStaffCell_6.xib; sourceTree = "<group>"; };
+		1D5D0D111A10BE9E00C83C49 /* RMStarCell_6p.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarCell_6p.xib; sourceTree = "<group>"; };
+		1D5D0D131A10BF7D00C83C49 /* RMMyChannelCell_6p.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMMyChannelCell_6p.xib; sourceTree = "<group>"; };
+		1D5D0D151A10C27300C83C49 /* RMStarDetailsCell_6p.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarDetailsCell_6p.xib; sourceTree = "<group>"; };
+		1D5D0D171A10C30000C83C49 /* RMVideoCreativeStaffCell_6p.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMVideoCreativeStaffCell_6p.xib; sourceTree = "<group>"; };
 		1D6063E219FBAAAA008F116D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D6063E419FBAAAD008F116D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1D71154F19ED02E30007D393 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
@@ -2262,6 +2272,7 @@
 				1D8480AA1A03633400A92879 /* RMMyChannelCell.m */,
 				1D8480AB1A03633400A92879 /* RMMyChannelCell.xib */,
 				1D9CB9B31A10655A00F185B1 /* RMMyChannelCell_6.xib */,
+				1D5D0D131A10BF7D00C83C49 /* RMMyChannelCell_6p.xib */,
 				1D8480AC1A03633400A92879 /* RMMyChannelViewController.h */,
 				1D8480AD1A03633400A92879 /* RMMyChannelViewController.m */,
 				1D8480AE1A03633400A92879 /* RMMyChannelViewController.xib */,
@@ -2319,6 +2330,7 @@
 				1D8480C21A03633400A92879 /* RMStarCell.m */,
 				1D8480C31A03633400A92879 /* RMStarCell.xib */,
 				1D9CB9AF1A1053D200F185B1 /* RMStarCell_6.xib */,
+				1D5D0D111A10BE9E00C83C49 /* RMStarCell_6p.xib */,
 				1D8480C41A03633400A92879 /* RMStarViewController.h */,
 				1D8480C51A03633400A92879 /* RMStarViewController.m */,
 				1D8480C61A03633400A92879 /* RMStarViewController.xib */,
@@ -2335,6 +2347,7 @@
 				1D8480C91A03633400A92879 /* RMStarDetailsCell.m */,
 				1D8480CA1A03633400A92879 /* RMStarDetailsCell.xib */,
 				1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */,
+				1D5D0D151A10C27300C83C49 /* RMStarDetailsCell_6p.xib */,
 				1D8480CB1A03633400A92879 /* RMStarDetailsViewController.h */,
 				1D8480CC1A03633400A92879 /* RMStarDetailsViewController.m */,
 				1D8480CD1A03633400A92879 /* RMStarDetailsViewController.xib */,
@@ -2425,6 +2438,8 @@
 				1D8480F11A03633400A92879 /* RMVideoCreativeStaffCell.h */,
 				1D8480F21A03633400A92879 /* RMVideoCreativeStaffCell.m */,
 				1D8480F31A03633400A92879 /* RMVideoCreativeStaffCell.xib */,
+				1D5D0D0F1A10B55800C83C49 /* RMVideoCreativeStaffCell_6.xib */,
+				1D5D0D171A10C30000C83C49 /* RMVideoCreativeStaffCell_6p.xib */,
 				1D8480F41A03633400A92879 /* RMVideoCreativeStaffViewController.h */,
 				1D8480F51A03633400A92879 /* RMVideoCreativeStaffViewController.m */,
 				1D8480F61A03633400A92879 /* RMVideoCreativeStaffViewController.xib */,
@@ -3274,6 +3289,7 @@
 				1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */,
 				918DE7241A063A9B00287E06 /* hotPlay_zhoubang@3x.png in Resources */,
 				91908CCB19FA355A00C3DF09 /* open_all_back_image.png in Resources */,
+				1D5D0D141A10BF7D00C83C49 /* RMMyChannelCell_6p.xib in Resources */,
 				912E0CE719F7B34D00CFBE77 /* RMLaunchScreen.xib in Resources */,
 				1DED762F1A0C51DB004ADBD1 /* next_btn.png in Resources */,
 				1D4C35DA19F5F8E000AC8F1E /* Default-568h@2x.png in Resources */,
@@ -3302,12 +3318,14 @@
 				91B2C23D1A07173D001F0220 /* delect_all_btn@3x.png in Resources */,
 				1DAB0D0D19EB647E0063A58E /* arrow_up1.png in Resources */,
 				1D9CB9D01A1084F900F185B1 /* RMDownLoadingViewController.xib in Resources */,
+				1D5D0D121A10BE9E00C83C49 /* RMStarCell_6p.xib in Resources */,
 				1D4C362A19F6050700AC8F1E /* complete_img@2x.png in Resources */,
 				1D8481721A03633400A92879 /* RMStarFilmListViewController.xib in Resources */,
 				1D4FC51619F8B08200366F31 /* onVoice_4.png in Resources */,
 				1D4C366219F6052E00AC8F1E /* mx_voiceBtn_img.png in Resources */,
 				1DED75C61A0B59BF004ADBD1 /* zongyi@3.png in Resources */,
 				1D4C362F19F6050700AC8F1E /* logo_ls.png in Resources */,
+				1D5D0D181A10C30000C83C49 /* RMVideoCreativeStaffCell_6p.xib in Resources */,
 				91B2C23F1A07173D001F0220 /* nodelect_all_btn@3x.png in Resources */,
 				91D4EC7F19FB7FF9005E9235 /* pd_accessoryType_gray.png in Resources */,
 				91D4EC8219FB81B4005E9235 /* open_all_back_image@2x.png in Resources */,
@@ -3330,6 +3348,7 @@
 				1D357CB61A09D863000C5C44 /* rb_loadingImg.png in Resources */,
 				1D4C35F819F5F91800AC8F1E /* logo_weibo@2x.png in Resources */,
 				1D5B829C1A0E202500A4A29B /* down_dark.png in Resources */,
+				1D5D0D161A10C27300C83C49 /* RMStarDetailsCell_6p.xib in Resources */,
 				91908CAB19FA30E400C3DF09 /* MyChannel_black@3x.png in Resources */,
 				1D4C363819F6050700AC8F1E /* logo_tx.png in Resources */,
 				1D84815B1A03633400A92879 /* RMDailyVarietyViewController.xib in Resources */,
@@ -3405,6 +3424,7 @@
 				1D84816C1A03633400A92879 /* RMStarViewController.xib in Resources */,
 				1DAB0D0919EB647E0063A58E /* arrow_down.png in Resources */,
 				1D357CB71A09D863000C5C44 /* 明星详情大图loading.png in Resources */,
+				1D5D0D101A10B55800C83C49 /* RMVideoCreativeStaffCell_6.xib in Resources */,
 				1DAB0D2119EB684D0063A58E /* SVProgressHUD.bundle in Resources */,
 				91B2C23C1A07173D001F0220 /* delect_all_btn@2x.png in Resources */,
 				1D84814F1A03633400A92879 /* RMRecommendedDailyViewController.xib in Resources */,

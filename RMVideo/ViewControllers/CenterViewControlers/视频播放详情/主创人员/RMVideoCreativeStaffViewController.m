@@ -31,7 +31,7 @@
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 205 - 82)];
     }else if (IS_IPHONE_6_SCREEN){
-
+        tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 295)];
     }else if (IS_IPHONE_6p_SCREEN){
         tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 267 - 82)];
     }
@@ -59,7 +59,14 @@
     static NSString * CellIdentifier = @"RMVideoCreativeStaffCellIdentifier";
     RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (! cell){
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMVideoCreativeStaffCell" owner:self options:nil];
+        NSArray *array;
+        if (IS_IPHONE_6_SCREEN){
+            array = [[NSBundle mainBundle] loadNibNamed:@"RMVideoCreativeStaffCell_6" owner:self options:nil];
+        }else if (IS_IPHONE_6p_SCREEN){
+            array = [[NSBundle mainBundle] loadNibNamed:@"RMVideoCreativeStaffCell_6p" owner:self options:nil];
+        }else{
+            array = [[NSBundle mainBundle] loadNibNamed:@"RMVideoCreativeStaffCell" owner:self options:nil];
+        }
         cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         cell.backgroundColor = [UIColor clearColor];
