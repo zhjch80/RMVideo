@@ -9,6 +9,7 @@
 #import "RMMyDownLoadViewController.h"
 #import "RMDownLoadTVSeriesDetailViewController.h"
 #import "CustomVideoPlayerController.h"
+#import "RMCustomNavViewController.h"
 
 @interface RMMyDownLoadViewController ()
 
@@ -55,6 +56,7 @@
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
         [customVideo createTopTool];
+        
         [self presentViewController:customVideo animated:YES completion:nil];
     }];
     [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
