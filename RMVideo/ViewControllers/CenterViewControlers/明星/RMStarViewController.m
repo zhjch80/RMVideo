@@ -30,6 +30,7 @@
 #import "ISRDataHelper.h"
 #import "RMLoginViewController.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 typedef enum{
     requestStarListType = 1,
@@ -587,7 +588,7 @@ typedef enum{
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-        RMCustomNavViewController * loginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
+        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
         [self presentViewController:loginNav animated:YES completion:^{
         }];
         return;
@@ -681,7 +682,7 @@ typedef enum{
     switch (sender.tag) {
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
-            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -873,7 +874,7 @@ typedef enum{
         [SVProgressHUD dismiss];
         RMStarSearchResultViewController * starSearchResultCtl = [[RMStarSearchResultViewController alloc] init];
         starSearchResultCtl.resultData = data;
-        RMCustomNavViewController * searchResultNav = [[RMCustomNavViewController alloc] initWithRootViewController:starSearchResultCtl];
+        RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:starSearchResultCtl];
         [self presentViewController:searchResultNav animated:YES completion:^{
             [self showStarVoiceView:NO WithShowVoiceImage:NO WithShowTableView:NO];
             ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;

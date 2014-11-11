@@ -13,6 +13,7 @@
 #import "RMSetupViewController.h"
 #import "RMSearchViewController.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMSoHotListViewController ()
 
@@ -66,7 +67,7 @@
     switch (sender.tag) {
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
-            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
                 
             }];
             
@@ -76,7 +77,7 @@
         case 2:{
             RMSearchViewController * searchCtl = [[RMSearchViewController alloc] init];
             
-            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];

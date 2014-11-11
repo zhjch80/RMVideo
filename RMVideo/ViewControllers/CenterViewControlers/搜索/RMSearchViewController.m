@@ -24,6 +24,7 @@
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 #define searchTextField_TAG             101
 #define cancelBtn_TAG                   102
@@ -362,7 +363,7 @@
     [SVProgressHUD dismiss];
     RMSearchResultViewController * searchResultCtl = [[RMSearchResultViewController alloc] init];
     searchResultCtl.resultData = data;
-    RMCustomNavViewController * searchResultNav = [[RMCustomNavViewController alloc] initWithRootViewController:searchResultCtl];
+    RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:searchResultCtl];
     [self presentViewController:searchResultNav animated:YES completion:^{
         [self showVoiceView:NO];
     }];

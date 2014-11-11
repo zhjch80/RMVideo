@@ -13,6 +13,7 @@
 #import "RMStarVarietyListViewController.h"
 #import "RMLoginViewController.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 typedef enum{
     requestIntroType = 1,
@@ -214,7 +215,7 @@ typedef enum{
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
                 RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-                RMCustomNavViewController * loginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
+                RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
                 [self presentViewController:loginNav animated:YES completion:^{
                 }];
                 return;

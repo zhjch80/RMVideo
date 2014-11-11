@@ -17,6 +17,7 @@
 #import "PullToRefreshTableView.h"
 #import "UMSocial.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 typedef enum{
     usingSinaLogin = 1,
@@ -289,7 +290,7 @@ typedef enum{
     switch (sender.tag) {
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
-            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -298,7 +299,7 @@ typedef enum{
         case 2:{
             RMSearchViewController * searchCtl = [[RMSearchViewController alloc] init];
             
-            [self presentViewController:[[RMCustomNavViewController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
+            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:searchCtl] animated:YES completion:^{
                 
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
@@ -510,7 +511,7 @@ typedef enum{
 
 - (void)myChannelLoginSuccessRecommendmethod{
     RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
-    RMCustomNavViewController * moreWonderfulNav = [[RMCustomNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
+    RMCustomPresentNavViewController * moreWonderfulNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
     [self presentViewController:moreWonderfulNav animated:YES completion:^{
     }];
     [moreWonderfulCtl setupNavTitle:@"你可能喜欢的内容" SwitchingBarButtonDirection:@"right"];

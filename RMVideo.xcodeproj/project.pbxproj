@@ -199,6 +199,7 @@
 		1D5D0D1F1A10D74B00C83C49 /* RMVideoBroadcastAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D1E1A10D74B00C83C49 /* RMVideoBroadcastAddressViewController.m */; };
 		1D5D0D211A10D76900C83C49 /* CustomVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D201A10D76900C83C49 /* CustomVideoPlayerView.m */; };
 		1D5D0D241A10D77B00C83C49 /* CustomVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D231A10D77B00C83C49 /* CustomVideoPlayerController.m */; };
+		1D5D0D271A119C4D00C83C49 /* RMCustomPresentNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */; };
 		1D6063E119FBAAAA008F116D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D6063E319FBAAAA008F116D /* InfoPlist.strings */; };
 		1D71155119ED02E30007D393 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D71155019ED02E30007D393 /* HMSegmentedControl.m */; };
 		1D7116FE19ED21270007D393 /* rjr_movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D7116F819ED21270007D393 /* rjr_movie@2x.png */; };
@@ -811,6 +812,8 @@
 		1D5D0D201A10D76900C83C49 /* CustomVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerView.m; sourceTree = "<group>"; };
 		1D5D0D221A10D77B00C83C49 /* CustomVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomVideoPlayerController.h; sourceTree = "<group>"; };
 		1D5D0D231A10D77B00C83C49 /* CustomVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerController.m; sourceTree = "<group>"; };
+		1D5D0D251A119C4D00C83C49 /* RMCustomPresentNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCustomPresentNavViewController.h; sourceTree = "<group>"; };
+		1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCustomPresentNavViewController.m; sourceTree = "<group>"; };
 		1D6063E219FBAAAA008F116D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D6063E419FBAAAD008F116D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1D71154F19ED02E30007D393 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
@@ -1796,6 +1799,8 @@
 				1DAB0D7319EBDBB10063A58E /* HJMTabBar.xib */,
 				1DED761A1A0C5168004ADBD1 /* RMCustomNavViewController.h */,
 				1DED761B1A0C5168004ADBD1 /* RMCustomNavViewController.m */,
+				1D5D0D251A119C4D00C83C49 /* RMCustomPresentNavViewController.h */,
+				1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */,
 			);
 			path = Tabbar;
 			sourceTree = "<group>";
@@ -3546,6 +3551,7 @@
 				913D15D81A01E4BB000A50E2 /* UIImage+GIF.m in Sources */,
 				1D84816B1A03633400A92879 /* RMStarViewController.m in Sources */,
 				1D4D47F319D7B42800E3A50B /* FMResultSet.m in Sources */,
+				1D5D0D271A119C4D00C83C49 /* RMCustomPresentNavViewController.m in Sources */,
 				1D8481A41A03633400A92879 /* RMDownLoadTVSeriesDetailViewController.m in Sources */,
 				1D4D47B919D7B41C00E3A50B /* AFURLConnectionOperation.m in Sources */,
 				1D99741B19E90814007E53DB /* SDiPhoneVersion.m in Sources */,

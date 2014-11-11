@@ -20,9 +20,9 @@
 #import "UMSocial.h"
 #import "SDImageCache.h"
 #import <StoreKit/StoreKit.h>
-#import "RMCustomNavViewController.h"
 #import "RMMoreWonderfulViewController.h"
 #import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMSetupViewController ()<UMSocialUIDelegate,SKStoreProductViewControllerDelegate>
 
@@ -56,7 +56,7 @@
 
 - (void)loginSuccessRecommendmethod {
     RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
-    RMCustomNavViewController * moreWonderfulNav = [[RMCustomNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
+    RMCustomPresentNavViewController * moreWonderfulNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
     [self presentViewController:moreWonderfulNav animated:YES completion:^{
     }];
     [moreWonderfulCtl setupNavTitle:@"你可能喜欢的内容" SwitchingBarButtonDirection:@"right"];
@@ -267,7 +267,7 @@
     //登录
     if(sender.tag == 1){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-        RMCustomNavViewController * LoginNav = [[RMCustomNavViewController alloc] initWithRootViewController:loginCtl];
+        RMCustomPresentNavViewController * LoginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
         
         [self presentViewController:LoginNav animated:YES completion:^{
             
@@ -331,6 +331,21 @@
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
+
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+//    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
+//}
+//
+//- (BOOL)shouldAutorotate {
+//    return NO;
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations{
+////    return UIInterfaceOrientationMaskPortrait;
+////    return UIInterfaceOrientationIsPortrait(UIInterfaceOrientationPortrait);
+//    return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
+//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
