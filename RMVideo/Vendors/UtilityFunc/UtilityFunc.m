@@ -170,13 +170,13 @@
  * 计算该路径下文件大小 返回单位为M
  *
  */
-+ (CGFloat) fileSizeAtPath:(NSString*) filePath{
-    NSFileManager* manager = [NSFileManager defaultManager];
-    if ([manager fileExistsAtPath:filePath]){
-        return ([[manager attributesOfItemAtPath:filePath error:nil] fileSize])/1024.0;
-    }
-    return 0;
-}
+//+ (CGFloat) fileSizeAtPath:(NSString*) filePath{
+//    NSFileManager* manager = [NSFileManager defaultManager];
+//    if ([manager fileExistsAtPath:filePath]){
+//        return ([[manager attributesOfItemAtPath:filePath error:nil] fileSize])/1024.0;
+//    }
+//    return 0;
+//}
 
 /**
  *
@@ -211,6 +211,25 @@
         return (([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) ? UIDevice_iPadHiRes : UIDevice_iPadStandardRes);
 }
 
-
+//单个文件的大小
++ (float) fileSizeAtPath:(NSString*) filePath{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize]/2048.0/1024.0;
+    }
+    return 0;
+}
+//遍历文件夹获得文件夹大小，返回多少M
++ (float ) folderSizeAtPath:(NSString*) folderPath{
+    
+    NSFileManager* fileManeger = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *array = [fileManeger contentsOfDirectoryAtPath:folderPath error:&error];
+    float sum = 0;
+    for(NSString *string in array){
+        sum = sum + [self fileSizeAtPath:[NSString stringWithFormat:@"%@/%@",folderPath,string]];
+    }
+    return sum;
+}
 
 @end

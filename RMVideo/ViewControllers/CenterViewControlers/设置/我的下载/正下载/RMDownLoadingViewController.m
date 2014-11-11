@@ -59,43 +59,25 @@ static id _instance;
     [super viewDidLoad];
     
     NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:DownLoadDataArray_KEY];
-    if(data==nil){
-        //**********************测试代码*****************************
-        NSArray *array = [NSArray arrayWithObjects:
-                          @"http://220.181.185.11/youku/697635D8C5847833549B846954/0300200100544E32020A2D0014D61B004A5863-6A4D-E160-C56E-827D4238A6CE.mp4132412",
-                          @"http://220.181.185.11/youku/697756E8B683F82D76D2E461A1/030020010052A84E8B5217055EEB3E4DC7771E-B14F-EB8E-CB90-E28B72954460.mp4",
-                          @"http://220.181.185.19/youku/67727468CCD4082E328DF02A2F/0300200100513DD205D938055EEB3E16881E52-345A-B3E8-2FA8-FEEBDC4DE258.mp4",
-                          @"http://106.38.249.19/youku/656267845D31786EB54A4961/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4",
-                          @"http://220.181.154.41/youku/6772289061C3982909BAFC2B08/03002001005431D9F2FCD70014D61B7DD3F133-BB28-9B83-58C7-C14FADFC0F4E.mp4", nil];
-        self.movieTitleArray = [NSMutableArray arrayWithObjects:@"绣春刀",@"庞贝末日",@"神笔马良",@"幻影车神",@"分手大师", nil];
-        for(int i=0;i<5;i++){
-            RMPublicModel *model = [[RMPublicModel alloc] init];
-            model.downLoadURL = [array objectAtIndex:i];
-            model.name = [self.movieTitleArray objectAtIndex:i];
-            model.pic = @"http://a.hiphotos.baidu.com/image/w%3D310/sign=d372b7e38544ebf86d71623ee9f8d736/30adcbef76094b3614bd950da1cc7cd98d109d27.jpg";
-            model.downLoadState = @"等待缓存";
-            model.totalMemory = @"0M";
-            model.alreadyCasheMemory = @"0M";
-            model.cacheProgress = @"0.0";
-            [self.dataArray addObject:model];
-            downLoadIndex = 0;
-            [self BeginDownLoad];
-        }
-        /**********************************************************/
+//    downLoadIndex = 0;
+    NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if(SavedownLoad==nil){
+        
     }else{
-        isCLickPauseCell = YES;
-        NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        self.dataArray = [SavedownLoad mutableCopy];
-        [self.mainTableView reloadData];
-        [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"start_all_downLoad_image"] forState:UIControlStateNormal];
-        [self.showDownLoadState setTitle:@"全部开始" forState:UIControlStateNormal];
-        self.isDownLoadNow = NO;
+        for(RMPublicModel *model in SavedownLoad){
+            [self.dataArray addObject:model];
+        }
     }
+    [self.mainTableView reloadData];
+    [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"start_all_downLoad_image"] forState:UIControlStateNormal];
+    [self.showDownLoadState setTitle:@"全部开始" forState:UIControlStateNormal];
+    self.isDownLoadNow = NO;
     [self setExtraCellLineHidden:self.mainTableView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginAnimation) name:kDownLoadingControStartEditing object:nil];
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(endAnimation) name:kDownLoadingControEndEditing object:nil];
     selectCellArray = [[NSMutableArray alloc] init];
-    cellEditingImageArray = [[NSMutableArray alloc] init];
+    if(cellEditingImageArray==nil)
+        cellEditingImageArray = [[NSMutableArray alloc] init];
     isPauseAllDownLoadAssignment = NO;
     for (int i=0; i<self.dataArray.count; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
@@ -196,9 +178,10 @@ static id _instance;
             if(self.isDownLoadNow){
                 model.downLoadState =@"等待缓存";
                 cell.showDownLoadingState.text = model.downLoadState;
-                [self.mainTableView reloadData];
-                RMPublicModel *model = [self.dataArray objectAtIndex:downLoadIndex];
-                [self startDownloadWithMovieName:model];
+                [self.downLoadIDArray addObject:model];
+                if(!self.isDownLoadNow){
+                    [self BeginDownLoad];
+                }
             }
             else{
                 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
@@ -224,9 +207,13 @@ static id _instance;
             }
         }
         selectIndex(indexPath.row);
+        [self setPauseAllOrStartAllBtnState];
     }
 }
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender {
+    if(self.dataArray.count==0){
+        return;
+    }
     if(!isPauseAllDownLoadAssignment){
         [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"start_all_downLoad_image"] forState:UIControlStateNormal];
         [self.showDownLoadState setTitle:@"全部开始" forState:UIControlStateNormal];
@@ -241,8 +228,14 @@ static id _instance;
         model.cacheProgress = [NSString stringWithFormat:@"%f",cell.downLoadProgress.progress];
         NSString *memory = cell.showDownLoading.text;
         NSRange range = [memory rangeOfString:@"/"];
-        model.totalMemory = [memory substringFromIndex:range.location+1];
-        model.alreadyCasheMemory = [memory substringToIndex:range.location];
+        if(range.location != NSNotFound){
+            model.totalMemory = [memory substringFromIndex:range.location+1];
+            model.alreadyCasheMemory = [memory substringToIndex:range.location];
+        }
+        else{
+            model.totalMemory = @"0M";
+            model.alreadyCasheMemory = @"0M";
+        }
         [self.downLoadIDArray removeAllObjects];
         for(int i=0;i<self.dataArray.count;i++){
             RMPublicModel *tmpModel = [self.dataArray objectAtIndex:i];
@@ -250,6 +243,9 @@ static id _instance;
             [self.pauseLoadingArray addObject:tmpModel];
         }
         [self.mainTableView reloadData];
+        self.haveReadTheSchedule = 0;
+        self.downLoadSpeed = 0;
+        self.totalDownLoad = 0;
     }
     else{
         [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"pause_all_downLoad_Image"] forState:UIControlStateNormal];
@@ -339,16 +335,10 @@ static id _instance;
 - (void) BeginDownLoad{
     [self.mainTableView reloadData];
     if(cellEditingImageArray.count<self.dataArray.count){
-        [cellEditingImageArray addObject:@"no-select_cellImage"];
-    }
-    if(!isCLickPauseCell){
-        for (RMPublicModel *model in self.dataArray) {
-            if([self.downLoadIDArray containsObject: model]){
-                continue;
-            }else{
-                [self.downLoadIDArray addObject:model];
-            }
+        if(cellEditingImageArray==nil){
+            cellEditingImageArray = [[NSMutableArray alloc] init];
         }
+        [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
     if(!self.isDownLoadNow){
         RMPublicModel *model = [self.downLoadIDArray objectAtIndex:0];
@@ -358,6 +348,7 @@ static id _instance;
                 break;
             }
         }
+        
         [self startDownloadWithMovieName:model];
     }
     
@@ -508,7 +499,7 @@ static id _instance;
     return fileSize;
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     isCLickPauseCell = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -547,6 +538,7 @@ static id _instance;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//判断在dataArray中是否存在这个model
 - (BOOL)dataArrayContainsModel:(RMPublicModel *)model{
     for (RMPublicModel *tmpModel in self.dataArray){
         if([tmpModel.name isEqualToString:model.name]){
@@ -555,4 +547,26 @@ static id _instance;
     }
     return NO;
 }
+
+- (void) setPauseAllOrStartAllBtnState{
+    NSMutableArray *statusArr = [NSMutableArray array];
+    for(RMPublicModel *model in self.dataArray){
+        if([model.downLoadState isEqualToString:@"暂停缓存"]){
+            [statusArr addObject:model];
+        }
+    }
+    if(statusArr.count==self.dataArray.count){
+        //全部开始
+        [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"start_all_downLoad_image"] forState:UIControlStateNormal];
+        [self.showDownLoadState setTitle:@"全部开始" forState:UIControlStateNormal];
+        isPauseAllDownLoadAssignment = YES;
+    }
+    else{
+        //全部暂停
+        [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"pause_all_downLoad_Image"] forState:UIControlStateNormal];
+        [self.showDownLoadState setTitle:@"全部暂停" forState:UIControlStateNormal];
+        isPauseAllDownLoadAssignment = NO;
+    }
+}
+
 @end

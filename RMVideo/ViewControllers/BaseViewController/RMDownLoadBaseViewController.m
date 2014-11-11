@@ -27,7 +27,18 @@
     showMemoryLable.textColor = [UIColor lightGrayColor];
     showMemoryLable.textAlignment = NSTextAlignmentCenter;
     showMemoryLable.font = [UIFont fontWithName:@"TrebuchetMS-Bold" size:12];
-    showMemoryLable.text =@"已缓存142.72M,剩余9.11G可用";
+    float freeNum = [[UtilityFunc freeDiskSpace] floatValue];
+    NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+    float alreadyCache = [UtilityFunc folderSizeAtPath:path];
+    if((freeNum/1024/1024)>1024){
+        freeNum = freeNum/1024/1024/1024-0.2;
+        showMemoryLable.text =[NSString stringWithFormat:@"已缓存%.2fM,剩余%.2fG可用",alreadyCache,freeNum];
+    }
+    else{
+        freeNum = freeNum/1024/-200;
+        showMemoryLable.text =[NSString stringWithFormat:@"已缓存%.2fM,剩余%.2fM可用",alreadyCache,freeNum];
+    }
     [self.view addSubview:showMemoryLable];
     
     btnView = [[UIView alloc] initWithFrame:CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49)];

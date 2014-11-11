@@ -115,6 +115,15 @@ static Database *gl_database=nil;
     }
     return NO;
 }
+
+- (BOOL)isDownLoadMovieWith:(RMPublicModel *)model{
+    NSString *sql = [NSString stringWithFormat:@"select titleName from DownLoadListname where titleName=?"];
+    FMResultSet *rs = [mdb executeQuery:sql,model.name];
+    while ([rs next]) {
+        return YES;
+    }
+    return NO;
+}
 //插入单个省份数据
 -(void)insertProvinceItem:(RMPublicModel *)item andListName:(NSString *)listName
 {

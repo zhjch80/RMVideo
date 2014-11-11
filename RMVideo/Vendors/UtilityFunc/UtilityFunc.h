@@ -53,12 +53,12 @@ enum {
  */
 + (NSString *)localImageCachesPath;
 
-/**
- *
- * 计算该路径下文件大小 返回单位为M
- *
- */
-+ (CGFloat)fileSizeAtPath:(NSString*)filePath;
+///**
+// *
+// * 计算该路径下文件大小 返回单位为M
+// *
+// */
+//+ (CGFloat)fileSizeAtPath:(NSString*)filePath;
 
 /**
  *
@@ -75,5 +75,11 @@ enum {
 + (NSNumber *) freeDiskSpace;
 
 //+ (UIDeviceResolution)currentResolution;
+
+//单个文件的大小
++ (float) fileSizeAtPath:(NSString*) filePath;
+
+////遍历文件夹获得文件夹大小，返回多少M
++ (float ) folderSizeAtPath:(NSString*) folderPath;
 
 @end

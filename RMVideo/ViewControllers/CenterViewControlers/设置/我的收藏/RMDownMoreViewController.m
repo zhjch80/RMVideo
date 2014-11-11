@@ -174,6 +174,8 @@ typedef enum{
     else{
         NSLog(@"非编辑状态下---index：%d",indexPath.row);
         RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
+        RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        videoPlay.currentVideo_id = model.video_id;
         [self.navigationController pushViewController:videoPlay animated:YES];
     }
 }

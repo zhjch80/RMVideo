@@ -50,4 +50,6 @@
 - (NSArray *)readItemFromDownLoadList;
 - (void)deletFristItem;
 
+- (BOOL)isDownLoadMovieWith:(RMPublicModel *)model;
+
 @end
