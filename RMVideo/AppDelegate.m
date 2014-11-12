@@ -27,6 +27,7 @@
 #import "iflyMSC/IFlySpeechUtility.h"
 #import "RMCustomNavViewController.h"
 #import "RMDownLoadingViewController.h"
+#import "Flurry.h"
 
 #define COLOR_RGB(r,g,b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1]
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
@@ -67,6 +68,8 @@
 
     [self.window makeKeyAndVisible];
     
+    [self loadFlurry];
+    
     [self loadSocial];
     
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -79,6 +82,11 @@
     }
     
     return YES;
+}
+
+- (void)loadFlurry {
+    [Flurry setCrashReportingEnabled:YES];
+    [Flurry startSession:@"PJZBVWP6HTXW8FZFFZW5"];
 }
 
 - (void)loadSocial {
@@ -186,14 +194,7 @@
          }
      }];
     
-    [self.window setRootViewController:_drawerController];
-    
-}
-
-#pragma mark - Tabbar Select index method
-
-- (void)tabbarSelectIndex:(NSNumber*)number {
-    self.tabBarController.selectedIndex = number.intValue;
+    [self.window setRootViewController:_drawerController];  
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -213,6 +214,7 @@
     }
     */
     
+    /*
     self.bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
         //10分钟后执行这里，应该进行一些清理工作，如断开和服务器的链接等...
         [application endBackgroundTask:self.bgTask];
@@ -248,15 +250,18 @@
             }
         });
     });
+     */
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     // 如果没到10分钟又打开了app,结束后台任务
+    /*
     if (self.bgTask!=UIBackgroundTaskInvalid) {
         [application endBackgroundTask:self.bgTask];
         self.bgTask = UIBackgroundTaskInvalid;
     }
+     */
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -266,27 +271,22 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     RMDownLoadingViewController *downLoading = [RMDownLoadingViewController shared];
-    
     if(downLoading.dataArray.count>0){
-        
         [downLoading saveData];
         NSData * data = [NSKeyedArchiver archivedDataWithRootObject:downLoading.dataArray];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:DownLoadDataArray_KEY];
     }
-
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return  [UMSocialSnsService handleOpenURL:url];
 }
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
+         annotation:(id)annotation {
     return  [UMSocialSnsService handleOpenURL:url];
 }
-
 
 @end

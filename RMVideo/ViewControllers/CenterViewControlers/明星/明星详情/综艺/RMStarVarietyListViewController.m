@@ -22,6 +22,17 @@
 @implementation RMStarVarietyListViewController
 @synthesize starDetailsDelegate = _starDetailsDelegate;
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_StarDetail_Variety" timed:YES];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_StarDetail_Variety" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

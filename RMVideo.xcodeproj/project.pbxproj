@@ -200,6 +200,7 @@
 		1D5D0D211A10D76900C83C49 /* CustomVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D201A10D76900C83C49 /* CustomVideoPlayerView.m */; };
 		1D5D0D241A10D77B00C83C49 /* CustomVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D231A10D77B00C83C49 /* CustomVideoPlayerController.m */; };
 		1D5D0D271A119C4D00C83C49 /* RMCustomPresentNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */; };
+		1D5D0D2B1A13337D00C83C49 /* libFlurry_5.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5D0D2A1A13337D00C83C49 /* libFlurry_5.4.0.a */; };
 		1D6063E119FBAAAA008F116D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D6063E319FBAAAA008F116D /* InfoPlist.strings */; };
 		1D71155119ED02E30007D393 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D71155019ED02E30007D393 /* HMSegmentedControl.m */; };
 		1D7116FE19ED21270007D393 /* rjr_movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D7116F819ED21270007D393 /* rjr_movie@2x.png */; };
@@ -402,6 +403,8 @@
 		1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD2BFEB19D919950073D9F8 /* AFSoundManager.m */; };
 		1DD2BFEF19D919950073D9F8 /* AFAudioRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD2BFED19D919950073D9F8 /* AFAudioRouter.m */; };
 		1DD2BFF119D919B10073D9F8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD2BFF019D919B10073D9F8 /* AVFoundation.framework */; };
+		1DD39F181A13510F000A215A /* GPLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD39F171A13510F000A215A /* GPLoadingView.m */; };
+		1DD39F1A1A1351FD000A215A /* UserBehaviorList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */; };
 		1DDBB6AE1A0CD9DE003B9845 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6A51A0CD9DE003B9845 /* EGOCache.m */; };
 		1DDBB6AF1A0CD9DE003B9845 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6A81A0CD9DE003B9845 /* EGOImageLoadConnection.m */; };
 		1DDBB6B01A0CD9DE003B9845 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6AA1A0CD9DE003B9845 /* EGOImageLoader.m */; };
@@ -826,6 +829,8 @@
 		1D5D0D231A10D77B00C83C49 /* CustomVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomVideoPlayerController.m; sourceTree = "<group>"; };
 		1D5D0D251A119C4D00C83C49 /* RMCustomPresentNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCustomPresentNavViewController.h; sourceTree = "<group>"; };
 		1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCustomPresentNavViewController.m; sourceTree = "<group>"; };
+		1D5D0D291A13337D00C83C49 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		1D5D0D2A1A13337D00C83C49 /* libFlurry_5.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.4.0.a; sourceTree = "<group>"; };
 		1D6063E219FBAAAA008F116D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D6063E419FBAAAD008F116D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1D71154F19ED02E30007D393 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
@@ -1130,6 +1135,9 @@
 		1DD2BFEC19D919950073D9F8 /* AFAudioRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAudioRouter.h; sourceTree = "<group>"; };
 		1DD2BFED19D919950073D9F8 /* AFAudioRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAudioRouter.m; sourceTree = "<group>"; };
 		1DD2BFF019D919B10073D9F8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1DD39F161A13510A000A215A /* GPLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPLoadingView.h; sourceTree = "<group>"; };
+		1DD39F171A13510F000A215A /* GPLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPLoadingView.m; sourceTree = "<group>"; };
+		1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = UserBehaviorList.rtf; sourceTree = "<group>"; };
 		1DDBB6A41A0CD9DE003B9845 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		1DDBB6A51A0CD9DE003B9845 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		1DDBB6A71A0CD9DE003B9845 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
@@ -1338,6 +1346,7 @@
 				1D847F3D1A0324D000A92879 /* libSocialSina.a in Frameworks */,
 				1D847F421A0324D000A92879 /* libTCWeiboSDK.a in Frameworks */,
 				1D4D481919D7B50D00E3A50B /* libiconv.dylib in Frameworks */,
+				1D5D0D2B1A13337D00C83C49 /* libFlurry_5.4.0.a in Frameworks */,
 				1D4D481719D7B50200E3A50B /* libz.dylib in Frameworks */,
 				1D847F331A0324D000A92879 /* libUMSocial_Sdk_4.2.a in Frameworks */,
 				1D847F441A0324D000A92879 /* libWeChatSDK.a in Frameworks */,
@@ -1565,8 +1574,11 @@
 		1D4D478D19D7B35100E3A50B /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
+				1DD39F151A135104000A215A /* GPLoadingView */,
+				1D5D0D281A13337000C83C49 /* Flurry */,
 				1D5B828D1A0E200A00A4A29B /* DropDownListView */,
 				1DDBB6A31A0CD9DE003B9845 /* EGOCache */,
 				1DDBB6A61A0CD9DE003B9845 /* EGOImageLoader */,
@@ -1845,6 +1857,15 @@
 				1D5B82941A0E201C00A4A29B /* DropDownTabelViewCell.xib */,
 			);
 			path = DropDownListView;
+			sourceTree = "<group>";
+		};
+		1D5D0D281A13337000C83C49 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				1D5D0D291A13337D00C83C49 /* Flurry.h */,
+				1D5D0D2A1A13337D00C83C49 /* libFlurry_5.4.0.a */,
+			);
+			path = Flurry;
 			sourceTree = "<group>";
 		};
 		1D71154E19ED02D80007D393 /* HMSegmentedControl */ = {
@@ -2907,6 +2928,15 @@
 			path = AFSoundManager;
 			sourceTree = "<group>";
 		};
+		1DD39F151A135104000A215A /* GPLoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				1DD39F161A13510A000A215A /* GPLoadingView.h */,
+				1DD39F171A13510F000A215A /* GPLoadingView.m */,
+			);
+			path = GPLoadingView;
+			sourceTree = "<group>";
+		};
 		1DDBB6A31A0CD9DE003B9845 /* EGOCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -3338,6 +3368,7 @@
 				916E1F4E1A1308D200AD4400 /* no_play_history@2x.png in Resources */,
 				918DE70E1A062BFD00287E06 /* movie_unSelected@3x.png in Resources */,
 				1D71172919EE45180007D393 /* backup_img@2x.png in Resources */,
+				1DD39F1A1A1351FD000A215A /* UserBehaviorList.rtf in Resources */,
 				1D71172D19EE68270007D393 /* mx_fold@2x.png in Resources */,
 				1D847F371A0324D000A92879 /* UMShareEditViewController.xib in Resources */,
 				912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */,
@@ -3691,6 +3722,7 @@
 				1D7117AF19EFAB5B0007D393 /* RatingView.m in Sources */,
 				1D16BC0119E664D0008BBB08 /* MMDrawerController.m in Sources */,
 				1DED761C1A0C5168004ADBD1 /* RMCustomNavViewController.m in Sources */,
+				1DD39F181A13510F000A215A /* GPLoadingView.m in Sources */,
 				1DDBB6B11A0CD9DE003B9845 /* EGOImageView.m in Sources */,
 				913D15D31A01E4BB000A50E2 /* SDWebImageDownloader.m in Sources */,
 				1D8481501A03633400A92879 /* RMSoHotListViewController.m in Sources */,
@@ -3846,6 +3878,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentWeibo",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/RMVideo/Vendors/Flurry",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3874,6 +3907,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentWeibo",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
+					"$(PROJECT_DIR)/RMVideo/Vendors/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";

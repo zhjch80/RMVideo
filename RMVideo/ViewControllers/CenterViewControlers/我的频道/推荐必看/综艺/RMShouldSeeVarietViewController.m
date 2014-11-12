@@ -16,6 +16,16 @@
 
 @implementation RMShouldSeeVarietViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_MyChannel_Variety" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_MyChannel_Variety" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [[NSMutableArray alloc] init];

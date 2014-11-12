@@ -23,6 +23,16 @@
 
 @implementation RMRecommendedDailyViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [Flurry logEvent:@"VIEW_ToDayRecommended" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_ToDayRecommended" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

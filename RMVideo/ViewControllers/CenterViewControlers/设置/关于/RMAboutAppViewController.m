@@ -14,6 +14,16 @@
 
 @implementation RMAboutAppViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup_About" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup_About" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"关于";

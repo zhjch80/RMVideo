@@ -8,9 +8,11 @@
 #import "CustomVideoPlayerView.h"
 #import "UtilityFunc.h"
 #import "CustomSVProgressHUD.h"
-#import "SVProgressHUD.h"
+#import "GPLoadingView.h"
 
-@interface CustomVideoPlayerView ()<TouchViewDelegate>
+@interface CustomVideoPlayerView ()<TouchViewDelegate> {
+    GPLoadingView * loading;
+}
 
 @end
 static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerViewStatusObservationContext;
@@ -41,10 +43,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     }
     return self;
 }
-- (void)contentURL:(NSURL *)contentURL
-{
-    
-    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+- (void)contentURL:(NSURL *)contentURL {
     if (self.playerItem) {
         //[self.playerItem removeObserver:self forKeyPath:@"status"];
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -97,7 +96,6 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     self.playerHudCenter.userInteractionEnabled = YES;
     [self addSubview:self.playerHudBottom];
 
-    
     //Play 按钮
     self.playPauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.playPauseButton.frame = CGRectMake(10, 7, 35, 35);
@@ -189,6 +187,10 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self addSubview:customSVP];
     //隐藏屏幕导航栏和菜单栏
     [self performSelector:@selector(hiddenNavBarAndPlayerHudBottom) withObject:nil afterDelay:3];
+    
+    loading = [[GPLoadingView alloc] initWithFrame:CGRectMake(([UtilityFunc shareInstance].globleAllHeight-50)/2, ([UtilityFunc shareInstance].globleWidth - 50)/2, 50, 50)];
+    [loading startAnimation];
+    [self addSubview:loading];
 }
 
 //隐藏菜单栏并通知主视图隐藏导航
@@ -240,7 +242,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //    }];
 //    [self play];
 //    [self setHiddenView];
-    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [loading startAnimation];
     if (self.playerItem) {
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:AVPlayerItemDidPlayToEndTimeNotification
@@ -555,7 +557,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
             NSLog(@"AVPlayerStatusReadyToPlay");
 
 //            self.playPauseButton.enabled = YES;
-            [SVProgressHUD dismiss];
+            loading.hidden = YES;
+            [loading stopAnimation];
 
 //            CMTime duration = self.playerItem.duration;// 获取视频总长度
 
@@ -568,10 +571,9 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //            [self monitoringPlayback:self.playerItem];// 监听播放状态
 
         } else if ([playerItem status] == AVPlayerStatusFailed) {
-
-            NSLog(@"AVPlayerStatusFailed");
-            [SVProgressHUD showErrorWithStatus:@"加载失败"];
-
+            loading.hidden = YES;
+            [loading stopAnimation];
+            NSLog(@"加载失败:AVPlayerStatusFailed");
 
         }
 

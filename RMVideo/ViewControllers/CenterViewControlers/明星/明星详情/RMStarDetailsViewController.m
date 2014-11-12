@@ -54,6 +54,12 @@ typedef enum{
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setTitle:@"明星"];
+    [Flurry logEvent:@"VIEW_StarDetail" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_StarDetail" withParameters:nil];
 }
 
 - (void)viewDidLoad {

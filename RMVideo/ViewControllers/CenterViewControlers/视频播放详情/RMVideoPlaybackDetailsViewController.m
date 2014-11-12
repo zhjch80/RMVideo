@@ -48,6 +48,16 @@ typedef enum{
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_VideoPlayDetails" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_VideoPlayDetails" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -183,7 +193,6 @@ typedef enum{
         [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
         request.delegate = self;
     }
- 
 }
 
 #pragma mark - Base Method

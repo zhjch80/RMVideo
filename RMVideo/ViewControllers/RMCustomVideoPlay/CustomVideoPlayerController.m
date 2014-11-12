@@ -9,6 +9,7 @@
 #import "CustomVideoPlayerController.h"
 #import "CustomVideoPlayerView.h"
 #import "UtilityFunc.h"
+#import "Flurry.h"
 
 #define kTopToolHeight 49
 #define kTopToolTitleHeight 35
@@ -40,9 +41,15 @@
     self.playList  = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_CustomPlayView" timed:YES];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [UIApplication sharedApplication].statusBarHidden = NO;
+    [Flurry endTimedEvent:@"VIEW_CustomPlayView" withParameters:nil];
 }
 
 - (void)viewDidLoad {

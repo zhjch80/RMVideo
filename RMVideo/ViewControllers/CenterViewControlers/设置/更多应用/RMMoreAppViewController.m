@@ -17,6 +17,16 @@
 
 @implementation RMMoreAppViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup_MoreApp" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup_MoreApp" withParameters:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];

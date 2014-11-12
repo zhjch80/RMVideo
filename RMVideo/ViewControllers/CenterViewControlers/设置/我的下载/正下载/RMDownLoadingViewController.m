@@ -55,6 +55,18 @@ static id _instance;
     return _instance;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    isCLickPauseCell = YES;
+    [Flurry logEvent:@"VIEW_Setup_Downloading" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    isCLickPauseCell = NO;
+    [Flurry endTimedEvent:@"VIEW_Setup_Downloading" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -509,13 +521,6 @@ static id _instance;
         }
     }
     return fileSize;
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    isCLickPauseCell = YES;
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    isCLickPauseCell = NO;
 }
 
 - (NSString *)setMemoryString:(NSString *)string{

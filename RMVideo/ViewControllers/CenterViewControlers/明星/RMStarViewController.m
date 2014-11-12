@@ -78,6 +78,8 @@ typedef enum{
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self loadDefaultHandInputSearchView];
+    [Flurry logEvent:@"VIEW_Star" timed:YES];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -101,6 +103,7 @@ typedef enum{
     [_iFlySpeechRecognizer cancel];
     [_iFlySpeechRecognizer setDelegate: nil];
     [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Star" withParameters:nil];
 }
 
 - (void)viewDidLoad {

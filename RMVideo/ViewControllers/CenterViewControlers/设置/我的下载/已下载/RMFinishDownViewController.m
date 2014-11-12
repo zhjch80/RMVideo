@@ -16,6 +16,15 @@
 
 @implementation RMFinishDownViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup_Downloaded" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup_Downloaded" withParameters:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

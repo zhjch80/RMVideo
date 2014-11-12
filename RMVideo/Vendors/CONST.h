@@ -30,8 +30,12 @@
  6.HMSegmentedControl
  需要  QuartzCore框架
  
- UMeng需要的框架
+ 7.UMeng需要的框架
  Security.framework,libiconv.dylib,SystemConfiguration.framework,CoreGraphics.framework，libsqlite3.dylib，CoreTelephony.framework,libstdc++.dylib,libz.dylib。
+ 8.Flurry 需要的框架
+ Security.framework
+ SystemConfiguration.framework
+ 
  
  
  svn://172.16.2.204/rmdom //文档
@@ -42,9 +46,6 @@
  账号目前都是自己姓名全称 如：刘涛 密码 为rm+名字首字母+123 如：rmlt123
  
  */
-
-//5428ecfdfd98c52c830223c4    友盟 appkey   zhjch80  我的产品
-
 #import "CONSTURL.h"
 
 #define kHideTabbar                             @"hideTabBar"
@@ -124,23 +125,5 @@
 #else
 // MRC
 #endif
-
-
-
-
-
-
-/*
- 
- 
- 调研 谷歌行为统计
- 
- 
- */
-
-
-
-
-
 
 

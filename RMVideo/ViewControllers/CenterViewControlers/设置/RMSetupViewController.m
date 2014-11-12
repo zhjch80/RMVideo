@@ -31,6 +31,9 @@
 @implementation RMSetupViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup" timed:YES];
+
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSString * loginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
@@ -50,6 +53,11 @@
         [self.headImageView setImage:LOADIMAGE(@"user_head-Image", kImageTypePNG)];
         self.userNameLable.text = @"";
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup" withParameters:nil];
 }
 
 #pragma mark - 登录后即推荐

@@ -61,6 +61,16 @@ typedef enum{
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup_Collect" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup_Collect" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

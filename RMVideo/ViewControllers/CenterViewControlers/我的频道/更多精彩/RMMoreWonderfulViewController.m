@@ -43,6 +43,16 @@ typedef enum{
 
 @implementation RMMoreWonderfulViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_MyChannel_MoreWonderful" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_MyChannel_MoreWonderful" withParameters:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([self.BarButtonDirection isEqualToString:@"left"]){

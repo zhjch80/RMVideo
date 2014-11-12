@@ -22,6 +22,16 @@
 @implementation RMStarTeleplayListViewController
 @synthesize starDetailsDelegate = _starDetailsDelegate;
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_StarDetail_TVseries" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry logEvent:@"VIEW_StarDetail_TVseries" timed:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

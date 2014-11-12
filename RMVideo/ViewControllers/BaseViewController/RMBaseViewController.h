@@ -21,6 +21,7 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 #import "Database.h"
+#import "Flurry.h"
 
 #define PLAYHISTORYLISTNAME @"PlayHistoryListname"
 #define DOWNLOADLISTNAME @"DownLoadListname"

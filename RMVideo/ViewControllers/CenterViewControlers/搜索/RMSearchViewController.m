@@ -49,12 +49,17 @@
 
 @implementation RMSearchViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Search" timed:YES];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     //取消识别
     [_iFlySpeechRecognizer cancel];
     [_iFlySpeechRecognizer setDelegate: nil];
-    
     [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Search" withParameters:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

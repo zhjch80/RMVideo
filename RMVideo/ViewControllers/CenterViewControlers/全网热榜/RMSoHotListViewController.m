@@ -21,6 +21,15 @@
 
 @implementation RMSoHotListViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_SoHotList" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_SoHotList" withParameters:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

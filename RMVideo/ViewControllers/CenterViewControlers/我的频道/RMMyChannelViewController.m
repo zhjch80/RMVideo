@@ -51,11 +51,6 @@ typedef enum{
 
 @implementation RMMyChannelViewController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self refreshCurrentCtl];
-}
-
 #pragma mark - 刷新当前Ctl
 
 - (void)refreshCurrentCtl {
@@ -103,6 +98,17 @@ typedef enum{
 }
 
 #pragma mark -
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_MyChannel" timed:YES];
+    [self refreshCurrentCtl];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_MyChannel" withParameters:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -16,6 +16,16 @@
 
 @implementation RMShouldSeeTVViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_MyChannel_TVseries" timed:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_MyChannel_TVseries" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [[NSMutableArray alloc] init];
