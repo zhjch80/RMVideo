@@ -75,9 +75,13 @@ typedef enum{
 
 @implementation RMStarViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadDefaultHandInputSearchView];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self loadDefaultHandInputSearchView];
 
     [_iFlySpeechRecognizer setDelegate: self];
     
@@ -268,7 +272,7 @@ typedef enum{
         }
         case voiceBtn_TAG: {
             if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
                 return;
             }
             self.isCanceled = NO;
@@ -375,7 +379,7 @@ typedef enum{
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //TODO:搜索一
     if ([UtilityFunc isConnectionAvailable] == 0) {
-        [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
     }else {
         [self updateUserSearchRecord:textField.text];
         [self.recordsTableView reloadData];
@@ -559,7 +563,7 @@ typedef enum{
         case 202:{
             //TODO:搜索二
             if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
                 return;
             }
             [self startStarSearchRequest:[NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]]];
@@ -585,6 +589,9 @@ typedef enum{
 #pragma mark - 添加或者删除 明星 在我的频道里
 
 - (void)clickAddMyChannelMethod:(RMImageView *)imageView {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        return;
+    }
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];

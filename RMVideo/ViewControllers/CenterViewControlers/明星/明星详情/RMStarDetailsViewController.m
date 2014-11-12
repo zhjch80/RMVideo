@@ -211,6 +211,9 @@ typedef enum{
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 201:{
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                return;
+            }
             //加入 或者 删除 明星  在我的频道
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){

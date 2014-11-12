@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RMStarDetailsViewController">
@@ -40,7 +40,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test_3@2x" id="iKe-RR-Woo">
                     <rect key="frame" x="10" y="10" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="qkv-lR-TNB">
                     <rect key="frame" x="120" y="10" width="204" height="129"/>
@@ -103,7 +103,6 @@
                             <rect key="frame" x="0.0" y="20" width="200" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <string key="text">姜文，1963年生于河北唐山，中院，1987年凭借《芙蓉镇》获得了大众电影百花最佳男演员，使其拥有一定知名度；1988年凭借《红高粱》获得柏林国际电影节金熊奖；1993年主演得电视剧《北京人在纽约》获得中国电视台金鹰奖，演技受到肯定，后开始尝试导演，其自编自导得处女作《阳光灿烂的日子》被《时代周刊》评为九五年度全世界十大最佳电影之首，抗战题材影片《鬼子来了》在2000年第53届戛纳国际电影节上荣获评审团大奖。2010年末上映的贺岁电影《让子弹飞》刷新了国产电影的多项国大陆演员，导演，编剧。1984年毕业于中央戏剧学院，1987年凭借《芙蓉镇》获得了大众电影百花最佳男演员，使其拥有一定知名度；1988年凭借《红高粱》获得柏林国际电影节金熊奖；1993年主演得电视剧《北京人在纽约》获得中国电视台金鹰奖，演技受到肯定，后开始尝试导演，其自编自导得处女作《阳光灿烂的日子》被《时代周刊》评为九五年度全世界十大最佳电影之首，抗战题材影片《鬼子来了》在2000年第53届戛纳国际电影节上荣获评审团大奖。2010年末上映的贺岁电影《让子弹飞》刷新了国产电影的多项票房记录，获得国内大小奖项二十余项。姜文，1963年生于河北唐山，中国大陆演员，导演，编剧。1984年毕业于中央戏剧学票房记录，获得国内大小奖项二十余项。</string>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

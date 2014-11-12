@@ -124,8 +124,12 @@ typedef enum{
                 }
                 blockSelf.videoBroadcastAddressCtl.videoPlayDelegate = blockSelf;
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
-                RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
-                [blockSelf refreshBroadcastAddressDate:model];
+                if (blockSelf.dataArr.count == 0){
+                    
+                }else{
+                    RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
+                    [blockSelf refreshBroadcastAddressDate:model];
+                }
                 break;
             }
             case 2:{
@@ -140,8 +144,12 @@ typedef enum{
                     blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
                 [blockSelf.view addSubview:blockSelf.videoCreativeStaffCtl.view];
-                RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
-                [blockSelf refreshCreativeStaffDate:model];
+                if (blockSelf.dataArr.count == 0){
+                    
+                }else{
+                    RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
+                    [blockSelf refreshCreativeStaffDate:model];
+                }
                 break;
             }
                 
@@ -163,11 +171,19 @@ typedef enum{
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
     
-    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-    [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-    request.delegate = self;
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        self.videoDownloadBtn.hidden = YES;
+        self.videoShareBtn.hidden = YES;
+        self.videoCollectionBtn.hidden = YES;
+        self.videoPlayImg.hidden = YES;
+    }else{
+        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+        request.delegate = self;
+    }
+ 
 }
 
 #pragma mark - Base Method
@@ -320,6 +336,10 @@ typedef enum{
     [self.videoRateView displayRating:[model.gold integerValue]];
     self.videoPlayCount.text = [NSString stringWithFormat:@"播放%@次",model.hits];
     
+    self.videoDownloadBtn.hidden = NO;
+    self.videoShareBtn.hidden = NO;
+    self.videoPlayImg.hidden = NO;
+
     if ([model.is_favorite integerValue] == 1){
         [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionRedImg", kImageTypePNG) forState:UIControlStateNormal];
         isCollect = YES;
