@@ -19,14 +19,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isSeleltAllCell = YES;
+    [self setTitle:@"播放历史"];
+    
+    [self showEmptyViewWithImage:[UIImage imageNamed:@"no_play_history"] WithTitle:@"您没有播放记录"];
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readitemFromListName:PLAYHISTORYLISTNAME]];
+    if (self.dataArray.count==0) {
+        [self isShouldSetHiddenEmptyView:NO];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
+    }
     selectCellArray = [NSMutableArray array];
     [showMemoryLable removeFromSuperview];
     cellEditingImageArray = [NSMutableArray array];
     for (int i=0; i<20; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,6 +85,11 @@
             RMPublicModel *model = [self.dataArray objectAtIndex:number.integerValue];
             [[Database sharedDatabase] deleteItem:model fromListName:PLAYHISTORYLISTNAME];
             [self.dataArray removeObjectAtIndex:number.integerValue];
+            if (self.dataArray.count==0) {
+                [self isShouldSetHiddenEmptyView:NO];
+            }else{
+                [self isShouldSetHiddenEmptyView:YES];
+            }
         }
         
         [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];

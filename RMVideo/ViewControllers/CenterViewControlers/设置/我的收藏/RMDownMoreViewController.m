@@ -67,6 +67,7 @@ typedef enum{
     isSeleltAllCell = YES;
     requestType = downLoadRequestType;
     
+    [self setTitle:@"我的收藏"];
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     
     selectCellArray = [NSMutableArray array];
@@ -74,7 +75,7 @@ typedef enum{
     for (int i=0; i<20; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
-
+    [self showEmptyViewWithImage:[UIImage imageNamed:@"no_save_history"] WithTitle:@"您没有收藏记录"];
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
@@ -183,6 +184,12 @@ typedef enum{
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
     
     if(requestType == downLoadRequestType){
+        if (data.count==0) {
+            [self isShouldSetHiddenEmptyView:NO];
+            return;
+        }else{
+            [self isShouldSetHiddenEmptyView:YES];
+        }
         self.dataArray = data;
         [self.mainTableView reloadData];
     }else if (requestType == deleteRequestType) {
@@ -200,6 +207,11 @@ typedef enum{
             NSNumber *number = [sort objectAtIndex:i];
             [self.dataArray removeObjectAtIndex:number.integerValue];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+            if (self.dataArray.count==0) {
+                [self isShouldSetHiddenEmptyView:NO];
+            }else{
+                [self isShouldSetHiddenEmptyView:YES];
+            }
         }
         
         [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];

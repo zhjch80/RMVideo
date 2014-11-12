@@ -147,14 +147,14 @@
             switch (indexPath.row) {
                     //我的收藏
                 case 0:{
-                    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-                    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
-                        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-                        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
-                        [self presentViewController:loginNav animated:YES completion:^{
-                        }];
-                        return;
-                    }
+//                    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+//                    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+//                        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+//                        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
+//                        [self presentViewController:loginNav animated:YES completion:^{
+//                        }];
+//                        return;
+//                    }
                     __unsafe_unretained RMSetupViewController *unSafeSelf = self;
                     RMDownMoreViewController *moreVC = [[RMDownMoreViewController alloc] init];
                     [unSafeSelf.navigationController pushViewController:moreVC animated:YES];

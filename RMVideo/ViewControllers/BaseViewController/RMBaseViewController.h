@@ -30,8 +30,13 @@
     UIButton *rightBarButton;
 }
 
+@property (nonatomic, strong) UIImageView *noDataShowImage;
+@property (nonatomic, strong) UILabel *noDataShowLable;
 - (void)setTitle:(NSString *)title;
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender;
 - (void)setExtraCellLineHidden: (UITableView *)tableView;
+
+- (void)showEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title;
+- (void)isShouldSetHiddenEmptyView:(BOOL)isShould;
 
 @end

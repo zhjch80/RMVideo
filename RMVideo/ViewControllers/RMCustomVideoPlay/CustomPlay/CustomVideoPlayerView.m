@@ -43,6 +43,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 }
 - (void)contentURL:(NSURL *)contentURL
 {
+    
     [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     if (self.playerItem) {
         //[self.playerItem removeObserver:self forKeyPath:@"status"];

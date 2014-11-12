@@ -60,13 +60,15 @@ static id _instance;
     
     NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:DownLoadDataArray_KEY];
 //    downLoadIndex = 0;
+    [self showEmptyViewWithImage:[UIImage imageNamed:@"no_cashe_video"] WithTitle:@"您没有缓存记录"];
     NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if(SavedownLoad==nil){
-        
+        [self isShouldSetHiddenEmptyView:NO];
     }else{
         for(RMPublicModel *model in SavedownLoad){
             [self.dataArray addObject:model];
         }
+        [self isShouldSetHiddenEmptyView:YES];
     }
     [self.mainTableView reloadData];
     [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"start_all_downLoad_image"] forState:UIControlStateNormal];
@@ -310,6 +312,11 @@ static id _instance;
         NSNumber *number = [sort objectAtIndex:i];
         RMPublicModel *model = [self.dataArray objectAtIndex:number.integerValue];
         [self.dataArray removeObjectAtIndex:number.integerValue];
+        if (self.dataArray.count==0) {
+            [self isShouldSetHiddenEmptyView:NO];
+        }else{
+            [self isShouldSetHiddenEmptyView:YES];
+        }
         
         if([self.downLoadIDArray containsObject:model]){
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
@@ -405,6 +412,11 @@ static id _instance;
         RMPublicModel *model = [weekSelf.dataArray objectAtIndex:index];
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.dataArray removeObject:model];
+        if (weekSelf.dataArray.count==0) {
+            [weekSelf isShouldSetHiddenEmptyView:NO];
+        }else{
+            [weekSelf isShouldSetHiddenEmptyView:YES];
+        }
         [weekSelf.mainTableView reloadData];
         if(weekSelf.downLoadIDArray.count==0){
             weekSelf.isDownLoadNow = YES;

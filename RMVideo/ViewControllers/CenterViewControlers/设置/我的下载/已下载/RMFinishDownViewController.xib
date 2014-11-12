@@ -16,9 +16,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Rd1-mk-1P6">
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Rd1-mk-1P6">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.94117653369903564" green="0.92941182851791382" blue="0.92941182851791382" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="sectionIndexBackgroundColor" red="0.94117653369903564" green="0.92941182851791382" blue="0.92941182851791382" alpha="1" colorSpace="deviceRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="lqU-XO-W3L"/>
                         <outlet property="delegate" destination="-1" id="Bux-Mp-FHo"/>
@@ -27,10 +28,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Rd1-mk-1P6" secondAttribute="trailing" id="9Vn-wv-n4W"/>
-                <constraint firstAttribute="bottom" secondItem="Rd1-mk-1P6" secondAttribute="bottom" id="NWX-X3-bpm"/>
-                <constraint firstItem="Rd1-mk-1P6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aIv-DW-qOz"/>
-                <constraint firstItem="Rd1-mk-1P6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nRh-SG-faV"/>
+                <constraint firstAttribute="trailing" secondItem="Rd1-mk-1P6" secondAttribute="trailing" id="HqW-Mf-CLk"/>
+                <constraint firstItem="Rd1-mk-1P6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ejB-pp-9Lg"/>
+                <constraint firstItem="Rd1-mk-1P6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ldh-ZQ-SBO"/>
+                <constraint firstAttribute="bottom" secondItem="Rd1-mk-1P6" secondAttribute="bottom" id="ymd-4H-A0I"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="287" y="316"/>

@@ -20,6 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readItemFromDownLoadList]];
+    [self showEmptyViewWithImage:[UIImage imageNamed:@"no_cashe_video"] WithTitle:@"您没有缓存记录"];
+    if (self.dataArray.count==0) {
+        [self isShouldSetHiddenEmptyView:NO];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
+    }
+    
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginAnimation) name:kFinishViewControStartEditing object:nil];
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(endAnimation) name:kFinishViewControEndEditing object:nil];
@@ -69,6 +76,11 @@
 - (void)downLoadSuccess{
     [self.dataArray removeAllObjects];
     self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readItemFromDownLoadList]];
+    if (self.dataArray.count==0) {
+        [self isShouldSetHiddenEmptyView:NO];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
+    }
     [self.maiTableView reloadData];
     [cellEditingImageArray removeAllObjects];
     for (int i=0; i<self.dataArray.count; i++) {
@@ -178,6 +190,11 @@
         }
         [self.dataArray removeObjectAtIndex:number.integerValue];
         [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+        if (self.dataArray.count==0) {
+            [self isShouldSetHiddenEmptyView:NO];
+        }else{
+            [self isShouldSetHiddenEmptyView:YES];
+        }
     }
 
     [self.maiTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];

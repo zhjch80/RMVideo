@@ -112,7 +112,6 @@
 //    [self playerWithURL:nil];
 //    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
 //    [self.player setSelectionEpisodeScrollViewWithArray:array];
-    
     [self.view setBackgroundColor:[UIColor blackColor]];
     if (self.player == nil) {
         self.player = [[CustomVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight)];
