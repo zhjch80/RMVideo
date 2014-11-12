@@ -81,7 +81,8 @@
     dataArray = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"我的下载",@"播放历史"],@[@"用户反馈",@"清理缓存"],@[@"关于",@"分享给朋友",@"去给评分",@"更多应用"]]];
     
     [self loadCustomView];
-    }
+
+}
 
 - (void)loadCustomView {
     UIView * headTableView = [[UIView alloc] init];
@@ -146,6 +147,14 @@
             switch (indexPath.row) {
                     //我的收藏
                 case 0:{
+                    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+                    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+                        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+                        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
+                        [self presentViewController:loginNav animated:YES completion:^{
+                        }];
+                        return;
+                    }
                     __unsafe_unretained RMSetupViewController *unSafeSelf = self;
                     RMDownMoreViewController *moreVC = [[RMDownMoreViewController alloc] init];
                     [unSafeSelf.navigationController pushViewController:moreVC animated:YES];
@@ -305,8 +314,11 @@
             break;
         }
         case 2:{
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+                [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+            }
             [self dismissViewControllerAnimated:YES completion:^{
-                
+          
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
             break;
@@ -331,21 +343,6 @@
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-//    return UIDeviceOrientationIsLandscape(toInterfaceOrientation);
-//}
-//
-//- (BOOL)shouldAutorotate {
-//    return NO;
-//}
-//
-//- (NSUInteger)supportedInterfaceOrientations{
-////    return UIInterfaceOrientationMaskPortrait;
-////    return UIInterfaceOrientationIsPortrait(UIInterfaceOrientationPortrait);
-//    return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
-//}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

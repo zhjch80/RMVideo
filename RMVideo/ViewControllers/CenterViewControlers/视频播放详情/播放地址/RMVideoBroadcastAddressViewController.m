@@ -61,11 +61,7 @@
     [playContro createPlayerViewWithURL:@"http://106.38.249.115/youku/6571A120949307841CDD82F2D/0300200100541051355CC105CF07DD1B1058E5-6200-DC5A-6294-C5EA5EB2CC63.mp4" isPlayLocalVideo:NO];
     [playContro createTopTool];
     [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
-//        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-//            // iOS 7
-//            [self prefersStatusBarHidden];
-//            [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-//        }
+        
     }];
 }
 

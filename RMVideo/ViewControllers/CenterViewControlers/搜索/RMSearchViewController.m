@@ -381,6 +381,9 @@
             break;
         }
         case 2:{
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+                [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+            }
             [self dismissViewControllerAnimated:YES completion:^{
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];

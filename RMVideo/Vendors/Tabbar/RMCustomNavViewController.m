@@ -17,6 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+//    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,6 +36,12 @@
 
 - (BOOL)shouldAutorotate {
     return NO;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    NSLog(@"nav UIInterfaceOrientationPortrait:%d",UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationPortrait;
 }
 
 //- (NSUInteger)supportedInterfaceOrientations{

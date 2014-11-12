@@ -49,6 +49,7 @@
     [manager getDailyRecommend];
     
 }
+
 #pragma mark main tableVeiw dataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -169,7 +170,8 @@
     switch (sender.tag) {
         case 1:{
             RMSetupViewController * setupCtl = [[RMSetupViewController alloc] init];
-            [self presentViewController:[[RMCustomPresentNavViewController alloc] initWithRootViewController:setupCtl] animated:YES completion:^{
+            RMCustomPresentNavViewController * setupNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:setupCtl];
+            [self presentViewController:setupNav animated:YES completion:^{
                 
             }];
             

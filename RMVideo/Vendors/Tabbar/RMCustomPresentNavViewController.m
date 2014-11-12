@@ -8,6 +8,8 @@
 
 #import "RMCustomPresentNavViewController.h"
 
+#define JuV [[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0
+
 @interface RMCustomPresentNavViewController ()
 
 @end
@@ -17,6 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+//    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,9 +41,27 @@
     return NO;
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    NSLog(@"present nav UIInterfaceOrientationPortrait:%d",UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationPortrait;
+}
+
+//iOS7 上注释掉该方法
+
 //- (NSUInteger)supportedInterfaceOrientations{
-//    return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
+//        NSLog(@"123123123");
+//        return UIInterfaceOrientationLandscapeLeft;//只支持这一个方向(正常的方向)
+//    }else{
+//        
+//        NSLog(@"456456456");
+//        return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
+//    }
 //}
+
+
+
 
 /*
 #pragma mark - Navigation
