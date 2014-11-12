@@ -55,10 +55,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFail) name:@"playFail_KEY" object:nil];
 //    [self createPlayerView];
 //    [self createTopTool];
 }
-
+- (void)playFail{
+    [self buttonClick:nil];
+}
 /**
  *
  * 顶部工具栏
@@ -97,7 +100,6 @@
 - (void)buttonClick:(UIButton *)sender {
     [self.player CustomViewWillDisappear];
     [self dismissViewControllerAnimated:YES completion:^{
-        
         [self.player pause];
     }];
 }

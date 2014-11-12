@@ -41,8 +41,12 @@
     self.dataArr = [[NSMutableArray alloc] init];
     [self showEmptyViewWithImage:LOADIMAGE(@"no_search_result", kImageTypePNG) WithTitle:@"没有搜索到你要找的视频"];
     RMPublicModel * model = [self.resultData objectAtIndex:0];
-    self.keyWord = model.keyword;
-    self.dataArr = [NSMutableArray arrayWithArray:model.list];
+    if ([model.list isKindOfClass:[NSString class]]){
+        
+    }else{
+        self.keyWord = model.keyword;
+        self.dataArr = [NSMutableArray arrayWithArray:model.list];
+    }
     
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;

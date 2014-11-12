@@ -226,7 +226,7 @@ typedef enum{
             //真实数据 model.downLoadURL != nil
             if(model.downLoadURL == nil){
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-                model.downLoadURL = @"http://106.38.249.142/youku/6979B9C04F431786ECFB45C83/0300200100514D09437E64055EEB3E66AC4E25-DFC2-9E22-FF27-97AFEC905383.mp4";
+                model.downLoadURL = @"http://106.38.249.114/youku/656E234CA43C7A5D8AA36767/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
                 model.downLoadState = @"等待缓存";
                 model.totalMemory = @"0M";
                 model.alreadyCasheMemory = @"0M";

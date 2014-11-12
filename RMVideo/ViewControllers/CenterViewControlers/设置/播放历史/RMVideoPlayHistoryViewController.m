@@ -36,8 +36,10 @@
     self.dataArray = [NSMutableArray arrayWithArray:[[Database sharedDatabase] readitemFromListName:PLAYHISTORYLISTNAME]];
     if (self.dataArray.count==0) {
         [self isShouldSetHiddenEmptyView:NO];
+        rightBarButton.hidden = YES;
     }else{
         [self isShouldSetHiddenEmptyView:YES];
+        rightBarButton.hidden = NO;
     }
     selectCellArray = [NSMutableArray array];
     [showMemoryLable removeFromSuperview];
@@ -97,8 +99,10 @@
             [self.dataArray removeObjectAtIndex:number.integerValue];
             if (self.dataArray.count==0) {
                 [self isShouldSetHiddenEmptyView:NO];
+                rightBarButton.hidden = YES;
             }else{
                 [self isShouldSetHiddenEmptyView:YES];
+                rightBarButton.hidden = NO;
             }
         }
         

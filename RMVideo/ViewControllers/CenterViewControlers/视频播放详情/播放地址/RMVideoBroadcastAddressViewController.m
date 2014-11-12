@@ -68,7 +68,7 @@
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
     CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
 //    [playContro createPlayerViewWithURL:[dic objectForKey:@"jumpurl"] isPlayLocalVideo:NO];
-    [playContro createPlayerViewWithURL:@"http://106.38.249.115/youku/6571A120949307841CDD82F2D/0300200100541051355CC105CF07DD1B1058E5-6200-DC5A-6294-C5EA5EB2CC63.mp4" isPlayLocalVideo:NO];
+    [playContro createPlayerViewWithURL:@"http://106.38.249.19/youku/65627388FF3C7A5D74795177/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4" isPlayLocalVideo:NO];
     [playContro createTopTool];
     [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
         

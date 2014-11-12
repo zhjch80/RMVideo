@@ -9,6 +9,7 @@
 #import "UtilityFunc.h"
 #import "CustomSVProgressHUD.h"
 #import "GPLoadingView.h"
+#import "SVProgressHUD.h"
 
 @interface CustomVideoPlayerView ()<TouchViewDelegate> {
     GPLoadingView * loading;
@@ -189,6 +190,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self performSelector:@selector(hiddenNavBarAndPlayerHudBottom) withObject:nil afterDelay:3];
     
     loading = [[GPLoadingView alloc] initWithFrame:CGRectMake(([UtilityFunc shareInstance].globleAllHeight-50)/2, ([UtilityFunc shareInstance].globleWidth - 50)/2, 50, 50)];
+    loading.hidden = NO;
     [loading startAnimation];
     [self addSubview:loading];
 }
@@ -242,6 +244,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //    }];
 //    [self play];
 //    [self setHiddenView];
+    loading.hidden = YES;
     [loading startAnimation];
     if (self.playerItem) {
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -573,6 +576,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         } else if ([playerItem status] == AVPlayerStatusFailed) {
             loading.hidden = YES;
             [loading stopAnimation];
+            [SVProgressHUD showErrorWithStatus:@"播放失败"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"playFail_KEY" object:nil];
             NSLog(@"加载失败:AVPlayerStatusFailed");
 
         }

@@ -408,6 +408,9 @@ typedef enum{
 }
 
 - (void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
     //授权成功后的回调函数
     if (response.viewControllerType == UMSViewControllerOauth) {
         NSDictionary *snsAccountDic = [UMSocialAccountManager socialAccountDictionary];
