@@ -93,7 +93,6 @@
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" backgroundImage="vd_collectionImg"/>
                             <connections>
                                 <action selector="mbuttonClick:" destination="-1" eventType="touchUpInside" id="vWu-UQ-amh"/>
                             </connections>
@@ -125,7 +124,6 @@
     </objects>
     <resources>
         <image name="paly_bg_img" width="44" height="44"/>
-        <image name="vd_collectionImg" width="44" height="44"/>
         <image name="vd_loadImg" width="44" height="44"/>
         <image name="vd_shareImg" width="44" height="44"/>
     </resources>

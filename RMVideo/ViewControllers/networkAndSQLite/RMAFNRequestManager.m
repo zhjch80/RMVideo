@@ -18,14 +18,19 @@
 #else
 //测试服务器
 #define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
+//线上
+//#define baseUrl     @"172.16.2.213/rmapi/index.php/vod/"
+
 #endif
+
+
 
 @implementation RMAFNRequestManager
 
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 10;//超市
+    manager.requestSerializer.timeoutInterval = 10;//超时
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
     return manager;
 }
@@ -34,7 +39,7 @@
     NSString *strUrl;
     switch (tag) {
         case Http_getDailyRecommend:{
-            strUrl = [NSString stringWithFormat:@"%@getDailyRecommend?",baseUrl];
+            strUrl = [NSString stringWithFormat:@"%@getDailyRecommend",baseUrl];
             break;
         }
         case Http_getTopList:{
@@ -133,7 +138,9 @@
 - (void)getDailyRecommend{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDailyRecommend];
+    NSLog(@"url:%@",url);
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSLog(@"responseObject:%@",responseObject);
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
             NSMutableArray *tvArray = [NSMutableArray array];

@@ -44,8 +44,8 @@
 
 - (void)subButtonClick:(UIButton *)sender {
     NSInteger index = sender.tag - 301;
+    
     NSMutableDictionary * dic = [dataArr objectAtIndex:index];
-    //TODO:跳转到播放界面或者选集界面 接口不完全
     NSLog(@"index:%d jumpurl:%@",index,[dic objectForKey:@"jumpurl"]);
     
     RMPublicModel *insertModel = [[RMPublicModel alloc] init];
@@ -64,10 +64,6 @@
         
     }];
 }
-
-//- (BOOL)prefersStatusBarHidden {
-//    return YES;//隐藏为YES，显示为NO
-//}
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {
     dataArr = model.playurlArr;

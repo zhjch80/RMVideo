@@ -38,10 +38,6 @@
     [rightBarButton addTarget:self action:@selector(navgationBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithCustomView:rightBarButton];
     self.navigationItem.rightBarButtonItem = rightBarItem;
-    
-    
-
-    
 }
 
 - (void)showEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title {
@@ -51,16 +47,19 @@
     [self.view addSubview:self.noDataShowImage];
     
     self.noDataShowLable = [[UILabel alloc] init];
-    self.noDataShowLable.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-154)/2, self.noDataShowImage.frame.origin.y+self.noDataShowImage.frame.size.height+10, 154, 21);
+    self.noDataShowLable.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-200)/2, self.noDataShowImage.frame.origin.y+self.noDataShowImage.frame.size.height+10, 200, 21);
+
     self.noDataShowLable.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
     self.noDataShowLable.text = title;//@"您没有播放记录";
     self.noDataShowLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.noDataShowLable];
 }
+
 - (void)isShouldSetHiddenEmptyView:(BOOL)isShould{
     self.noDataShowLable.hidden = isShould;
     self.noDataShowImage.hidden = isShould;
 }
+
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender{
     
 }

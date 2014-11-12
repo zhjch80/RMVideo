@@ -28,7 +28,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.dataArr = [[NSMutableArray alloc] init];
-    
+    [self showEmptyViewWithImage:LOADIMAGE(@"no_search_result", kImageTypePNG) WithTitle:@"没有搜索到你要找的明星"];
+
     RMPublicModel * model = [self.resultData objectAtIndex:0];
     self.keyWord = model.name;
     self.dataArr = [NSMutableArray arrayWithArray:model.list];
@@ -52,6 +53,11 @@
 #pragma mark - UITableViewDataSource UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.dataArr.count == 0){
+        [self isShouldSetHiddenEmptyView:NO];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
+    }
     return [self.dataArr count];
 }
 

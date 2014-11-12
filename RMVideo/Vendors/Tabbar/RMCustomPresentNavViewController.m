@@ -43,7 +43,6 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-    NSLog(@"present nav UIInterfaceOrientationPortrait:%d",UIInterfaceOrientationPortrait);
     return UIInterfaceOrientationPortrait;
 }
 
