@@ -51,5 +51,6 @@
 - (void)deletFristItem;
 
 - (BOOL)isDownLoadMovieWith:(RMPublicModel *)model;
+- (BOOL)isDownLoadMovieWithModelName:(NSString *)modelName;
 
 @end

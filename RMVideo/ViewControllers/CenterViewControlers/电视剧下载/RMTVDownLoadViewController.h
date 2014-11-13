@@ -8,12 +8,15 @@
 
 #import "RMBaseViewController.h"
 
-@interface RMTVDownLoadViewController : RMBaseViewController{
-    NSArray *TVDetailArray;
-}
-- (IBAction)downAllTVEpisode:(UIButton *)sender;
+@interface RMTVDownLoadViewController : RMBaseViewController
+
 @property (weak, nonatomic) IBOutlet UIScrollView *headScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (copy, nonatomic) NSString *TVseriesTitle;
+@property (copy, nonatomic) NSString *modelID;
+@property (copy, nonatomic) NSString *TVName;
+@property (copy, nonatomic) NSString *TVHeadImage;
 @property (strong, nonatomic) NSMutableArray *TVdataArray;
+
+- (IBAction)downAllTVEpisode:(UIButton *)sender;
 @end

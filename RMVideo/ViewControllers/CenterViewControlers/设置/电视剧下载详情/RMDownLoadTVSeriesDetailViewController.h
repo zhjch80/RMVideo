@@ -8,8 +8,11 @@
 
 #import "RMDownLoadBaseViewController.h"
 
-@interface RMDownLoadTVSeriesDetailViewController : RMDownLoadBaseViewController
-
-
+@interface RMDownLoadTVSeriesDetailViewController : RMDownLoadBaseViewController{
+    
+}
+@property (nonatomic, copy) NSString * modelID;
+@property (nonatomic, copy) NSString * TVName;
+@property (nonatomic, strong)NSMutableArray *dataArray;
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender;
 @end

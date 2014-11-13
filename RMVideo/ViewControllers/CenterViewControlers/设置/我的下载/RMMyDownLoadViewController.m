@@ -47,6 +47,7 @@
 
     }];
     finishDownViewContr = [[RMFinishDownViewController alloc] init];
+    finishDownViewContr.myDownLoadDelegate = self;
     [finishDownViewContr selectTableViewCellWithIndex:^(NSString *movieName) {
         
         NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

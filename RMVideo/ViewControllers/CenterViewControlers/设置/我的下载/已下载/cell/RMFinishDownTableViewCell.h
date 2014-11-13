@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMImageView.h"
 
 @interface RMFinishDownTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *headImage;
+@property (weak, nonatomic) IBOutlet RMImageView *headImage;
 @property (weak, nonatomic) IBOutlet UILabel *movieName;
 @property (weak, nonatomic) IBOutlet UILabel *memoryCount;
 @property (weak, nonatomic) IBOutlet UIImageView *editingImage;

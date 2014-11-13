@@ -235,7 +235,9 @@ typedef enum{
             }else{
                 //电视剧 综艺 进download 界面 传video_id
                 RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
-//                model.video_id
+                TVDownLoadCtl.modelID = model.video_id;
+                TVDownLoadCtl.TVName = model.name;
+                TVDownLoadCtl.TVHeadImage = model.pic;
                 [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
             }
 

@@ -260,11 +260,25 @@
 - (void)getDownloadDiversityWithID:(NSString *)ID{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDownloadDiversity];
-    url = [NSString stringWithFormat:@"%@id=%@",url,ID];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    url = [NSString stringWithFormat:@"%@video_id=%@",url,ID];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         NSLog(@"responseObject:%@",responseObject);
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            NSMutableArray *dataArray = [NSMutableArray array];
+            for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
+                RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.topNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"curnum"]];
+                model.downLoadURL = [dict objectForKey:@"down_url"];
+                [dataArray addObject:model];
+            }
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:dataArray];
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:%@",error);
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
     }];
 }
 

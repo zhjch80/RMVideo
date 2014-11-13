@@ -117,10 +117,24 @@ static Database *gl_database=nil;
 }
 
 - (BOOL)isDownLoadMovieWith:(RMPublicModel *)model{
-    NSString *sql = [NSString stringWithFormat:@"select titleName from DownLoadListname where titleName=?"];
-    FMResultSet *rs = [mdb executeQuery:sql,model.name];
-    while ([rs next]) {
-        return YES;
+    if([mdb open]){
+        NSString *sql = [NSString stringWithFormat:@"select titleName from DownLoadListname where titleName=?"];
+        FMResultSet *rs = [mdb executeQuery:sql,model.name];
+        while ([rs next]) {
+            [mdb close];
+            return YES;
+        }
+    }
+    return NO;
+}
+- (BOOL)isDownLoadMovieWithModelName:(NSString *)modelName{
+    if([mdb open]){
+        NSString *sql = [NSString stringWithFormat:@"select titleName from DownLoadListname where titleName=?"];
+        FMResultSet *rs = [mdb executeQuery:sql,modelName];
+        while ([rs next]) {
+            [mdb close];
+            return YES;
+        }
     }
     return NO;
 }

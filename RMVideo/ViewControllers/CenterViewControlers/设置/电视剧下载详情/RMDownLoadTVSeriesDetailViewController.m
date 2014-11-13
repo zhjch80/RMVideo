@@ -10,7 +10,9 @@
 #import "RMFinishDownTableViewCell.h"
 #import "RMTVDownLoadViewController.h"
 
-@interface RMDownLoadTVSeriesDetailViewController ()
+@interface RMDownLoadTVSeriesDetailViewController (){
+    NSMutableArray *tableDataArray;
+}
 
 @end
 
@@ -59,15 +61,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"电视剧名称";
+   
     isSeleltAllCell = YES;
-    
-    self.dataArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    NSString *tmpStr = [self.TVName substringFromIndex:[self.TVName rangeOfString:@"_"].location+1];
+    tmpStr = [tmpStr substringToIndex:[tmpStr rangeOfString:@"_"].location];
+    self.title = tmpStr;
+    tableDataArray = [NSMutableArray array];
+    for (RMPublicModel *model in self.dataArray) {
+        if([model.name rangeOfString:tmpStr].location != NSNotFound){
+           [tableDataArray addObject:model];
+        }
+    }
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     
     selectCellArray = [NSMutableArray array];
     cellEditingImageArray = [NSMutableArray array];
-    for (int i=0; i<20; i++) {
+    for (int i=0; i<tableDataArray.count; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
     }
 }
@@ -78,7 +87,7 @@
         [selectCellArray removeAllObjects];
         if(isSeleltAllCell){
             [sender setImage:LOADIMAGE(@"uncancle_select_all", kImageTypePNG) forState:UIControlStateNormal];
-            for(int i=0; i<self.dataArray.count;i++){
+            for(int i=0; i<tableDataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"select_cellImage"];
                 [selectCellArray addObject:[NSNumber numberWithInt:i]];
             }
@@ -87,7 +96,7 @@
         }
         else{
             [sender setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
-            for(int i=0; i<self.dataArray.count;i++){
+            for(int i=0; i<tableDataArray.count;i++){
                 [cellEditingImageArray replaceObjectAtIndex:i withObject:@"no-select_cellImage"];
             }
             ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
@@ -109,7 +118,7 @@
         }
         for(int i=0;i<sort.count;i++){
             NSNumber *number = [sort objectAtIndex:i];
-            [self.dataArray removeObjectAtIndex:number.integerValue];
+            [tableDataArray removeObjectAtIndex:number.integerValue];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
         }
         
@@ -123,6 +132,10 @@
         [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
         isEditing = NO;
     }
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return tableDataArray.count;
 }
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -154,9 +167,35 @@
     }
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    static NSString *identifier = @"cellIIdentifier";
+    RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(cell==nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
+        if(isEditing)
+            [cell setCellViewFrame];
+    }
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
+    NSString *tmpStr = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+//    tmpStr = [tmpStr substringToIndex:[tmpStr rangeOfString:@"_"].location];
+    cell.movieName.text = tmpStr;
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    cell.memoryCount.text = model.totalMemory;
+    return cell;
+
+    
+}
+
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender{
-    RMTVDownLoadViewController *TVDownLoad = [[RMTVDownLoadViewController alloc] init];
-    [self.navigationController pushViewController:TVDownLoad animated:YES];
+    RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
+    RMPublicModel *model = [tableDataArray objectAtIndex:0];
+    TVDownLoadCtl.modelID = self.modelID;
+    TVDownLoadCtl.TVName = self.title;
+    TVDownLoadCtl.TVHeadImage = model.pic;
+    [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

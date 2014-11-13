@@ -10,7 +10,7 @@
 #import "RMTVDownView.h"
 #import "RMDownLoadingViewController.h"
 
-@interface RMTVDownLoadViewController ()
+@interface RMTVDownLoadViewController ()<RMAFNRequestManagerDelegate>
 
 @end
 
@@ -24,45 +24,31 @@
      //tv_downing  正在下载的
      //tv_down_succes 下载成功的
      */
+    self.TVdataArray = [[NSMutableArray alloc] init];
     self.title = @"选择要下载的分集";
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
-    self.TVdataArray = [[NSMutableArray alloc] init];
-    NSArray *headBtnArray = [NSArray arrayWithObjects:@"tv_download-test",@"tv_download-test",@"tv_download-test",@"tv_download-test",@"tv_download-test", nil];
 
-    TVDetailArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15"];
-    [self headScrollviewAddBtnFromArray:headBtnArray andBtnWidth:60];
-    int count = 5,width = 50;
-    if(IS_IPHONE_6_SCREEN||IS_IPHONE_6p_SCREEN){
-        count = 6; width = 50;
-    }
-    [self addTVDetailEveryEpisodeViewFromArray:TVDetailArray andEveryTVViewWidth:width andEveryRowHaveTVViewCount:count];
-    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
-    [manager getDownloadDiversityWithID:@"9507"];
+    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+    RMAFNRequestManager *requestManager = [[RMAFNRequestManager alloc] init];
+    requestManager.delegate = self;
+    [requestManager getDownloadDiversityWithID:self.modelID];
 }
 
 //添加集数的按钮
-- (void)headScrollviewAddBtnFromArray:(NSArray *)btnArray andBtnWidth:(CGFloat)width{
-
-    if ((btnArray.count*width+(btnArray.count+1)*17)>[UtilityFunc shareInstance].globleWidth) {
-        self.headScrollView.contentSize = CGSizeMake((btnArray.count*width+(btnArray.count+1)*17), self.headScrollView.frame.size.height);
-    }
-    for (int i=0;i<btnArray.count;i++){
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setBackgroundImage:[UIImage imageNamed:[btnArray objectAtIndex:i]] forState:UIControlStateNormal];
-        button.tag = i+1;
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitle:@"1-15集" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(headSCrollViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake(i*width+17*(i+1), (self.headScrollView.frame.size.height-30)/2, width, 30);
-        [self.headScrollView addSubview:button];
-    }
+- (void)headScrollviewAddBtnWithImage:(UIImage *)image andBtnWidth:(CGFloat)width{
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:13];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    NSString *titelStr = [NSString stringWithFormat:@"1-%d集",self.TVdataArray.count];
+    [button setTitle:titelStr forState:UIControlStateNormal];
+    button.frame = CGRectMake(17, (self.headScrollView.frame.size.height-30)/2, width, 30);
+    [self.headScrollView addSubview:button];
+    
 }
 
-- (void)headSCrollViewBtnClick:(UIButton *)sender{
-    NSLog(@"sender.tag:%d",sender.tag);
-}
 
 - (void)addTVDetailEveryEpisodeViewFromArray:(NSArray *)dataArray andEveryTVViewWidth:(CGFloat)width andEveryRowHaveTVViewCount:(int)count{
     
@@ -76,20 +62,23 @@
     if ((column*width+(column+1)*spacing)>self.contentScrollView.frame.size.height) {
         self.contentScrollView.contentSize = CGSizeMake([UtilityFunc shareInstance].globleWidth, (column*width+(column+1)*spacing));
     }
+    RMDownLoadingViewController *downLoad = [RMDownLoadingViewController shared];
     for(int i=0;i<dataArray.count;i++){
         RMTVDownView *downView = [[[NSBundle mainBundle] loadNibNamed:@"RMTVDownView" owner:self options:nil] lastObject];
         downView.frame = CGRectMake((i%count+1)*spacing+i%count*width, (i/count+1)*spacing+i/count*width, width, width);
         downView.TVEpisodeButton.tag = i+1;
         downView.tag = i+1000;
         [downView.TVEpisodeButton setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
-//        downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
         RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
-        RMDownLoadingViewController *downLoad = [RMDownLoadingViewController shared];
+        
+        NSString *tvString = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
+        NSLog(@"--%@",tvString);
+        
         //判断改电视剧是否已经下载成功
-        if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+        if([[Database sharedDatabase] isDownLoadMovieWithModelName:tvString]){
             downView.TVStateImageView.image = [UIImage imageNamed:@"tv_down_succes"];
         }
-        else if([downLoad.downLoadIDArray containsObject:model]){
+        else if([self isContainsModel:downLoad.downLoadIDArray modelName:tvString]){
             downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
         }
         [downView.TVEpisodeButton addTarget:self action:@selector(TVEpisodeButtonCLick:) forControlEvents:UIControlEventTouchUpInside];
@@ -99,26 +88,33 @@
 
 //点击下载某一个集
 - (void)TVEpisodeButtonCLick:(UIButton*)sender{
-    RMPublicModel *model = [self.TVdataArray objectAtIndex:sender.tag-1000];
+    
+    RMPublicModel *model = [self.TVdataArray objectAtIndex:sender.tag-1];
     RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+    NSString *tvString = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
+    NSLog(@"--%@",tvString);
+
     //判断改电视剧是否已经下载成功
-    if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+    if([[Database sharedDatabase] isDownLoadMovieWithModelName:tvString]){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
         return;
     }
-    else if([rmDownLoading.downLoadIDArray containsObject:model]){
+    else if([self isContainsModel:rmDownLoading.downLoadIDArray modelName:tvString]){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"已在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
         return;
     }
     RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:sender.tag-1+1000];
     downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
-    model.downLoadURL = @"http://106.38.249.114/youku/677153A8A794B7D0030376158/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+    model.downLoadURL = @"http://106.38.249.114/youku/6971C52877936794FB5AA6E18/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+    model.name = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
     model.downLoadState = @"等待缓存";
     model.totalMemory = @"0M";
     model.alreadyCasheMemory = @"0M";
     model.cacheProgress = @"0.0";
+    model.pic = self.TVHeadImage;
+    model.video_id = self.modelID;
     [rmDownLoading.dataArray addObject:model];
     [rmDownLoading.downLoadIDArray addObject:model];
     [rmDownLoading BeginDownLoad];
@@ -132,7 +128,7 @@
 //下载多有的电视剧
 - (IBAction)downAllTVEpisode:(UIButton *)sender {
     RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-    for (int i=0;i<TVDetailArray.count;i++){
+    for (int i=0;i<self.TVdataArray.count;i++){
         RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
         if([[Database sharedDatabase] isDownLoadMovieWith:model]){
             
@@ -159,4 +155,35 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
 }
 
+#pragma request finish
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    if(data.count>0){
+        [SVProgressHUD dismiss];
+        
+        self.TVdataArray = data;
+        [self headScrollviewAddBtnWithImage:[UIImage imageNamed:@"tv_download-test"] andBtnWidth:60];
+        int count = 5,width = 50;
+        if(IS_IPHONE_6_SCREEN||IS_IPHONE_6p_SCREEN){
+            count = 6; width = 50;
+        }
+        [self addTVDetailEveryEpisodeViewFromArray:self.TVdataArray andEveryTVViewWidth:width andEveryRowHaveTVViewCount:count];
+    }
+    else{
+        [SVProgressHUD showErrorWithStatus:@"下载失败"];
+    }
+
+}
+- (void)requestError:(NSError *)error{
+    NSLog(@"error:%@",error);
+    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+}
+
+- (BOOL)isContainsModel:(NSMutableArray *)dataArray modelName:(NSString *)string{
+    for(RMPublicModel *tmpModel in dataArray){
+        if([tmpModel.name isEqualToString:string]){
+            return YES;
+        }
+    }
+    return NO;
+}
 @end

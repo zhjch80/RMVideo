@@ -15,6 +15,8 @@
     void(^selectArray)(NSMutableArray *array);
     BOOL isBegingEditing;
 }
+@property (nonatomic, assign) id myDownLoadDelegate;
+
 @property (weak, nonatomic) IBOutlet UITableView *maiTableView;
 @property (nonatomic ,strong) NSMutableArray *dataArray;
 
