@@ -120,7 +120,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     self.playBackTime.text = [self getStringFromCMTime:self.moviePlayer.currentTime];
     [self.playBackTime setTextAlignment:NSTextAlignmentLeft];
     [self.playBackTime setTextColor:[UIColor whiteColor]];
-    self.playBackTime.font = [UIFont systemFontOfSize:12*frameWidth/240];
+    self.playBackTime.font = [UIFont systemFontOfSize:14.0];
     [self.playerHudBottom addSubview:self.playBackTime];
     //视频总的时间数
     self.playBackTotalTime = [[UILabel alloc] init];
@@ -128,7 +128,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     self.playBackTotalTime.text = [self getStringFromCMTime:self.moviePlayer.currentItem.asset.duration];
     [self.playBackTotalTime setTextAlignment:NSTextAlignmentRight];
     [self.playBackTotalTime setTextColor:[UIColor whiteColor]];
-    self.playBackTotalTime.font = [UIFont systemFontOfSize:12*frameWidth/240];
+    self.playBackTotalTime.font = [UIFont systemFontOfSize:14.0];
     [self.playerHudBottom addSubview:self.playBackTotalTime];
     
     self.videoProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(145, 24, frameWidth-5, 25)];
@@ -153,7 +153,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.playerHudBottom addSubview:self.progressBar];
     
     UIButton *selectEpisodeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    selectEpisodeBtn.frame = CGRectMake(520, 5, 40, 40);
+    selectEpisodeBtn.frame = CGRectMake(self.playBackTotalTime.frame.origin.x+self.playBackTotalTime.frame.size.width+20, 5, 40, 40);
     [selectEpisodeBtn setTitle:@"选集" forState:UIControlStateNormal];
     [selectEpisodeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [selectEpisodeBtn addTarget:self action:@selector(selectTVEpisodebtnClick) forControlEvents:UIControlEventTouchUpInside];

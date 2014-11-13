@@ -333,14 +333,24 @@ static id _instance;
         }else{
             [self isShouldSetHiddenEmptyView:YES];
         }
-        
-        if([self.downLoadIDArray containsObject:model]){
+        NSFileManager *fileManeger = [NSFileManager defaultManager];
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSError *error = nil;
+        NSString *toPath = [NSString stringWithFormat:@"%@/%@.mp4",document,model.name];
+        BOOL delete = [fileManeger removeItemAtPath:toPath error:&error];
+        if(delete){
+            NSLog(@"删除成功");
+        }
+        if([self.downLoadIDArray containsObject:model]&&number.intValue==downLoadIndex){
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
             [operation pause];
             [operation cancel];
             [self.downLoadIDArray removeObject:model];
             self.isDownLoadNow = NO;
-        }else{
+        }else if([self.downLoadIDArray containsObject:model]&&number.intValue!=downLoadIndex){
+            [self.downLoadIDArray removeObject:model];
+        }
+        if([self.pauseLoadingArray containsObject:model]){
             [self.pauseLoadingArray removeObject:model];
         }
         [cellEditingImageArray removeObjectAtIndex:number.integerValue];
