@@ -58,6 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = @"电视剧名称";
     isSeleltAllCell = YES;
     

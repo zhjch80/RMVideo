@@ -17,6 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /*
+     //传值的时候，self.title必须是电视剧名称。
+     */
     self.title = @"选择要下载的分集";
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
