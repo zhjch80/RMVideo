@@ -47,7 +47,7 @@ static Database *gl_database=nil;
     
     if([mdb open])
     {
-        NSString *playHistoryNameSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),movieURL TEXT(1024),playTime TEXT(1024) DEFAULT NULL)",PLAYHISTORYLISTNAME];
+        NSString *playHistoryNameSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),movieURL TEXT(1024),playTime TEXT(1024),webURL TEXT(1024) DEFAULT NULL)",PLAYHISTORYLISTNAME];
         NSString *downLoadSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),totalMemory TEXT(1024) DEFAULT NULL)",DOWNLOADLISTNAME];
        
         if(![mdb executeUpdate:playHistoryNameSql]||![mdb executeUpdate:downLoadSql])
@@ -136,8 +136,8 @@ static Database *gl_database=nil;
             [self deletFristItem];
         }
        [mdb open];
-        NSString *sql = [NSString stringWithFormat:@"insert into %@ (titleName,titleImage,movieURL,playTime) values (?,?,?,?)",listName];
-        if([mdb executeUpdate:sql,item.name,item.pic_url,item.reurl,item.playTime])
+        NSString *sql = [NSString stringWithFormat:@"insert into %@ (titleName,titleImage,movieURL,playTime,webURL) values (?,?,?,?,?)",listName];
+        if([mdb executeUpdate:sql,item.name,item.pic_url,item.reurl,item.playTime,item.jumpurl])
         {
             NSLog(@"插入成功");
         }
@@ -220,7 +220,7 @@ static Database *gl_database=nil;
         NSString *sql = nil;
         
         if([listName isEqualToString:PLAYHISTORYLISTNAME]){
-            sql = [NSString stringWithFormat:@"select titleName,titleImage,movieURL,playTime from %@",PLAYHISTORYLISTNAME];
+            sql = [NSString stringWithFormat:@"select titleName,titleImage,movieURL,playTime,webURL from %@",PLAYHISTORYLISTNAME];
         }
         FMResultSet *rs = [mdb executeQuery:sql];
         
@@ -231,6 +231,7 @@ static Database *gl_database=nil;
                 item.pic_url = [rs stringForColumn:@"titleImage"];
                 item.reurl = [rs stringForColumn:@"movieURL"];
                 item.playTime = [rs stringForColumn:@"playTime"];
+                item.jumpurl = [rs stringForColumn:@"webURL"];
                 [array addObject:item];
             }
 

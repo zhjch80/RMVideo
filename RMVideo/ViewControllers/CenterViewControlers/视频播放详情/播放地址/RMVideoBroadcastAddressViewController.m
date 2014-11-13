@@ -17,9 +17,8 @@
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;
     NSMutableArray * dataArr;
-    RMPublicModel *publicModel;
 }
-
+@property (nonatomic, strong) RMPublicModel *publicModel;
 @end
 
 @implementation RMVideoBroadcastAddressViewController
@@ -49,44 +48,57 @@
                @"logo_aqy", @"6",
                @"logo_td", @"7",
                nil];
-    publicModel = [[RMPublicModel alloc] init];
-    publicModel.pic_url = @"http://f.hiphotos.baidu.com/image/w%3D310/sign=7437de58d2a20cf44690f8de460b4b0c/e1fe9925bc315c60191d32308fb1cb1348547760.jpg";
-    publicModel.name = @"新影片";
 }
 
 - (void)subButtonClick:(UIButton *)sender {
     NSInteger index = sender.tag - 301;
-    
     NSMutableDictionary * dic = [dataArr objectAtIndex:index];
-    NSLog(@"index:%d jumpurl:%@",index,[dic objectForKey:@"jumpurl"]);
-    
-    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
-    insertModel.name = publicModel.name;
-    insertModel.pic_url = publicModel.pic_url;
-    insertModel.reurl = [dic objectForKey:@"jumpurl"];
-    insertModel.playTime = @"0";
-    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
-    
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
-//    CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-////    [playContro createPlayerViewWithURL:[dic objectForKey:@"jumpurl"] isPlayLocalVideo:NO];
-//    [playContro createPlayerViewWithURL:@"http://106.38.249.19/youku/65627388FF3C7A5D74795177/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4" isPlayLocalVideo:NO];
-//    [playContro createTopTool];
-//    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
-//        
-//    }];
-    RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
-    RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
-    webView.urlString = @"http://v.youku.com/v_show/id_XNzgyODExNDY4.html?from=y1.3-movie-grid-1095-9921.95742.2-1";
-    [videoPlaybackDetailsCtl presentViewController:webNav animated:YES completion:^{
+
+    if ([NSString stringWithFormat:@"%@",[dic objectForKey:@"m_down_url"]].length == 0){
+        //跳转web
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = self.publicModel.name;
+        insertModel.pic_url = self.publicModel.pic;
+        insertModel.jumpurl = [dic objectForKey:@"jumpurl"];
+        insertModel.playTime = @"0";
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        //跳转
+        RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+        RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+        webView.urlString = [dic objectForKey:@"jumpurl"];
+        [videoPlaybackDetailsCtl presentViewController:webNav animated:YES completion:^{
+        }];
+    }else{
+        //使用custom play 播放mp4
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = self.publicModel.name;
+        insertModel.pic_url = self.publicModel.pic;
+        insertModel.reurl = [dic objectForKey:@"m_down_url"];
+        insertModel.playTime = @"0";
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
         
-        
-    }];
-//    [videoPlaybackDetailsCtl.navigationController pushViewController:webNav animated:YES];
+        //跳转
+        CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
+        [playContro createPlayerViewWithURL:[dic objectForKey:@"m_down_url"] isPlayLocalVideo:NO];
+        [playContro createTopTool];
+        [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {
-    dataArr = model.playurlArr;
+//    video_type ==1 为电影   video_type ==2 电视剧  video_type ==3 综艺
+    
+    self.publicModel = model;
+    if ([model.video_type integerValue] == 1){
+        dataArr = model.playurlArr;//保存电影数据
+    }else{
+        dataArr = model.playurlsArr;//保存电视剧及综艺数据
+    }
     int value = 0;
     for (int i=0; i<3; i++){
         for (int j=0; j<4; j++) {

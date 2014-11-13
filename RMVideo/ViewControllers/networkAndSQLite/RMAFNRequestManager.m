@@ -230,6 +230,7 @@
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
         model.code = [responseObject objectForKey:@"code"];
@@ -240,7 +241,8 @@
         model.hits = [responseObject objectForKey:@"hits"];
         model.name = [responseObject objectForKey:@"name"];
         model.pic = [responseObject objectForKey:@"pic"];
-        model.playurlArr = [responseObject objectForKey:@"playurl"];
+        model.playurlArr = [responseObject objectForKey:@"playurl"];/*jumpurl m_down_url source_type */
+        model.playurlsArr = [responseObject objectForKey:@"playurls"];/*id(没用) source_type urls(arr)｛jumpurl m_down_url curnum｝ */
         model.video_id = [responseObject objectForKey:@"video_id"];
         model.video_type = [responseObject objectForKey:@"video_type"];
         [dataArray addObject:model];

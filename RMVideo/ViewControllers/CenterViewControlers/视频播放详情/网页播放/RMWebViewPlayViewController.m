@@ -17,11 +17,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [Flurry logEvent:@"VIEW_StarDetail_WebPlay" timed:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_StarDetail_WebPlay" withParameters:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -34,12 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
-
-//    [self.PlayWebView setUserInteractionEnabled:YES];
-//    self.PlayWebView.scrollView.bounces = YES;
-//    self.PlayWebView.opaque = NO;
-//    self.PlayWebView.delegate = self;
-//    self.PlayWebView.backgroundColor = [UIColor clearColor];
     
     [self.navButton setEnlargeEdgeWithTop:10 right:10 bottom:10 left:10];
 }

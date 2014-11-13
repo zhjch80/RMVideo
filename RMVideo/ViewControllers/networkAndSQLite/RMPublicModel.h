@@ -27,11 +27,12 @@
 @property (nonatomic, strong) NSMutableArray * video_list;
 @property (nonatomic, strong) NSString * detail;
 @property (nonatomic, strong) NSString * pic_url;
-@property (nonatomic, strong) NSMutableArray * playurlArr;
+@property (nonatomic, strong) NSMutableArray * playurlArr;      //电影
+@property (nonatomic, strong) NSMutableArray * playurlsArr;     //电视剧，综艺
 @property (nonatomic, strong) NSMutableArray * creatorArr;
 @property (nonatomic, strong) NSString * hits;
-@property (nonatomic, strong) NSString * jumpurl;
-@property (nonatomic, strong) NSString * reurl;
+@property (nonatomic, strong) NSString * jumpurl;           //web
+@property (nonatomic, strong) NSString * reurl;             //mp4地址
 @property (nonatomic, strong) NSString * source_type;
 @property (nonatomic, strong) NSString * content;
 @property (nonatomic, strong) NSString * android;
