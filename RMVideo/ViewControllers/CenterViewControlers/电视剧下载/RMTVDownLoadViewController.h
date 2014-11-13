@@ -14,4 +14,6 @@
 - (IBAction)downAllTVEpisode:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIScrollView *headScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
+@property (copy, nonatomic) NSString *TVseriesTitle;
+@property (strong, nonatomic) NSMutableArray *TVdataArray;
 @end

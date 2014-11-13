@@ -226,8 +226,6 @@ typedef enum{
             //下载
             NSLog(@"下载");
             RMPublicModel *model = [self.dataArr objectAtIndex:0];
-            //测试数据 model.downLoadURL == nil
-            //真实数据 model.downLoadURL != nil
             if(model.downLoadURL == nil){
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
                 model.downLoadURL = @"http://106.38.249.114/youku/677153A8A794B7D0030376158/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";

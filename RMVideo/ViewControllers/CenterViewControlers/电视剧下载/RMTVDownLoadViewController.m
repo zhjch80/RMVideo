@@ -8,6 +8,7 @@
 
 #import "RMTVDownLoadViewController.h"
 #import "RMTVDownView.h"
+#import "RMDownLoadingViewController.h"
 
 @interface RMTVDownLoadViewController ()
 
@@ -19,11 +20,14 @@
     [super viewDidLoad];
     /*
      //传值的时候，self.title必须是电视剧名称。
+     //self.dataArray 里面装的是RMPublicModel 其中publicModel.name 和下载是的名称要一致，即**第*集   model.downLoadURL为下载地址
+     //tv_downing  正在下载的
+     //tv_down_succes 下载成功的
      */
     self.title = @"选择要下载的分集";
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
-    
+    self.TVdataArray = [[NSMutableArray alloc] init];
     NSArray *headBtnArray = [NSArray arrayWithObjects:@"tv_download-test",@"tv_download-test",@"tv_download-test",@"tv_download-test",@"tv_download-test", nil];
 
     TVDetailArray = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15"];
@@ -79,6 +83,15 @@
         downView.tag = i+1000;
         [downView.TVEpisodeButton setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
 //        downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+        RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
+        RMDownLoadingViewController *downLoad = [RMDownLoadingViewController shared];
+        //判断改电视剧是否已经下载成功
+        if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+            downView.TVStateImageView.image = [UIImage imageNamed:@"tv_down_succes"];
+        }
+        else if([downLoad.downLoadIDArray containsObject:model]){
+            downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+        }
         [downView.TVEpisodeButton addTarget:self action:@selector(TVEpisodeButtonCLick:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentScrollView addSubview:downView];
     }
@@ -86,9 +99,29 @@
 
 //点击下载某一个集
 - (void)TVEpisodeButtonCLick:(UIButton*)sender{
-    NSLog(@"sender.tag:%d",sender.tag);
+    RMPublicModel *model = [self.TVdataArray objectAtIndex:sender.tag-1000];
+    RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+    //判断改电视剧是否已经下载成功
+    if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    else if([rmDownLoading.downLoadIDArray containsObject:model]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"已在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
     RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:sender.tag-1+1000];
     downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+    model.downLoadURL = @"http://106.38.249.114/youku/677153A8A794B7D0030376158/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+    model.downLoadState = @"等待缓存";
+    model.totalMemory = @"0M";
+    model.alreadyCasheMemory = @"0M";
+    model.cacheProgress = @"0.0";
+    [rmDownLoading.dataArray addObject:model];
+    [rmDownLoading.downLoadIDArray addObject:model];
+    [rmDownLoading BeginDownLoad];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -98,9 +131,24 @@
 
 //下载多有的电视剧
 - (IBAction)downAllTVEpisode:(UIButton *)sender {
+    RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
     for (int i=0;i<TVDetailArray.count;i++){
-        RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:i+1000];
-        downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+        RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
+        if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+            
+        }
+        else if([rmDownLoading.downLoadIDArray containsObject:model]){
+            
+        }else{
+            RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:i+1000];
+            downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+            model.downLoadState = @"等待缓存";
+            model.totalMemory = @"0M";
+            model.alreadyCasheMemory = @"0M";
+            model.cacheProgress = @"0.0";
+            [rmDownLoading.dataArray addObject:model];
+            [rmDownLoading.downLoadIDArray addObject:model];
+        }
     }
 }
 
