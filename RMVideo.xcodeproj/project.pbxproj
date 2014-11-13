@@ -475,6 +475,8 @@
 		916E1F531A1308D200AD4400 /* no_search_result.@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E1F471A1308D200AD4400 /* no_search_result.@2x.png */; };
 		916E1F541A1308D200AD4400 /* no_search_result.@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E1F481A1308D200AD4400 /* no_search_result.@3x.png */; };
 		916E1F551A1308D200AD4400 /* no_search_result.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E1F491A1308D200AD4400 /* no_search_result.png */; };
+		918322F41A144BBF00BACEC0 /* RMWebViewPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918322F21A144BBF00BACEC0 /* RMWebViewPlayViewController.m */; };
+		918322F51A144BBF00BACEC0 /* RMWebViewPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918322F31A144BBF00BACEC0 /* RMWebViewPlayViewController.xib */; };
 		918DE7001A05F6E200287E06 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918DE6FF1A05F6E200287E06 /* StoreKit.framework */; };
 		918DE7041A0628D500287E06 /* tijiao.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE7011A0628D500287E06 /* tijiao.png */; };
 		918DE7051A0628D500287E06 /* tijiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE7021A0628D500287E06 /* tijiao@2x.png */; };
@@ -1235,6 +1237,9 @@
 		916E1F471A1308D200AD4400 /* no_search_result.@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_search_result.@2x.png"; sourceTree = "<group>"; };
 		916E1F481A1308D200AD4400 /* no_search_result.@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_search_result.@3x.png"; sourceTree = "<group>"; };
 		916E1F491A1308D200AD4400 /* no_search_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_search_result.png; sourceTree = "<group>"; };
+		918322F11A144BBF00BACEC0 /* RMWebViewPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMWebViewPlayViewController.h; sourceTree = "<group>"; };
+		918322F21A144BBF00BACEC0 /* RMWebViewPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMWebViewPlayViewController.m; sourceTree = "<group>"; };
+		918322F31A144BBF00BACEC0 /* RMWebViewPlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMWebViewPlayViewController.xib; sourceTree = "<group>"; };
 		918DE6FF1A05F6E200287E06 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		918DE7011A0628D500287E06 /* tijiao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tijiao.png; sourceTree = "<group>"; };
 		918DE7021A0628D500287E06 /* tijiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tijiao@2x.png"; sourceTree = "<group>"; };
@@ -2476,6 +2481,7 @@
 				1D8480ED1A03633400A92879 /* RMVideoPlaybackDetailsViewController.h */,
 				1D8480EE1A03633400A92879 /* RMVideoPlaybackDetailsViewController.m */,
 				1D8480EF1A03633400A92879 /* RMVideoPlaybackDetailsViewController.xib */,
+				918322F01A144B9500BACEC0 /* 网页播放 */,
 				1D8480F01A03633400A92879 /* 主创人员 */,
 				1D8480F71A03633400A92879 /* 剧情介绍 */,
 				1D8480FB1A03633400A92879 /* 播放地址 */,
@@ -3052,6 +3058,16 @@
 			path = "无数据显示图片";
 			sourceTree = "<group>";
 		};
+		918322F01A144B9500BACEC0 /* 网页播放 */ = {
+			isa = PBXGroup;
+			children = (
+				918322F11A144BBF00BACEC0 /* RMWebViewPlayViewController.h */,
+				918322F21A144BBF00BACEC0 /* RMWebViewPlayViewController.m */,
+				918322F31A144BBF00BACEC0 /* RMWebViewPlayViewController.xib */,
+			);
+			path = "网页播放";
+			sourceTree = "<group>";
+		};
 		91908CB319FA355A00C3DF09 /* 设置 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3213,6 +3229,7 @@
 				916E1F511A1308D200AD4400 /* no_save_history@2x.png in Resources */,
 				1D357CB81A09D863000C5C44 /* 更多头像loading.png in Resources */,
 				1D4C363B19F6050700AC8F1E /* logo_xlkk@2x.png in Resources */,
+				918322F51A144BBF00BACEC0 /* RMWebViewPlayViewController.xib in Resources */,
 				1D357CBA1A09D863000C5C44 /* 演员导演loading.png in Resources */,
 				1D5B82981A0E201C00A4A29B /* DropDownTabelViewCell.xib in Resources */,
 				1D4C365419F6051800AC8F1E /* SoHotList_red.png in Resources */,
@@ -3620,6 +3637,7 @@
 				1D4D47BF19D7B41C00E3A50B /* AFURLResponseSerialization.m in Sources */,
 				913D15DC1A01E4BB000A50E2 /* UIImageView+WebCache.m in Sources */,
 				1D8481791A03633400A92879 /* RMTVDownView.m in Sources */,
+				918322F41A144BBF00BACEC0 /* RMWebViewPlayViewController.m in Sources */,
 				1D4D47FF19D7B42800E3A50B /* UIWebView+AFNetworking.m in Sources */,
 				1D4D47BB19D7B41C00E3A50B /* AFURLSessionManager.m in Sources */,
 				1D84818C1A03633400A92879 /* RMSetupViewController.m in Sources */,

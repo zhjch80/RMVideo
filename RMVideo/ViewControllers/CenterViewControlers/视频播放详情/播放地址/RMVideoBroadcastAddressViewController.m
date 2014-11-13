@@ -10,6 +10,8 @@
 #import "CustomVideoPlayerController.h"
 #import "Database.h"
 #import "RMVideoPlaybackDetailsViewController.h"
+#import "RMWebViewPlayViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMVideoBroadcastAddressViewController () {
     NSMutableArray * logoNameArr;
@@ -66,13 +68,21 @@
     [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
     
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
-    CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-//    [playContro createPlayerViewWithURL:[dic objectForKey:@"jumpurl"] isPlayLocalVideo:NO];
-    [playContro createPlayerViewWithURL:@"http://106.38.249.19/youku/65627388FF3C7A5D74795177/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4" isPlayLocalVideo:NO];
-    [playContro createTopTool];
-    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
+//    CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
+////    [playContro createPlayerViewWithURL:[dic objectForKey:@"jumpurl"] isPlayLocalVideo:NO];
+//    [playContro createPlayerViewWithURL:@"http://106.38.249.19/youku/65627388FF3C7A5D74795177/0300200100540028BE5B4905CF07DDD2EA7A92-268F-6D8E-02C5-CAD970EFBB61.mp4" isPlayLocalVideo:NO];
+//    [playContro createTopTool];
+//    [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
+//        
+//    }];
+    RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+    RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+    webView.urlString = @"http://v.youku.com/v_show/id_XNzgyODExNDY4.html?from=y1.3-movie-grid-1095-9921.95742.2-1";
+    [videoPlaybackDetailsCtl presentViewController:webNav animated:YES completion:^{
+        
         
     }];
+//    [videoPlaybackDetailsCtl.navigationController pushViewController:webNav animated:YES];
 }
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {
