@@ -16,6 +16,7 @@
 #import "RMCustomNavViewController.h"
 #import "RMDownLoadingViewController.h"
 #import "RMCustomPresentNavViewController.h"
+#import "RMTVDownLoadViewController.h"
 
 typedef enum{
     requestVideoContentType = 1,
@@ -27,6 +28,7 @@ typedef enum{
     LoadType loadType;
     BOOL isCollect;                 //1为收藏   0为未收藏
     
+    
 }
 @property (nonatomic, strong) NSMutableArray * dataArr;
 
@@ -35,6 +37,7 @@ typedef enum{
 @property (nonatomic, strong) RMVideoPlotIntroducedViewController * videoPlotIntroducedCtl;
 @property (nonatomic, strong) RMVideoBroadcastAddressViewController * videoBroadcastAddressCtl;
 @property (nonatomic, strong) RMVideoCreativeStaffViewController * videoCreativeStaffCtl;
+//@property (nonatomic, strong) RMPublicModel * publicModel;
 
 @end
 
@@ -223,6 +226,21 @@ typedef enum{
             if ([UtilityFunc isConnectionAvailable] == 0){
                 return;
             }
+            
+            RMPublicModel * model = [self.dataArr objectAtIndex:0];
+
+            if ([model.video_type isEqualToString:@"1"]) {
+                //电影  直接下载
+                
+            }else{
+                //电视剧 综艺 进download 界面 传video_id
+                RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
+//                model.video_id
+                [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
+            }
+
+            
+            /*
             //下载
             NSLog(@"下载");
             RMPublicModel *model = [self.dataArr objectAtIndex:0];
@@ -271,12 +289,15 @@ typedef enum{
                     [rmDownLoading BeginDownLoad];
                     UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alerView show];
+            
                 }
+             
             }
             else{
                 UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alerView show];
             }
+              */
             break;
         }
         case 102:{
@@ -414,7 +435,7 @@ typedef enum{
     // Dispose of any resources that can be recreated.
 }
 
-//根据`responseCode得到发送结果,如果分享成功
+//根据responseCode得到发送结果,如果分享成功
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
     if(response.responseCode == UMSResponseCodeSuccess)
     {
