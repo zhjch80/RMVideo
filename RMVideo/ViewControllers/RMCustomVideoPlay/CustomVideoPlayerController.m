@@ -10,6 +10,7 @@
 #import "CustomVideoPlayerView.h"
 #import "UtilityFunc.h"
 #import "Flurry.h"
+#import "UIButton+EnlargeEdge.h"
 
 #define kTopToolHeight 49
 #define kTopToolTitleHeight 35
@@ -82,6 +83,7 @@
                   forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(buttonClick:)
            forControlEvents:UIControlEventTouchUpInside];
+    [button setEnlargeEdgeWithTop:10 right:10 bottom:10 left:10];
     [self.topTool addSubview:button];
     
     self.videoTitle = [[UILabel alloc] init];
@@ -93,8 +95,6 @@
     [self.videoTitle setTextAlignment:NSTextAlignmentLeft];
     [self.videoTitle setTextColor:[UIColor whiteColor]];
     [self.topTool addSubview:self.videoTitle];
-
-    
 }
 
 - (void)buttonClick:(UIButton *)sender {
