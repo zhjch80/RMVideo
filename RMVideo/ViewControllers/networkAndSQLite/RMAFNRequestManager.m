@@ -138,9 +138,7 @@
 - (void)getDailyRecommend{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDailyRecommend];
-    NSLog(@"url:%@",url);
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
             NSMutableArray *tvArray = [NSMutableArray array];
@@ -230,7 +228,6 @@
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
         model.code = [responseObject objectForKey:@"code"];
@@ -299,7 +296,6 @@
     NSString *url = [self urlPathadress:Http_getMyChannelVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit_tag=%@&offset_tag=%@",url,token,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"tag_list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];

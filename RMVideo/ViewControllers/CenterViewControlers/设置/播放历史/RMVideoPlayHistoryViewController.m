@@ -165,7 +165,7 @@
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic_url]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.movieName.text = model.name;
     cell.memoryCount.hidden = YES;
     cell.movieCount.hidden = YES;
@@ -201,8 +201,10 @@
     }
     else{
         NSLog(@"非编辑状态下---index：%d",indexPath.row);
+        RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
 
         RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
+        videoPlay.currentVideo_id = model.video_id;
         [self.navigationController pushViewController:videoPlay animated:YES];
     }
 }

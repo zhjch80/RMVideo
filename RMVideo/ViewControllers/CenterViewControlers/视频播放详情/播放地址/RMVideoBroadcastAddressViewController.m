@@ -63,6 +63,7 @@
         insertModel.pic_url = self.publicModel.pic;
         insertModel.jumpurl = [dic objectForKey:@"jumpurl"];
         insertModel.playTime = @"0";
+        insertModel.video_id = self.publicModel.video_id;
         [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
         //跳转
         RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
@@ -78,6 +79,7 @@
         insertModel.pic_url = self.publicModel.pic;
         insertModel.reurl = [dic objectForKey:@"m_down_url"];
         insertModel.playTime = @"0";
+        insertModel.video_id = self.publicModel.video_id;
         [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
         
         //跳转
