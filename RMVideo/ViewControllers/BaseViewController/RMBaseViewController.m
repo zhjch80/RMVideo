@@ -52,12 +52,16 @@
 
 //居中
 - (void)showEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title {
-    self.noDataShowImage = [[UIImageView alloc] init];
+    if (!self.noDataShowImage){
+        self.noDataShowImage = [[UIImageView alloc] init];
+    }
     self.noDataShowImage.image = image;//[UIImage imageNamed:@"no_cashe_video"];
     self.noDataShowImage.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-154)/2, ([UtilityFunc shareInstance].globleHeight-154)/2 - 77 , 154, 154);
     [self.view addSubview:self.noDataShowImage];
     
-    self.noDataShowLable = [[UILabel alloc] init];
+    if (!self.noDataShowLable){
+        self.noDataShowLable = [[UILabel alloc] init];
+    }
     self.noDataShowLable.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-200)/2, self.noDataShowImage.frame.origin.y+self.noDataShowImage.frame.size.height+10, 200, 21);
 
     self.noDataShowLable.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
@@ -73,12 +77,16 @@
 
 //居下
 - (void)showUnderEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title WithHeight:(CGFloat)height {
-    self.noDataUnderShowImage = [[UIImageView alloc] init];
+    if (!self.noDataUnderShowImage){
+        self.noDataUnderShowImage = [[UIImageView alloc] init];
+    }
     self.noDataUnderShowImage.image = image;
     self.noDataUnderShowImage.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-154)/2, height, 154, 154); //([UtilityFunc shareInstance].globleHeight-154)/2 - 77
     [self.view addSubview:self.noDataUnderShowImage];
     
-    self.noDataUnderShowLabel = [[UILabel alloc] init];
+    if (!self.noDataUnderShowLabel){
+        self.noDataUnderShowLabel = [[UILabel alloc] init];
+    }
     self.noDataUnderShowLabel.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-200)/2, self.noDataUnderShowImage.frame.origin.y+self.noDataUnderShowImage.frame.size.height+10, 200, 21);
     
     self.noDataUnderShowLabel.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];

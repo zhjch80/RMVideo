@@ -115,6 +115,8 @@ typedef enum{
     [tagList removeAllTag];
     if (dataArr.count == 0){
         return ;
+    }else if (dataArr.count < 15){
+        return;
     }
     self.randomTag = [NSMutableArray arrayWithArray:
                       @[@{@"title": ((RMPublicModel *)[dataArr objectAtIndex:0]).name},

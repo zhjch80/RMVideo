@@ -49,6 +49,8 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.dataArray.count == 0){
         [self showEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无数据"];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
     }
     return self.dataArray.count;
 }
@@ -58,7 +60,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     static NSString *cellName = @"DailyListCellIndex";
     RMDailyListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     if(cell ==nil){

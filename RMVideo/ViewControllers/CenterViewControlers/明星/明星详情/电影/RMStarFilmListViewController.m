@@ -64,6 +64,11 @@
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([dataArr count] == 0){
+        [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无内容" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+    }else{
+        [self isShouldSetHiddenUnderEmptyView:YES];
+    }
     if ([dataArr count]%3 == 0){
         return [dataArr count] / 3;
     }else if ([dataArr count]%3 == 1){

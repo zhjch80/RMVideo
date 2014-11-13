@@ -321,6 +321,7 @@
     NSString *url = [self urlPathadress:Http_getMoreWonderfulVideoList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];

@@ -42,6 +42,8 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.dataArray.count == 0){
         [self showEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无数据"];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
     }
     return self.dataArray.count;
 }

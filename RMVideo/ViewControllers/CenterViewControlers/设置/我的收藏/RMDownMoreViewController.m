@@ -193,9 +193,9 @@ typedef enum{
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
-    
     if(requestType == downLoadRequestType){
         if (data.count==0) {
+            [SVProgressHUD dismiss];
             [self isShouldSetHiddenEmptyView:NO];
             return;
         }else{
@@ -207,6 +207,7 @@ typedef enum{
         
         NSMutableArray *deleteArray = [NSMutableArray array];
         NSArray *sort = [selectCellArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+            [SVProgressHUD dismiss];
             return obj1.integerValue<obj2.integerValue;
         }];
         for(int i=0;i<sort.count;i++){
@@ -240,8 +241,12 @@ typedef enum{
         requestType = downLoadRequestType;
     }
     [SVProgressHUD dismiss];
-
 }
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
