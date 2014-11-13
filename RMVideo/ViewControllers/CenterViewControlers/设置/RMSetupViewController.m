@@ -217,6 +217,9 @@
                     break;
                     //分享给朋友
                 case 1:{
+                    if ([UtilityFunc isConnectionAvailable] == 0){
+                        return;
+                    }
                     [UMSocialSnsService presentSnsIconSheetView:self
                                                          appKey:@"544db5aafd98c570d2069586"
                                                       shareText:@"测试"

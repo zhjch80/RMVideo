@@ -219,6 +219,10 @@ typedef enum{
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
+            [Flurry logEvent:@"Click_Download_Btn"];
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                return;
+            }
             //下载
             NSLog(@"下载");
             RMPublicModel *model = [self.dataArr objectAtIndex:0];
@@ -278,6 +282,9 @@ typedef enum{
             break;
         }
         case 102:{
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                return;
+            }
             //收藏 或者 取消收藏
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
@@ -289,6 +296,7 @@ typedef enum{
             }
 
             if (isCollect){
+                [Flurry logEvent:@"Click_AddCollect_Btn"];
                 loadType = requestDeleteVideoCollectlType;
                 RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
                 CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -296,6 +304,7 @@ typedef enum{
                 [request getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:self.currentVideo_id];
                 request.delegate = self;
             }else{
+                [Flurry logEvent:@"Click_CancelCollect_Btn"];
                 loadType = requestAddVideoCollectlType;
                 RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
                 CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -306,6 +315,10 @@ typedef enum{
             break;
         }
         case 103:{
+            [Flurry logEvent:@"Click_Share_Btn"];
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                return;
+            }
             [UMSocialSnsService presentSnsIconSheetView:self
                                                  appKey:@"544db5aafd98c570d2069586"
                                               shareText:@"测试"
