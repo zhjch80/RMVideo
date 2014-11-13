@@ -13,6 +13,7 @@
 
 @interface CustomVideoPlayerView ()<TouchViewDelegate> {
     GPLoadingView * loading;
+    NSInteger PlayTVNumber;
 }
 
 @end
@@ -41,6 +42,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     if (self) {
         customSVP = [[[NSBundle mainBundle] loadNibNamed:@"CustomSVProgressHUD" owner:self options:nil] lastObject];
         customSVP.frame = CGRectMake(([UtilityFunc shareInstance].globleHeight-customSVP.frame.size.width)/2, ([UtilityFunc shareInstance].globleWidth-customSVP.frame.size.height)/2, customSVP.frame.size.width, customSVP.frame.size.height);
+        PlayTVNumber = 1; //默认播放第一集
     }
     return self;
 }
@@ -122,19 +124,19 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.playerHudBottom addSubview:self.playBackTime];
     //视频总的时间数
     self.playBackTotalTime = [[UILabel alloc] init];
-    self.playBackTotalTime.frame = CGRectMake(frameWidth+140, 10, 50, 30);
+    self.playBackTotalTime.frame = CGRectMake(frameWidth+145, 10, 50, 30);
     self.playBackTotalTime.text = [self getStringFromCMTime:self.moviePlayer.currentItem.asset.duration];
     [self.playBackTotalTime setTextAlignment:NSTextAlignmentRight];
     [self.playBackTotalTime setTextColor:[UIColor whiteColor]];
     self.playBackTotalTime.font = [UIFont systemFontOfSize:12*frameWidth/240];
     [self.playerHudBottom addSubview:self.playBackTotalTime];
     
-    self.videoProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(150, 25, frameWidth-10, 30)];
+    self.videoProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(145, 24, frameWidth-5, 25)];
     [self.playerHudBottom addSubview:self.videoProgress];
     
     //跟踪电影播放的进度条
     self.progressBar = [[UISlider alloc] init];
-    self.progressBar.frame = CGRectMake(145, 10, frameWidth, 30);
+    self.progressBar.frame = CGRectMake(140, 10, frameWidth, 30);
     //配置slider
     //左右滑轨
 //    UIImage * leftTrackImage = [[UIImage imageFromMainBundleFile:@"glowStick_brightness_leftTrack.png"] stretchableImageWithLeftCapWidth:12 topCapHeight:5];
@@ -209,11 +211,11 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     __unsafe_unretained CustomVideoPlayerView *weekSelf = self;
     if(!isShowTVEpisode){
         [UIView animateWithDuration:0.3 animations:^{
-            weekSelf.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight-150, 44, 150, [UtilityFunc shareInstance].globleWidth-44-49);
+            weekSelf.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight-150, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49);
         }];
     }else{
         [UIView animateWithDuration:0.3 animations:^{
-            weekSelf.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 150, [UtilityFunc shareInstance].globleWidth-44-49);
+            weekSelf.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49);
         }];
     }
     isShowTVEpisode = !isShowTVEpisode;
@@ -266,9 +268,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 }
 //设置选集的视图大小
 - (void)setSelectionEpisodeScrollViewWithArray:(NSMutableArray *)tvArray{
-    self.TVSelectEpisodeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 150, [UtilityFunc shareInstance].globleWidth-44-49)];
-    self.TVSelectEpisodeScrollView.alpha = 0.5;
-    self.TVSelectEpisodeScrollView.backgroundColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:0.7];
+    self.TVSelectEpisodeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleAllHeight, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49)];
+    self.TVSelectEpisodeScrollView.backgroundColor = [UIColor colorWithRed:0.11 green:0.11 blue:0.11 alpha:1];
     int count = 0;
     if(tvArray.count%3==0){
         count = (int)tvArray.count/3;
@@ -276,22 +277,46 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     else{
         count = (int)tvArray.count/3+1;
     }
-    self.TVSelectEpisodeScrollView.contentSize = CGSizeMake(150, count*50);
+    self.TVSelectEpisodeScrollView.contentSize = CGSizeMake([UtilityFunc shareInstance].globleWidth-96, count*50);
     for(int i=0;i<tvArray.count;i++){
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [button setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
         button.frame = CGRectMake(i%3*50, i/3*50, 50, 50);
         button.tag = i+1;
+        if(i==0){
+            [button setTitleColor:[UIColor colorWithRed:0.76 green:0 blue:0.05 alpha:1] forState:UIControlStateNormal];
+        }else{
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
         [button addTarget:self action:@selector(TVEpisodeBntClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.TVSelectEpisodeScrollView addSubview:button];
+        if(i%3==0&&i!=tvArray.count-3){
+            UILabel *lineLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 50*(i/3+1), self.TVSelectEpisodeScrollView.frame.size.width-20, 1)];
+            lineLable.backgroundColor = [UIColor colorWithRed:0.31 green:0.31 blue:0.31 alpha:1];
+            [self.TVSelectEpisodeScrollView addSubview:lineLable];
+        }
     }
     [self addSubview:self.TVSelectEpisodeScrollView];
+    
+    for(int i=0;i<2;i++){
+        float height = self.TVSelectEpisodeScrollView.contentSize.height;
+        if(height<self.TVSelectEpisodeScrollView.frame.size.height){
+            height = self.TVSelectEpisodeScrollView.frame.size.height;
+        }
+        UILabel *lineLable = [[UILabel alloc] initWithFrame:CGRectMake(50*(i+1), 10, 1, height-20)];
+        lineLable.backgroundColor = [UIColor colorWithRed:0.31 green:0.31 blue:0.31 alpha:1];
+        [self.TVSelectEpisodeScrollView addSubview:lineLable];
+    }
 }
 
 //点击所选集数
 - (void)TVEpisodeBntClick:(UIButton *)sender{
+    UIButton *buttn = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:PlayTVNumber];
+    [buttn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sender setTitleColor:[UIColor colorWithRed:0.76 green:0 blue:0.05 alpha:1] forState:UIControlStateNormal];
+    PlayTVNumber = sender.tag;
     [UIView animateWithDuration:0.3 animations:^{
-        self.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 150, [UtilityFunc shareInstance].globleWidth-44-49);
+        self.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49);
     }];
     isShowTVEpisode = NO;
     if([self.delegate respondsToSelector:@selector(selectTVEpisodeWithIndex:)]){
@@ -351,7 +376,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         [self showHud:!viewIsShowing];
         if(isShowTVEpisode){
             [UIView animateWithDuration:0.3 animations:^{
-                self.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 150, [UtilityFunc shareInstance].globleWidth-44-49);
+                self.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49);
             }];
             isShowTVEpisode = !isShowTVEpisode;
         }

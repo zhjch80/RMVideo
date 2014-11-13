@@ -349,6 +349,9 @@ static id _instance;
     if(self.downLoadIDArray.count>0){
         downLoadIndex = 0;
         [self BeginDownLoad];
+        self.downLoadSpeed = 0;
+        self.haveReadTheSchedule = 0;
+        self.totalDownLoad = 0;
     }
     [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
     [self.mainTableView reloadData];
@@ -357,6 +360,7 @@ static id _instance;
 }
 - (void) BeginDownLoad{
     [self.mainTableView reloadData];
+    [self isShouldSetHiddenEmptyView:YES];
     if(cellEditingImageArray.count<self.dataArray.count){
         if(cellEditingImageArray==nil){
             cellEditingImageArray = [[NSMutableArray alloc] init];
