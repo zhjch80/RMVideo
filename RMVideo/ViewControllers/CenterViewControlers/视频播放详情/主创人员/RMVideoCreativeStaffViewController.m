@@ -9,6 +9,8 @@
 #import "RMVideoCreativeStaffViewController.h"
 #import "RMVideoCreativeStaffCell.h"
 #import "PullToRefreshTableView.h"
+#import "RMLoginViewController.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
@@ -121,8 +123,18 @@
 }
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
-    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        return;
+    }
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
+        [self presentViewController:loginNav animated:YES completion:^{
+        }];
+        return;
+    }
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     [request getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
     request.delegate = self;
