@@ -232,4 +232,50 @@
     return sum;
 }
 
+#pragma mark- 缩放图片
+
+//按比例缩放
++ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize {
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+//缩放到指定大小
++ (UIImage*)scaleFromImage:(UIImage*)image scaledToSize:(CGSize)newSize {
+    CGSize imageSize = image.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    
+    if (width <= newSize.width && height <= newSize.height){
+        return image;
+    }
+    
+    if (width == 0 || height == 0){
+        return image;
+    }
+    
+    CGFloat widthFactor = newSize.width / width;
+    CGFloat heightFactor = newSize.height / height;
+    CGFloat scaleFactor = (widthFactor<heightFactor?widthFactor:heightFactor);
+    
+    CGFloat scaledWidth = width * scaleFactor;
+    CGFloat scaledHeight = height * scaleFactor;
+    CGSize targetSize = CGSizeMake(scaledWidth,scaledHeight);
+    
+    UIGraphicsBeginImageContext(targetSize);
+    [image drawInRect:CGRectMake(0,0,scaledWidth,scaledHeight)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+////缩放
+//static inline CGRect ScaleRect(CGRect rect, float n) {
+//    return CGRectMake((rect.size.width - rect.size.width * n)/ 2, (rect.size.height - rect.size.height * n) / 2, rect.size.width * n, rect.size.height * n);
+//}
+
+
 @end
