@@ -101,10 +101,14 @@
     }else{
         dataArr = model.playurlsArr;//保存电视剧及综艺数据
     }
+
     int value = 0;
     for (int i=0; i<3; i++){
         for (int j=0; j<4; j++) {
             if (value == [dataArr count]){
+                if (value == 0){
+                    [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无播放地址" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+                }
                 return;
             }
             NSMutableDictionary * dic = [dataArr objectAtIndex:value];
@@ -117,6 +121,7 @@
             value ++;
         }
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -40,6 +40,9 @@
     [manager getTopListWithVideoTpye:@"2" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.dataArray.count == 0){
+        [self showEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无数据"];
+    }
     return self.dataArray.count;
 }
 

@@ -138,7 +138,7 @@ static id _instance;
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.editingImageView setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
     cell.titleLable.text = model.name;
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic]];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
     cell.showDownLoadingState.text = model.downLoadState;
     if([[self setMemoryString:model.totalMemory] floatValue]==0){

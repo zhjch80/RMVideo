@@ -60,7 +60,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [SVProgressHUD showErrorWithStatus:@"加载失败"];
+//    [SVProgressHUD showErrorWithStatus:@"加载失败"];
 }
 
 

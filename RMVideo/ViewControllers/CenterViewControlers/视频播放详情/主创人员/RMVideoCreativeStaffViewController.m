@@ -58,6 +58,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([dataArr count] == 0){
+        [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无主创人员" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+    }
     if ([dataArr count]%3 == 0){
         return [dataArr count] / 3;
     }else if ([dataArr count]%3 == 1){

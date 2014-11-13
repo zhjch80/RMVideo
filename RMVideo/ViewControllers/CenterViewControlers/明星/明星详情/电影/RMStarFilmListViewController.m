@@ -108,7 +108,7 @@
         RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
         [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.secondLable startScrolling];
-        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:nil];
+        [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
         cell.secondImage.identifierString = model_center.video_id;
         [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondStarRateView displayRating:[model_center.gold integerValue]];

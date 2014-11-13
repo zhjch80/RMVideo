@@ -42,7 +42,7 @@
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44-49);
         self.exitbtn.hidden = NO;
         self.loginBtn.hidden = YES;
-        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"HeadImageURL"]]];
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"HeadImageURL"]] placeholderImage:LOADIMAGE(@"sd_setImageWithURL", kImageTypePNG)];
         self.userNameLable.text = [dict objectForKey:@"userName"];
     }
     //未登录

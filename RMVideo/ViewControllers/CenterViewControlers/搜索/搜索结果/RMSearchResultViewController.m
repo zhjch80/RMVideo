@@ -104,7 +104,7 @@
             cell.type.text = @"";
             break;
     }
-    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic"]] placeholderImage:nil];
+    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sd_setImageWithURL", kImageTypePNG)];
     cell.name.text = [[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
     [cell.searchFirstRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
     [cell.searchFirstRateView displayRating:[[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"gold"] integerValue]];

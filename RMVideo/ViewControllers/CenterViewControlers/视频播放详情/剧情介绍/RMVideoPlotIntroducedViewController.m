@@ -55,6 +55,7 @@
 
 - (void)updatePlotIntroduced:(RMPublicModel *)model {
     if (model.content.length == 0){
+        [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无剧情介绍" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
         return;
     }
     // 设置字体间每行的间距

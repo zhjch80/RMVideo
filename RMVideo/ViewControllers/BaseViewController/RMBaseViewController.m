@@ -8,6 +8,16 @@
 
 #import "RMBaseViewController.h"
 
+@interface RMBaseViewController()
+//居中
+@property (nonatomic, strong) UIImageView *noDataShowImage;
+@property (nonatomic, strong) UILabel *noDataShowLable;
+
+//居下
+@property (nonatomic, strong) UIImageView * noDataUnderShowImage;
+@property (nonatomic, strong) UILabel * noDataUnderShowLabel;
+@end
+
 @implementation RMBaseViewController
 
 - (void)viewDidLoad {
@@ -40,6 +50,7 @@
     self.navigationItem.rightBarButtonItem = rightBarItem;
 }
 
+//居中
 - (void)showEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title {
     self.noDataShowImage = [[UIImageView alloc] init];
     self.noDataShowImage.image = image;//[UIImage imageNamed:@"no_cashe_video"];
@@ -56,8 +67,29 @@
 }
 
 - (void)isShouldSetHiddenEmptyView:(BOOL)isShould{
-    self.noDataShowLable.hidden = isShould;
     self.noDataShowImage.hidden = isShould;
+    self.noDataShowLable.hidden = isShould;
+}
+
+//居下
+- (void)showUnderEmptyViewWithImage:(UIImage *)image WithTitle:(NSString *)title WithHeight:(CGFloat)height {
+    self.noDataUnderShowImage = [[UIImageView alloc] init];
+    self.noDataUnderShowImage.image = image;
+    self.noDataUnderShowImage.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-154)/2, height, 154, 154); //([UtilityFunc shareInstance].globleHeight-154)/2 - 77
+    [self.view addSubview:self.noDataUnderShowImage];
+    
+    self.noDataUnderShowLabel = [[UILabel alloc] init];
+    self.noDataUnderShowLabel.frame = CGRectMake(([UtilityFunc shareInstance].globleWidth-200)/2, self.noDataUnderShowImage.frame.origin.y+self.noDataUnderShowImage.frame.size.height+10, 200, 21);
+    
+    self.noDataUnderShowLabel.textColor = [UIColor colorWithRed:0.76 green:0.76 blue:0.76 alpha:1];
+    self.noDataUnderShowLabel.text = title;
+    self.noDataUnderShowLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.noDataUnderShowLabel];
+}
+
+- (void)isShouldSetHiddenUnderEmptyView:(BOOL)isShould {
+    self.noDataUnderShowImage.hidden = isShould;
+    self.noDataUnderShowLabel.hidden = isShould;
 }
 
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender{
@@ -79,7 +111,6 @@
     titleView.text = title;
     [titleView sizeToFit];
 }
-
 
 - (void)setExtraCellLineHidden: (UITableView *)tableView{
     UIView *view =[ [UIView alloc]init];
