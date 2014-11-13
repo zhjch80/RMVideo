@@ -75,7 +75,11 @@ static id _instance;
     [self showEmptyViewWithImage:[UIImage imageNamed:@"no_cashe_video"] WithTitle:@"您没有缓存记录"];
     NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if(SavedownLoad==nil){
-        [self isShouldSetHiddenEmptyView:NO];
+        if(self.dataArray.count==0){
+            [self isShouldSetHiddenEmptyView:NO];
+        }else{
+            [self isShouldSetHiddenEmptyView:YES];
+        }
     }else{
         for(RMPublicModel *model in SavedownLoad){
             [self.dataArray addObject:model];

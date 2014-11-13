@@ -81,8 +81,13 @@
 
     [self.view insertSubview:sunSliderSwitchView belowSubview:btnView];
     
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downLoadSuccess) name:DownLoadSuccess_KEY object:nil];
+    
 }
 
+- (void)downLoadSuccess{
+    [self setRightBarBtnItemState];
+}
 - (void)creatDownLoadDetailViewControllerWithController:(UIViewController *)viewControl{
 //    RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
 //    [viewControl.navigationController pushViewController:TVSeriesDetailView animated:YES];
@@ -122,6 +127,7 @@
         } else if (selectViewControl == 1 && !isEditing) {
             [downLoadingViewContr deleteAllTableViewCell];
         }
+        [self setRightBarBtnItemState];
         isEditing = YES;
         [sender setImage:[UIImage imageNamed:@"nodelect_all_btn"] forState:UIControlStateNormal];
         [(UIButton *)[btnView viewWithTag:10] setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
@@ -152,7 +158,9 @@
 }
 
 - (void)slideSwitchView:(SUNSlideSwitchView *)view didselectTab:(NSUInteger)number {
+    [self setRightBarBtnItemImageWith:YES];
     selectViewControl = number;
+    [self setRightBarBtnItemState];
     isSeleltAllCell = YES;
     if (number == 0 && !isEditing) {
         //当开启编辑状态的时候才进行结束cell的动画
@@ -208,6 +216,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setRightBarBtnItemState{
+    NSInteger count = 0;
+    if(selectViewControl==0){
+        count = finishDownViewContr.dataArray.count;
+    }else{
+        count = downLoadingViewContr.dataArray.count;
+    }
+    if(count>0){
+        rightBarButton.hidden = NO;
+    }else{
+        rightBarButton.hidden = YES;
+    }
+
+}
 /*
 #pragma mark - Navigation
 
