@@ -55,6 +55,9 @@
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,movieName];
 
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
+        customVideo.videoType = videoTypeIsMovie;
+//        customVideo.playStyle = playLocalVideo;
+        customVideo.playEpisodeNumber = 0;
         [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
         [customVideo createTopToolWithTitle:movieName];
         

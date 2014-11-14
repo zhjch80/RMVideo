@@ -10,8 +10,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 #import "TouchVIew.h"
+#import "CustomVideoPlayerController.h"
 
-@class CustomVideoPlayerView;
+@class CustomVideoPlayerView; ;
 
 @protocol playerViewDelegate <NSObject>
 @optional
@@ -21,6 +22,8 @@
 -(void)playViewTouchesEnded;
 
 -(void)selectTVEpisodeWithIndex:(NSInteger)index;
+
+-(void)playViewWillPlayNext;
 
 @end
 
@@ -35,6 +38,7 @@
 
 @property (strong, nonatomic) UIButton *playPauseButton; //播放/暂停按钮
 @property (strong, nonatomic) UIButton *nextButton; //下一集
+@property (strong, nonatomic) UIButton *selectEpisodeBtn;
 
 @property (strong, nonatomic) UISlider *progressBar; //影片播放进度
 @property (strong, nonatomic) UIProgressView *videoProgress;
@@ -46,6 +50,10 @@
 @property (strong,nonatomic) UIView *playerHudBottom;
 @property (strong,nonatomic) TouchVIew *touchView; //添有手势的视图，只要是实现滑动快进和快退的功能
 @property (nonatomic, strong) AVPlayerItem *playerItem;
+@property (nonatomic)PlayStyle videoPlayStyle;  //本地的还是网络的
+@property (nonatomic)VideoType videoType;  //电影还是电视剧
+@property (nonatomic,assign)NSInteger videoEpisode;
+@property (nonatomic ,strong)NSMutableArray *videoDataArray;
 
 //显示未播放的电视剧
 @property (strong,nonatomic) UIScrollView *TVSelectEpisodeScrollView;

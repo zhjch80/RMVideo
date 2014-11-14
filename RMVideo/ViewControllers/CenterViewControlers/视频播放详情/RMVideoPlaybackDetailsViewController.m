@@ -431,6 +431,10 @@ typedef enum{
 
 - (void)requestError:(NSError *)error {
     NSLog(@"error:%@",error);
+    self.videoDownloadBtn.hidden = YES;
+    self.videoShareBtn.hidden = YES;
+    self.videoCollectionBtn.hidden = YES;
+    self.videoPlayImg.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {

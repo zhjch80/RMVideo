@@ -208,6 +208,10 @@
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
         
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
+        customVideo.videoArray = tableDataArray;
+        customVideo.videoType = videoTypeisTV;
+//        customVideo.playStyle = playLocalVideo;
+        customVideo.playEpisodeNumber = indexPath.row;
         [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
         [customVideo createTopToolWithTitle:model.name];
         

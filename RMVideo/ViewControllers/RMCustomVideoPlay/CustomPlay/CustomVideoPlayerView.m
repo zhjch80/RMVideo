@@ -10,10 +10,10 @@
 #import "CustomSVProgressHUD.h"
 #import "GPLoadingView.h"
 #import "SVProgressHUD.h"
+#import "RMPublicModel.h"
 
 @interface CustomVideoPlayerView ()<TouchViewDelegate> {
     GPLoadingView * loading;
-    NSInteger PlayTVNumber;
 }
 
 @end
@@ -42,7 +42,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     if (self) {
         customSVP = [[[NSBundle mainBundle] loadNibNamed:@"CustomSVProgressHUD" owner:self options:nil] lastObject];
         customSVP.frame = CGRectMake(([UtilityFunc shareInstance].globleHeight-customSVP.frame.size.width)/2, ([UtilityFunc shareInstance].globleWidth-customSVP.frame.size.height)/2, customSVP.frame.size.width, customSVP.frame.size.height);
-        PlayTVNumber = 1; //默认播放第一集
+        self.videoDataArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -114,6 +114,9 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.nextButton setBackgroundImage:[UIImage imageNamed:@"next_btn"] forState:UIControlStateNormal];
     [self.nextButton setTintColor:[UIColor blueColor]];
     [self.playerHudBottom addSubview:self.nextButton];
+    if(self.videoType==videoTypeIsMovie){
+        self.nextButton.hidden = YES;
+    }
     //视频当前播放时间
     self.playBackTime = [[UILabel alloc] init];
     self.playBackTime.frame = CGRectMake(135-35, 10, 50, 30);
@@ -152,12 +155,15 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.progressBar addTarget:self action:@selector(progressBarChanged:) forControlEvents:UIControlEventValueChanged];
     [self.playerHudBottom addSubview:self.progressBar];
     
-    UIButton *selectEpisodeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    selectEpisodeBtn.frame = CGRectMake(self.playBackTotalTime.frame.origin.x+self.playBackTotalTime.frame.size.width+20, 5, 40, 40);
-    [selectEpisodeBtn setTitle:@"选集" forState:UIControlStateNormal];
-    [selectEpisodeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [selectEpisodeBtn addTarget:self action:@selector(selectTVEpisodebtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.playerHudBottom addSubview:selectEpisodeBtn];
+    self.selectEpisodeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.selectEpisodeBtn.frame = CGRectMake(self.playBackTotalTime.frame.origin.x+self.playBackTotalTime.frame.size.width+20, 5, 40, 40);
+    [self.selectEpisodeBtn setTitle:@"选集" forState:UIControlStateNormal];
+    [self.selectEpisodeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.selectEpisodeBtn addTarget:self action:@selector(selectTVEpisodebtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.playerHudBottom addSubview:self.selectEpisodeBtn];
+    if(self.videoType==videoTypeIsMovie){
+        self.selectEpisodeBtn.hidden = YES;
+    }
     
 
     
@@ -224,28 +230,25 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //跳转下一集
 - (void)playNextButtonAction:(UIButton *)sender{
     
-    NSString * str = @"http://220.181.185.11/youku/697756E8B683F82D76D2E461A1/030020010052A84E8B5217055EEB3E4DC7771E-B14F-EB8E-CB90-E28B72954460.mp4";
-    NSURL * _URL = [NSURL URLWithString:str];
-//    self.playerItem = nil;
-//    [self.playerItem removeObserver:self forKeyPath:@"status"];
-//    [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-//    
-//    self.playerItem = [AVPlayerItem playerItemWithURL:_URL];
-//    self.moviePlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
-//    self.playerLayer.player = self.moviePlayer;
-//    
-//    CMTime interval = CMTimeMake(33, 1000);
-//    __weak __typeof(self) weakself = self;
-//    playbackObserver = [self.moviePlayer addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock: ^(CMTime time) {
-//        CMTime endTime = CMTimeConvertScale (weakself.moviePlayer.currentItem.asset.duration, weakself.moviePlayer.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
-//        if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
-//            double normalizedTime = (double) weakself.moviePlayer.currentTime.value / (double) endTime.value;
-//            weakself.progressBar.value = normalizedTime;
-//        }
-//        weakself.playBackTime.text = [weakself getStringFromCMTime:weakself.moviePlayer.currentTime];
-//    }];
-//    [self play];
-//    [self setHiddenView];
+    if([self.delegate respondsToSelector:@selector(playViewWillPlayNext)]){
+        [self.delegate playViewWillPlayNext];
+    }
+    self.videoEpisode++;
+    
+    NSURL * _URL;
+     RMPublicModel *model = [self.videoDataArray objectAtIndex:self.videoEpisode];
+    if (self.videoPlayStyle==playNetWorVideo) {
+       
+        NSString * str = model.reurl;
+        _URL = [NSURL URLWithString:str];
+    }
+    else{
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+        NSString * str = [NSString stringWithFormat:@"%@/%@",path,model.name];
+        _URL = [NSURL fileURLWithPath:str];
+    }
+    
     loading.hidden = YES;
     [loading startAnimation];
     if (self.playerItem) {
@@ -279,8 +282,9 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     }
     self.TVSelectEpisodeScrollView.contentSize = CGSizeMake([UtilityFunc shareInstance].globleWidth-96, count*50);
     for(int i=0;i<tvArray.count;i++){
+        RMPublicModel *model = [tvArray objectAtIndex:i];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
+        [button setTitle:model.topNum forState:UIControlStateNormal];
         button.frame = CGRectMake(i%3*50, i/3*50, 50, 50);
         button.tag = i+1;
         if(i==0){
@@ -311,10 +315,14 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 
 //点击所选集数
 - (void)TVEpisodeBntClick:(UIButton *)sender{
-    UIButton *buttn = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:PlayTVNumber];
+    if(self.videoEpisode==sender.tag-1)
+        return;
+    self.videoEpisode = sender.tag-1;
+    RMPublicModel *model = [self.videoDataArray objectAtIndex:self.videoEpisode];
+    UIButton *buttn = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:self.videoEpisode+1];
     [buttn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sender setTitleColor:[UIColor colorWithRed:0.76 green:0 blue:0.05 alpha:1] forState:UIControlStateNormal];
-    PlayTVNumber = sender.tag;
+    
     [UIView animateWithDuration:0.3 animations:^{
         self.TVSelectEpisodeScrollView.frame =  CGRectMake([UtilityFunc shareInstance].globleAllHeight, 49, 150, [UtilityFunc shareInstance].globleWidth-49-49);
     }];
@@ -322,6 +330,36 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     if([self.delegate respondsToSelector:@selector(selectTVEpisodeWithIndex:)]){
         [self.delegate selectTVEpisodeWithIndex:sender.tag];
     }
+    NSURL * _URL ;
+    if(self.videoPlayStyle==playNetWorVideo){
+        NSString * str = model.reurl;
+        _URL = [NSURL URLWithString:str];
+    }else{
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+        NSString * str = [NSString stringWithFormat:@"%@/%@",path,model.name];
+        _URL = [NSURL fileURLWithPath:str];
+    }
+    loading.hidden = YES;
+    [loading startAnimation];
+    if (self.playerItem) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVPlayerItemDidPlayToEndTimeNotification
+                                                      object:self.playerItem];
+        [self.playerItem removeObserver:self forKeyPath:@"status"];
+        [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        
+    }
+    self.playerItem = [AVPlayerItem playerItemWithURL:_URL];
+    self.moviePlayer = [AVPlayer playerWithPlayerItem:self.playerItem];
+    self.playerLayer.player = self.moviePlayer;
+    self.contentURL = _URL;
+    
+    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];// 监听status属性
+    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];// 监听loadedTimeRanges属性
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerFinishedPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
+    [self play];
+
 }
 //全屏
 -(void)zoomButtonPressed

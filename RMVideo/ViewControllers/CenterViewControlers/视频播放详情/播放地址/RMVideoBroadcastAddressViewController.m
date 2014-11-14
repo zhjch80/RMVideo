@@ -54,7 +54,6 @@
     NSInteger index = sender.tag - 301;
     NSMutableDictionary * dic = [dataArr objectAtIndex:index];
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
-
     if ([NSString stringWithFormat:@"%@",[dic objectForKey:@"m_down_url"]].length == 0){
         //跳转web
         //保存数据sqlit
@@ -84,7 +83,25 @@
         
         //跳转
         CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-        [playContro createPlayerViewWithURL:[dic objectForKey:@"m_down_url"] isPlayLocalVideo:NO];
+        NSMutableArray * downloadArr = [[NSMutableArray alloc] init];
+        for (int i=0; i<[dataArr count]; i++){
+            RMPublicModel * model = [[RMPublicModel alloc] init];
+            model.reurl = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];//mp4地址
+            model.topNum = [[dataArr objectAtIndex:i] objectForKey:@"curnum"];//所属第几集
+            [downloadArr addObject:model];
+        }
+//        playContro.playStyle = playNetWorVideo;
+        playContro.playEpisodeNumber = 0;
+        if([self.publicModel.video_type integerValue]!=1){
+            //电视剧 综艺
+            playContro.videoArray = downloadArr;
+            playContro.videoType = videoTypeisTV;
+            [playContro createPlayerViewWithURL:[[dataArr objectAtIndex:0] objectForKey:@"m_down_url"] isPlayLocalVideo:NO];//默认播放第一集
+        }else{
+            //电影
+            playContro.videoType = videoTypeIsMovie;
+            [playContro createPlayerViewWithURL:[dic objectForKey:@"m_down_url"] isPlayLocalVideo:NO];
+        }
         [playContro createTopToolWithTitle:self.publicModel.name];
         [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
             
@@ -99,7 +116,7 @@
     if ([model.video_type integerValue] == 1){
         dataArr = model.playurlArr;//保存电影数据
     }else{
-        dataArr = model.playurlsArr;//保存电视剧及综艺数据
+        dataArr = [[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"];//保存电视剧及综艺数据
     }
 
     int value = 0;

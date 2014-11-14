@@ -11,6 +11,7 @@
 #import "UtilityFunc.h"
 #import "Flurry.h"
 #import "UIButton+EnlargeEdge.h"
+#import "RMPublicModel.h"
 
 #define kTopToolHeight 49
 #define kTopToolTitleHeight 35
@@ -18,7 +19,9 @@
 #define kVideoTitleX 50
 #define kVideoTitleY 21
 
-@interface CustomVideoPlayerController ()<playerViewDelegate>
+@interface CustomVideoPlayerController ()<playerViewDelegate>{
+    NSString *headTitle; //标题
+}
 @property (nonatomic, strong) CustomVideoPlayerView *player;
 @property (nonatomic, strong) UIView *topTool;
 @property (nonatomic, strong) UILabel *videoTitle;
@@ -57,8 +60,6 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFail) name:@"playFail_KEY" object:nil];
-//    [self createPlayerView];
-//    [self createTopTool];
 }
 - (void)playFail{
     [self buttonClick:nil];
@@ -69,6 +70,7 @@
  *
  ***/
 - (void)createTopToolWithTitle:(NSString *)titel {
+    headTitle = titel;
     self.topTool = [[UIView alloc] init];
     [self.topTool setFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight)];
     [self.topTool setBackgroundColor:[UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:0.4]];
@@ -86,12 +88,25 @@
     [button setEnlargeEdgeWithTop:10 right:10 bottom:10 left:10];
     [self.topTool addSubview:button];
     
+   
     self.videoTitle = [[UILabel alloc] init];
     [self.videoTitle setFrame:CGRectMake(kVideoTitleX, 15, [UtilityFunc shareInstance].globleWidth - kVideoTitleX - 10, kTopToolTitleHeight)];
     self.videoTitle.font = [UIFont systemFontOfSize:16.0];
     self.videoTitle.backgroundColor = [UIColor clearColor];
     self.videoTitle.userInteractionEnabled = YES;
-    [self.videoTitle setText:titel];
+    
+    if(self.playStyle==playLocalVideo&&self.videoType!=videoTypeIsMovie){
+        if([titel rangeOfString:@"电视剧"].location == NSNotFound){
+            [self.videoTitle setText:titel];
+        }else{
+            [self.videoTitle setText:[titel substringFromIndex:[titel rangeOfString:@"_"].location+1]];
+        }
+    }else if(self.playStyle==playNetWorVideo&&self.videoType!=videoTypeIsMovie){
+        [self.videoTitle setText:[NSString stringWithFormat:@"%@_1",titel]];
+    }
+    else{
+        [self.videoTitle setText:titel];
+    }
     [self.videoTitle setTextAlignment:NSTextAlignmentLeft];
     [self.videoTitle setTextColor:[UIColor whiteColor]];
     [self.topTool addSubview:self.videoTitle];
@@ -125,12 +140,22 @@
     if (self.player == nil) {
         self.player = [[CustomVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight)];
         self.player.delegate = self;
+        if(isLocal){
+            self.player.videoPlayStyle = playLocalVideo;
+            self.playStyle = playLocalVideo;
+        }
+        else{
+            self.playStyle = playNetWorVideo;
+            self.player.videoPlayStyle = playNetWorVideo;
+        }
+        self.player.videoType = self.videoType;
+        self.player.videoEpisode = self.playEpisodeNumber;
+        self.player.videoDataArray = self.videoArray;
         self.player.tintColor = [UIColor redColor];
         [self.view addSubview:self.player];
     }
     [self playerWithURL:url isPlayLocalVideo:isLocal];
-    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
-    [self.player setSelectionEpisodeScrollViewWithArray:array];
+    [self.player setSelectionEpisodeScrollViewWithArray:self.videoArray];
     
     
 }
@@ -193,6 +218,41 @@
 //TODO:播放下一集
 -(void)selectTVEpisodeWithIndex:(NSInteger)index{
     
+    RMPublicModel *model = [self.videoArray objectAtIndex:index-1];
+    if(self.playStyle==playLocalVideo&&self.videoType!=videoTypeIsMovie){
+        
+        if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
+            [self.videoTitle setText:model.name];
+        }else{
+            [self.videoTitle setText:[model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1]];
+        }
+    }else if(self.playStyle==playNetWorVideo&&self.videoType!=videoTypeIsMovie){
+        [self.videoTitle setText:[NSString stringWithFormat:@"%@_%d",headTitle,index]];
+    }
+    else{
+        [self.videoTitle setText:headTitle];
+    }
+
+}
+
+- (void)playViewWillPlayNext{
+    
+    RMPublicModel *model = [self.videoArray objectAtIndex:self.player.videoEpisode];
+    
+    if(self.playStyle==playLocalVideo&&self.videoType!=videoTypeIsMovie){
+        
+        if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
+            [self.videoTitle setText:model.name];
+        }else{
+            [self.videoTitle setText:[model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1]];
+        }
+    }else if(self.playStyle==playNetWorVideo&&self.videoType!=videoTypeIsMovie){
+        [self.videoTitle setText:[NSString stringWithFormat:@"%@_%d",headTitle,self.player.videoEpisode+1]];
+    }
+    else{
+        [self.videoTitle setText:headTitle];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
