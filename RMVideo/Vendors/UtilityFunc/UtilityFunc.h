@@ -82,4 +82,17 @@ enum {
 ////遍历文件夹获得文件夹大小，返回多少M
 + (float ) folderSizeAtPath:(NSString*) folderPath;
 
+/**
+ *  按比例缩放
+ */
++ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize;
+
+/**
+ *  缩放到指定大小
+ */
++ (UIImage*)scaleFromImage:(UIImage*)image scaledToSize:(CGSize)newSize;
+
+
+
+
 @end
