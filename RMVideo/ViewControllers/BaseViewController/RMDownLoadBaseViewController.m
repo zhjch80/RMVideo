@@ -36,8 +36,8 @@
         showMemoryLable.text =[NSString stringWithFormat:@"已缓存%.2fM,剩余%.2fG可用",alreadyCache,freeNum];
     }
     else{
-        freeNum = freeNum/1024/-200;
-        showMemoryLable.text =[NSString stringWithFormat:@"已缓存%.2fM,剩余%.2fM可用",alreadyCache,freeNum];
+        freeNum = freeNum/1024/1024-200;
+        showMemoryLable.text =[NSString stringWithFormat:@"已缓存%.2fM,剩余%.0fM可用",alreadyCache,freeNum];
     }
     [self.view addSubview:showMemoryLable];
     

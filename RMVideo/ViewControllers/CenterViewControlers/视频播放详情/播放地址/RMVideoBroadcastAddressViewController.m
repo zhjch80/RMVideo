@@ -85,7 +85,7 @@
         //跳转
         CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
         [playContro createPlayerViewWithURL:[dic objectForKey:@"m_down_url"] isPlayLocalVideo:NO];
-        [playContro createTopTool];
+        [playContro createTopToolWithTitle:self.publicModel.name];
         [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
             
         }];

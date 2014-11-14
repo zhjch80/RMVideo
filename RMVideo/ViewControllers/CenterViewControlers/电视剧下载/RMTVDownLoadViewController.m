@@ -78,7 +78,7 @@
         if([[Database sharedDatabase] isDownLoadMovieWithModelName:tvString]){
             downView.TVStateImageView.image = [UIImage imageNamed:@"tv_down_succes"];
         }
-        else if([self isContainsModel:downLoad.downLoadIDArray modelName:tvString]){
+        else if([self isContainsModel:downLoad.dataArray modelName:tvString]){
             downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
         }
         [downView.TVEpisodeButton addTarget:self action:@selector(TVEpisodeButtonCLick:) forControlEvents:UIControlEventTouchUpInside];
@@ -100,14 +100,14 @@
         [alertView show];
         return;
     }
-    else if([self isContainsModel:rmDownLoading.downLoadIDArray modelName:tvString]){
+    else if([self isContainsModel:rmDownLoading.dataArray modelName:tvString]){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"已在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
         return;
     }
     RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:sender.tag-1+1000];
     downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
-    model.downLoadURL = @"http://106.38.249.114/youku/6971C52877936794FB5AA6E18/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+    model.downLoadURL = @"http://106.38.249.114/youku/6971C5A86B537797CB2AD5C37/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
     model.name = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
     model.downLoadState = @"等待缓存";
     model.totalMemory = @"0M";
@@ -125,7 +125,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//下载多有的电视剧
+//下载所有的电视剧
 - (IBAction)downAllTVEpisode:(UIButton *)sender {
     RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
     for (int i=0;i<self.TVdataArray.count;i++){
@@ -133,7 +133,7 @@
         if([[Database sharedDatabase] isDownLoadMovieWith:model]){
             
         }
-        else if([rmDownLoading.downLoadIDArray containsObject:model]){
+        else if([rmDownLoading.dataArray containsObject:model]){
             
         }else{
             RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:i+1000];

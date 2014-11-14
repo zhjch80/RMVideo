@@ -30,55 +30,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dataArray = [NSMutableArray array];
+    self.dataArray = [[NSMutableArray alloc] init];
     [self showEmptyViewWithImage:[UIImage imageNamed:@"no_cashe_video"] WithTitle:@"您没有缓存记录"];
     [self setExtraCellLineHidden:self.maiTableView];
     NSArray *tmpArray = [[Database sharedDatabase] readItemFromDownLoadList];
     if ([tmpArray count] == 0){
         [self isShouldSetHiddenEmptyView:NO];
-
     }else{
-        [self isShouldSetHiddenEmptyView:YES];
-        RMPublicModel *tmpModel = [tmpArray objectAtIndex:0];
-        NSString *titleString =tmpModel.name;
-        NSString *tvname = @"";
-        if([titleString rangeOfString:@"电视剧"].location == NSNotFound){
-            [self.dataArray addObject:tmpModel];
-            for(RMPublicModel *model in tmpArray){
-                if([model.name rangeOfString:@"电视剧"].location != NSNotFound){
-                    NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
-                    NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
-                    if(![nn isEqualToString:tvname]){
-                        model.isTVModel = YES;
-                        [self.dataArray addObject:model];
-                        tvname = nn;
-                    }
-                }else if(![model.name isEqualToString:titleString]){
-                    [self.dataArray addObject:model];
-                }
-            }
+        // dataBaseArray主要实在删除的时候使用 dataBaseArray包含的是所有的下载视屏数据
+        if(dataBaseArray==nil){
+            dataBaseArray = [NSMutableArray arrayWithArray:tmpArray];
         }
         else{
-            for(RMPublicModel *model in tmpArray){
-                if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
-                    [self.dataArray addObject:model];
-                }else{
-                    NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
-                    NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
-                    if(![nn isEqualToString:tvname]&&![model.name isEqualToString:titleString]){
-                        model.isTVModel = YES;
-                        [self.dataArray addObject:model];
-                        tvname = nn;
-                    }
-                }
+            [dataBaseArray removeAllObjects];
+            dataBaseArray = [tmpArray mutableCopy];
+        }
+        [self isShouldSetHiddenEmptyView:YES];
+        for(RMPublicModel *model in tmpArray){
+            if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
+                [self.dataArray addObject:model];
+            }else {
+                NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+                NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
                 
+                if(![self arrayIsHaveTitle:nn inArray:self.dataArray]){
+                    model.isTVModel = YES;
+                    [self.dataArray addObject:model];
+                }
             }
         }
-
-        // Do any additional setup after loading the view from its nib.
+        //开始编辑的时候接受到的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginAnimation) name:kFinishViewControStartEditing object:nil];
+        //结束编辑的时候接受到的通知
         [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(endAnimation) name:kFinishViewControEndEditing object:nil];
+        //正在下载界面，但有视频下载成功的时候接受到的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downLoadSuccess) name:DownLoadSuccess_KEY object:nil];
+        //电视机下载详情页面中，编辑完电视机的时候，该界面要进行更新
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TVSericesDetailFinishEditing) name:kTVSeriesDetailDeleteFinish object:nil];
         
         selectCellArray = [NSMutableArray array];
         cellEditingImageArray = [NSMutableArray array];
@@ -86,6 +74,7 @@
             [cellEditingImageArray addObject:@"no-select_cellImage"];
         }
     
+        //此处注释的部分，显示的下载成功后影片保存的的沙河目录路径 其中array中保存的是所有的下载后的MP4文件
 //        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 //        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
 //        
@@ -117,56 +106,12 @@
 }
 //电影下载成功。更新界面
 - (void)downLoadSuccess{
-    [self.dataArray removeAllObjects];
-    NSArray *tmpArray = [[Database sharedDatabase] readItemFromDownLoadList];
-    RMPublicModel *tmpModel = [tmpArray objectAtIndex:0];
-    NSString *titleString =tmpModel.name;
-    NSString *tvname = @"";
-    if([titleString rangeOfString:@"电视剧"].location == NSNotFound){
-        [self.dataArray addObject:tmpModel];
-        for(RMPublicModel *model in tmpArray){
-            if([model.name rangeOfString:@"电视剧"].location != NSNotFound){
-                NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
-                NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
-                if(![nn isEqualToString:tvname]){
-                    model.isTVModel = YES;
-                    [self.dataArray addObject:model];
-                    tvname = nn;
-                }
-            }else if(![model.name isEqualToString:titleString]){
-                [self.dataArray addObject:model];
-            }
-        }
-    }
-    else{
-        for(RMPublicModel *model in tmpArray){
-            if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
-                [self.dataArray addObject:model];
-            }else{
-                NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
-                NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
-                if(![nn isEqualToString:tvname]&&![model.name isEqualToString:titleString]){
-                    model.isTVModel = YES;
-                    [self.dataArray addObject:model];
-                    tvname = nn;
-                }
-            }
-            
-        }
-    }
-    
-    if (self.dataArray.count==0) {
-        [self isShouldSetHiddenEmptyView:NO];
-    }else{
-        [self isShouldSetHiddenEmptyView:YES];
-    }
-    [self.maiTableView reloadData];
-    [cellEditingImageArray removeAllObjects];
-    for (int i=0; i<self.dataArray.count; i++) {
-        [cellEditingImageArray addObject:@"no-select_cellImage"];
-    }
+    [self takeTheDataFromDataBase];
 }
-
+//电视剧下载详情编辑完成之后要更新主界面
+- (void) TVSericesDetailFinishEditing{
+    [self takeTheDataFromDataBase];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -277,15 +222,33 @@
     for(int i=0;i<sort.count;i++){
         NSNumber *number = [sort objectAtIndex:i];
         RMPublicModel *model = [self.dataArray objectAtIndex:number.intValue];
-        NSString *removePath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
-        NSError *error = nil;
-        BOOL remove = [[NSFileManager defaultManager] removeItemAtPath:removePath error:&error];
-        [[Database sharedDatabase] deleteItem:model fromListName:DOWNLOADLISTNAME];
-        if(remove){
-            NSLog(@"删除成功");
+        if(model.isTVModel){
+            NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+            NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
+            for (RMPublicModel *tmpModel in dataBaseArray) {
+                if([tmpModel.name rangeOfString:nn].location != NSNotFound){
+                    NSString *removePath = [NSString stringWithFormat:@"%@/%@.mp4",path,tmpModel.name];
+                    NSError *error = nil;
+                    BOOL remove = [[NSFileManager defaultManager] removeItemAtPath:removePath error:&error];
+                    [[Database sharedDatabase] deleteItem:tmpModel fromListName:DOWNLOADLISTNAME];
+                    if(remove){
+                        NSLog(@"删除成功");
+                    }
+                }
+            }
+            [self.dataArray removeObjectAtIndex:number.integerValue];
+            [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+        }else{
+            NSString *removePath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+            NSError *error = nil;
+            BOOL remove = [[NSFileManager defaultManager] removeItemAtPath:removePath error:&error];
+            [[Database sharedDatabase] deleteItem:model fromListName:DOWNLOADLISTNAME];
+            if(remove){
+                NSLog(@"删除成功");
+            }
+            [self.dataArray removeObjectAtIndex:number.integerValue];
+            [cellEditingImageArray removeObjectAtIndex:number.integerValue];
         }
-        [self.dataArray removeObjectAtIndex:number.integerValue];
-        [cellEditingImageArray removeObjectAtIndex:number.integerValue];
         if (self.dataArray.count==0) {
             [self isShouldSetHiddenEmptyView:NO];
         }else{
@@ -299,7 +262,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kFinishViewControEndEditing object:nil];
 }
 
-//回调 ，
+//回调
 - (void)selectTableViewCellWithIndex:(void (^)(NSString *))block{
     selectIndex = block;
 }
@@ -307,6 +270,7 @@
     selectArray = block;
 }
 
+//判断相关的电视剧有几部  在cell
 - (NSInteger)searchTVCountWith:(NSString *)title{
     NSArray *tmpArray = [[Database sharedDatabase] readItemFromDownLoadList];
     int sum = 0;
@@ -316,5 +280,49 @@
         }
     }
     return sum;
+}
+//判断数组中是否存在改字段的model
+- (BOOL)arrayIsHaveTitle:(NSString *)titel inArray:(NSMutableArray *)array{
+    for(RMPublicModel *model in array){
+        if([model.name rangeOfString:titel].location != NSNotFound){
+            return YES;
+        }
+    }
+    return NO;
+}
+//从数据库中去数据，并对数据进行分类，主要是对电视剧进行归类
+- (void)takeTheDataFromDataBase{
+    [self.dataArray removeAllObjects];
+    NSArray *tmpArray = [[Database sharedDatabase] readItemFromDownLoadList];
+    if(dataBaseArray==nil){
+        dataBaseArray = [NSMutableArray arrayWithArray:tmpArray];
+    }
+    else{
+        [dataBaseArray removeAllObjects];
+        dataBaseArray = [tmpArray mutableCopy];
+    }
+    for(RMPublicModel *model in tmpArray){
+        if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
+            [self.dataArray addObject:model];
+        }else {
+            NSString *mm = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+            NSString *nn = [mm substringToIndex:[mm rangeOfString:@"_"].location];
+            
+            if(![self arrayIsHaveTitle:nn inArray:self.dataArray]){
+                model.isTVModel = YES;
+                [self.dataArray addObject:model];
+            }
+        }
+    }
+    if (self.dataArray.count==0) {
+        [self isShouldSetHiddenEmptyView:NO];
+    }else{
+        [self isShouldSetHiddenEmptyView:YES];
+    }
+    [self.maiTableView reloadData];
+    [cellEditingImageArray removeAllObjects];
+    for (int i=0; i<self.dataArray.count; i++) {
+        [cellEditingImageArray addObject:@"no-select_cellImage"];
+    }
 }
 @end

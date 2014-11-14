@@ -48,7 +48,7 @@ static Database *gl_database=nil;
     if([mdb open])
     {
         NSString *playHistoryNameSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),movieURL TEXT(1024),playTime TEXT(1024),webURL TEXT(1024),video_id TEXT(1024) DEFAULT NULL)",PLAYHISTORYLISTNAME];
-        NSString *downLoadSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),totalMemory TEXT(1024) DEFAULT NULL)",DOWNLOADLISTNAME];
+        NSString *downLoadSql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (serial integer  Primary Key Autoincrement,titleName TEXT(1024) DEFAULT NULL,titleImage TEXT(1024),totalMemory TEXT(1024),video_id TEXT(1024) DEFAULT NULL)",DOWNLOADLISTNAME];
        
         if(![mdb executeUpdate:playHistoryNameSql]||![mdb executeUpdate:downLoadSql])
         {
@@ -165,9 +165,8 @@ static Database *gl_database=nil;
 }
 - (void)insertDownLoadItem:(RMPublicModel *)item{
     if([mdb open]){
-        //titleName,titleImage,downURL,downStatus,totalMemory,alreadDownLoad,downLoadProgress
-        NSString *sql = [NSString stringWithFormat:@"insert into DownLoadListname (titleName,titleImage,totalMemory) values (?,?,?)"];
-        if([mdb executeUpdate:sql,item.name,item.pic,item.totalMemory])
+        NSString *sql = [NSString stringWithFormat:@"insert into DownLoadListname (titleName,titleImage,totalMemory,video_id) values (?,?,?,?)"];
+        if([mdb executeUpdate:sql,item.name,item.pic,item.totalMemory,item.video_id])
         {
             NSLog(@"插入成功");
         }
@@ -263,7 +262,7 @@ static Database *gl_database=nil;
     if([mdb open]){
         NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
         
-        NSString *sql = [NSString stringWithFormat:@"select titleName,titleImage,totalMemory from DownLoadListname"];
+        NSString *sql = [NSString stringWithFormat:@"select titleName,titleImage,totalMemory,video_id from DownLoadListname"];
         FMResultSet *rs = [mdb executeQuery:sql];
         
         while ([rs next]) {
@@ -271,6 +270,7 @@ static Database *gl_database=nil;
             item.name = [rs stringForColumn:@"titleName"];
             item.pic = [rs stringForColumn:@"titleImage"];
             item.totalMemory = [rs stringForColumn:@"totalMemory"];
+            item.video_id = [rs stringForColumn:@"video_id"];
             [array addObject:item];
         }
         

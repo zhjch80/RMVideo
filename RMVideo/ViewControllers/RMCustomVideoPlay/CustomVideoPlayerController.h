@@ -12,6 +12,6 @@
 @property (nonatomic,copy) NSString *playURL;
 
 - (void)createPlayerViewWithURL:(NSString *)url isPlayLocalVideo:(BOOL)isLocal;
-- (void)createTopTool;
+- (void)createTopToolWithTitle:(NSString *)titel;
 
 @end

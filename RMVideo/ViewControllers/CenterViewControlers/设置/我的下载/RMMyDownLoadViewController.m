@@ -56,7 +56,7 @@
 
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
-        [customVideo createTopTool];
+        [customVideo createTopToolWithTitle:movieName];
         
         [self presentViewController:customVideo animated:YES completion:nil];
     }];

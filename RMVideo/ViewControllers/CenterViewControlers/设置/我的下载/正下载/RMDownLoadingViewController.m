@@ -137,7 +137,13 @@ static id _instance;
     //[cell setCellViewOfFrame];
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.editingImageView setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
-    cell.titleLable.text = model.name;
+    if([model.name rangeOfString:@"电视剧"].location == NSNotFound){
+        cell.titleLable.text = model.name;
+    }else{
+        NSString *titel = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+//        titel = [titel substringToIndex:[titel rangeOfString:@"_"].location];
+        cell.titleLable.text = titel;
+    }
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
     cell.showDownLoadingState.text = model.downLoadState;

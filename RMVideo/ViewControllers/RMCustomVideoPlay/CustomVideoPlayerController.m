@@ -68,7 +68,7 @@
  * 顶部工具栏
  *
  ***/
-- (void)createTopTool {
+- (void)createTopToolWithTitle:(NSString *)titel {
     self.topTool = [[UIView alloc] init];
     [self.topTool setFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, kTopToolHeight)];
     [self.topTool setBackgroundColor:[UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:0.4]];
@@ -91,7 +91,7 @@
     self.videoTitle.font = [UIFont systemFontOfSize:16.0];
     self.videoTitle.backgroundColor = [UIColor clearColor];
     self.videoTitle.userInteractionEnabled = YES;
-    [self.videoTitle setText:@"视频"];
+    [self.videoTitle setText:titel];
     [self.videoTitle setTextAlignment:NSTextAlignmentLeft];
     [self.videoTitle setTextColor:[UIColor whiteColor]];
     [self.topTool addSubview:self.videoTitle];

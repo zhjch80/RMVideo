@@ -13,53 +13,5 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/CenterViewControlers/&#x8bbe;&#x7f6e;/&#x7535;&#x89c6;&#x5267;&#x4e0b;&#x8f7d;&#x8be6;&#x60c5;/RMDownLoadTVSeriesDetailViewController.m"
-            timestampString = "437575273.212129"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "-pauseOrStarAllBtnClick:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/CenterViewControlers/&#x8bbe;&#x7f6e;/&#x6211;&#x7684;&#x4e0b;&#x8f7d;/&#x5df2;&#x4e0b;&#x8f7d;/RMFinishDownViewController.m"
-            timestampString = "437575749.25601"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/CenterViewControlers/&#x8bbe;&#x7f6e;/&#x6211;&#x7684;&#x4e0b;&#x8f7d;/&#x6b63;&#x4e0b;&#x8f7d;/RMDownLoadingViewController.m"
-            timestampString = "437576251.764474"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
-            landmarkName = "-startDownloadWithMovieName:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

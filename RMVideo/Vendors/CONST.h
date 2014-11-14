@@ -66,7 +66,8 @@
 #define kDownLoadingControStartEditing          @"downLoadingCellBeginAimation"
 //下载中 cell结束编辑
 #define kDownLoadingControEndEditing            @"downLoadingCellEndAimation"
-
+//电视剧下载详情删除结束
+#define kTVSeriesDetailDeleteFinish             @"TVSeriesDetailDeleteFinish"
 
 #define IS_IPHONE_4_SCREEN ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 #define IS_IPHONE_5_SCREEN ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)

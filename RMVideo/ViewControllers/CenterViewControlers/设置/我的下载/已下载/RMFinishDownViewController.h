@@ -14,6 +14,7 @@
     void(^selectIndex)(NSString *movieName);
     void(^selectArray)(NSMutableArray *array);
     BOOL isBegingEditing;
+    NSMutableArray *dataBaseArray;
 }
 @property (nonatomic, assign) id myDownLoadDelegate;
 

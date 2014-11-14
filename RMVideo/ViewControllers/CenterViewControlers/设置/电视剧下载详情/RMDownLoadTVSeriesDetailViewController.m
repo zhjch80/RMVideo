@@ -9,6 +9,7 @@
 #import "RMDownLoadTVSeriesDetailViewController.h"
 #import "RMFinishDownTableViewCell.h"
 #import "RMTVDownLoadViewController.h"
+#import "CustomVideoPlayerController.h"
 
 @interface RMDownLoadTVSeriesDetailViewController (){
     NSMutableArray *tableDataArray;
@@ -116,10 +117,26 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
             [deleteArray addObject:indexPath];
         }
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+        
         for(int i=0;i<sort.count;i++){
             NSNumber *number = [sort objectAtIndex:i];
+            RMPublicModel *model = [tableDataArray objectAtIndex:number.intValue];
+            NSString *removePath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+            NSError *error = nil;
+            BOOL remove = [[NSFileManager defaultManager] removeItemAtPath:removePath error:&error];
+            [[Database sharedDatabase] deleteItem:model fromListName:DOWNLOADLISTNAME];
+            if(remove){
+                NSLog(@"删除成功");
+            }
             [tableDataArray removeObjectAtIndex:number.integerValue];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
+            if (tableDataArray.count==0) {
+                [self isShouldSetHiddenEmptyView:NO];
+            }else{
+                [self isShouldSetHiddenEmptyView:YES];
+            }
         }
         
         [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
@@ -131,12 +148,34 @@
         }];
         [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
         isEditing = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTVSeriesDetailDeleteFinish object:nil];
     }
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return tableDataArray.count;
 }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *identifier = @"cellIIdentifier";
+    RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(cell==nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
+        if(isEditing)
+            [cell setCellViewFrame];
+    }
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
+    NSString *tmpStr = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+    //    tmpStr = [tmpStr substringToIndex:[tmpStr rangeOfString:@"_"].location];
+    cell.movieName.text = tmpStr;
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
+    cell.memoryCount.text = model.totalMemory;
+    return cell;
+    
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(isEditing){
@@ -163,30 +202,17 @@
         [self.mainTableView reloadData];
     }
     else{
-        NSLog(@"非编辑状态下---index：%d",indexPath.row);
+        RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+        NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+        
+        CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
+        [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
+        [customVideo createTopToolWithTitle:model.name];
+        
+        [self presentViewController:customVideo animated:YES completion:nil];
     }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    static NSString *identifier = @"cellIIdentifier";
-    RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if(cell==nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
-        if(isEditing)
-            [cell setCellViewFrame];
-    }
-    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
-    RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
-    NSString *tmpStr = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
-//    tmpStr = [tmpStr substringToIndex:[tmpStr rangeOfString:@"_"].location];
-    cell.movieName.text = tmpStr;
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
-    [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
-    cell.memoryCount.text = model.totalMemory;
-    return cell;
-
-    
 }
 
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender{
