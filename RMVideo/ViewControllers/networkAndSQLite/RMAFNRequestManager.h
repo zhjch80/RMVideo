@@ -116,7 +116,7 @@ typedef enum{
  *  @param ID   tag的id
  *  @param type 视频类型（1：电影 2：电视剧 3：综艺）
  */
-- (void)getTagOfVideoListWithID:(NSString *)ID andVideoType:(NSString *)type;
+- (void)getTagOfVideoListWithID:(NSString *)ID andVideoType:(NSString *)type WithPage:(NSString *)page count:(NSString *)count;
 
 /**
  *  明星：明星列表

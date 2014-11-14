@@ -79,6 +79,7 @@ typedef enum{
             ((UILabel *)[self.view viewWithTag:201+i]).hidden = YES;
         }
     }else{
+        [self isShouldSetHiddenEmptyView:YES];
         [self setTitle:@"登录"];
         self.moreWonderfulImg.hidden = YES;
         self.moreBgImg.hidden = YES;
@@ -181,8 +182,12 @@ typedef enum{
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (dataArr.count == 0){
-        [self showEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无数据"];
+    if ([self.kLoginStatus isEqualToString:@"islogin"]){
+        if (dataArr.count == 0){
+            [self showEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无数据"];
+        }else{
+            [self isShouldSetHiddenEmptyView:YES];
+        }
     }else{
         [self isShouldSetHiddenEmptyView:YES];
     }

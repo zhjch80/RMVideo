@@ -11,4 +11,7 @@
 
 @interface RMStarFilmListViewController : RMBaseViewController
 @property (nonatomic, assign) id starDetailsDelegate;
+@property (nonatomic, copy) NSString * star_id;
+- (void)startRequest;
+
 @end

@@ -196,9 +196,11 @@ typedef enum{
     if(requestType == downLoadRequestType){
         if (data.count==0) {
             [SVProgressHUD dismiss];
+            rightBarButton.hidden = YES;
             [self isShouldSetHiddenEmptyView:NO];
             return;
         }else{
+            rightBarButton.hidden = NO;
             [self isShouldSetHiddenEmptyView:YES];
         }
         self.dataArray = data;

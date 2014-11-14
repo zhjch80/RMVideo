@@ -137,6 +137,8 @@ typedef enum{
                 }
                 blockSelf.starFilmListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starFilmListCtl.view belowSubview:maskView];
+                blockSelf.starFilmListCtl.star_id = blockSelf.star_id;
+                [blockSelf.starFilmListCtl startRequest];
                 break;
             }
             case 1:{
@@ -152,6 +154,8 @@ typedef enum{
                 }
                 blockSelf.starTeleplayListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starTeleplayListCtl.view belowSubview:maskView];
+                blockSelf.starTeleplayListCtl.star_id = blockSelf.star_id;
+                [blockSelf.starTeleplayListCtl startRequest];
                 break;
             }
             case 2:{
@@ -167,6 +171,8 @@ typedef enum{
                 }
                 blockSelf.starVarietyListCtl.starDetailsDelegate = blockSelf;
                 [blockSelf.contentView insertSubview:blockSelf.starVarietyListCtl.view belowSubview:maskView];
+                blockSelf.starVarietyListCtl.star_id = blockSelf.star_id;
+                [blockSelf.starVarietyListCtl startRequest];
                 break;
             }
                 
@@ -321,6 +327,27 @@ typedef enum{
 }
 
 #pragma mark - requset RMAFNRequestManagerDelegate
+
+/**
+ *刷新电影
+ */
+- (void)refreshStarFilmListDate:(RMPublicModel *)model {
+//    [self.videoPlotIntroducedCtl updatePlotIntroduced:model];
+}
+
+/**
+ *刷新电视剧
+ */
+- (void)refreshStarTeleplayListDate:(RMPublicModel *)model {
+//    [self.videoBroadcastAddressCtl updateBroadcastAddress:model];
+}
+
+/**
+ *刷新综艺
+ */
+- (void)refreshStarVarietyListDate:(RMPublicModel *)model {
+//    [self.videoCreativeStaffCtl updateCreativeStaff:model];
+}
 
 - (void)refreshIntroductionView {
     RMPublicModel * model = [introDataArr objectAtIndex:0];

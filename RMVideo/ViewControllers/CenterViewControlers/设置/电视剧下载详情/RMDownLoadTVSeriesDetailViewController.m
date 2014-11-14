@@ -59,9 +59,18 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [Flurry logEvent:@"VIEW_Setup_DownLoadTVSeriesDetail" timed:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"VIEW_Setup_DownLoadTVSeriesDetail" withParameters:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
    
     isSeleltAllCell = YES;
     NSString *tmpStr = [self.TVName substringFromIndex:[self.TVName rangeOfString:@"_"].location+1];

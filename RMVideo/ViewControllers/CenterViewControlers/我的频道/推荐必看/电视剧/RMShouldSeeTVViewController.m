@@ -36,7 +36,7 @@
     manager.delegate = self;
     //视频类型（1：电影 2：电视剧 3：综艺）
     //排行类型（1：日榜 2：周榜 3：月榜）
-    [manager getTagOfVideoListWithID:self.downLoadID andVideoType:@"2"];
+    [manager getTagOfVideoListWithID:self.downLoadID andVideoType:@"2" WithPage:@"1" count:@"12"];
     [self setExtraCellLineHidden:self.mainTableView];
 
 }

@@ -10,6 +10,8 @@
 
 @interface RMVideoCreativeStaffViewController : RMBaseViewController
 
+@property (nonatomic, assign) id videoPlayBackDetailsDelegate;
+
 - (void)updateCreativeStaff:(RMPublicModel *)model;
 
 @end

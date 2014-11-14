@@ -60,7 +60,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    [(RMImageView *)cell.headImage setFileShowImageView:model.pic];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
     cell.movieKind.text = [NSString stringWithFormat:@"分类:%@",model.video_type];

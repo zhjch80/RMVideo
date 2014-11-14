@@ -51,7 +51,7 @@ typedef enum{
     NSInteger pageCount;
     BOOL isRefresh;
     RMImageView * rmImage;                  //获取点击cell的图片
-
+    NSInteger AltogetherRows;               //总共有多少条数据
 }
 
 @property (nonatomic, strong) AMBlurView * blurView;
@@ -675,14 +675,21 @@ typedef enum{
         {
             pageCount = 1;
             isRefresh = YES;
+            loadType =  requestStarListType;
             [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            pageCount ++;
-            isRefresh = NO;
-            [self startRequest];
+            if (pageCount * 12 > AltogetherRows){
+                [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:YES];
+            }else{
+                pageCount ++;
+                isRefresh = NO;
+                loadType =  requestStarListType;
+                [self startRequest];
+            }
+
             break;
         }
             
@@ -865,6 +872,8 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestStarListType){
+        RMPublicModel * model_row = [data objectAtIndex:0];
+        AltogetherRows = [model_row.rows integerValue];
         if (isRefresh){
             dataArr = data;
         }else{
@@ -873,7 +882,6 @@ typedef enum{
                 [dataArr addObject:model];
             }
         }
-        [(UITableView *)[self.view viewWithTag:201] reloadData];
         [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     }else if (loadType == requestAddStarMyChannelType){
         RMStarCell * cell = (RMStarCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];

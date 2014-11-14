@@ -37,7 +37,8 @@
 
 //添加集数的按钮
 - (void)headScrollviewAddBtnWithImage:(UIImage *)image andBtnWidth:(CGFloat)width{
-    
+    [Flurry logEvent:@"Click_VideoDownloadViewAddEpisode_Btn"];
+
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:image forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -48,7 +49,6 @@
     [self.headScrollView addSubview:button];
     
 }
-
 
 - (void)addTVDetailEveryEpisodeViewFromArray:(NSArray *)dataArray andEveryTVViewWidth:(CGFloat)width andEveryRowHaveTVViewCount:(int)count{
     
@@ -127,6 +127,8 @@
 
 //下载所有的电视剧
 - (IBAction)downAllTVEpisode:(UIButton *)sender {
+    [Flurry logEvent:@"Click_VideoDownloadViewAllEpisode_Btn"];
+
     RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
     for (int i=0;i<self.TVdataArray.count;i++){
         RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
@@ -138,10 +140,13 @@
         }else{
             RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:i+1000];
             downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
+            model.name = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
             model.downLoadState = @"等待缓存";
             model.totalMemory = @"0M";
             model.alreadyCasheMemory = @"0M";
             model.cacheProgress = @"0.0";
+            model.pic = self.TVHeadImage;
+            model.video_id = self.modelID;
             [rmDownLoading.dataArray addObject:model];
             [rmDownLoading.downLoadIDArray addObject:model];
         }

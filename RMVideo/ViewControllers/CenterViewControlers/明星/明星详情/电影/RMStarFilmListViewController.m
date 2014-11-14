@@ -15,6 +15,9 @@
 
 @interface RMStarFilmListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate>{
     NSMutableArray * dataArr;
+    NSInteger AltogetherRows;               //总共有多少条数据
+    NSInteger pageCount;
+    BOOL isRefresh;
 }
 
 @end
@@ -53,12 +56,15 @@
     [tableView setIsCloseHeader:NO];
     [tableView setIsCloseFooter:NO];
     [self.view addSubview:tableView];
-    
-    //TODO:记得换tag_id
-    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getTagOfVideoListWithID:@"25151" andVideoType:@"1"];
-    request.delegate = self;
+    pageCount = 1;
+}
 
+#pragma mark - request
+
+- (void)startRequest{
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
+    request.delegate = self;
 }
 
 #pragma mark - UITableView Delegate
@@ -171,12 +177,20 @@
         }
         case k_RETURN_REFRESH://刷新
         {
-            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
+            pageCount = 1;
+            isRefresh = YES;
+            [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
+            if (pageCount * 12 > AltogetherRows){
+                [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:YES];
+            }else{
+                pageCount ++;
+                isRefresh = NO;
+                [self startRequest];
+            }
             break;
         }
             
@@ -203,9 +217,23 @@
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    if (data.count == 0){
+        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseHeader = YES;
+        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
+        return;
+    }
+    RMPublicModel * model = [data objectAtIndex:0];
+    AltogetherRows = [model.rows integerValue];
     dataArr = data;
-    NSLog(@"%d",data.count);
-    [(UITableView *)[self.view viewWithTag:201] reloadData];
+    if (isRefresh){
+        dataArr = data;
+    }else{
+        for (int i=0; i<data.count; i++) {
+            RMPublicModel * model = [data objectAtIndex:i];
+            [dataArr addObject:model];
+        }
+    }
+    [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
 }
 
 -(void)requestError:(NSError *)error {

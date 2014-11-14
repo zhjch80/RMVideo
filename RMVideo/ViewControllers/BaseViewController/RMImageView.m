@@ -76,7 +76,7 @@
     self.image = LOADIMAGE(@"file_bg_Image", kImageTypePNG);
     UIImageView *showImageView = [[UIImageView alloc] init];
     showImageView.frame = CGRectMake(5, 10, self.frame.size.width-10, self.frame.size.height-10);
-    [showImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    [showImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     [self addSubview:showImageView];
     
     UIImageView *beforeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+5, self.frame.size.width, self.frame.size.height/2-5)];

@@ -229,7 +229,6 @@
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
 //    url = @"http://172.16.2.204/rmapi/index.php/vod/getVideoDetailById?video_id=11849&token=aaa";
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
         model.code = [responseObject objectForKey:@"code"];
@@ -262,7 +261,6 @@
     NSString *url = [self urlPathadress:Http_getDownloadDiversity];
     url = [NSString stringWithFormat:@"%@video_id=%@",url,ID];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -402,10 +400,10 @@
 
 #pragma mark - 我的频道：单个tag下的影片列表
 
-- (void)getTagOfVideoListWithID:(NSString *)ID andVideoType:(NSString *)type{
+- (void)getTagOfVideoListWithID:(NSString *)ID andVideoType:(NSString *)type WithPage:(NSString *)page count:(NSString *)count{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getTagOfVideoList];
-    url = [NSString stringWithFormat:@"%@tag_id=%@&video_type=%@",url,ID,type];
+    url = [NSString stringWithFormat:@"%@tag_id=%@&video_type=%@&limit=%@&offset=%@",url,ID,type,count,page];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue]==4001){
             NSMutableArray *array = [NSMutableArray array];
@@ -416,6 +414,7 @@
                 model.gold = [dict objectForKey:@"gold"];
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.video_id = [dict objectForKey:@"video_id"];
+                model.rows = [responseObject objectForKey:@"rows"];
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -448,6 +447,7 @@
             model.detail = [dict objectForKey:@"detail"];
             model.name = [dict objectForKey:@"name"];
             model.pic_url = [dict objectForKey:@"pic_url"];
+            model.rows = [responseObject objectForKey:@"rows"];
             [dataArray addObject:model];
         }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){

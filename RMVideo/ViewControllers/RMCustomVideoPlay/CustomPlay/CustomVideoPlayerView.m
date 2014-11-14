@@ -9,7 +9,6 @@
 #import "UtilityFunc.h"
 #import "CustomSVProgressHUD.h"
 #import "GPLoadingView.h"
-#import "SVProgressHUD.h"
 #import "RMPublicModel.h"
 
 @interface CustomVideoPlayerView ()<TouchViewDelegate> {
@@ -230,10 +229,11 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //跳转下一集
 - (void)playNextButtonAction:(UIButton *)sender{
     
+    self.videoEpisode++;
+    
     if([self.delegate respondsToSelector:@selector(playViewWillPlayNext)]){
         [self.delegate playViewWillPlayNext];
     }
-    self.videoEpisode++;
     
     NSURL * _URL;
      RMPublicModel *model = [self.videoDataArray objectAtIndex:self.videoEpisode];
@@ -639,7 +639,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         } else if ([playerItem status] == AVPlayerStatusFailed) {
             loading.hidden = YES;
             [loading stopAnimation];
-            [SVProgressHUD showErrorWithStatus:@"播放失败"];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"playFail_KEY" object:nil];
             NSLog(@"加载失败:AVPlayerStatusFailed");
 

@@ -11,6 +11,7 @@
 #import "PullToRefreshTableView.h"
 #import "RMLoginViewController.h"
 #import "RMCustomPresentNavViewController.h"
+#import "RMVideoPlaybackDetailsViewController.h"
 
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
@@ -60,6 +61,8 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([dataArr count] == 0){
         [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无主创人员" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+    }else{
+        [self isShouldSetHiddenUnderEmptyView:YES];
     }
     if ([dataArr count]%3 == 0){
         return [dataArr count] / 3;
@@ -132,8 +135,9 @@
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayBackDetailsDelegate;
         RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
-        [self presentViewController:loginNav animated:YES completion:^{
+        [videoPlaybackDetailsCtl presentViewController:loginNav animated:YES completion:^{
         }];
         return;
     }

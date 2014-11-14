@@ -28,7 +28,7 @@
     if([self.topType isEqualToString:@"1"]){
         self.title = @"日榜";
     }else if([self.topType isEqualToString:@"2"]){
-        self.title = @"周报";
+        self.title = @"周榜";
     }else{
         self.title = @"月榜";
     }

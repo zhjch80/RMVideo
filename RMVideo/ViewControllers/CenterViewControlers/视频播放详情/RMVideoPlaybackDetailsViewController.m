@@ -129,11 +129,11 @@ typedef enum{
                     blockSelf.videoBroadcastAddressCtl = [[RMVideoBroadcastAddressViewController alloc] init];
                 }
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-                blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
+                    blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6_SCREEN){
                     blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 250, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }else if (IS_IPHONE_6p_SCREEN){
-                blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
+                    blockSelf.videoBroadcastAddressCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
                 blockSelf.videoBroadcastAddressCtl.videoPlayDelegate = blockSelf;
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
@@ -157,6 +157,7 @@ typedef enum{
                     blockSelf.videoCreativeStaffCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
                 [blockSelf.view addSubview:blockSelf.videoCreativeStaffCtl.view];
+                blockSelf.videoCreativeStaffCtl.videoPlayBackDetailsDelegate = blockSelf;
                 if (blockSelf.dataArr.count == 0){
                     
                 }else{
@@ -225,14 +226,41 @@ typedef enum{
         case 101:{
             [Flurry logEvent:@"Click_Download_Btn"];
             if ([UtilityFunc isConnectionAvailable] == 0){
+                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
                 return;
             }
-            
             RMPublicModel * model = [self.dataArr objectAtIndex:0];
-
             if ([model.video_type isEqualToString:@"1"]) {
                 //电影  直接下载
-                
+                if ([model.playurlArr count] == 0){
+                    [SVProgressHUD showWithStatus:@"暂无片源可下"];
+                    return;
+                }
+                if(model.downLoadURL == nil){
+//                    NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
+                    RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+                    model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
+                    model.downLoadState = @"等待缓存";
+                    model.totalMemory = @"0M";
+                    model.alreadyCasheMemory = @"0M";
+                    model.cacheProgress = @"0.0";
+                    //已经下载过了
+                    if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+                        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        [alerView show];
+                    };
+                    if(![rmDownLoading dataArrayContainsModel:model]){
+                        
+                        [rmDownLoading.dataArray addObject:model];
+                        [rmDownLoading.downLoadIDArray addObject:model];
+                        [rmDownLoading BeginDownLoad];
+                        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        [alerView show];
+                    }
+                }else{
+                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alerView show];
+                }
             }else{
                 //电视剧 综艺 进download 界面 传video_id
                 RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
@@ -241,66 +269,6 @@ typedef enum{
                 TVDownLoadCtl.TVHeadImage = model.pic;
                 [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
             }
-
-            
-            /*
-            //下载
-            NSLog(@"下载");
-            RMPublicModel *model = [self.dataArr objectAtIndex:0];
-            if(model.downLoadURL == nil){
-                RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-                model.downLoadURL = @"http://106.38.249.114/youku/677153A8A794B7D0030376158/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
-                model.downLoadState = @"等待缓存";
-                model.totalMemory = @"0M";
-                model.alreadyCasheMemory = @"0M";
-                model.cacheProgress = @"0.0";
-                
-                //已经下载过了
-                if([[Database sharedDatabase] isDownLoadMovieWith:model]){
-                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alerView show];
-                };
-                if(![rmDownLoading dataArrayContainsModel:model]){
-                    
-                    [rmDownLoading.dataArray addObject:model];
-                    [rmDownLoading.downLoadIDArray addObject:model];
-                    
-                    
-                    //                //**********************测试代码*****************************
-                    //                NSArray *array = [NSArray arrayWithObjects:
-                    //                                  @"http://220.181.185.11/youku/697635D8C5847833549B846954/0300200100544E32020A2D0014D61B004A5863-6A4D-E160-C56E-827D4238A6CE.mp4132412",
-                    //                                  @"http://106.38.249.50/youku/697585E07B6497CA61DAA6418/0300200100542B1866585105CF07DD21FD2882-9316-9568-ACDE-1EADBA2E5C56.mp4",
-                    //                                  @"http://220.181.185.17/youku/6775BAE273537827990F4A24D3/030020010053F6A17A4101055EEB3E0C9F7D7B-9C57-9B35-ECE2-616593D076BE.mp4",
-                    //                                  @"http://220.181.154.43/youku/69777EF8EC9388284E250D4A8E/03002001005416837230B305CF07DD9F740C76-84C5-3CA3-EA8B-FF8BABB0C65D.mp4",
-                    //                                  @"http://106.38.249.43/youku/69715430D0D4C7D2D07882F4D/0300200100541018136B2105CF07DD235F12A1-4430-5E5D-24BD-2A2083C7ECD9.mp4", nil];
-                    //                NSMutableArray *movieTitleArray = [NSMutableArray arrayWithObjects:@"绣春刀",@"激浪青春",@"暴力街区",@"神笔马良",@"星图", nil];
-                    //                for(int i=0;i<5;i++){
-                    //                    RMPublicModel *model = [[RMPublicModel alloc] init];
-                    //                    model.downLoadURL = [array objectAtIndex:i];
-                    //                    model.name = [movieTitleArray objectAtIndex:i];
-                    //                    model.pic = @"http://a.hiphotos.baidu.com/image/w%3D310/sign=d372b7e38544ebf86d71623ee9f8d736/30adcbef76094b3614bd950da1cc7cd98d109d27.jpg";
-                    //                    model.downLoadState = @"等待缓存";
-                    //                    model.totalMemory = @"0M";
-                    //                    model.alreadyCasheMemory = @"0M";
-                    //                    model.cacheProgress = @"0.0";
-                    //                    [rmDownLoading.dataArray addObject:model];
-                    //                    [rmDownLoading.downLoadIDArray addObject:model];
-                    //
-                    //                }
-                    
-                    
-                    [rmDownLoading BeginDownLoad];
-                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alerView show];
-            
-                }
-             
-            }
-            else{
-                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alerView show];
-            }
-              */
             break;
         }
         case 102:{
@@ -316,7 +284,7 @@ typedef enum{
                 }];
                 return;
             }
-
+            
             if (isCollect){
                 [Flurry logEvent:@"Click_AddCollect_Btn"];
                 loadType = requestDeleteVideoCollectlType;
@@ -383,7 +351,7 @@ typedef enum{
     self.videoDownloadBtn.hidden = NO;
     self.videoShareBtn.hidden = NO;
     self.videoPlayImg.hidden = NO;
-
+    
     if ([model.is_favorite integerValue] == 1){
         [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionRedImg", kImageTypePNG) forState:UIControlStateNormal];
         isCollect = YES;

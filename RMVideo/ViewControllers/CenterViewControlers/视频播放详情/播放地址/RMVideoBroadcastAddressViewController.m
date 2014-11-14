@@ -65,6 +65,7 @@
         insertModel.video_id = self.publicModel.video_id;
         [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
         //跳转
+        [Flurry logEvent:@"Click_JumpWebPlayVideo"];
         RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
         RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
         webView.urlString = [dic objectForKey:@"jumpurl"];
@@ -82,6 +83,7 @@
         [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
         
         //跳转
+        [Flurry logEvent:@"Click_JumpCustomPlayVideo"];
         CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
         NSMutableArray * downloadArr = [[NSMutableArray alloc] init];
         for (int i=0; i<[dataArr count]; i++){
@@ -122,13 +124,15 @@
     int value = 0;
     for (int i=0; i<3; i++){
         for (int j=0; j<4; j++) {
-            if (value == [dataArr count]){
+            if (value == [model.playurlsArr count]){
                 if (value == 0){
                     [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无播放地址" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+                }else{
+                    [self isShouldSetHiddenUnderEmptyView:YES];
                 }
                 return;
             }
-            NSMutableDictionary * dic = [dataArr objectAtIndex:value];
+            NSMutableDictionary * dic = [model.playurlsArr objectAtIndex:value];
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(16 + j*75, 20 + i*75, 60, 60);
             [button setBackgroundImage:LOADIMAGE([logoDic objectForKey:[dic objectForKey:@"source_type"]], kImageTypePNG) forState:UIControlStateNormal];

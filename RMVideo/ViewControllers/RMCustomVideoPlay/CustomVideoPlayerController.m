@@ -12,6 +12,7 @@
 #import "Flurry.h"
 #import "UIButton+EnlargeEdge.h"
 #import "RMPublicModel.h"
+#import "SVProgressHUD.h"
 
 #define kTopToolHeight 49
 #define kTopToolTitleHeight 35
@@ -113,9 +114,22 @@
 }
 
 - (void)buttonClick:(UIButton *)sender {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [self.player CustomViewWillDisappear];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.player pause];
+            [SVProgressHUD showErrorWithStatus:@"播放失败"];
+        }];
+    }else{
+        [self performSelector:@selector(delayViewDisAppear) withObject:nil afterDelay:1.5];
+    }
+}
+
+- (void)delayViewDisAppear{
     [self.player CustomViewWillDisappear];
     [self dismissViewControllerAnimated:YES completion:^{
         [self.player pause];
+        [SVProgressHUD showErrorWithStatus:@"播放失败"];
     }];
 }
 
