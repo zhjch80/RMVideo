@@ -107,7 +107,7 @@
     }
     RMTVDownView *downView = (RMTVDownView *)[self.contentScrollView viewWithTag:sender.tag-1+1000];
     downView.TVStateImageView.image = [UIImage imageNamed:@"tv_downing"];
-    model.downLoadURL = @"http://106.38.249.114/youku/6971C5A86B537797CB2AD5C37/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";
+    model.downLoadURL = model.downLoadURL;
     model.name = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
     model.downLoadState = @"等待缓存";
     model.totalMemory = @"0M";

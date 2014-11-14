@@ -184,6 +184,7 @@ typedef enum{
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
     
+    
     if ([UtilityFunc isConnectionAvailable] == 0){
         self.videoDownloadBtn.hidden = YES;
         self.videoShareBtn.hidden = YES;

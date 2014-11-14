@@ -227,7 +227,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
-    url = @"http://172.16.2.204/rmapi/index.php/vod/getVideoDetailById?video_id=11849&token=aaa";
+//    url = @"http://172.16.2.204/rmapi/index.php/vod/getVideoDetailById?video_id=11849&token=aaa";
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
