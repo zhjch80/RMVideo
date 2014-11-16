@@ -247,6 +247,9 @@ typedef enum{
             break;
         }
         case 2:{
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+                [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+            }
             [self dismissViewControllerAnimated:YES completion:^{
             }];
             break;
@@ -269,8 +272,9 @@ typedef enum{
     }else if (loadType == requestCustomType){
         RMPublicModel *model = [data objectAtIndex:0];
         if ([model.code integerValue] == 4001) {
-            NSLog(@"增加新的tag成功");
-            //TODO:添加到 我的频道
+            [SVProgressHUD showSuccessWithStatus:@"添加成功" duration:0.44];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"添加失败" duration:0.44];
         }
     }else if (loadType == requestAddTagToMyChannelType){
         

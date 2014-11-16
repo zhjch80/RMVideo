@@ -46,22 +46,6 @@
     return UIInterfaceOrientationPortrait;
 }
 
-//iOS7 上注释掉该方法
-
-//- (NSUInteger)supportedInterfaceOrientations{
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
-//        NSLog(@"123123123");
-//        return UIInterfaceOrientationLandscapeLeft;//只支持这一个方向(正常的方向)
-//    }else{
-//        
-//        NSLog(@"456456456");
-//        return UIInterfaceOrientationPortrait;//只支持这一个方向(正常的方向)
-//    }
-//}
-
-
-
-
 /*
 #pragma mark - Navigation
 

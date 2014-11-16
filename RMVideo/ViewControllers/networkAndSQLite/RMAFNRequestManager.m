@@ -227,7 +227,6 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
-//    url = @"http://172.16.2.204/rmapi/index.php/vod/getVideoDetailById?video_id=11849&token=aaa";
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -255,7 +254,7 @@
 }
 
 #pragma mark - 选择要下载的分集
-//TODO:todo...
+
 - (void)getDownloadDiversityWithID:(NSString *)ID{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDownloadDiversity];
@@ -316,6 +315,7 @@
             model.tag_id = [dict objectForKey:@"tag_id"];
             model.name = [dict objectForKey:@"name"];
             model.video_list = [dict objectForKey:@"video_list"];
+            model.rows = [responseObject objectForKey:@"rows"];
             [dataArray addObject:model];
         }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -335,12 +335,12 @@
     NSString *url = [self urlPathadress:Http_getMoreWonderfulVideoList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];
             model.tag_id = [dict objectForKey:@"tag_id"];
             model.name = [dict objectForKey:@"name"];
+            model.rows = [responseObject objectForKey:@"rows"];
             [dataArray addObject:model];
         }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -365,6 +365,7 @@
             RMPublicModel *model = [[RMPublicModel alloc] init];
             model.tag_id = [dict objectForKey:@"tag_id"];
             model.name = [dict objectForKey:@"name"];
+            model.rows = [responseObject objectForKey:@"rows"];
             [dataArray addObject:model];
         }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -472,6 +473,7 @@
         model.code = [responseObject objectForKey:@"code"];
         model.name = [responseObject objectForKey:@"name"];
         model.list = [responseObject objectForKey:@"list"];
+        model.rows = [responseObject objectForKey:@"rows"];
         [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];
@@ -508,7 +510,7 @@
     }];
 }
 
-#pragma mark - 明星：加入我的频道
+#pragma mark - 明星：加入我的频道   或者  主创人员 明星添加
 
 - (void)getJoinMyChannelWithToken:(NSString *)token andID:(NSString *)ID{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
@@ -548,6 +550,7 @@
                 model.name = [dict objectForKey:@"name"];
                 model.video_id =[dict objectForKey:@"video_id"];
                 model.video_type = [dict objectForKey:@"video_type"];
+                model.rows = [responseObject objectForKey:@"rows"];
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -622,6 +625,7 @@
         model.code = [responseObject objectForKey:@"code"];
         model.keyword = [responseObject objectForKey:@"keyword"];
         model.list = [responseObject objectForKey:@"list"];
+        model.rows = [responseObject objectForKey:@"rows"];
         [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];

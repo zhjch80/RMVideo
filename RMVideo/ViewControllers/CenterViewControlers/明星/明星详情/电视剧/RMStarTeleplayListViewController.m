@@ -60,7 +60,7 @@
 
 - (void)startRequest {
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
+    [request getTagOfVideoListWithID:self.star_id andVideoType:@"2" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
     request.delegate = self;
 }
 
@@ -196,7 +196,6 @@
 #pragma mark - StarDetailsCellDelegate
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView {
-    NSLog(@"电视剧");
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
     RMStarDetailsViewController * starDetailsDelegate = _starDetailsDelegate;
     videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
@@ -207,10 +206,10 @@
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (data.count == 0){
-        ((PullToRefreshTableView *)[self.view viewWithTag:202]).isCloseHeader = YES;
         ((PullToRefreshTableView *)[self.view viewWithTag:202]).isCloseFooter = YES;
         return;
     }
+    ((PullToRefreshTableView *)[self.view viewWithTag:202]).isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
     AltogetherRows = [model.rows integerValue];
     if (isRefresh){

@@ -13,6 +13,7 @@
 
 @interface RMStarSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,RMAFNRequestManagerDelegate> {
     NSInteger pageCount;
+    NSInteger AltogetherRows;               //总共有多少条数据
     BOOL isRefresh;
 }
 @property (nonatomic, strong) PullToRefreshTableView * tableView;
@@ -136,9 +137,13 @@
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            pageCount ++;
-            isRefresh = NO;
-            [self startRequest];
+            if (pageCount * 20 > AltogetherRows){
+                [self.tableView reloadData:YES];
+            }else{
+                pageCount ++;
+                isRefresh = NO;
+                [self startRequest];
+            }
             break;
         }
             
@@ -177,7 +182,12 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    if ([data count] == 0){
+        self.tableView.isCloseFooter =YES;
+    }
+    self.tableView.isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
+    AltogetherRows = [model.rows integerValue];
     if (isRefresh){
         [self.dataArr removeAllObjects];
         for (int i=0; i<[model.list count]; i++){

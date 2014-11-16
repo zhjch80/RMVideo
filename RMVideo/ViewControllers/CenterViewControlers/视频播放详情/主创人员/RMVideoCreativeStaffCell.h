@@ -41,6 +41,7 @@
 
 
 
+- (void)setImageWithImage:(UIImage *)image IdentifierString:(NSString *)tag AddMyChannel:(BOOL)isAdd;
 
 
 

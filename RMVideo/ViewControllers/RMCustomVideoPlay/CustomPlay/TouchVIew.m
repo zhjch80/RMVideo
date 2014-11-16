@@ -49,7 +49,7 @@ CGFloat constgestureMinimumTranslation =20.0;
         NSLog(@"上");
         
     }else{
-        NSLog(@"xia");
+        NSLog(@"下");
     }
 }
 

@@ -13,6 +13,7 @@
 
 @interface RMSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,RMAFNRequestManagerDelegate> {
     NSInteger pageCount;
+    NSInteger AltogetherRows;               //总共有多少条数据
     BOOL isRefresh;
     
 }
@@ -163,9 +164,13 @@
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            pageCount ++;
-            isRefresh = NO;
-            [self startRequest];
+            if (pageCount * 20 > AltogetherRows){
+                [self.tableView reloadData:YES];
+            }else{
+                pageCount ++;
+                isRefresh = NO;
+                [self startRequest];
+            }
             break;
         }
             
@@ -200,11 +205,17 @@
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)startRequest {
-    [self.manager getSearchStartWithName:[self.keyWord stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
+    [self.manager getSearchVideoWithKeyword:[self.keyWord stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    if ([data count] == 0){
+        self.tableView.isCloseFooter = YES;
+        return;
+    }
+    self.tableView.isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
+    AltogetherRows = [model.rows integerValue];
     if (isRefresh){
         [self.dataArr removeAllObjects];
         for (int i=0; i<[model.list count]; i++){

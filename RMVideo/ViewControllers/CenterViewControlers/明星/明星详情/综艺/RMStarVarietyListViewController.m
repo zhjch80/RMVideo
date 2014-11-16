@@ -61,7 +61,7 @@
 
 - (void)startRequest {
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
+    [request getTagOfVideoListWithID:self.star_id andVideoType:@"3" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
     request.delegate = self;
 }
 
@@ -204,10 +204,10 @@
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (data.count == 0){
-        ((PullToRefreshTableView *)[self.view viewWithTag:203]).isCloseHeader = YES;
         ((PullToRefreshTableView *)[self.view viewWithTag:203]).isCloseFooter = YES;
         return;
     }
+    ((PullToRefreshTableView *)[self.view viewWithTag:203]).isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
     AltogetherRows = [model.rows integerValue];
     if (isRefresh){

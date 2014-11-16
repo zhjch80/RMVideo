@@ -13,11 +13,18 @@
 #import "RMCustomPresentNavViewController.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 
+typedef enum{
+    requestAddCreativeStaffType = 1,
+    requestDeleteCreativeStaffType
+}LoadType;
+
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
     NSMutableDictionary * starTypeDic;
     NSInteger pageCount;
     BOOL isRefresh;
+    LoadType loadType;
+    RMImageView * rmImage;                  //获取点击cell的图片
 }
 
 @end
@@ -95,6 +102,14 @@
     cell.leftTitle.text = [dic_left objectForKey:@"name"];
     [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.leftAddImg.identifierString = [dic_left objectForKey:@"tag_id"];
+    cell.leftAddImg.indexPath = indexPath;
+//    if ([model_left.is_follow integerValue] == 0){
+//        cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+//        cell.starAddLeftImg.isAttentionStarState = 0;
+//    }else{
+//        cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+//        cell.starAddLeftImg.isAttentionStarState = 1;
+//    }
     cell.leftRotatingTitle.text = [starTypeDic objectForKey:[dic_left objectForKey:@"type"]];
     [UtilityFunc rotatingView:cell.leftRotatView];
     
@@ -106,6 +121,14 @@
         cell.centerTitle.text = [dic_center objectForKey:@"name"];
         [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
+        cell.centerAddImg.indexPath = indexPath;
+//        if ([model_left.is_follow integerValue] == 0){
+//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+//            cell.starAddLeftImg.isAttentionStarState = 0;
+//        }else{
+//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+//            cell.starAddLeftImg.isAttentionStarState = 1;
+//        }
         cell.centerRotatingTitle.text = [starTypeDic objectForKey:[dic_center objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.centerRotatView];
     }
@@ -118,6 +141,14 @@
         cell.rightTitle.text = [dic_right objectForKey:@"name"];
         [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
+        cell.rightAddImg.indexPath = indexPath;
+//        if ([model_left.is_follow integerValue] == 0){
+//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+//            cell.starAddLeftImg.isAttentionStarState = 0;
+//        }else{
+//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+//            cell.starAddLeftImg.isAttentionStarState = 1;
+//        }
         cell.rightRotatingTitle.text = [starTypeDic objectForKey:[dic_right objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.rightRotatView];
     }
@@ -127,6 +158,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 150;
 }
+
+#pragma mark - 添加或者删除 主创明星
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
     if ([UtilityFunc isConnectionAvailable] == 0){
@@ -141,10 +174,25 @@
         }];
         return;
     }
-    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-    [request getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
-    request.delegate = self;
+    if (imageView.identifierString){
+        if (imageView.isAttentionStarState == 0){
+            loadType = requestAddCreativeStaffType;
+            RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [request getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:imageView.identifierString];
+            request.delegate = self;
+            rmImage = imageView;
+        }else{
+            loadType = requestDeleteCreativeStaffType;
+            RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
+            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+            NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+            [requset getDeleteMyChannelWithTag:imageView.identifierString WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+            requset.delegate = self;
+            rmImage = imageView;
+        }
+    }else{
+    }
 }
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
@@ -201,11 +249,21 @@
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    
+    if (loadType == requestAddCreativeStaffType){
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        UIImage * image = [[UIImage alloc] init];
+        image = [UIImage imageNamed:@"mx_add_success_img"];
+        [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:YES];
+    }else if (loadType == requestDeleteCreativeStaffType){
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        UIImage * image = [[UIImage alloc] init];
+        image = [UIImage imageNamed:@"mx_add_img"];
+        [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:NO];
+    }
 }
 
 - (void)requestError:(NSError *)error {
-    
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

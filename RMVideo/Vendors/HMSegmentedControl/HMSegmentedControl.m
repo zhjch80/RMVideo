@@ -68,7 +68,6 @@
 }
 
 -(void)setDefaultsLabelTitle{
-    //NSLog(@"identifierType:%@",self.identifierType);
     if ([self.identifierType isEqualToString:@"starIdentifier"]){
         for (int i=0; i<self.sectionTitles.count; i++) {
             UIImageView * image;

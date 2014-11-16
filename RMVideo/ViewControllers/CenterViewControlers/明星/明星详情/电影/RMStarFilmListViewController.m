@@ -218,10 +218,10 @@
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (data.count == 0){
-        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseHeader = YES;
         ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
         return;
     }
+    ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
     AltogetherRows = [model.rows integerValue];
     dataArr = data;

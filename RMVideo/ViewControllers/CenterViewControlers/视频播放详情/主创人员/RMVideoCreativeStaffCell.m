@@ -27,4 +27,17 @@
     [self.delegate clickCreativeStaffCellAddMyChannelMethod:imageView];
 }
 
+- (void)setImageWithImage:(UIImage *)image IdentifierString:(NSString *)tag AddMyChannel:(BOOL)isAdd {
+    if ([self.leftAddImg.identifierString isEqualToString:tag]){
+        self.leftAddImg.image = image;
+        self.leftAddImg.isAttentionStarState = isAdd;
+    }else if ([self.centerAddImg.identifierString isEqualToString:tag]){
+        self.centerAddImg.image = image;
+        self.centerAddImg.isAttentionStarState = isAdd;
+    }else if ([self.rightAddImg.identifierString isEqualToString:tag]){
+        self.rightAddImg.image = image;
+        self.rightAddImg.isAttentionStarState = isAdd;
+    }
+}
+
 @end

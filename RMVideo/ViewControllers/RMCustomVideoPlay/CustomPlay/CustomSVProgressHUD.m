@@ -29,7 +29,6 @@
     }if (seconds<=0) {
         seconds = 0;
     }
-    NSLog(@"---%@",self.totalTimeString);
     self.beginLable.text = [NSString stringWithFormat:@"%d:%d",minutes,seconds];
     self.totalLable.text = [NSString stringWithFormat:@"/%@",self.totalTimeString];
 }
