@@ -11,7 +11,7 @@
 #import "CONST.h"
 
 //5 44  6+ 60    120
-static const CGFloat kHeightOfTopScrollView = 44.0f;
+//static const CGFloat kHeightOfTopScrollView = 44.0f;
 static const CGFloat kWidthOfButtonMargin = 15.0f;
 static const NSUInteger kTagOfRightSideButton = 999;
 
@@ -20,6 +20,13 @@ static const NSUInteger kTagOfRightSideButton = 999;
 #pragma mark - 初始化参数
 
 - (void)initValues {
+    
+    if(IS_IPHONE_6p_SCREEN){
+        kHeightOfTopScrollView = 54;
+    }
+    else{
+        kHeightOfTopScrollView = 44;
+    }
     //创建顶部可滑动的tab
     _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kHeightOfTopScrollView)];
     _topScrollView.delegate = self;
@@ -174,20 +181,23 @@ static const NSUInteger kTagOfRightSideButton = 999;
         //累计每个tab文字的长度
         //设置按钮尺寸
         //计算下一个tab的x偏移量
-        int count = 0;
+        int count = 0, value = 0;
         if(IS_IPHONE_6_SCREEN){
             count = 5;
         }
+        if (IS_IPHONE_6p_SCREEN){
+            value = 1.5;
+        }
         if ([_viewArray count] == 3){
             if (i==1){
+                //这个是第二个
                 button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 14+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
-//                button.backgroundColor = [UIColor blueColor];
             }else if (i==2){
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + 1+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
-//                button.backgroundColor = [UIColor cyanColor];
+                //这个是第三个
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + count-value, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
             }else{
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2- 11+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
-//                button.backgroundColor = [UIColor redColor];
+                //这个是第一个
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 11+count-value, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
             }
         }else{
             if (i==1){

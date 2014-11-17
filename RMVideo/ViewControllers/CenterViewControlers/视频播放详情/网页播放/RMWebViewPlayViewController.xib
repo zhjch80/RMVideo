@@ -22,7 +22,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9B-ui-B53">
-                            <rect key="frame" x="18" y="34" width="22" height="22"/>
+                            <rect key="frame" x="18" y="32" width="22" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="Ezr-fS-3jG"/>
                                 <constraint firstAttribute="width" constant="22" id="oTA-Ow-a3g"/>
@@ -49,7 +49,7 @@
                         <constraint firstAttribute="height" constant="64" id="7r0-J0-71V"/>
                         <constraint firstItem="J9B-ui-B53" firstAttribute="leading" secondItem="vPt-Yi-i7e" secondAttribute="leading" constant="18" id="G0j-x7-sqQ"/>
                         <constraint firstItem="5rY-RH-Vdb" firstAttribute="top" secondItem="vPt-Yi-i7e" secondAttribute="top" constant="35" id="HkK-ZJ-t2Y"/>
-                        <constraint firstItem="J9B-ui-B53" firstAttribute="top" secondItem="vPt-Yi-i7e" secondAttribute="top" constant="34" id="JwN-JF-D5K"/>
+                        <constraint firstItem="J9B-ui-B53" firstAttribute="top" secondItem="vPt-Yi-i7e" secondAttribute="top" constant="32" id="JwN-JF-D5K"/>
                         <constraint firstAttribute="trailing" secondItem="5rY-RH-Vdb" secondAttribute="trailing" constant="30" id="Or7-eO-bYU"/>
                         <constraint firstItem="5rY-RH-Vdb" firstAttribute="leading" secondItem="vPt-Yi-i7e" secondAttribute="leading" constant="48" id="b2u-4u-VJm"/>
                     </constraints>

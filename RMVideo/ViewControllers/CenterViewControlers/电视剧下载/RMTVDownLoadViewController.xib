@@ -26,10 +26,12 @@
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgR-BL-cvW">
                     <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                    <color key="backgroundColor" red="0.19607844948768616" green="0.19607844948768616" blue="0.19607844948768616" alpha="1" colorSpace="deviceRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="49" id="fe3-LI-Eb9"/>
                     </constraints>
-                    <state key="normal" backgroundImage="tv-down_all.png">
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="下载本页全部视频">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -57,7 +59,4 @@
             <point key="canvasLocation" x="149" y="408"/>
         </view>
     </objects>
-    <resources>
-        <image name="tv-down_all.png" width="617" height="95"/>
-    </resources>
 </document>

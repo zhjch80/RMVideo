@@ -1559,7 +1559,6 @@
 				1DAB0CF519EB647E0063A58E /* RefreshView */,
 				1DAB0CF119EB634D0063A58E /* ICViewPager */,
 				1D4D483219D7E16D00E3A50B /* UtilityFunc */,
-				1D4D48B219D8100F00E3A50B /* Tabbar */,
 				1D99745319E92D62007E53DB /* DBImageView */,
 				1D99741819E90814007E53DB /* SDiPhoneVersion */,
 				1D16BBF619E664D0008BBB08 /* MMDrawerController */,
@@ -1798,7 +1797,8 @@
 				1D5D0D251A119C4D00C83C49 /* RMCustomPresentNavViewController.h */,
 				1D5D0D261A119C4D00C83C49 /* RMCustomPresentNavViewController.m */,
 			);
-			path = Tabbar;
+			name = Tabbar;
+			path = ../Tabbar;
 			sourceTree = "<group>";
 		};
 		1D5B828D1A0E200A00A4A29B /* DropDownListView */ = {
@@ -2740,6 +2740,7 @@
 		1DAB0D1919EB64C80063A58E /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
+				1D4D48B219D8100F00E3A50B /* Tabbar */,
 				1DAB0D1A19EB64C80063A58E /* JSONKit.h */,
 				1DAB0D1B19EB64C80063A58E /* JSONKit.m */,
 			);

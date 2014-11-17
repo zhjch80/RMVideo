@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" id="DG5-6s-HqZ">
-                        <rect key="frame" x="131" y="7" width="37" height="20"/>
+                        <rect key="frame" x="131" y="6" width="37" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rotating_img" id="bbI-mY-5LF">
@@ -71,7 +71,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" id="Uz6-MT-bzE">
-                        <rect key="frame" x="249" y="7" width="37" height="20"/>
+                        <rect key="frame" x="249" y="6" width="37" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rotating_img" id="KEW-kE-jp6">

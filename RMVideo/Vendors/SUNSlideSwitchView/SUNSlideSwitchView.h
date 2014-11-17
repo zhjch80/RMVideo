@@ -25,6 +25,8 @@
     
     UIButton *_rigthSideButton;                     //右侧按钮
     
+    CGFloat kHeightOfTopScrollView;
+    
     __weak id<SUNSlideSwitchViewDelegate> _slideSwitchViewDelegate;
 }
 
