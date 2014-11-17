@@ -166,7 +166,7 @@
         [SVProgressHUD dismiss];
         
         self.TVdataArray = data;
-        [self headScrollviewAddBtnWithImage:[UIImage imageNamed:@"tv_download-test"] andBtnWidth:60];
+        [self headScrollviewAddBtnWithImage:[UIImage imageNamed:@"tv_download"] andBtnWidth:60];
         int count = 5,width = 50;
         if(IS_IPHONE_6_SCREEN||IS_IPHONE_6p_SCREEN){
             count = 6; width = 50;

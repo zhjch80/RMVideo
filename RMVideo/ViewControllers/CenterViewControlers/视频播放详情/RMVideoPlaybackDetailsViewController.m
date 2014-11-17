@@ -138,11 +138,11 @@ typedef enum{
                 blockSelf.videoBroadcastAddressCtl.videoPlayDelegate = blockSelf;
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
                 if (blockSelf.dataArr.count == 0){
-                    
                 }else{
                     RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
                     [blockSelf refreshBroadcastAddressDate:model];
                 }
+                
                 break;
             }
             case 2:{
@@ -159,7 +159,6 @@ typedef enum{
                 [blockSelf.view addSubview:blockSelf.videoCreativeStaffCtl.view];
                 blockSelf.videoCreativeStaffCtl.videoPlayBackDetailsDelegate = blockSelf;
                 if (blockSelf.dataArr.count == 0){
-                    
                 }else{
                     RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
                     [blockSelf refreshCreativeStaffDate:model];
@@ -184,7 +183,6 @@ typedef enum{
     [_segmentedControl setSelectionIndicatorColor:[UIColor clearColor]];
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
-    
     
     if ([UtilityFunc isConnectionAvailable] == 0){
         self.videoDownloadBtn.hidden = YES;

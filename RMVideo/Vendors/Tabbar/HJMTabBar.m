@@ -104,7 +104,13 @@
             btn.tag = i ;
             if (btn.tag == 0){
                 btn.selected = YES;
-                [btn setBackgroundImage:LOADIMAGE(@"RecommendedDaily_red", kImageTypePNG) forState:UIControlStateNormal];
+                if (IS_IPHONE_6p_SCREEN){
+                    [btn setBackgroundImage:LOADIMAGE(@"RecommendedDaily_red_6p", kImageTypePNG) forState:UIControlStateNormal];
+                }else if (IS_IPHONE_6_SCREEN){
+                    [btn setBackgroundImage:LOADIMAGE(@"RecommendedDaily_red_6", kImageTypePNG) forState:UIControlStateNormal];
+                }else{
+                    [btn setBackgroundImage:LOADIMAGE(@"RecommendedDaily_red", kImageTypePNG) forState:UIControlStateNormal];
+                }
             }else {
                 btn.selected = NO;
             }
