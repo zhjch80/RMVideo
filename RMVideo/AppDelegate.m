@@ -167,9 +167,23 @@
     
     NSArray * ctlsArr = [NSArray arrayWithObjects:recommendedDailyNav, soHotListNav, starNav, myChannelNav, nil];
     
-    NSArray * normalImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_black", @"SoHotList_black", @"Star_black", @"MyChannel_black", nil];
+    NSArray * normalImageArray;
+    NSArray * selectedImageArray;
     
-    NSArray * selectedImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_red", @"SoHotList_red", @"Star_red", @"MyChannel_red", nil];
+    if (IS_IPHONE_6_SCREEN){
+        normalImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_black_6", @"SoHotList_black_6", @"Star_black_6", @"MyChannel_black_6", nil];
+        
+        selectedImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_red_6", @"SoHotList_red_6", @"Star_red_6", @"MyChannel_red_6", nil];
+    }else if (IS_IPHONE_6p_SCREEN){
+        normalImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_black_6p", @"SoHotList_black_6p", @"Star_black_6p", @"MyChannel_black_6p", nil];
+        
+        selectedImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_red_6p", @"SoHotList_red_6p", @"Star_red_6p", @"MyChannel_red_6p", nil];
+    }else{
+        normalImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_black", @"SoHotList_black", @"Star_black", @"MyChannel_black", nil];
+        
+        selectedImageArray = [[NSArray alloc] initWithObjects:@"RecommendedDaily_red", @"SoHotList_red", @"Star_red", @"MyChannel_red", nil];
+    }
+
     
     HJMTabBar * customTab = [[HJMTabBar alloc] init];
     [customTab setTabWithArray:ctlsArr NormalImageArray:normalImageArray SelectedImageArray:selectedImageArray];
