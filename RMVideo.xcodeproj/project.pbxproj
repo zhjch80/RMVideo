@@ -401,6 +401,22 @@
 		1DD39F991A15E500000A215A /* rb_month_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F931A15E500000A215A /* rb_month_6p.png */; };
 		1DD39F9A1A15E500000A215A /* rb_week_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F941A15E500000A215A /* rb_week_6.png */; };
 		1DD39F9B1A15E500000A215A /* rb_week_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F951A15E500000A215A /* rb_week_6p.png */; };
+		1DD8C8DB1A19B67B00D4B128 /* RecommendedDaily_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D31A19B67B00D4B128 /* RecommendedDaily_red_6.png */; };
+		1DD8C8DC1A19B67B00D4B128 /* RecommendedDaily_black_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D41A19B67B00D4B128 /* RecommendedDaily_black_6.png */; };
+		1DD8C8DD1A19B67B00D4B128 /* Star_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D51A19B67B00D4B128 /* Star_red_6.png */; };
+		1DD8C8DE1A19B67B00D4B128 /* Star_black_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D61A19B67B00D4B128 /* Star_black_6.png */; };
+		1DD8C8DF1A19B67B00D4B128 /* SoHotList_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D71A19B67B00D4B128 /* SoHotList_red_6.png */; };
+		1DD8C8E01A19B67B00D4B128 /* SoHotList_black_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D81A19B67B00D4B128 /* SoHotList_black_6.png */; };
+		1DD8C8E11A19B67B00D4B128 /* MyChannel_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D91A19B67B00D4B128 /* MyChannel_red_6.png */; };
+		1DD8C8E21A19B67B00D4B128 /* MyChannel_black_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8DA1A19B67B00D4B128 /* MyChannel_black_6.png */; };
+		1DD8C8EB1A19B77400D4B128 /* RecommendedDaily_red_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E31A19B77400D4B128 /* RecommendedDaily_red_6p.png */; };
+		1DD8C8EC1A19B77400D4B128 /* RecommendedDaily_black_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E41A19B77400D4B128 /* RecommendedDaily_black_6p.png */; };
+		1DD8C8ED1A19B77400D4B128 /* Star_red_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E51A19B77400D4B128 /* Star_red_6p.png */; };
+		1DD8C8EE1A19B77400D4B128 /* Star_black_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E61A19B77400D4B128 /* Star_black_6p.png */; };
+		1DD8C8EF1A19B77400D4B128 /* SoHotList_red_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E71A19B77400D4B128 /* SoHotList_red_6p.png */; };
+		1DD8C8F01A19B77400D4B128 /* SoHotList_black_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E81A19B77400D4B128 /* SoHotList_black_6p.png */; };
+		1DD8C8F11A19B77400D4B128 /* MyChannel_red_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8E91A19B77400D4B128 /* MyChannel_red_6p.png */; };
+		1DD8C8F21A19B77400D4B128 /* MyChannel_black_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8EA1A19B77400D4B128 /* MyChannel_black_6p.png */; };
 		1DDBB6AE1A0CD9DE003B9845 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6A51A0CD9DE003B9845 /* EGOCache.m */; };
 		1DDBB6AF1A0CD9DE003B9845 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6A81A0CD9DE003B9845 /* EGOImageLoadConnection.m */; };
 		1DDBB6B01A0CD9DE003B9845 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDBB6AA1A0CD9DE003B9845 /* EGOImageLoader.m */; };
@@ -490,14 +506,6 @@
 		918DE7301A0651D100287E06 /* uncancle_select_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE7291A0651D100287E06 /* uncancle_select_all.png */; };
 		918DE7311A0651D100287E06 /* undelect_all_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE72A1A0651D100287E06 /* undelect_all_btn.png */; };
 		918DE7321A0651D100287E06 /* unselect_all_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE72B1A0651D100287E06 /* unselect_all_btn.png */; };
-		91908CAB19FA30E400C3DF09 /* MyChannel_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA319FA30E400C3DF09 /* MyChannel_black@3x.png */; };
-		91908CAC19FA30E400C3DF09 /* MyChannel_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA419FA30E400C3DF09 /* MyChannel_red@3x.png */; };
-		91908CAD19FA30E400C3DF09 /* RecommendedDaily_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA519FA30E400C3DF09 /* RecommendedDaily_black@3x.png */; };
-		91908CAE19FA30E400C3DF09 /* RecommendedDaily_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA619FA30E400C3DF09 /* RecommendedDaily_red@3x.png */; };
-		91908CAF19FA30E400C3DF09 /* SoHotList_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA719FA30E400C3DF09 /* SoHotList_black@3x.png */; };
-		91908CB019FA30E400C3DF09 /* SoHotList_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA819FA30E400C3DF09 /* SoHotList_red@3x.png */; };
-		91908CB119FA30E400C3DF09 /* Star_black@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CA919FA30E400C3DF09 /* Star_black@3x.png */; };
-		91908CB219FA30E400C3DF09 /* Star_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CAA19FA30E400C3DF09 /* Star_red@3x.png */; };
 		91908CC519FA355A00C3DF09 /* downLoading_noselectImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CB519FA355A00C3DF09 /* downLoading_noselectImage@2x.png */; };
 		91908CC619FA355A00C3DF09 /* downLoading_selectImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CB619FA355A00C3DF09 /* downLoading_selectImage@2x.png */; };
 		91908CC719FA355A00C3DF09 /* finish_downLoad_noselectImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91908CB719FA355A00C3DF09 /* finish_downLoad_noselectImage@2x.png */; };
@@ -1113,6 +1121,22 @@
 		1DD39F931A15E500000A215A /* rb_month_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_month_6p.png; sourceTree = "<group>"; };
 		1DD39F941A15E500000A215A /* rb_week_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_week_6.png; sourceTree = "<group>"; };
 		1DD39F951A15E500000A215A /* rb_week_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_week_6p.png; sourceTree = "<group>"; };
+		1DD8C8D31A19B67B00D4B128 /* RecommendedDaily_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_red_6.png; sourceTree = "<group>"; };
+		1DD8C8D41A19B67B00D4B128 /* RecommendedDaily_black_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_black_6.png; sourceTree = "<group>"; };
+		1DD8C8D51A19B67B00D4B128 /* Star_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_red_6.png; sourceTree = "<group>"; };
+		1DD8C8D61A19B67B00D4B128 /* Star_black_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_black_6.png; sourceTree = "<group>"; };
+		1DD8C8D71A19B67B00D4B128 /* SoHotList_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoHotList_red_6.png; sourceTree = "<group>"; };
+		1DD8C8D81A19B67B00D4B128 /* SoHotList_black_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoHotList_black_6.png; sourceTree = "<group>"; };
+		1DD8C8D91A19B67B00D4B128 /* MyChannel_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyChannel_red_6.png; sourceTree = "<group>"; };
+		1DD8C8DA1A19B67B00D4B128 /* MyChannel_black_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyChannel_black_6.png; sourceTree = "<group>"; };
+		1DD8C8E31A19B77400D4B128 /* RecommendedDaily_red_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_red_6p.png; sourceTree = "<group>"; };
+		1DD8C8E41A19B77400D4B128 /* RecommendedDaily_black_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_black_6p.png; sourceTree = "<group>"; };
+		1DD8C8E51A19B77400D4B128 /* Star_red_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_red_6p.png; sourceTree = "<group>"; };
+		1DD8C8E61A19B77400D4B128 /* Star_black_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_black_6p.png; sourceTree = "<group>"; };
+		1DD8C8E71A19B77400D4B128 /* SoHotList_red_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoHotList_red_6p.png; sourceTree = "<group>"; };
+		1DD8C8E81A19B77400D4B128 /* SoHotList_black_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoHotList_black_6p.png; sourceTree = "<group>"; };
+		1DD8C8E91A19B77400D4B128 /* MyChannel_red_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyChannel_red_6p.png; sourceTree = "<group>"; };
+		1DD8C8EA1A19B77400D4B128 /* MyChannel_black_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyChannel_black_6p.png; sourceTree = "<group>"; };
 		1DDBB6A41A0CD9DE003B9845 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		1DDBB6A51A0CD9DE003B9845 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		1DDBB6A71A0CD9DE003B9845 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
@@ -1230,14 +1254,6 @@
 		918DE7291A0651D100287E06 /* uncancle_select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncancle_select_all.png; sourceTree = "<group>"; };
 		918DE72A1A0651D100287E06 /* undelect_all_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undelect_all_btn.png; sourceTree = "<group>"; };
 		918DE72B1A0651D100287E06 /* unselect_all_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselect_all_btn.png; sourceTree = "<group>"; };
-		91908CA319FA30E400C3DF09 /* MyChannel_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyChannel_black@3x.png"; sourceTree = "<group>"; };
-		91908CA419FA30E400C3DF09 /* MyChannel_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyChannel_red@3x.png"; sourceTree = "<group>"; };
-		91908CA519FA30E400C3DF09 /* RecommendedDaily_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecommendedDaily_black@3x.png"; sourceTree = "<group>"; };
-		91908CA619FA30E400C3DF09 /* RecommendedDaily_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RecommendedDaily_red@3x.png"; sourceTree = "<group>"; };
-		91908CA719FA30E400C3DF09 /* SoHotList_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SoHotList_black@3x.png"; sourceTree = "<group>"; };
-		91908CA819FA30E400C3DF09 /* SoHotList_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SoHotList_red@3x.png"; sourceTree = "<group>"; };
-		91908CA919FA30E400C3DF09 /* Star_black@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Star_black@3x.png"; sourceTree = "<group>"; };
-		91908CAA19FA30E400C3DF09 /* Star_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Star_red@3x.png"; sourceTree = "<group>"; };
 		91908CB519FA355A00C3DF09 /* downLoading_noselectImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downLoading_noselectImage@2x.png"; sourceTree = "<group>"; };
 		91908CB619FA355A00C3DF09 /* downLoading_selectImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downLoading_selectImage@2x.png"; sourceTree = "<group>"; };
 		91908CB719FA355A00C3DF09 /* finish_downLoad_noselectImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finish_downLoad_noselectImage@2x.png"; sourceTree = "<group>"; };
@@ -2760,14 +2776,6 @@
 		1DAB0DAB19ECC2EC0063A58E /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				91908CA319FA30E400C3DF09 /* MyChannel_black@3x.png */,
-				91908CA419FA30E400C3DF09 /* MyChannel_red@3x.png */,
-				91908CA519FA30E400C3DF09 /* RecommendedDaily_black@3x.png */,
-				91908CA619FA30E400C3DF09 /* RecommendedDaily_red@3x.png */,
-				91908CA719FA30E400C3DF09 /* SoHotList_black@3x.png */,
-				91908CA819FA30E400C3DF09 /* SoHotList_red@3x.png */,
-				91908CA919FA30E400C3DF09 /* Star_black@3x.png */,
-				91908CAA19FA30E400C3DF09 /* Star_red@3x.png */,
 				1D4C364719F6051800AC8F1E /* MyChannel_black.png */,
 				1D4C364819F6051800AC8F1E /* MyChannel_red.png */,
 				1D4C364919F6051800AC8F1E /* RecommendedDaily_black.png */,
@@ -2784,6 +2792,22 @@
 				1DAB0DB119ECC2EC0063A58E /* SoHotList_red@2x.png */,
 				1DAB0DB219ECC2EC0063A58E /* Star_black@2x.png */,
 				1DAB0DB319ECC2EC0063A58E /* Star_red@2x.png */,
+				1DD8C8D31A19B67B00D4B128 /* RecommendedDaily_red_6.png */,
+				1DD8C8D41A19B67B00D4B128 /* RecommendedDaily_black_6.png */,
+				1DD8C8D51A19B67B00D4B128 /* Star_red_6.png */,
+				1DD8C8D61A19B67B00D4B128 /* Star_black_6.png */,
+				1DD8C8D71A19B67B00D4B128 /* SoHotList_red_6.png */,
+				1DD8C8D81A19B67B00D4B128 /* SoHotList_black_6.png */,
+				1DD8C8D91A19B67B00D4B128 /* MyChannel_red_6.png */,
+				1DD8C8DA1A19B67B00D4B128 /* MyChannel_black_6.png */,
+				1DD8C8E31A19B77400D4B128 /* RecommendedDaily_red_6p.png */,
+				1DD8C8E41A19B77400D4B128 /* RecommendedDaily_black_6p.png */,
+				1DD8C8E51A19B77400D4B128 /* Star_red_6p.png */,
+				1DD8C8E61A19B77400D4B128 /* Star_black_6p.png */,
+				1DD8C8E71A19B77400D4B128 /* SoHotList_red_6p.png */,
+				1DD8C8E81A19B77400D4B128 /* SoHotList_black_6p.png */,
+				1DD8C8E91A19B77400D4B128 /* MyChannel_red_6p.png */,
+				1DD8C8EA1A19B77400D4B128 /* MyChannel_black_6p.png */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -3154,6 +3178,7 @@
 				1D4FC51E19F8B08E00366F31 /* onVoice_4@2x.png in Resources */,
 				91B2C23B1A07173D001F0220 /* cancle_select_all@3x.png in Resources */,
 				1DD39F4A1A15A6B5000A215A /* setup.png in Resources */,
+				1DD8C8E21A19B67B00D4B128 /* MyChannel_black_6.png in Resources */,
 				916E1F521A1308D200AD4400 /* no_save_history@3x.png in Resources */,
 				1D8481851A03633400A92879 /* RMVideoCreativeStaffViewController.xib in Resources */,
 				916E1F511A1308D200AD4400 /* no_save_history@2x.png in Resources */,
@@ -3172,6 +3197,7 @@
 				918DE7101A062BFD00287E06 /* teleplay_unSelected@3x.png in Resources */,
 				1D4C35E519F5F8F500AC8F1E /* tv-down_all.png in Resources */,
 				91908CCE19FA355A00C3DF09 /* start_all_downLoad_image@2x.png in Resources */,
+				1DD8C8EB1A19B77400D4B128 /* RecommendedDaily_red_6p.png in Resources */,
 				1D4C35D919F5F8E000AC8F1E /* Default-568h.png in Resources */,
 				1D357CC61A0A1CDF000C5C44 /* vd_collectionRedImg@3x.png in Resources */,
 				1D4C363F19F6050700AC8F1E /* mx_rateEmpty_img.png in Resources */,
@@ -3185,6 +3211,7 @@
 				912C099919F8D79E006B6305 /* toppaiming.png in Resources */,
 				1DDBB6C01A0CFB2D003B9845 /* customBtn_img@3x.png in Resources */,
 				1D84818B1A03633400A92879 /* RMSetUpTableViewCell.xib in Resources */,
+				1DD8C8EC1A19B77400D4B128 /* RecommendedDaily_black_6p.png in Resources */,
 				91908CC619FA355A00C3DF09 /* downLoading_selectImage@2x.png in Resources */,
 				916E1F4A1A1308D200AD4400 /* no_cashe_video.@2x.png in Resources */,
 				91B2C2401A07173D001F0220 /* select_all_btn@2x.png in Resources */,
@@ -3244,7 +3271,9 @@
 				1DD39F841A15D588000A215A /* rb_day_4@2x.png in Resources */,
 				1D8481591A03633400A92879 /* RMDailyTVViewController.xib in Resources */,
 				1D4C35FC19F5F91800AC8F1E /* tv_download-test.png in Resources */,
+				1DD8C8DB1A19B67B00D4B128 /* RecommendedDaily_red_6.png in Resources */,
 				1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */,
+				1DD8C8E11A19B67B00D4B128 /* MyChannel_red_6.png in Resources */,
 				1DD39F371A15A2DA000A215A /* vd_loadImg@2x.png in Resources */,
 				1D84815F1A03633400A92879 /* RMMyChannelViewController.xib in Resources */,
 				1D84816E1A03633400A92879 /* RMStarDetailsCell.xib in Resources */,
@@ -3283,7 +3312,6 @@
 				1DED75C01A0B59BF004ADBD1 /* dianshiju@3.png in Resources */,
 				91908CD219FA355A00C3DF09 /* 正在缓存的文件夹@2x.png in Resources */,
 				1D357CB91A09D863000C5C44 /* 榜单.png in Resources */,
-				91908CAE19FA30E400C3DF09 /* RecommendedDaily_red@3x.png in Resources */,
 				1D4C365219F6051800AC8F1E /* RecommendedDaily_red.png in Resources */,
 				918DE7061A0628D500287E06 /* tijiao@3x.png in Resources */,
 				91D4EC8019FB7FF9005E9235 /* pd_accessoryType_red.png in Resources */,
@@ -3292,13 +3320,14 @@
 				1D7117B619EFBD3D0007D393 /* pd_accessoryType_red@2x.png in Resources */,
 				1D84817C1A03633400A92879 /* RMLoginViewController.xib in Resources */,
 				1D4FC51C19F8B08E00366F31 /* onVoice_2@2x.png in Resources */,
-				91908CB219FA30E400C3DF09 /* Star_red@3x.png in Resources */,
 				1DD39F361A15A2DA000A215A /* vd_loadImg.png in Resources */,
 				1DED76301A0C51DB004ADBD1 /* pause.png in Resources */,
 				91908CC819FA355A00C3DF09 /* finish_downLoad_selectImage@2x.png in Resources */,
+				1DD8C8DD1A19B67B00D4B128 /* Star_red_6.png in Resources */,
 				916E1F4E1A1308D200AD4400 /* no_play_history@2x.png in Resources */,
 				918DE70E1A062BFD00287E06 /* movie_unSelected@3x.png in Resources */,
 				1D71172919EE45180007D393 /* backup_img@2x.png in Resources */,
+				1DD8C8DE1A19B67B00D4B128 /* Star_black_6.png in Resources */,
 				1DD39F1A1A1351FD000A215A /* UserBehaviorList.rtf in Resources */,
 				1D71172D19EE68270007D393 /* mx_fold@2x.png in Resources */,
 				1D847F371A0324D000A92879 /* UMShareEditViewController.xib in Resources */,
@@ -3321,6 +3350,8 @@
 				918DE72E1A0651D100287E06 /* nodelect_all_btn.png in Resources */,
 				1D4FC51519F8B08200366F31 /* onVoice_3.png in Resources */,
 				1DD39F571A15A7E4000A215A /* logo_pptv.png in Resources */,
+				1DD8C8EF1A19B77400D4B128 /* SoHotList_red_6p.png in Resources */,
+				1DD8C8EE1A19B77400D4B128 /* Star_black_6p.png in Resources */,
 				1DAB0D0F19EB647E0063A58E /* arrow_upipad.png in Resources */,
 				1D4D477419D7AADA00E3A50B /* Images.xcassets in Resources */,
 				91908CDE19FA3C3300C3DF09 /* complete_btn_image.png in Resources */,
@@ -3347,14 +3378,17 @@
 				91B2C23F1A07173D001F0220 /* nodelect_all_btn@3x.png in Resources */,
 				91D4EC7F19FB7FF9005E9235 /* pd_accessoryType_gray.png in Resources */,
 				1DD39F5F1A15A81E000A215A /* logo_sgw.png in Resources */,
+				1DD8C8E01A19B67B00D4B128 /* SoHotList_black_6.png in Resources */,
 				91D4EC8219FB81B4005E9235 /* open_all_back_image@2x.png in Resources */,
 				1D4FC51419F8B08200366F31 /* onVoice_2.png in Resources */,
 				1D84819F1A03633400A92879 /* RMMoreAPPTableViewCell.xib in Resources */,
 				1D4C362619F6050700AC8F1E /* backup_img.png in Resources */,
 				1DDBB6BE1A0CFB2D003B9845 /* customBtn_img.png in Resources */,
+				1DD8C8F01A19B77400D4B128 /* SoHotList_black_6p.png in Resources */,
 				1D357CC71A0A1CDF000C5C44 /* vd_collectionWhiteImg.png in Resources */,
 				91B2C2431A07173D001F0220 /* uncancle_select_all@3x.png in Resources */,
 				1DAB0DB719ECC2EC0063A58E /* RecommendedDaily_red@2x.png in Resources */,
+				1DD8C8DF1A19B67B00D4B128 /* SoHotList_red_6.png in Resources */,
 				91B2C2451A07173D001F0220 /* undelect_all_btn@3x.png in Resources */,
 				1D4C365119F6051800AC8F1E /* RecommendedDaily_black.png in Resources */,
 				91908CC919FA355A00C3DF09 /* no-select_cellImage@2x.png in Resources */,
@@ -3363,7 +3397,6 @@
 				1D5B829C1A0E202500A4A29B /* down_dark.png in Resources */,
 				1D5D0D161A10C27300C83C49 /* RMStarDetailsCell_6p.xib in Resources */,
 				1DD39F5E1A15A81E000A215A /* logo_sgw@2x.png in Resources */,
-				91908CAB19FA30E400C3DF09 /* MyChannel_black@3x.png in Resources */,
 				1D84815B1A03633400A92879 /* RMDailyVarietyViewController.xib in Resources */,
 				1D4C365019F6051800AC8F1E /* MyChannel_red.png in Resources */,
 				1D4C366019F6052E00AC8F1E /* mx_searchBar.png in Resources */,
@@ -3372,11 +3405,11 @@
 				1D84816A1A03633400A92879 /* RMStarCell.xib in Resources */,
 				1DAB0D0A19EB647E0063A58E /* arrow_down1.png in Resources */,
 				9195B4D31A03767B005ED51B /* RMShouldSeeTVViewController.xib in Resources */,
+				1DD8C8DC1A19B67B00D4B128 /* RecommendedDaily_black_6.png in Resources */,
 				1DAB0D1319EB647E0063A58E /* blueArrow_up@2x.png in Resources */,
 				1D71171E19EE17A10007D393 /* mx_searchBar@2x.png in Resources */,
 				918DE72F1A0651D100287E06 /* select_all_btn.png in Resources */,
 				1DD39F321A15A2A9000A215A /* tv_downing.png in Resources */,
-				91908CAD19FA30E400C3DF09 /* RecommendedDaily_black@3x.png in Resources */,
 				1D71175619EF9A2E0007D393 /* tv_back_imge@2x.png in Resources */,
 				1DD39F5B1A15A802000A215A /* logo_xlkk.png in Resources */,
 				1DD39F6E1A15A885000A215A /* logo_ls@2x.png in Resources */,
@@ -3388,6 +3421,7 @@
 				1D71171119ED27230007D393 /* paly_bg_img@2x.png in Resources */,
 				918DE7311A0651D100287E06 /* undelect_all_btn.png in Resources */,
 				91B2C23A1A07173D001F0220 /* cancle_select_all@2x.png in Resources */,
+				1DD8C8F11A19B77400D4B128 /* MyChannel_red_6p.png in Resources */,
 				1D4C363919F6050700AC8F1E /* logo_weibo.png in Resources */,
 				1D847F3B1A0324D000A92879 /* UMSShareListController.xib in Resources */,
 				1DED75C41A0B59BF004ADBD1 /* jr_Variety.png in Resources */,
@@ -3401,8 +3435,6 @@
 				1DDBB6BB1A0CFB2D003B9845 /* changeBtn_img.png in Resources */,
 				91D4EC8C19FB82E1005E9235 /* start_all_downLoad_image.png in Resources */,
 				1D8481761A03633400A92879 /* RMStarVarietyListViewController.xib in Resources */,
-				91908CB119FA30E400C3DF09 /* Star_black@3x.png in Resources */,
-				91908CAF19FA30E400C3DF09 /* SoHotList_black@3x.png in Resources */,
 				1D8481AB1A03633400A92879 /* RightMenuViewController.xib in Resources */,
 				1D4FC51B19F8B08E00366F31 /* onVoice_1@2x.png in Resources */,
 				1D84817A1A03633400A92879 /* RMTVDownView.xib in Resources */,
@@ -3422,10 +3454,10 @@
 				1D9CB9B41A10655A00F185B1 /* RMMyChannelCell_6.xib in Resources */,
 				1DD39F3F1A15A38F000A215A /* pause_all_downLoad_Image@2x.png in Resources */,
 				1DD39F2F1A15A26F000A215A /* tv_down_succes@2x.png in Resources */,
+				1DD8C8ED1A19B77400D4B128 /* Star_red_6p.png in Resources */,
 				1D84814D1A03633400A92879 /* RMRecommendedDailyTableViewCell.xib in Resources */,
 				1D357CB51A09D863000C5C44 /* sp_loadingImg.png in Resources */,
 				913D165B1A01FF78000A50E2 /* file_before_Image.png in Resources */,
-				91908CAC19FA30E400C3DF09 /* MyChannel_red@3x.png in Resources */,
 				1DD39F471A15A529000A215A /* search@2x.png in Resources */,
 				912C099519F8D79E006B6305 /* movie_unSelected.png in Resources */,
 				1D4C365519F6051800AC8F1E /* Star_black.png in Resources */,
@@ -3465,7 +3497,6 @@
 				1D5B829D1A0E202500A4A29B /* down_dark@2x.png in Resources */,
 				9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */,
 				1D847F3A1A0324D000A92879 /* UMSnsAccountViewController.xib in Resources */,
-				91908CB019FA30E400C3DF09 /* SoHotList_red@3x.png in Resources */,
 				91B2C2461A07173D001F0220 /* unselect_all_btn@2x.png in Resources */,
 				1D71170519ED26000007D393 /* cell_accessoryType_red.png in Resources */,
 				912C099719F8D79E006B6305 /* teleplay_selected.png in Resources */,
@@ -3477,6 +3508,7 @@
 				1DD39F981A15E500000A215A /* rb_month_6.png in Resources */,
 				91B2C23E1A07173D001F0220 /* nodelect_all_btn@2x.png in Resources */,
 				1D8481A71A03633400A92879 /* LeftMenuViewController.xib in Resources */,
+				1DD8C8F21A19B77400D4B128 /* MyChannel_black_6p.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
