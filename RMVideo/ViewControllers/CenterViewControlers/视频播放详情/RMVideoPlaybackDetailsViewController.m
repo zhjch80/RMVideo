@@ -195,6 +195,7 @@ typedef enum{
         NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
         [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
         request.delegate = self;
+        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
     }
 }
 
@@ -386,6 +387,7 @@ typedef enum{
     if (loadType == requestVideoContentType) {
         self.dataArr = data;
         [self refreshVideoHeadView];
+        [SVProgressHUD dismiss];
     }else if (loadType == requestAddVideoCollectlType) {
         [self.videoCollectionBtn setImage:LOADIMAGE(@"vd_collectionRedImg", kImageTypePNG) forState:UIControlStateNormal];
         isCollect = YES;
@@ -401,6 +403,7 @@ typedef enum{
     self.videoShareBtn.hidden = YES;
     self.videoCollectionBtn.hidden = YES;
     self.videoPlayImg.hidden = YES;
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {
