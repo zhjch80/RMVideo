@@ -103,13 +103,13 @@ typedef enum{
     [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.leftAddImg.identifierString = [dic_left objectForKey:@"tag_id"];
     cell.leftAddImg.indexPath = indexPath;
-//    if ([model_left.is_follow integerValue] == 0){
-//        cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
-//        cell.starAddLeftImg.isAttentionStarState = 0;
-//    }else{
-//        cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
-//        cell.starAddLeftImg.isAttentionStarState = 1;
-//    }
+    if ([[dic_left objectForKey:@"status"] integerValue] == 0){
+        cell.leftAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+        cell.leftAddImg.isAttentionStarState = 0;
+    }else{
+        cell.leftAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+        cell.leftAddImg.isAttentionStarState = 1;
+    }
     cell.leftRotatingTitle.text = [starTypeDic objectForKey:[dic_left objectForKey:@"type"]];
     [UtilityFunc rotatingView:cell.leftRotatView];
     
@@ -122,13 +122,13 @@ typedef enum{
         [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
         cell.centerAddImg.indexPath = indexPath;
-//        if ([model_left.is_follow integerValue] == 0){
-//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
-//            cell.starAddLeftImg.isAttentionStarState = 0;
-//        }else{
-//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
-//            cell.starAddLeftImg.isAttentionStarState = 1;
-//        }
+        if ([[dic_center objectForKey:@"status"] integerValue] == 0){
+            cell.centerAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+            cell.centerAddImg.isAttentionStarState = 0;
+        }else{
+            cell.centerAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+            cell.centerAddImg.isAttentionStarState = 1;
+        }
         cell.centerRotatingTitle.text = [starTypeDic objectForKey:[dic_center objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.centerRotatView];
     }
@@ -142,13 +142,13 @@ typedef enum{
         [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
         cell.rightAddImg.indexPath = indexPath;
-//        if ([model_left.is_follow integerValue] == 0){
-//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
-//            cell.starAddLeftImg.isAttentionStarState = 0;
-//        }else{
-//            cell.starAddLeftImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
-//            cell.starAddLeftImg.isAttentionStarState = 1;
-//        }
+        if ([[dic_right objectForKey:@"status"] integerValue] == 0){
+            cell.rightAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
+            cell.rightAddImg.isAttentionStarState = 0;
+        }else{
+            cell.rightAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
+            cell.rightAddImg.isAttentionStarState = 1;
+        }
         cell.rightRotatingTitle.text = [starTypeDic objectForKey:[dic_right objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.rightRotatView];
     }
