@@ -135,13 +135,13 @@
     
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                           COLOR_RGB(53, 55, 76),
-                                                          UITextAttributeTextColor,
+                                                          NSForegroundColorAttributeName,
                                                           COLOR_RGB(0, 0, 0),
-                                                          UITextAttributeTextShadowColor,
+                                                          NSShadowAttributeName,
                                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)],
-                                                          UITextAttributeTextShadowOffset,
+                                                          NSShadowAttributeName,
                                                           [UIFont systemFontOfSize:18.0f],
-                                                          UITextAttributeFont,nil]];
+                                                          NSForegroundColorAttributeName,nil]];
     if (IS_IOS7){
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
         [[UINavigationBar appearance] setBarTintColor:NAVI_COLOR];

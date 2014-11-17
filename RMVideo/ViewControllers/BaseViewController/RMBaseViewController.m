@@ -32,7 +32,8 @@
         self.extendedLayoutIncludesOpaqueBars=NO;
         self.automaticallyAdjustsScrollViewInsets = NO;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
+        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+        
     }
     
     leftBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
