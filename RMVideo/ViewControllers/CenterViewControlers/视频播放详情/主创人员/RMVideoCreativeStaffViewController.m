@@ -176,6 +176,7 @@ typedef enum{
     }
     if (imageView.identifierString){
         if (imageView.isAttentionStarState == 0){
+            [SVProgressHUD show];
             loadType = requestAddCreativeStaffType;
             RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
             NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
@@ -183,6 +184,7 @@ typedef enum{
             request.delegate = self;
             rmImage = imageView;
         }else{
+            [SVProgressHUD show];
             loadType = requestDeleteCreativeStaffType;
             RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -197,6 +199,7 @@ typedef enum{
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
     dataArr = model.creatorArr;
+    NSLog(@"-------dataArr:%@",dataArr);
     [(UITableView *)[self.view viewWithTag:101] reloadData];
 }
 #pragma mark -
@@ -250,20 +253,22 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestAddCreativeStaffType){
-        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:101] cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_success_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:YES];
     }else if (loadType == requestDeleteCreativeStaffType){
-        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:101] cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:NO];
     }
+    [SVProgressHUD dismiss];
 }
 
 - (void)requestError:(NSError *)error {
     NSLog(@"error:%@",error);
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {

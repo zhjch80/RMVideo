@@ -57,6 +57,7 @@
     [tableView setIsCloseFooter:NO];
     [self.view addSubview:tableView];
     pageCount = 1;
+    isRefresh = YES;
 }
 
 - (void)startRequest {

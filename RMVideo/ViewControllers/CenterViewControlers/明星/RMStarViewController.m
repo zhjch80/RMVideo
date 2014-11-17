@@ -610,6 +610,7 @@ typedef enum{
     }
     if (imageView.identifierString){
         if (imageView.isAttentionStarState == 0){
+            [SVProgressHUD show];
             loadType = requestAddStarMyChannelType;
             RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -618,6 +619,7 @@ typedef enum{
             requset.delegate = self;
             rmImage = imageView;
         }else{
+            [SVProgressHUD show];
             loadType = requestDeleteStarMyChannelType;
             RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -888,11 +890,13 @@ typedef enum{
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_success_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:YES];
+        [SVProgressHUD dismiss];
     }else if (loadType == requestDeleteStarMyChannelType){
         RMStarCell * cell = (RMStarCell *)[(PullToRefreshTableView *)[self.view viewWithTag:201] cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:NO];
+        [SVProgressHUD dismiss];
     }else if (loadType == requestSearchStarType){
         [SVProgressHUD dismiss];
         RMStarSearchResultViewController * starSearchResultCtl = [[RMStarSearchResultViewController alloc] init];
