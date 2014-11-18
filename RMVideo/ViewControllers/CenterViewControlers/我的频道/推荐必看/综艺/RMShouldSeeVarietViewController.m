@@ -55,7 +55,13 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 155;
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        return 155;
+    }else if (IS_IPHONE_6_SCREEN){
+        return 155;
+    }else{
+        return 190;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -78,6 +84,8 @@
     cell.fristImage.identifierString = model_left.video_id;
     [cell.fristLable loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
     [cell.fristLable startScrolling];
+    [cell.firstStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+    [cell.firstStarRateView displayRating:[model_left.gold integerValue]];
     
     if (indexPath.row * 3 + 1 >= [self.dataArray count]){
         
@@ -87,6 +95,8 @@
         cell.secondImage.identifierString = model_center.video_id;
         [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.secondLable startScrolling];
+        [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.secondStarRateView displayRating:[model_center.gold integerValue]];
     }
     
     if (indexPath.row * 3 + 2 >= [self.dataArray count]){
@@ -97,6 +107,8 @@
         cell.threeImage.identifierString = model_right.video_id;
         [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.threeLable startScrolling];
+        [cell.thirdStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.thirdStarRateView displayRating:[model_right.gold integerValue]];
     }
     return cell;
 }
@@ -104,12 +116,6 @@
 - (void)reloadTableViewWithDataArray:(NSMutableArray *)array{
     self.dataArray = array;
     [self.mainTableView reloadData];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if([self.delegate respondsToSelector:@selector(selectVarietyTableViewCellWithIndex:)]){
-//        [self.delegate selectVarietyTableViewCellWithIndex:indexPath.row];
-//    }
 }
 
 - (void)didReceiveMemoryWarning {

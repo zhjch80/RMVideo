@@ -265,6 +265,29 @@ typedef enum{
 
 #pragma mark - 取消 语音搜索 方法
 
+- (void)willStartVoiceSearch {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    self.isCanceled = NO;
+    [self showStarVoiceView:YES WithShowVoiceImage:YES WithShowTableView:NO];
+    [self loadAddCovertextField];
+    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
+    
+    //设置为录音模式
+    [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
+    bool ret = [_iFlySpeechRecognizer startListening];
+    if (ret) {
+        ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
+    }else{
+        NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
+        [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
+    }
+}
+
 - (void)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case cancelBtn_TAG: {
@@ -274,25 +297,8 @@ typedef enum{
             break;
         }
         case voiceBtn_TAG: {
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
-                return;
-            }
-            self.isCanceled = NO;
-            [self showStarVoiceView:YES WithShowVoiceImage:YES WithShowTableView:NO];
-            [self loadAddCovertextField];
-            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-            ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
-
-            //设置为录音模式
-            [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
-            bool ret = [_iFlySpeechRecognizer startListening];
-            if (ret) {
-                ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
-            }else{
-                NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
-                [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
-            }
+            [SVProgressHUD showWithStatus:@"检测语音搜索服务..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willStartVoiceSearch) withObject:nil afterDelay:1.0];
             break;
         }
             
@@ -381,14 +387,20 @@ typedef enum{
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //TODO:搜索一
+    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+    [self performSelector:@selector(willStartStarSearch_ONE:) withObject:textField afterDelay:1.0];
+    return YES;
+}
+
+- (void)willStartStarSearch_ONE:(UITextField *)textField {
     if ([UtilityFunc isConnectionAvailable] == 0) {
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
     }else {
+        [SVProgressHUD dismiss];
         [self updateUserSearchRecord:textField.text];
         [self.recordsTableView reloadData];
         [self startStarSearchRequest:textField.text];
     }
-    return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -543,9 +555,21 @@ typedef enum{
             }
             
             if (indexPath.row == value - 1){
-                return 135;
+                if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+                    return 135;
+                }else if (IS_IPHONE_6_SCREEN){
+                    return 135;
+                }else{
+                    return 155;
+                }
             }else{
-                return 125;
+                if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+                    return 125;
+                }else if (IS_IPHONE_6_SCREEN){
+                    return 125;
+                }else{
+                    return 145;
+                }
             }
 
             break;
@@ -570,17 +594,24 @@ typedef enum{
         }
         case 202:{
             //TODO:搜索二
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
-                return;
-            }
-            [self startStarSearchRequest:[NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]]];
+            NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+            [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willStartStarSearch_TWO:) withObject:str afterDelay:1.0];
             break;
         }
             
         default:
             break;
     }
+}
+
+- (void)willStartStarSearch_TWO:(NSString *)str {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    [self startStarSearchRequest:str];
 }
 
 #pragma mark - 进入明星详情页面
@@ -596,10 +627,13 @@ typedef enum{
 
 #pragma mark - 添加或者删除 明星 在我的频道里
 
-- (void)clickAddMyChannelMethod:(RMImageView *)imageView {
+- (void)willStartAddMyChannelMethod:(RMImageView *)imageView {
     if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
         return;
     }
+    
+    [SVProgressHUD dismiss];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
@@ -629,6 +663,11 @@ typedef enum{
             rmImage = imageView;
         }
     }
+}
+
+- (void)clickAddMyChannelMethod:(RMImageView *)imageView {
+    [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeBlack];
+    [self performSelector:@selector(willStartAddMyChannelMethod:) withObject:imageView afterDelay:1.0];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -865,6 +904,7 @@ typedef enum{
 }
 
 - (void)startRequest {
+    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];
@@ -873,6 +913,7 @@ typedef enum{
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    [SVProgressHUD dismiss];
     if (loadType == requestStarListType){
         RMPublicModel * model_row = [data objectAtIndex:0];
         AltogetherRows = [model_row.rows integerValue];
@@ -911,6 +952,7 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
+    [SVProgressHUD dismiss];
     if (loadType == requestSearchStarType){
         [SVProgressHUD showErrorWithStatus:@"搜索失败,请重新尝试"];
     }

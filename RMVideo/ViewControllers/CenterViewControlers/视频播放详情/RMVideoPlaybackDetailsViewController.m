@@ -27,7 +27,7 @@ typedef enum{
 @interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate,UMSocialUIDelegate> {
     LoadType loadType;
     BOOL isCollect;                 //1为收藏   0为未收藏
-    
+    BOOL isFirstViewDidAppear;
     
 }
 @property (nonatomic, strong) NSMutableArray * dataArr;
@@ -61,9 +61,38 @@ typedef enum{
     [Flurry endTimedEvent:@"VIEW_VideoPlayDetails" withParameters:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!isFirstViewDidAppear){
+        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+        [self performSelector:@selector(willStartRequest) withObject:nil afterDelay:1.0];
+        isFirstViewDidAppear = YES;
+    }
+}
+
+- (void)willStartRequest {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        self.videoDownloadBtn.hidden = YES;
+        self.videoShareBtn.hidden = YES;
+        self.videoCollectionBtn.hidden = YES;
+        self.videoPlayImg.hidden = YES;
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        [self refreshPlotIntroducedDate:nil];
+    }else{
+        [SVProgressHUD dismiss];
+        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+        request.delegate = self;
+        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    isFirstViewDidAppear = NO;
     self.dataArr = [[NSMutableArray alloc] init];
     loadType = requestVideoContentType;
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
@@ -99,7 +128,6 @@ typedef enum{
         self.videoShareBtn.frame = CGRectMake(360, 166, 25, 25);
     }
     
-    [self setTitle:@"电影"];
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
@@ -138,6 +166,7 @@ typedef enum{
                 blockSelf.videoBroadcastAddressCtl.videoPlayDelegate = blockSelf;
                 [blockSelf.view addSubview:blockSelf.videoBroadcastAddressCtl.view];
                 if (blockSelf.dataArr.count == 0){
+                    [blockSelf refreshBroadcastAddressDate:nil];
                 }else{
                     RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
                     [blockSelf refreshBroadcastAddressDate:model];
@@ -159,6 +188,7 @@ typedef enum{
                 [blockSelf.view addSubview:blockSelf.videoCreativeStaffCtl.view];
                 blockSelf.videoCreativeStaffCtl.videoPlayBackDetailsDelegate = blockSelf;
                 if (blockSelf.dataArr.count == 0){
+                    [blockSelf refreshCreativeStaffDate:nil];
                 }else{
                     RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
                     [blockSelf refreshCreativeStaffDate:model];
@@ -183,20 +213,6 @@ typedef enum{
     [_segmentedControl setSelectionIndicatorColor:[UIColor clearColor]];
     [_segmentedControl setTag:3];
     [self.view addSubview:_segmentedControl];
-    
-    if ([UtilityFunc isConnectionAvailable] == 0){
-        self.videoDownloadBtn.hidden = YES;
-        self.videoShareBtn.hidden = YES;
-        self.videoCollectionBtn.hidden = YES;
-        self.videoPlayImg.hidden = YES;
-    }else{
-        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-        [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-        request.delegate = self;
-        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
-    }
 }
 
 #pragma mark - Base Method
@@ -220,100 +236,120 @@ typedef enum{
     }
 }
 
+- (void)willDownload {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    RMPublicModel * model = [self.dataArr objectAtIndex:0];
+    if ([model.video_type isEqualToString:@"1"]) {
+        //电影  直接下载
+        if ([model.playurlArr count] == 0){
+            [SVProgressHUD showWithStatus:@"暂无片源可下"];
+            return;
+        }
+        if(model.downLoadURL == nil){
+//                    NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
+            RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+            model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
+            model.downLoadState = @"等待缓存";
+            model.totalMemory = @"0M";
+            model.alreadyCasheMemory = @"0M";
+            model.cacheProgress = @"0.0";
+            //已经下载过了
+            if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alerView show];
+            };
+            if(![rmDownLoading dataArrayContainsModel:model]){
+                
+                [rmDownLoading.dataArray addObject:model];
+                [rmDownLoading.downLoadIDArray addObject:model];
+                [rmDownLoading BeginDownLoad];
+                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alerView show];
+            }
+        }else{
+            UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alerView show];
+        }
+    }else{
+        //电视剧 综艺 进download 界面 传video_id
+        RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
+        TVDownLoadCtl.modelID = model.video_id;
+        TVDownLoadCtl.TVName = model.name;
+        TVDownLoadCtl.TVHeadImage = model.pic;
+        [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
+    }
+}
+
+- (void)willAddOrCancel {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    //收藏 或者 取消收藏
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
+        [self presentViewController:loginNav animated:YES completion:^{
+        }];
+        return;
+    }
+    
+    if (isCollect){
+        [Flurry logEvent:@"Click_AddCollect_Btn"];
+        loadType = requestDeleteVideoCollectlType;
+        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [request getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:self.currentVideo_id];
+        request.delegate = self;
+    }else{
+        [Flurry logEvent:@"Click_CancelCollect_Btn"];
+        loadType = requestAddVideoCollectlType;
+        RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [request getAddFavoriteWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+        request.delegate = self;
+    }
+}
+
+- (void)willShare {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"544db5aafd98c570d2069586"
+                                      shareText:@"测试"
+                                     shareImage:[UIImage imageNamed:@"001.png"]
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
+                                       delegate:self];
+}
+
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
             [Flurry logEvent:@"Click_Download_Btn"];
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
-                return;
-            }
-            RMPublicModel * model = [self.dataArr objectAtIndex:0];
-            if ([model.video_type isEqualToString:@"1"]) {
-                //电影  直接下载
-                if ([model.playurlArr count] == 0){
-                    [SVProgressHUD showWithStatus:@"暂无片源可下"];
-                    return;
-                }
-                if(model.downLoadURL == nil){
-//                    NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
-                    RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-                    model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
-                    model.downLoadState = @"等待缓存";
-                    model.totalMemory = @"0M";
-                    model.alreadyCasheMemory = @"0M";
-                    model.cacheProgress = @"0.0";
-                    //已经下载过了
-                    if([[Database sharedDatabase] isDownLoadMovieWith:model]){
-                        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                        [alerView show];
-                    };
-                    if(![rmDownLoading dataArrayContainsModel:model]){
-                        
-                        [rmDownLoading.dataArray addObject:model];
-                        [rmDownLoading.downLoadIDArray addObject:model];
-                        [rmDownLoading BeginDownLoad];
-                        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                        [alerView show];
-                    }
-                }else{
-                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alerView show];
-                }
-            }else{
-                //电视剧 综艺 进download 界面 传video_id
-                RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
-                TVDownLoadCtl.modelID = model.video_id;
-                TVDownLoadCtl.TVName = model.name;
-                TVDownLoadCtl.TVHeadImage = model.pic;
-                [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
-            }
+            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willDownload) withObject:nil afterDelay:1.0];
             break;
         }
         case 102:{
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                return;
-            }
-            //收藏 或者 取消收藏
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
-                RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-                RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
-                [self presentViewController:loginNav animated:YES completion:^{
-                }];
-                return;
-            }
-            
-            if (isCollect){
-                [Flurry logEvent:@"Click_AddCollect_Btn"];
-                loadType = requestDeleteVideoCollectlType;
-                RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-                [request getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:self.currentVideo_id];
-                request.delegate = self;
-            }else{
-                [Flurry logEvent:@"Click_CancelCollect_Btn"];
-                loadType = requestAddVideoCollectlType;
-                RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-                [request getAddFavoriteWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-                request.delegate = self;
-            }
+            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willAddOrCancel) withObject:nil afterDelay:1.0];
             break;
         }
         case 103:{
             [Flurry logEvent:@"Click_Share_Btn"];
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                return;
-            }
-            [UMSocialSnsService presentSnsIconSheetView:self
-                                                 appKey:@"544db5aafd98c570d2069586"
-                                              shareText:@"测试"
-                                             shareImage:[UIImage imageNamed:@"001.png"]
-                                        shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
-                                               delegate:self];
+            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willShare) withObject:nil afterDelay:1.0];
             break;
         }
             

@@ -54,6 +54,10 @@
 #pragma mark - 刷新界面
 
 - (void)updatePlotIntroduced:(RMPublicModel *)model {
+    if (model == nil){
+        [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无剧情介绍" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
+        return;
+    }
     if (model.content.length == 0){
         [self showUnderEmptyViewWithImage:LOADIMAGE(@"no_cashe_video", kImageTypePNG) WithTitle:@"暂无剧情介绍" WithHeight:([UtilityFunc shareInstance].globleHeight-154)/2 - 77-90];
         return;

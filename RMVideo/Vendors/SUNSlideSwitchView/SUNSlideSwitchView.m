@@ -181,20 +181,22 @@ static const NSUInteger kTagOfRightSideButton = 999;
         //累计每个tab文字的长度
         //设置按钮尺寸
         //计算下一个tab的x偏移量
-        int count = 0, value = 0;
+        int count = 0, value = 0,space = 0;
         if(IS_IPHONE_6_SCREEN){
             count = 5;
         }
         if (IS_IPHONE_6p_SCREEN){
             value = 1.5;
+            space = 1.5;
+            count = 7;
         }
         if ([_viewArray count] == 3){
             if (i==1){
                 //这个是第二个
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 14+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2-14+count, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth+17, self.btnHeight);
             }else if (i==2){
                 //这个是第三个
-                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 + count-value, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
+                button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2+count-value+space, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);
             }else{
                 //这个是第一个
                 button.frame = CGRectMake(i*self.btnWidth+([UtilityFunc shareInstance].globleWidth-self.SelectBtnImageArray.count*self.btnWidth)/2 - 11+count-value, (kHeightOfTopScrollView-self.btnHeight)/2, self.btnWidth, self.btnHeight);

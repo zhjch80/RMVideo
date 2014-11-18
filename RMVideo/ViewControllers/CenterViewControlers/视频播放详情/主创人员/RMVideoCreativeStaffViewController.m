@@ -156,15 +156,23 @@ typedef enum{
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        return 150;
+    }else if (IS_IPHONE_6_SCREEN){
+        return 150;
+    }else{
+        return 175;
+    }
 }
 
 #pragma mark - 添加或者删除 主创明星
 
-- (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
+- (void)willAddOrDeleteCreeativeStaff:(RMImageView *)imageView {
     if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
         return;
     }
+    [SVProgressHUD dismiss];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
         RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
@@ -195,6 +203,11 @@ typedef enum{
         }
     }else{
     }
+}
+
+- (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
+    [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeBlack];
+    [self performSelector:@selector(willAddOrDeleteCreeativeStaff:) withObject:imageView afterDelay:1.0];
 }
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {

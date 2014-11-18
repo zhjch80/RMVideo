@@ -220,36 +220,43 @@ typedef enum{
 
 #pragma mark - buttonClick Method
 
+- (void)willStartAddOrDeleteStar {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    //加入 或者 删除 明星  在我的频道
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
+        RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
+        RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
+        [self presentViewController:loginNav animated:YES completion:^{
+        }];
+        return;
+    }
+    if (isStarAttentionMyChannel){
+        loadType = requestDeleteMyChannelType;
+        RMPublicModel * model = [introDataArr objectAtIndex:0];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [manager getDeleteMyChannelWithTag:model.tag_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+        manager.delegate = self;
+    }else{
+        loadType = requestAddMyChannelType;
+        RMPublicModel * model = [introDataArr objectAtIndex:0];
+        CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+        NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+        [manager getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:model.tag_id];
+        manager.delegate = self;
+    }
+}
+
 - (IBAction)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 201:{
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                return;
-            }
-            //加入 或者 删除 明星  在我的频道
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            if (![[AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD] isEqualToString:@"islogin"]){
-                RMLoginViewController * loginCtl = [[RMLoginViewController alloc] init];
-                RMCustomPresentNavViewController * loginNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:loginCtl];
-                [self presentViewController:loginNav animated:YES completion:^{
-                }];
-                return;
-            }
-            if (isStarAttentionMyChannel){
-                loadType = requestDeleteMyChannelType;
-                RMPublicModel * model = [introDataArr objectAtIndex:0];
-                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-                [manager getDeleteMyChannelWithTag:model.tag_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-                manager.delegate = self;
-            }else{
-                loadType = requestAddMyChannelType;
-                RMPublicModel * model = [introDataArr objectAtIndex:0];
-                CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-                NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-                [manager getJoinMyChannelWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] andID:model.tag_id];
-                manager.delegate = self;
-            }
+            [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willStartAddOrDeleteStar) withObject:nil afterDelay:1.0];
             break;
         }
         case 202:{

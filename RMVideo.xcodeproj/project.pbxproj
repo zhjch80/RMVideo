@@ -400,6 +400,9 @@
 		1DD39F991A15E500000A215A /* rb_month_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F931A15E500000A215A /* rb_month_6p.png */; };
 		1DD39F9A1A15E500000A215A /* rb_week_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F941A15E500000A215A /* rb_week_6.png */; };
 		1DD39F9B1A15E500000A215A /* rb_week_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD39F951A15E500000A215A /* rb_week_6p.png */; };
+		1DD5E5F81A1B29D400FCBC11 /* logo_tx@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD5E5F71A1B29D400FCBC11 /* logo_tx@3x.png */; };
+		1DD5E5FA1A1B2B9300FCBC11 /* rotating_img@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD5E5F91A1B2B9300FCBC11 /* rotating_img@3x.png */; };
+		1DD5E5FC1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD5E5FB1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png */; };
 		1DD8C8DB1A19B67B00D4B128 /* RecommendedDaily_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D31A19B67B00D4B128 /* RecommendedDaily_red_6.png */; };
 		1DD8C8DC1A19B67B00D4B128 /* RecommendedDaily_black_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D41A19B67B00D4B128 /* RecommendedDaily_black_6.png */; };
 		1DD8C8DD1A19B67B00D4B128 /* Star_red_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DD8C8D51A19B67B00D4B128 /* Star_red_6.png */; };
@@ -533,7 +536,6 @@
 		91AF404C1A19E53500FB16FE /* logo_pps@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF404B1A19E53500FB16FE /* logo_pps@3x.png */; };
 		91AF404E1A19E54F00FB16FE /* logo_ls@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF404D1A19E54F00FB16FE /* logo_ls@3x.png */; };
 		91AF40501A19E55D00FB16FE /* logo_qq@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF404F1A19E55D00FB16FE /* logo_qq@3x.png */; };
-		91AF40521A19E57000FB16FE /* logo_tx@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF40511A19E57000FB16FE /* logo_tx@3x.png */; };
 		91AF40541A19E58E00FB16FE /* logo_weibo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF40531A19E58E00FB16FE /* logo_weibo@3x.png */; };
 		91AF40561A19E5BE00FB16FE /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF40551A19E5BE00FB16FE /* search@3x.png */; };
 		91AF40581A19E5CA00FB16FE /* backup_img@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91AF40571A19E5CA00FB16FE /* backup_img@3x.png */; };
@@ -1158,6 +1160,9 @@
 		1DD39F931A15E500000A215A /* rb_month_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_month_6p.png; sourceTree = "<group>"; };
 		1DD39F941A15E500000A215A /* rb_week_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_week_6.png; sourceTree = "<group>"; };
 		1DD39F951A15E500000A215A /* rb_week_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rb_week_6p.png; sourceTree = "<group>"; };
+		1DD5E5F71A1B29D400FCBC11 /* logo_tx@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_tx@3x.png"; sourceTree = "<group>"; };
+		1DD5E5F91A1B2B9300FCBC11 /* rotating_img@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating_img@3x.png"; sourceTree = "<group>"; };
+		1DD5E5FB1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pd_accessoryType_gray@3x.png"; sourceTree = "<group>"; };
 		1DD8C8D31A19B67B00D4B128 /* RecommendedDaily_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_red_6.png; sourceTree = "<group>"; };
 		1DD8C8D41A19B67B00D4B128 /* RecommendedDaily_black_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecommendedDaily_black_6.png; sourceTree = "<group>"; };
 		1DD8C8D51A19B67B00D4B128 /* Star_red_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Star_red_6.png; sourceTree = "<group>"; };
@@ -1322,7 +1327,6 @@
 		91AF404B1A19E53500FB16FE /* logo_pps@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_pps@3x.png"; sourceTree = "<group>"; };
 		91AF404D1A19E54F00FB16FE /* logo_ls@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_ls@3x.png"; sourceTree = "<group>"; };
 		91AF404F1A19E55D00FB16FE /* logo_qq@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_qq@3x.png"; sourceTree = "<group>"; };
-		91AF40511A19E57000FB16FE /* logo_tx@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_tx@3x.png"; sourceTree = "<group>"; };
 		91AF40531A19E58E00FB16FE /* logo_weibo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_weibo@3x.png"; sourceTree = "<group>"; };
 		91AF40551A19E5BE00FB16FE /* search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@3x.png"; sourceTree = "<group>"; };
 		91AF40571A19E5CA00FB16FE /* backup_img@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backup_img@3x.png"; sourceTree = "<group>"; };
@@ -2029,6 +2033,7 @@
 				91D4EC7E19FB7FF9005E9235 /* pd_accessoryType_red.png */,
 				1D7117B419EFBD3D0007D393 /* pd_accessoryType_red@2x.png */,
 				1D7117B519EFBD3D0007D393 /* pd_accessoryType_gray@2x.png */,
+				1DD5E5FB1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png */,
 			);
 			path = "我的频道";
 			sourceTree = "<group>";
@@ -2935,6 +2940,7 @@
 				1D4C361E19F6050700AC8F1E /* mx_rateFull_img@2x.png */,
 				1D4C362119F6050700AC8F1E /* rotating_img.png */,
 				1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */,
+				1DD5E5F91A1B2B9300FCBC11 /* rotating_img@3x.png */,
 				1DD39F481A15A6B5000A215A /* setup.png */,
 				1DD39F491A15A6B5000A215A /* setup@2x.png */,
 				91AF40591A19E61A00FB16FE /* setup@3x.png */,
@@ -2970,7 +2976,7 @@
 				91AF404F1A19E55D00FB16FE /* logo_qq@3x.png */,
 				1DD39F751A15A90C000A215A /* logo_tx.png */,
 				1DD39F741A15A90C000A215A /* logo_tx@2x.png */,
-				91AF40511A19E57000FB16FE /* logo_tx@3x.png */,
+				1DD5E5F71A1B29D400FCBC11 /* logo_tx@3x.png */,
 				1D4C361519F6050700AC8F1E /* logo_weibo.png */,
 				1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */,
 				91AF40531A19E58E00FB16FE /* logo_weibo@3x.png */,
@@ -3391,7 +3397,9 @@
 				1D8481741A03633400A92879 /* RMStarTeleplayListViewController.xib in Resources */,
 				1D4C362919F6050700AC8F1E /* complete_img.png in Resources */,
 				1DD39F841A15D588000A215A /* rb_day_4@2x.png in Resources */,
+				1DD5E5F81A1B29D400FCBC11 /* logo_tx@3x.png in Resources */,
 				1D8481591A03633400A92879 /* RMDailyTVViewController.xib in Resources */,
+				1DD5E5FA1A1B2B9300FCBC11 /* rotating_img@3x.png in Resources */,
 				91AF408D1A19F5AF00FB16FE /* next_btn@2x.png in Resources */,
 				1D4C35FC19F5F91800AC8F1E /* tv_download.png in Resources */,
 				91AF40581A19E5CA00FB16FE /* backup_img@3x.png in Resources */,
@@ -3399,7 +3407,6 @@
 				1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */,
 				1DD8C8E11A19B67B00D4B128 /* MyChannel_red_6.png in Resources */,
 				1DD39F371A15A2DA000A215A /* vd_loadImg@2x.png in Resources */,
-				91AF40521A19E57000FB16FE /* logo_tx@3x.png in Resources */,
 				1D84815F1A03633400A92879 /* RMMyChannelViewController.xib in Resources */,
 				1D84816E1A03633400A92879 /* RMStarDetailsCell.xib in Resources */,
 				1DD39F631A15A835000A215A /* logo_td.png in Resources */,
@@ -3464,6 +3471,7 @@
 				912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */,
 				912C099A19F8D79E006B6305 /* variety_selected.png in Resources */,
 				1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */,
+				1DD5E5FC1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png in Resources */,
 				91AF406A1A19E6E000FB16FE /* cell_accessoryType_red@3x.png in Resources */,
 				91AF40441A19E4F600FB16FE /* logo_xlkk@3x.png in Resources */,
 				91908CCB19FA355A00C3DF09 /* open_all_back_image.png in Resources */,

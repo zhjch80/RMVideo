@@ -167,6 +167,7 @@
             movieID = model.DailyRecommendVideo_id;
         }
     }
+
     RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
     videoPlay.tabBarIdentifier = kYES;
     videoPlay.currentVideo_id = movieID;

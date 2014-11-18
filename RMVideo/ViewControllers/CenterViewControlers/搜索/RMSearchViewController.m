@@ -111,7 +111,13 @@
     [[RMBaseTextField appearance] setTintColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1]];
     searchTextField.returnKeyType = UIReturnKeySearch;
     searchTextField.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    searchTextField.frame = CGRectMake(18, 72 - 64, 180, 30);
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        searchTextField.frame = CGRectMake(18, 72 - 64, 180, 30);
+    }else if (IS_IPHONE_6_SCREEN){
+        searchTextField.frame = CGRectMake(18, 72 - 64, 200, 30);
+    }else{
+        searchTextField.frame = CGRectMake(18, 72 - 64, 240, 30);
+    }
     searchTextField.placeholder = @"搜索你感兴趣的影片";
     searchTextField.font = [UIFont systemFontOfSize:14.0];
     searchTextField.backgroundColor = [UIColor clearColor];
@@ -122,6 +128,8 @@
         cancelBtn.frame = CGRectMake(210, 72-64, 70, 30);
     }else if (IS_IPHONE_6_SCREEN){
         cancelBtn.frame = CGRectMake(255, 72-64, 70, 30);
+    }else {
+        cancelBtn.frame = CGRectMake(280, 72-64, 70, 30);
     }
     cancelBtn.hidden = YES;
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -137,6 +145,8 @@
         voiceBtn.frame = CGRectMake(280, 72-64, 30, 30);
     }else if (IS_IPHONE_6_SCREEN){
         voiceBtn.frame = CGRectMake(330, 72-64, 30, 30);
+    }else{
+        voiceBtn.frame = CGRectMake(365, 72-64, 30, 30);
     }
     [voiceBtn setBackgroundImage:LOADIMAGE(@"mx_voiceBtn_img", kImageTypePNG) forState:UIControlStateNormal];
     [voiceBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -294,14 +304,20 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //TODO: 开始搜索一
+    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+    [self performSelector:@selector(willStartSearch_ONE:) withObject:textField afterDelay:1.0];
+    return YES;
+}
+
+- (void)willStartSearch_ONE:(UITextField *)textField {
     if ([UtilityFunc isConnectionAvailable] == 0) {
-        [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
     }else {
+        [SVProgressHUD dismiss];
         [self updateUserSearchRecord:textField.text];
         [self.searchTableView reloadData];
         [self startSearchRequest:textField.text];
     }
-    return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -343,11 +359,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO:开始搜索二
+    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+    NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+    [self performSelector:@selector(willStartSearch_TWO:) withObject:str afterDelay:1.0];
+}
+
+- (void)willStartSearch_TWO:(NSString *)str {
     if ([UtilityFunc isConnectionAvailable] == 0){
-        [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
         return;
     }
-    [self startSearchRequest:[NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]]];
+    [SVProgressHUD dismiss];
+    [self startSearchRequest:str];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -402,6 +425,28 @@
 
 #pragma mark - 
 
+- (void)willStartVoiceSearch {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    self.isCanceled = NO;
+    ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
+    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    
+    //设置为录音模式
+    [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
+    bool ret = [_iFlySpeechRecognizer startListening];
+    if (ret) {
+        ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
+    }else{
+        NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
+        [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
+    }
+    [self showVoiceView:YES];
+}
+
 - (void)mbuttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case cancelBtn_TAG:{
@@ -409,25 +454,8 @@
             break;
         }
         case voiceBtn_TAG:{
-            if ([UtilityFunc isConnectionAvailable] == 0){
-                [SVProgressHUD showWithStatus:kShowConnectionAvailableError maskType:SVProgressHUDMaskTypeBlack];
-                return;
-            }
-            self.isCanceled = NO;
-            ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
-            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-            
-            //设置为录音模式
-            [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
-            bool ret = [_iFlySpeechRecognizer startListening];
-            if (ret) {
-                ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
-            }else{
-                NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
-                [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
-            }
-            [self showVoiceView:YES];
-
+            [SVProgressHUD showWithStatus:@"启动语音搜索服务..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willStartVoiceSearch) withObject:nil afterDelay:1.0];
             break;
         }
             

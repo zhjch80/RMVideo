@@ -244,7 +244,7 @@ typedef enum{
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
-        [cell.firstMovieRateView displayRating:0];
+        [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
 
         cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
@@ -258,7 +258,6 @@ typedef enum{
         [cell.thirdMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.thirdMovieRateView displayRating:[[[model.video_list objectAtIndex:2] objectForKey:@"gold"] integerValue]];
         cell.videoThirdImg.identifierString = [[model.video_list objectAtIndex:2] objectForKey:@"video_id"];
-   
     }
     return cell;
 }
@@ -267,7 +266,7 @@ typedef enum{
     if (IS_IPHONE_6_SCREEN){
         return 215;
     }else if (IS_IPHONE_6p_SCREEN){
-        return 205;
+        return 225;
     }else{
         return 205;
     }

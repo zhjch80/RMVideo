@@ -217,16 +217,8 @@
                     break;
                     //分享给朋友
                 case 1:{
-                    if ([UtilityFunc isConnectionAvailable] == 0){
-                        return;
-                    }
-                    [UMSocialSnsService presentSnsIconSheetView:self
-                                                         appKey:@"544db5aafd98c570d2069586"
-                                                      shareText:@"测试"
-                                                     shareImage:[UIImage imageNamed:@"001.png"]
-                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
-                                                       delegate:self];
-
+                    [SVProgressHUD showWithStatus:@"启动分享中..." maskType:SVProgressHUDMaskTypeBlack];
+                    [self performSelector:@selector(willStartShare) withObject:nil afterDelay:1.0];
                 }
                     break;
                     //评分
@@ -268,6 +260,21 @@
         default:
             break;
     }
+}
+
+- (void)willStartShare {
+    if ([UtilityFunc isConnectionAvailable] == 0){
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return;
+    }
+    [SVProgressHUD dismiss];
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"544db5aafd98c570d2069586"
+                                      shareText:@"测试"
+                                     shareImage:[UIImage imageNamed:@"001.png"]
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
+                                       delegate:self];
+    
 }
 
 - (void)clearImageMemory{

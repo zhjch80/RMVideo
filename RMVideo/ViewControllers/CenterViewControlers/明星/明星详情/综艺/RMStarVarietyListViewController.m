@@ -134,6 +134,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        return 155;
+    }else if (IS_IPHONE_6_SCREEN){
+        return 155;
+    }else{
+        return 190;
+    }
     return 155;
 }
 

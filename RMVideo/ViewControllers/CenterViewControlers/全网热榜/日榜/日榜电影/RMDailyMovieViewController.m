@@ -34,7 +34,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor greenColor];
-    self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    }else if (IS_IPHONE_6_SCREEN){
+        self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
+    }else{
+        self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-54-64);
+    }
     [self.mainTableView setIsCloseFooter:YES];
     [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
     RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
