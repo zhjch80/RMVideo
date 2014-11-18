@@ -145,7 +145,7 @@
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
         return 155;
     }else if (IS_IPHONE_6_SCREEN){
-        return 155;
+        return 165;
     }else{
         return 190;
     }
