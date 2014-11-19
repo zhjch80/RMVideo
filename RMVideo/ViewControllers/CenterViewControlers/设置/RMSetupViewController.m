@@ -42,7 +42,7 @@
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44-49);
         self.exitbtn.hidden = NO;
         self.loginBtn.hidden = YES;
-        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"HeadImageURL"]] placeholderImage:LOADIMAGE(@"sd_setImageWithURL", kImageTypePNG)];
+        [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"HeadImageURL"]] placeholderImage:LOADIMAGE(@"user_head_Image", kImageTypePNG)];
         self.userNameLable.text = [dict objectForKey:@"userName"];
     }
     //未登录
@@ -50,7 +50,7 @@
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44);
         self.exitbtn.hidden = YES;
         self.loginBtn.hidden = NO;
-        [self.headImageView setImage:LOADIMAGE(@"user_head-Image", kImageTypePNG)];
+        [self.headImageView setImage:LOADIMAGE(@"user_head_Image", kImageTypePNG)];
         self.userNameLable.text = @"";
     }
 }
@@ -304,10 +304,8 @@
     //退出登录
     else if(sender.tag ==2){
         [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToSina  completion:^(UMSocialResponseEntity *response){
-            NSLog(@"response is %@",response);
         }];
         [[UMSocialDataService defaultDataService] requestUnOauthWithType:UMShareToTencent  completion:^(UMSocialResponseEntity *response){
-            NSLog(@"response is %@",response);
         }];
         CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
         [storage beginUpdates];
@@ -319,7 +317,7 @@
         mainTableView.frame = CGRectMake(mainTableView.frame.origin.x, mainTableView.frame.origin.y, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-44-44);
         self.exitbtn.hidden = YES;
         self.loginBtn.hidden = NO;
-        [self.headImageView setImage:LOADIMAGE(@"user_head-Image", kImageTypePNG)];
+        [self.headImageView setImage:LOADIMAGE(@"user_head_Image", kImageTypePNG)];
         self.userNameLable.text = @"";
     }
 }

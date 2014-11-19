@@ -43,7 +43,7 @@
                                 <action selector="loginOrExitButtonClick:" destination="-1" eventType="touchUpInside" id="kEE-3O-aJX"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_head-Image.png" id="soZ-aZ-Ekh">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_head_Image.png" id="soZ-aZ-Ekh">
                             <rect key="frame" x="15" y="8" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -79,7 +79,7 @@
         </view>
     </objects>
     <resources>
-        <image name="user_head-Image.png" width="30" height="30"/>
+        <image name="user_head_Image.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
