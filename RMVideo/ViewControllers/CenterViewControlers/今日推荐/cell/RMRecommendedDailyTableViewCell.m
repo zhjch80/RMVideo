@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+//    self.MoviePostersView.backgroundColor = [UIColor cyanColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,21 +26,6 @@
 }
 
 - (void)cellAddMovieCountFromDataArray:(NSArray *)movieArray andCellIdentifiersName:(NSString *)identifier{
-
-    
-    if (IS_IPHONE_4_SCREEN){
-        self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 332);
-    }else if (IS_IPHONE_5_SCREEN){
-        self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 375);
-        self.headImageView.frame = CGRectMake(50 - 5.5, 10 + 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
-    }else if (IS_IPHONE_6_SCREEN){
-        self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth +15, 460);
-        self.headImageView.frame = CGRectMake(43, 20, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
-    }else if (IS_IPHONE_6p_SCREEN){
-        self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 520);
-        self.headImageView.frame = CGRectMake(33, 10 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
-    }
-    
     self.MoviePostersView.alignment = SwipeViewAlignmentCenter;
     self.MoviePostersView.delegate = self;
     self.MoviePostersView.dataSource = self;
@@ -56,6 +42,36 @@
     [self.MoviePostersView reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHeadImgeView) name:@"tableViewWillBeginDragging" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHeadImageView) name:@"tableViewDidEndDecelerating" object:nil];
+    
+    
+    if (IS_IPHONE_4_SCREEN){
+        if (ImageArray.count == 1){
+            self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 332);
+            self.headImageView.frame = CGRectMake(50 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 332);
+            self.headImageView.frame = CGRectMake(18 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+    }else if (IS_IPHONE_5_SCREEN){
+        if (ImageArray.count == 1){
+            self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 375);
+            self.headImageView.frame = CGRectMake(50 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 375);
+            self.headImageView.frame = CGRectMake(18 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+    }else if (IS_IPHONE_6_SCREEN){
+        if (ImageArray.count == 1){
+            self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth +15, 460);
+            self.headImageView.frame = CGRectMake(42, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-75, 0, [UtilityFunc shareInstance].globleWidth + 75, 460);
+            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+    }else if (IS_IPHONE_6p_SCREEN){
+        self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 520);
+        self.headImageView.frame = CGRectMake(33, 10 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+    }
 }
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
@@ -69,6 +85,7 @@
     //    if (view == nil)
     //    {
     view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor greenColor];
     RMImageView * subImage = [[RMImageView alloc] init];
     subImage.identifierString = cellImgageIdentifier;
     
@@ -86,10 +103,10 @@
     }
     else if(IS_IPHONE_5_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 250.0f, 372);
-        subImage.frame = CGRectMake(10, 20, 225, 375-25);
+        subImage.frame = CGRectMake(10, 10, 240, 375-25);
     }else if (IS_IPHONE_6_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 315, 460);
-        subImage.frame = CGRectMake(20, 20, 290, 460-20);
+        subImage.frame = CGRectMake(20, 10, 290+10, 460-20);
     }else if (IS_IPHONE_6p_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 365.0f, 502);
         subImage.frame = CGRectMake(13, 17, 347, 502-26);
@@ -101,12 +118,52 @@
     view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     return view;
 }
+
 - (void)swipeViewWillBeginDragging:(SwipeView *)swipeView{
     [self showHeadImgeView];
 }
+
 - (void)swipeViewDidEndDecelerating:(SwipeView *)swipeView{
     [self hideHeadImageView];
 }
+
+- (void)swipeViewDidScroll:(SwipeView *)swipeView{
+    if (ImageArray.count == 1){
+        return;
+    }
+    if (IS_IPHONE_4_SCREEN){
+        if (swipeView.currentPage == 0){
+            self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 332);
+            self.headImageView.frame = CGRectMake(18 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 332);
+            self.headImageView.frame = CGRectMake(50 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+    }else if (IS_IPHONE_5_SCREEN){
+        if (swipeView.currentPage == 0){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 375);
+                self.headImageView.frame = CGRectMake(18 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
+        }else{
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 375);
+                self.headImageView.frame = CGRectMake(50 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
+        }
+    }else if (IS_IPHONE_6_SCREEN){
+        if (swipeView.currentPage == 0){
+            self.MoviePostersView.frame = CGRectMake(-75, 0, [UtilityFunc shareInstance].globleWidth + 75, 460);
+            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth + 15, 460);
+            self.headImageView.frame = CGRectMake(42, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+    }else if (IS_IPHONE_6p_SCREEN){
+        
+    }
+}
+
 - (void)swipeViewCurrentItemIndexDidChange:(SwipeView *)swipeView
 {
     value = swipeView.currentItemIndex;

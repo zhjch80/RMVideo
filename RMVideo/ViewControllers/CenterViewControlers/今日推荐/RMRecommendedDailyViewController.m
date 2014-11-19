@@ -93,7 +93,7 @@
     if(IS_IPHONE_4_SCREEN){
         return 332;
     }else if (IS_IPHONE_5_SCREEN){
-        return 375;
+        return 365;
     }else if (IS_IPHONE_6_SCREEN){
         return 460;
     }else if (IS_IPHONE_6p_SCREEN){
