@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我的下载";
+    self.title = @"我的缓存";
     isSeleltAllCell = YES;
     isEditing = YES; //编辑按钮为关闭状态
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];

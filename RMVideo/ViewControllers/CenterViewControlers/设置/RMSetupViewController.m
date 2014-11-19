@@ -86,7 +86,7 @@
     self.loginBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-18-self.loginBtn.frame.size.width, self.loginBtn.frame.origin.y, self.loginBtn.frame.size.width, self.loginBtn.frame.size.height);
     self.exitbtn.frame = CGRectMake(0, [UtilityFunc shareInstance].globleHeight-49-44, [UtilityFunc shareInstance].globleWidth, 49);
     
-    dataArray = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"我的下载",@"播放历史"],@[@"用户反馈",@"清理缓存"],@[@"关于",@"分享给朋友",@"去给评分",@"更多应用"]]];
+    dataArray = [NSMutableArray arrayWithArray:@[@[@"我的收藏",@"我的缓存",@"播放历史"],@[@"用户反馈",@"清理缓存"],@[@"关于",@"分享给朋友",@"去给评分",@"更多应用"]]];
     
     [self loadCustomView];
 
