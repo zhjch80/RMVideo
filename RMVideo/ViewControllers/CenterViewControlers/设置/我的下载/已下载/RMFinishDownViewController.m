@@ -143,8 +143,12 @@
         [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
         cell.movieName.text = model.name;
     }
-    
-    cell.memoryCount.text = model.totalMemory;
+    NSString *count = [model.totalMemory substringToIndex:[model.totalMemory rangeOfString:@"M"].location];
+    if(count.integerValue==0){
+        cell.memoryCount.text = @"0.9M";
+    }else{
+        cell.memoryCount.text = model.totalMemory;
+    }
     return cell;
     
 }

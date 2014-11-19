@@ -450,6 +450,7 @@ static id _instance;
         [NSObject cancelPreviousPerformRequestsWithTarget:weekSelf selector:@selector(showNetWorkingspeed) object:nil];
         
         RMPublicModel *model = [weekSelf.dataArray objectAtIndex:index];
+        model.downLoadState = @"下载中...";
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.dataArray removeObject:model];
         if (weekSelf.dataArray.count==0) {
