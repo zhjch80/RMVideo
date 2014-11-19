@@ -206,6 +206,10 @@ static id _instance;
                 if(!self.isDownLoadNow){
                     [self BeginDownLoad];
                 }
+                else if(self.downLoadIDArray.count==1&&self.isDownLoadNow){
+                    self.isDownLoadNow = NO;
+                   [self BeginDownLoad];
+                }
             }
             else{
                 [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];

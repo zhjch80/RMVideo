@@ -63,7 +63,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFail) name:@"playFail_KEY" object:nil];
 }
 - (void)playFail{
-    [self buttonClick:nil];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [self.player CustomViewWillDisappear];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.player pause];
+            [SVProgressHUD showErrorWithStatus:@"播放失败"];
+        }];
+    }else{
+        [self performSelector:@selector(delayViewDisAppear) withObject:nil afterDelay:1.5];
+    }
 }
 /**
  *
@@ -118,10 +126,13 @@
         [self.player CustomViewWillDisappear];
         [self dismissViewControllerAnimated:YES completion:^{
             [self.player pause];
-            [SVProgressHUD showErrorWithStatus:@"播放失败"];
         }];
     }else{
-        [self performSelector:@selector(delayViewDisAppear) withObject:nil afterDelay:1.5];
+        [self.player CustomViewWillDisappear];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.player pause];
+        }];
+
     }
 }
 
