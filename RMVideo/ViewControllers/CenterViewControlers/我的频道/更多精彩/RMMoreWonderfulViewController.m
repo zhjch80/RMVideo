@@ -75,7 +75,7 @@ typedef enum{
     loadType = requestListType;
 
     dataArr = [[NSMutableArray alloc] init];
-    pageCount = 1;
+    pageCount = 0;
     
     self.bgScrView = [[UIScrollView alloc] init];
     self.bgScrView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 130);

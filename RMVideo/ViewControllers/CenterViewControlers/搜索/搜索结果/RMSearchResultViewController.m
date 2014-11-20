@@ -63,6 +63,7 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.tableView];
     isRefresh = YES;
+    pageCount = 1;
 }
 
 #pragma mark - UITableViewDataSource UITableViewDelegate

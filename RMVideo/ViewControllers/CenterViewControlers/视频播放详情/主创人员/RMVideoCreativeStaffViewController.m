@@ -21,7 +21,6 @@ typedef enum{
 @interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
     NSMutableArray * dataArr;
     NSMutableDictionary * starTypeDic;
-    NSInteger pageCount;
     BOOL isRefresh;
     LoadType loadType;
     RMImageView * rmImage;                  //获取点击cell的图片

@@ -70,6 +70,11 @@
     }else{
         [self isShouldSetHiddenEmptyView:YES];
     }
+    if (pageCount * 20 <= AltogetherRows){
+        self.tableView.isCloseFooter = NO;
+    }else{
+        self.tableView.isCloseFooter = YES;
+    }
     return [self.dataArr count];
 }
 
