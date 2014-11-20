@@ -568,11 +568,16 @@
         NSLog(@"听写结果(json)：%@测试",  self.result);
         //TODO:搜索三
         ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = self.result;
-        [self updateUserSearchRecord:self.result];
-        [self.searchTableView reloadData];
-        [self startSearchRequest:self.result];
-        ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).enabled = YES;
+        [SVProgressHUD dismiss];
+        [self performSelector:@selector(willStartJumpSearchResult) withObject:nil afterDelay:1.0];
     }
+}
+
+- (void)willStartJumpSearchResult {
+    [self updateUserSearchRecord:self.result];
+    [self.searchTableView reloadData];
+    [self startSearchRequest:self.result];
+    ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).enabled = YES;
 }
 
 /**

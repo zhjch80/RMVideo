@@ -56,7 +56,7 @@
     [tableView setIsCloseHeader:NO];
     [tableView setIsCloseFooter:NO];
     [self.view addSubview:tableView];
-    pageCount = 1;
+    pageCount = 0;
     isRefresh = YES;
 }
 
@@ -185,14 +185,14 @@
         }
         case k_RETURN_REFRESH://刷新
         {
-            pageCount = 1;
+            pageCount = 0;
             isRefresh = YES;
             [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            if (pageCount * 12 > AltogetherRows){
+            if (pageCount * 12 + 12 > AltogetherRows){
                 [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:YES];
             }else{
                 pageCount ++;
@@ -227,11 +227,18 @@
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (data.count == 0){
         ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
+        [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
+        [SVProgressHUD showSuccessWithStatus:@"暂无相关内容" duration:0.44];
         return;
     }
     ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
     AltogetherRows = [model.rows integerValue];
+    if (AltogetherRows <= 12){
+        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
+    }else {
+        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
+    }
     dataArr = data;
     if (isRefresh){
         dataArr = data;

@@ -422,7 +422,7 @@
                 [self.delegate requestFinishiDownLoadWith:array];
             }
         }else{
-            [SVProgressHUD showErrorWithStatus:@"提交失败"];
+            [SVProgressHUD showErrorWithStatus:@"服务器忙，请稍后再试"];
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
