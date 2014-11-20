@@ -63,14 +63,19 @@
     }else if (IS_IPHONE_6_SCREEN){
         if (ImageArray.count == 1){
             self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth +15, 460);
-            self.headImageView.frame = CGRectMake(42, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(32, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }else{
-            self.MoviePostersView.frame = CGRectMake(-75, 0, [UtilityFunc shareInstance].globleWidth + 75, 460);
+            self.MoviePostersView.frame = CGRectMake(-60, 0, [UtilityFunc shareInstance].globleWidth + 60, 460);
             self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }
     }else if (IS_IPHONE_6p_SCREEN){
-        self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 520);
-        self.headImageView.frame = CGRectMake(33, 10 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        if(ImageArray.count == 1){
+            self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 502);
+            self.headImageView.frame = CGRectMake(31, -2 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-50, 0, [UtilityFunc shareInstance].globleWidth + 50, 502);
+            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
     }
 }
 
@@ -105,11 +110,11 @@
         view.frame = CGRectMake(0.0f, 0.0f, 250.0f, 372);
         subImage.frame = CGRectMake(10, 10, 240, 375-25);
     }else if (IS_IPHONE_6_SCREEN){
-        view.frame = CGRectMake(0.0f, 0.0f, 315, 460);
-        subImage.frame = CGRectMake(20, 10, 290+10, 460-20);
+        view.frame = CGRectMake(0.0f, 0.0f, 310, 460);
+        subImage.frame = CGRectMake(10, 10, 300, 450);
     }else if (IS_IPHONE_6p_SCREEN){
         view.frame = CGRectMake(0.0f, 0.0f, 365.0f, 502);
-        subImage.frame = CGRectMake(13, 17, 347, 502-26);
+        subImage.frame = CGRectMake(13, 15, 352, 502-15);
     }
     [view addSubview:subImage];
     //        view = nil;
@@ -153,14 +158,21 @@
         }
     }else if (IS_IPHONE_6_SCREEN){
         if (swipeView.currentPage == 0){
-            self.MoviePostersView.frame = CGRectMake(-75, 0, [UtilityFunc shareInstance].globleWidth + 75, 460);
+            self.MoviePostersView.frame = CGRectMake(-60, 0, [UtilityFunc shareInstance].globleWidth + 60, 460);
             self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }else{
             self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth + 15, 460);
-            self.headImageView.frame = CGRectMake(42, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(32, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }
     }else if (IS_IPHONE_6p_SCREEN){
-        
+        if(swipeView.currentPage == 0){
+            self.MoviePostersView.frame = CGRectMake(-50, 0, [UtilityFunc shareInstance].globleWidth + 50, 502);
+            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }else{
+            self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 502);
+            self.headImageView.frame = CGRectMake(31, -2 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+
     }
 }
 
