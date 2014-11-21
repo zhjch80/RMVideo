@@ -106,7 +106,7 @@
 
 
 //APP 相关信息
-#define kAppName                            @"天意"
+#define kAppName                            @"小花儿视频"
 #define kAppleId                            @"791488575"
 #define kAppAddress                         @""
 

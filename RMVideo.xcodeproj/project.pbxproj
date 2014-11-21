@@ -44,10 +44,6 @@
 		1D357D161A0B07D9000C5C44 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D141A0B07D9000C5C44 /* MediaPlayer.framework */; };
 		1D357D171A0B07D9000C5C44 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D151A0B07D9000C5C44 /* MediaToolbox.framework */; };
 		1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */; };
-		1D4C35D919F5F8E000AC8F1E /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35D519F5F8E000AC8F1E /* Default-568h.png */; };
-		1D4C35DA19F5F8E000AC8F1E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35D619F5F8E000AC8F1E /* Default-568h@2x.png */; };
-		1D4C35DB19F5F8E000AC8F1E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35D719F5F8E000AC8F1E /* Default.png */; };
-		1D4C35DC19F5F8E000AC8F1E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35D819F5F8E000AC8F1E /* Default@2x.png */; };
 		1D4C35F819F5F91800AC8F1E /* logo_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */; };
 		1D4C35FB19F5F91800AC8F1E /* rotating_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */; };
 		1D4C35FC19F5F91800AC8F1E /* tv_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35F019F5F91800AC8F1E /* tv_download.png */; };
@@ -460,7 +456,6 @@
 		912C099B19F8D79E006B6305 /* variety_unSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C099319F8D79E006B6305 /* variety_unSelected.png */; };
 		912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C099C19F8ECC1006B6305 /* file_before_Image@2x.png */; };
 		912C099F19F8ECC1006B6305 /* file_bg_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912C099D19F8ECC1006B6305 /* file_bg_Image@2x.png */; };
-		912E0CE719F7B34D00CFBE77 /* RMLaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 912E0CE619F7B34D00CFBE77 /* RMLaunchScreen.xib */; };
 		913D15CE1A01E4BB000A50E2 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D15AE1A01E4BB000A50E2 /* MKAnnotationView+WebCache.m */; };
 		913D15CF1A01E4BB000A50E2 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D15B01A01E4BB000A50E2 /* NSData+ImageContentType.m */; };
 		913D15D01A01E4BB000A50E2 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D15B21A01E4BB000A50E2 /* SDImageCache.m */; };
@@ -675,10 +670,6 @@
 		1D357D151A0B07D9000C5C44 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 		1D357D341A0B2381000C5C44 /* DAAutoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAAutoScrollView.h; sourceTree = "<group>"; };
 		1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAAutoScrollView.m; sourceTree = "<group>"; };
-		1D4C35D519F5F8E000AC8F1E /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
-		1D4C35D619F5F8E000AC8F1E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		1D4C35D719F5F8E000AC8F1E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		1D4C35D819F5F8E000AC8F1E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_weibo@2x.png"; sourceTree = "<group>"; };
 		1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating_img@2x.png"; sourceTree = "<group>"; };
 		1D4C35F019F5F91800AC8F1E /* tv_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv_download.png; sourceTree = "<group>"; };
@@ -1252,7 +1243,6 @@
 		912C099319F8D79E006B6305 /* variety_unSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = variety_unSelected.png; sourceTree = "<group>"; };
 		912C099C19F8ECC1006B6305 /* file_before_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "file_before_Image@2x.png"; sourceTree = "<group>"; };
 		912C099D19F8ECC1006B6305 /* file_bg_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "file_bg_Image@2x.png"; sourceTree = "<group>"; };
-		912E0CE619F7B34D00CFBE77 /* RMLaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMLaunchScreen.xib; sourceTree = "<group>"; };
 		913D15AD1A01E4BB000A50E2 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		913D15AE1A01E4BB000A50E2 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		913D15AF1A01E4BB000A50E2 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -1577,22 +1567,9 @@
 			path = AutoScrollView;
 			sourceTree = "<group>";
 		};
-		1D4C35D419F5F8E000AC8F1E /* Default */ = {
-			isa = PBXGroup;
-			children = (
-				1D4C35D519F5F8E000AC8F1E /* Default-568h.png */,
-				1D4C35D619F5F8E000AC8F1E /* Default-568h@2x.png */,
-				1D4C35D719F5F8E000AC8F1E /* Default.png */,
-				1D4C35D819F5F8E000AC8F1E /* Default@2x.png */,
-			);
-			name = Default;
-			path = ../Default;
-			sourceTree = "<group>";
-		};
 		1D4D475719D7AAD900E3A50B = {
 			isa = PBXGroup;
 			children = (
-				1D4D478F19D7B35800E3A50B /* Icon */,
 				1D4D478C19D7B35100E3A50B /* Resources */,
 				1D4D478D19D7B35100E3A50B /* Vendors */,
 				1D8480761A03633400A92879 /* ViewControllers */,
@@ -1618,7 +1595,6 @@
 				1D4D476719D7AAD900E3A50B /* AppDelegate.h */,
 				1D4D476819D7AAD900E3A50B /* AppDelegate.m */,
 				1D4D477319D7AADA00E3A50B /* Images.xcassets */,
-				912E0CE619F7B34D00CFBE77 /* RMLaunchScreen.xib */,
 				1D4D476319D7AAD900E3A50B /* Supporting Files */,
 			);
 			path = RMVideo;
@@ -1715,14 +1691,6 @@
 			);
 			name = Vendors;
 			path = RMVideo/Vendors;
-			sourceTree = "<group>";
-		};
-		1D4D478F19D7B35800E3A50B /* Icon */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Icon;
-			path = RMVideo/Icon;
 			sourceTree = "<group>";
 		};
 		1D4D479119D7B41C00E3A50B /* AES */ = {
@@ -3234,7 +3202,6 @@
 				919E20711A1B3E6300EB13F0 /* user_head_Image@2x.png */,
 				919E20731A1B3E7000EB13F0 /* user_head_Image@3x.png */,
 				91908CC219FA355A00C3DF09 /* 正在缓存的文件夹@2x.png */,
-				1D4C35D419F5F8E000AC8F1E /* Default */,
 			);
 			path = "设置";
 			sourceTree = "<group>";
@@ -3388,11 +3355,9 @@
 				91908CCE19FA355A00C3DF09 /* start_all_downLoad_image@2x.png in Resources */,
 				91AF40671A19E6E000FB16FE /* cell_accessoryType_white@2x.png in Resources */,
 				1DD8C8EB1A19B77400D4B128 /* RecommendedDaily_red_6p.png in Resources */,
-				1D4C35D919F5F8E000AC8F1E /* Default-568h.png in Resources */,
 				1D357CC61A0A1CDF000C5C44 /* vd_collectionRedImg@3x.png in Resources */,
 				91AF40541A19E58E00FB16FE /* logo_weibo@3x.png in Resources */,
 				1D4C363F19F6050700AC8F1E /* mx_rateEmpty_img.png in Resources */,
-				1D4C35DC19F5F8E000AC8F1E /* Default@2x.png in Resources */,
 				1DD39F531A15A7CB000A215A /* logo_fx.png in Resources */,
 				1DAB0D1619EB647E0063A58E /* refresh_bg.png in Resources */,
 				91AF409A1A19F5C600FB16FE /* retreatquickly@3x.png in Resources */,
@@ -3465,7 +3430,6 @@
 				1DD39F621A15A835000A215A /* logo_td@2x.png in Resources */,
 				918DE7041A0628D500287E06 /* tijiao.png in Resources */,
 				1DAB0DB419ECC2EC0063A58E /* MyChannel_black@2x.png in Resources */,
-				1D4C35DB19F5F8E000AC8F1E /* Default.png in Resources */,
 				1DB8E2BE1A1DB7D3008ADB78 /* vd_loadImg@3x.png in Resources */,
 				1DED75BF1A0B59BF004ADBD1 /* jr_teleplay@2x.png in Resources */,
 				1DED75BE1A0B59BF004ADBD1 /* jr_teleplay.png in Resources */,
@@ -3558,13 +3522,11 @@
 				91AF40441A19E4F600FB16FE /* logo_xlkk@3x.png in Resources */,
 				91908CCB19FA355A00C3DF09 /* open_all_back_image.png in Resources */,
 				1D5D0D141A10BF7D00C83C49 /* RMMyChannelCell_6p.xib in Resources */,
-				912E0CE719F7B34D00CFBE77 /* RMLaunchScreen.xib in Resources */,
 				91AF405A1A19E61A00FB16FE /* setup@3x.png in Resources */,
 				919E20741A1B3E7000EB13F0 /* user_head_Image@3x.png in Resources */,
 				1DD39F891A15D588000A215A /* rb_month_5@2x.png in Resources */,
 				1DD39F671A15A84E000A215A /* logo_yk.png in Resources */,
 				1DED762F1A0C51DB004ADBD1 /* next_btn.png in Resources */,
-				1D4C35DA19F5F8E000AC8F1E /* Default-568h@2x.png in Resources */,
 				912C099B19F8D79E006B6305 /* variety_unSelected.png in Resources */,
 				91908CDF19FA3C3300C3DF09 /* complete_btn_image@2x.png in Resources */,
 				91908CDC19FA3C3300C3DF09 /* cancle_btn_image.png in Resources */,
@@ -4020,7 +3982,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -4057,7 +4019,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -4090,7 +4052,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 			};
 			name = Debug;
 		};
@@ -4119,7 +4081,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
+				PROVISIONING_PROFILE = "6efa319b-8532-428f-83d8-d77f7990df4e";
 			};
 			name = Release;
 		};
