@@ -101,7 +101,6 @@
 		1D4D47F419D7B42800E3A50B /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47D319D7B42800E3A50B /* JDStatusBarNotification.m */; };
 		1D4D47F519D7B42800E3A50B /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47D519D7B42800E3A50B /* JDStatusBarStyle.m */; };
 		1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47D719D7B42800E3A50B /* JDStatusBarView.m */; };
-		1D4D47F719D7B42800E3A50B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47DA19D7B42800E3A50B /* Reachability.m */; };
 		1D4D47F819D7B42800E3A50B /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47DD19D7B42800E3A50B /* AFNetworkActivityIndicatorManager.m */; };
 		1D4D47F919D7B42800E3A50B /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47DF19D7B42800E3A50B /* UIActivityIndicatorView+AFNetworking.m */; };
 		1D4D47FA19D7B42800E3A50B /* UIAlertView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4D47E119D7B42800E3A50B /* UIAlertView+AFNetworking.m */; };
@@ -310,6 +309,7 @@
 		1DA2AC7019F65F5B0036C1AD /* SBJson4StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC6719F65F5B0036C1AD /* SBJson4StreamWriter.m */; };
 		1DA2AC7119F65F5B0036C1AD /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC6919F65F5B0036C1AD /* SBJson4StreamWriterState.m */; };
 		1DA2AC7219F65F5B0036C1AD /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC6B19F65F5B0036C1AD /* SBJson4Writer.m */; };
+		1DA8C34B1A1ED6F500D27AEE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8C34A1A1ED6F500D27AEE /* Reachability.m */; };
 		1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF319EB634D0063A58E /* ViewPagerController.m */; };
 		1DAB0D0919EB647E0063A58E /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF619EB647E0063A58E /* arrow_down.png */; };
 		1DAB0D0A19EB647E0063A58E /* arrow_down1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF719EB647E0063A58E /* arrow_down1.png */; };
@@ -762,8 +762,6 @@
 		1D4D47D519D7B42800E3A50B /* JDStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarStyle.m; sourceTree = "<group>"; };
 		1D4D47D619D7B42800E3A50B /* JDStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarView.h; sourceTree = "<group>"; };
 		1D4D47D719D7B42800E3A50B /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarView.m; sourceTree = "<group>"; };
-		1D4D47D919D7B42800E3A50B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		1D4D47DA19D7B42800E3A50B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1D4D47DC19D7B42800E3A50B /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		1D4D47DD19D7B42800E3A50B /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
 		1D4D47DE19D7B42800E3A50B /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
@@ -1082,6 +1080,8 @@
 		1DA2AC6919F65F5B0036C1AD /* SBJson4StreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamWriterState.m; sourceTree = "<group>"; };
 		1DA2AC6A19F65F5B0036C1AD /* SBJson4Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Writer.h; sourceTree = "<group>"; };
 		1DA2AC6B19F65F5B0036C1AD /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
+		1DA8C3491A1ED6F500D27AEE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		1DA8C34A1A1ED6F500D27AEE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1DAB0CF219EB634D0063A58E /* ViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPagerController.h; sourceTree = "<group>"; };
 		1DAB0CF319EB634D0063A58E /* ViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewPagerController.m; sourceTree = "<group>"; };
 		1DAB0CF619EB647E0063A58E /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
@@ -1673,6 +1673,7 @@
 		1D4D478D19D7B35100E3A50B /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				1DA8C3481A1ED6F500D27AEE /* Reachability */,
 				1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
@@ -1708,7 +1709,6 @@
 				1D4D47C319D7B42800E3A50B /* CUSSerializer */,
 				1D4D47C619D7B42800E3A50B /* FMDB */,
 				1D4D47D119D7B42800E3A50B /* JDStatusBarNotification */,
-				1D4D47D819D7B42800E3A50B /* Reachability */,
 				1D4D479119D7B41C00E3A50B /* AES */,
 				1D4D47DB19D7B42800E3A50B /* UIKit+AFNetworking */,
 				1D4D479A19D7B41C00E3A50B /* AFNetworking */,
@@ -1852,15 +1852,6 @@
 				1D4D47D719D7B42800E3A50B /* JDStatusBarView.m */,
 			);
 			path = JDStatusBarNotification;
-			sourceTree = "<group>";
-		};
-		1D4D47D819D7B42800E3A50B /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				1D4D47D919D7B42800E3A50B /* Reachability.h */,
-				1D4D47DA19D7B42800E3A50B /* Reachability.m */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		1D4D47DB19D7B42800E3A50B /* UIKit+AFNetworking */ = {
@@ -2853,6 +2844,15 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
+		1DA8C3481A1ED6F500D27AEE /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1DA8C3491A1ED6F500D27AEE /* Reachability.h */,
+				1DA8C34A1A1ED6F500D27AEE /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		1DAB0CF119EB634D0063A58E /* ICViewPager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3788,7 +3788,6 @@
 				1D5B82971A0E201C00A4A29B /* DropDownTabelViewCell.m in Sources */,
 				1D4D47FC19D7B42800E3A50B /* UIImageView+AFNetworking.m in Sources */,
 				1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */,
-				1D4D47F719D7B42800E3A50B /* Reachability.m in Sources */,
 				1D84815C1A03633400A92879 /* RMMyChannelCell.m in Sources */,
 				913D15D11A01E4BB000A50E2 /* SDWebImageCompat.m in Sources */,
 				1D4D47B619D7B41C00E3A50B /* NSString+Base64.m in Sources */,
@@ -3899,6 +3898,7 @@
 				1D84816D1A03633400A92879 /* RMStarDetailsCell.m in Sources */,
 				1D8481771A03633400A92879 /* RMTVDownLoadViewController.m in Sources */,
 				1D8481461A03633400A92879 /* RMBaseView.m in Sources */,
+				1DA8C34B1A1ED6F500D27AEE /* Reachability.m in Sources */,
 				1D84819A1A03633400A92879 /* RMDownMoreViewController.m in Sources */,
 				1DA2AC6F19F65F5B0036C1AD /* SBJson4StreamTokeniser.m in Sources */,
 				1D4D47FB19D7B42800E3A50B /* UIButton+AFNetworking.m in Sources */,

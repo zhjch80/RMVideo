@@ -48,18 +48,25 @@
 //检查网络链接是否可用
 + (NSInteger)isConnectionAvailable {
     NSInteger isNet = 0;
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    Reachability * reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
     switch ([reach currentReachabilityStatus]) {
         case NotReachable:
             isNet = 0;
             break;
-        case ReachableViaWWAN:
+        case ReachableViaWiFi:
             isNet = 1;
             break;
-        case ReachableViaWiFi:
+        case ReachableViaWWAN:
             isNet = 2;
             break;
+        case ReachableVia2G:
+            isNet = 3;
+            break;
+        case ReachableVia3G:
+            isNet = 4;
+            break;
         default:
+            
             break;
     }
     return isNet;
