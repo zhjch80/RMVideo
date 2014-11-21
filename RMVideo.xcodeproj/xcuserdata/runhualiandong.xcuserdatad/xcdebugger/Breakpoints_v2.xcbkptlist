@@ -13,37 +13,5 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/CenterViewControlers/&#x8bbe;&#x7f6e;/&#x6211;&#x7684;&#x4e0b;&#x8f7d;/&#x6b63;&#x4e0b;&#x8f7d;/RMDownLoadingViewController.m"
-            timestampString = "438078944.590479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
-            landmarkName = "-BeginDownLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/CenterViewControlers/&#x8bbe;&#x7f6e;/&#x6211;&#x7684;&#x4e0b;&#x8f7d;/&#x6b63;&#x4e0b;&#x8f7d;/RMDownLoadingViewController.m"
-            timestampString = "438079202.124632"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
-            landmarkName = "-startDownloadWithMovieName:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

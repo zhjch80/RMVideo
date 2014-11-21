@@ -172,7 +172,16 @@
     CGRect labelRect = CGRectZero;
     
     if(string) {
-        CGSize stringSize = [string sizeWithFont:self.stringLabel.font constrainedToSize:CGSizeMake(200, 300)];
+        CGSize resultSize;
+        NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.stringLabel.font, NSFontAttributeName, nil];
+        CGRect rect = [string boundingRectWithSize:CGSizeMake(200, 300)
+                                         options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                      attributes:attrs
+                                         context:nil];
+        resultSize = rect.size; 
+        resultSize = CGSizeMake(ceil(resultSize.width), ceil(resultSize.height));
+        
+        CGSize stringSize = resultSize;//[string sizeWithFont:self.stringLabel.font constrainedToSize:CGSizeMake(200, 300)];
         stringWidth = stringSize.width;
         stringHeight = stringSize.height;
         hudHeight = 80+stringHeight;

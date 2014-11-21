@@ -86,21 +86,21 @@ typedef enum{
         self.foldImg.frame = CGRectMake(164, 102, 12, 8);
         self.foldBtn.frame = CGRectMake(130, 93, 56, 28);
     }else if (IS_IPHONE_6_SCREEN){
-        self.starIntrduce.frame = CGRectMake(0, 20, 240, 60);
+        self.starIntrduce.frame = CGRectMake(0, 20, 260, 60);
         [self.starIntrduce setContentOffset:CGPointMake(0, 0) animated:YES];
         self.starIntrduce.bouncesZoom = NO;
-        self.headSubView.frame = CGRectMake(120, 10, 244, 129);
-        self.foldMarkTitle.frame = CGRectMake(170, 96, 31, 21);
-        self.foldImg.frame = CGRectMake(204, 102, 12, 8);
-        self.foldBtn.frame = CGRectMake(170, 93, 56, 28);
+        self.headSubView.frame = CGRectMake(120, 10, 264, 129);
+        self.foldMarkTitle.frame = CGRectMake(180, 96, 31, 21);
+        self.foldImg.frame = CGRectMake(214, 102, 12, 8);
+        self.foldBtn.frame = CGRectMake(180, 93, 56, 28);
     }else if (IS_IPHONE_6p_SCREEN){
-        self.starIntrduce.frame = CGRectMake(0, 20, 280, 60);
+        self.starIntrduce.frame = CGRectMake(0, 20, 300, 60);
         [self.starIntrduce setContentOffset:CGPointMake(0, 0) animated:YES];
         self.starIntrduce.bouncesZoom = NO;
-        self.headSubView.frame = CGRectMake(120, 10, 284, 129);
-        self.foldMarkTitle.frame = CGRectMake(210, 96, 31, 21);
-        self.foldImg.frame = CGRectMake(244, 102, 12, 8);
-        self.foldBtn.frame = CGRectMake(210, 93, 56, 28);
+        self.headSubView.frame = CGRectMake(120, 10, 304, 129);
+        self.foldMarkTitle.frame = CGRectMake(220, 96, 31, 21);
+        self.foldImg.frame = CGRectMake(254, 102, 12, 8);
+        self.foldBtn.frame = CGRectMake(220, 93, 56, 28);
     }
     
     [self.headSubChannelView.layer setCornerRadius:8.0];
@@ -272,17 +272,17 @@ typedef enum{
                         self.foldImg.frame = CGRectMake(164, 102, 12, 8);
                         self.foldBtn.frame = CGRectMake(130, 93, 56, 28);
                     }else if (IS_IPHONE_6_SCREEN){
-                        self.starIntrduce.frame = CGRectMake(0, 20, 240, 60);
-                        self.headSubView.frame = CGRectMake(120, 10, 244, 129);
-                        self.foldMarkTitle.frame = CGRectMake(170, 96, 31, 21);
-                        self.foldImg.frame = CGRectMake(204, 102, 12, 8);
-                        self.foldBtn.frame = CGRectMake(170, 93, 56, 28);
+                        self.starIntrduce.frame = CGRectMake(0, 20, 260, 60);
+                        self.headSubView.frame = CGRectMake(120, 10, 264, 129);
+                        self.foldMarkTitle.frame = CGRectMake(180, 96, 31, 21);
+                        self.foldImg.frame = CGRectMake(214, 102, 12, 8);
+                        self.foldBtn.frame = CGRectMake(180, 93, 56, 28);
                     }else if (IS_IPHONE_6p_SCREEN){
-                        self.starIntrduce.frame = CGRectMake(0, 20, 280, 60);
-                        self.headSubView.frame = CGRectMake(120, 10, 284, 129);
-                        self.foldMarkTitle.frame = CGRectMake(210, 96, 31, 21);
-                        self.foldImg.frame = CGRectMake(244, 102, 12, 8);
-                        self.foldBtn.frame = CGRectMake(210, 93, 56, 28);                    }
+                        self.starIntrduce.frame = CGRectMake(0, 20, 300, 60);
+                        self.headSubView.frame = CGRectMake(120, 10, 304, 129);
+                        self.foldMarkTitle.frame = CGRectMake(220, 96, 31, 21);
+                        self.foldImg.frame = CGRectMake(254, 102, 12, 8);
+                        self.foldBtn.frame = CGRectMake(220, 93, 56, 28);                    }
                 } completion:^(BOOL finished) {
                     self.foldMarkTitle.text = @"展开";
                     self.foldImg.image = LOADIMAGE(@"mx_unfold",kImageTypePNG);
@@ -303,17 +303,17 @@ typedef enum{
                         self.foldImg.frame = CGRectMake(164, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
                         self.foldBtn.frame = CGRectMake(130, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
                     }else if (IS_IPHONE_6_SCREEN){
-                        self.starIntrduce.frame = CGRectMake(0, 20, 240, [UtilityFunc shareInstance].globleHeight - 110);
-                        self.headSubView.frame = CGRectMake(120, 10, 244, [UtilityFunc shareInstance].globleHeight - 54);
-                        self.foldMarkTitle.frame = CGRectMake(170, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
-                        self.foldImg.frame = CGRectMake(204, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
-                        self.foldBtn.frame = CGRectMake(170, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
+                        self.starIntrduce.frame = CGRectMake(0, 20, 260, [UtilityFunc shareInstance].globleHeight - 110);
+                        self.headSubView.frame = CGRectMake(120, 10, 264, [UtilityFunc shareInstance].globleHeight - 54);
+                        self.foldMarkTitle.frame = CGRectMake(180, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
+                        self.foldImg.frame = CGRectMake(214, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
+                        self.foldBtn.frame = CGRectMake(180, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
                     }else if (IS_IPHONE_6p_SCREEN){
-                        self.starIntrduce.frame = CGRectMake(0, 20, 280, [UtilityFunc shareInstance].globleHeight - 110);
-                        self.headSubView.frame = CGRectMake(120, 10, 284, [UtilityFunc shareInstance].globleHeight - 54);
-                        self.foldMarkTitle.frame = CGRectMake(210, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
-                        self.foldImg.frame = CGRectMake(244, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
-                        self.foldBtn.frame = CGRectMake(210, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
+                        self.starIntrduce.frame = CGRectMake(0, 20, 300, [UtilityFunc shareInstance].globleHeight - 110);
+                        self.headSubView.frame = CGRectMake(120, 10, 304, [UtilityFunc shareInstance].globleHeight - 54);
+                        self.foldMarkTitle.frame = CGRectMake(220, [UtilityFunc shareInstance].globleHeight - 85, 31, 21);
+                        self.foldImg.frame = CGRectMake(254, [UtilityFunc shareInstance].globleHeight - 78, 12, 8);
+                        self.foldBtn.frame = CGRectMake(220, [UtilityFunc shareInstance].globleHeight - 85, 56, 28);
                     }
                 } completion:^(BOOL finished) {
                     self.foldMarkTitle.text = @"收起";
