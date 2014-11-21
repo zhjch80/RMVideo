@@ -253,7 +253,7 @@ typedef enum{
         if (isDownloadAddress){
             //有片源
             if(model.downLoadURL == nil){
-//                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
+                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
                 model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
                 model.downLoadState = @"等待缓存";
@@ -271,12 +271,19 @@ typedef enum{
                     [rmDownLoading BeginDownLoad];
                     UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alerView show];
+                    [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
                 }
-            }else{
+            }
+            
+            if (isDownload == YES && isDownloading == NO && isNotRecords == YES){
+                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载完成了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alerView show];
+            }
+            
+            if (isDownload == NO && isDownloading == YES && isNotRecords == YES){
                 UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alerView show];
             }
-
         }else{
             //没有片源
             [SVProgressHUD showSuccessWithStatus:@"暂无片源可下载" duration:0.44];
@@ -403,19 +410,22 @@ typedef enum{
     
     [self refreshPlotIntroducedDate:model];
     
-    if ([model.playurlArr count] == 0){
-        //没有片源
-        [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
-        isDownloadAddress = NO;
-        return ;
-    }
+
     
     if ([model.video_type integerValue] == 1){
         //电影
+        if ([model.playurlArr count] == 0){
+            //没有片源
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+            isDownloadAddress = NO;
+            return ;
+        }
+        
         if ([NSString stringWithFormat:@"%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]].length == 0){
             //没有片源
             [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
             isDownloadAddress = NO;
+            return ;
         }else{
             //有片源
             [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
