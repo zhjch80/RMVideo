@@ -13,18 +13,12 @@
 #import "SVProgressHUD.h"
 
 #if 0
-//雪峰
-#define baseUrl @"http://172.16.2.66/index.php/vod/"
+//测试
+#define baseUrl     @"http://vodapi.runmobile.cn/debug/index.php/vod/"
 #else
-//测试服务器
-#define baseUrl @"http://172.16.2.204/rmapi/index.php/vod/"
 //线上
-//#define baseUrl     @"172.16.2.213/rmapi/index.php/vod/"
-
-
+#define baseUrl     @"http://vodapi.runmobile.cn/index.php/vod/"
 #endif
-
-
 
 @implementation RMAFNRequestManager
 

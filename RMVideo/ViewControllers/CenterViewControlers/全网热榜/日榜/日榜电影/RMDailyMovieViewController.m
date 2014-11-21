@@ -71,6 +71,7 @@
     if(cell ==nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
     }
+    //
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
     cell.movieName.text = model.name;

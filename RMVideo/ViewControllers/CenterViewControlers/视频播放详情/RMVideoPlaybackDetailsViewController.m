@@ -32,8 +32,8 @@ typedef enum{
     BOOL isDownload;                //该影片已经下载完成
     BOOL isDownloading;             //该影片正在下载
     BOOL isNotRecords;              //本地没有找到该影片的记录
-    BOOL isDownloadAddress;      //判断是否网络上有该影片的下载地址
-    
+    BOOL isDownloadAddress;         //判断是否网络上有该影片的下载地址
+    BOOL isTVDownlaodAddress;       //判断是否有电视剧 或 综艺
 }
 @property (nonatomic, strong) NSMutableArray * dataArr;
 
@@ -242,18 +242,18 @@ typedef enum{
 }
 
 - (void)willDownload {
-    if ([UtilityFunc isConnectionAvailable] == 0){
-        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
-        return;
-    }
-    [SVProgressHUD dismiss];
     RMPublicModel * model = [self.dataArr objectAtIndex:0];
     if ([model.video_type isEqualToString:@"1"]) {
         //电影  直接下载
         if (isDownloadAddress){
             //有片源
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
+                return;
+            }
+            [SVProgressHUD dismiss];
             if(model.downLoadURL == nil){
-                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
+//                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
                 model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
                 model.downLoadState = @"等待缓存";
@@ -289,11 +289,20 @@ typedef enum{
             [SVProgressHUD showSuccessWithStatus:@"暂无片源可下载" duration:0.44];
         }
     }else{
-        RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
-        TVDownLoadCtl.modelID = model.video_id;
-        TVDownLoadCtl.TVName = model.name;
-        TVDownLoadCtl.TVHeadImage = model.pic;
-        [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
+        if (isTVDownlaodAddress){
+            if ([UtilityFunc isConnectionAvailable] == 0){
+                [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:0.44];
+                return;
+            }
+            [SVProgressHUD dismiss];
+            RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
+            TVDownLoadCtl.modelID = model.video_id;
+            TVDownLoadCtl.TVName = model.name;
+            TVDownLoadCtl.TVHeadImage = model.pic;
+            [self.navigationController pushViewController:TVDownLoadCtl animated:YES];
+        }else{
+            [SVProgressHUD showSuccessWithStatus:@"暂无片源可下载" duration:0.44];
+        }
     }
 }
 
@@ -350,19 +359,19 @@ typedef enum{
     switch (sender.tag) {
         case 101:{
             [Flurry logEvent:@"Click_Download_Btn"];
-            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
-            [self performSelector:@selector(willDownload) withObject:nil afterDelay:1.0];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willDownload) withObject:nil afterDelay:0.5];
             break;
         }
         case 102:{
-            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
-            [self performSelector:@selector(willAddOrCancel) withObject:nil afterDelay:1.0];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willAddOrCancel) withObject:nil afterDelay:0.5];
             break;
         }
         case 103:{
             [Flurry logEvent:@"Click_Share_Btn"];
-            [SVProgressHUD showWithStatus:@"请稍后..." maskType:SVProgressHUDMaskTypeBlack];
-            [self performSelector:@selector(willShare) withObject:nil afterDelay:1.0];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [self performSelector:@selector(willShare) withObject:nil afterDelay:0.5];
             break;
         }
             
@@ -410,8 +419,6 @@ typedef enum{
     
     [self refreshPlotIntroducedDate:model];
     
-
-    
     if ([model.video_type integerValue] == 1){
         //电影
         if ([model.playurlArr count] == 0){
@@ -454,6 +461,21 @@ typedef enum{
         }
     }else{
         //电视剧 综艺
+        if ([model.playurlsArr count] == 0){
+            //无下载地址
+            isTVDownlaodAddress = NO;
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+        }else{
+            if ([NSString stringWithFormat:@"%@",[[[[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"m_down_url"]].length == 0){
+                //无下载地址
+                isTVDownlaodAddress = NO;
+                [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+            }else{
+                //有下载地址
+                isTVDownlaodAddress = YES;
+                [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg", kImageTypePNG) forState:UIControlStateNormal];
+            }
+        }
     }
 }
 
