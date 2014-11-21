@@ -13,7 +13,7 @@
 #import "RMWebViewPlayViewController.h"
 #import "RMCustomPresentNavViewController.h"
 
-@interface RMVideoBroadcastAddressViewController () {
+@interface RMVideoBroadcastAddressViewController ()<RMAFNRequestManagerDelegate> {
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;
     NSMutableArray * dataArr;
@@ -110,6 +110,10 @@
             
         }];
     }
+    UIDevice *device = [[UIDevice alloc] init];
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getDeviceHitsWithVideo_id:self.publicModel.video_id WithDevice:device.model];
+    request.delegate = self;
 }
 
 - (void)updateBroadcastAddress:(RMPublicModel *)model {
@@ -192,6 +196,14 @@
             }
         }
     }
+}
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

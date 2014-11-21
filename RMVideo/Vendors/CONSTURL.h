@@ -28,6 +28,6 @@
 #define Http_postLogin                          318     //设置：登录
 #define Http_getMoreAppSpread                   319     //设置：更多应用
 #define Http_getDeleteMyChannelTag              320     //我的频道：删除tag
-
+#define Http_getDeviceHits                      321     //统计:播放影片次数
 
 

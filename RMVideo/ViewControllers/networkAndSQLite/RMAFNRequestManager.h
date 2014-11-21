@@ -20,7 +20,8 @@ typedef enum{
     requestReturnStatusHasBeenAddedToMyChannelType,                 //明星已经添加到我的频道
     requestReturnStatusInputDoesNotMeetSpecificationsType,          //输入不符合规范
     requestReturnStatusDataEnteredIsIncompleteType,                 //输入的数据不完整
-    requestReturnStatusContentsOfTheInputCanNotBeEmptyType          //输入的内容不能为空
+    requestReturnStatusContentsOfTheInputCanNotBeEmptyType,         //输入的内容不能为空
+    requestReturnStatusUnKnownDevice = 4011                         //未知设备
 }kCodeReturnStatusType;
 
 @protocol RMAFNRequestManagerDelegate <NSObject>
@@ -206,5 +207,13 @@ typedef enum{
  *  @param token    token
  */
 - (void)getDeleteMyChannelWithTag:(NSString *)tag WithToken:(NSString *)token;
+
+/**
+ * 行为统计 统计影片的播放次数
+ * @param video_id      影片的video_id
+ * @param device        设备 （iPhone android）
+ */
+- (void)getDeviceHitsWithVideo_id:(NSString *)video_id WithDevice:(NSString *)device;
+
 
 @end

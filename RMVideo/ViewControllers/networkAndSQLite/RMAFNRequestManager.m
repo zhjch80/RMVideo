@@ -120,6 +120,10 @@
             strUrl = [NSString stringWithFormat:@"%@delMyTag?",baseUrl];
             break;
         }
+        case Http_getDeviceHits:{
+            strUrl = [NSString stringWithFormat:@"%@getDeviceHits?",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -704,6 +708,25 @@
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
             [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        }
+    }];
+}
+
+#pragma mark - 行为统计 统计影片播放次数
+
+- (void)getDeviceHitsWithVideo_id:(NSString *)video_id WithDevice:(NSString *)device {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getDeviceHits];
+    url = [NSString stringWithFormat:@"%@video_id=%@&device=%@",url,video_id,device];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            NSLog(@"success");
+        }else{
+            NSLog(@"fail");
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
         }
     }];
 }
