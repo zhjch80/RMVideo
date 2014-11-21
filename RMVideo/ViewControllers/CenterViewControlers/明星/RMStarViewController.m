@@ -556,19 +556,19 @@ typedef enum{
             
             if (indexPath.row == value - 1){
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-                    return 135;
+                    return 160;
                 }else if (IS_IPHONE_6_SCREEN){
-                    return 140;
+                    return 172;
                 }else{
-                    return 155;
+                    return 190;
                 }
             }else{
                 if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-                    return 125;
+                    return 150;
                 }else if (IS_IPHONE_6_SCREEN){
-                    return 130;
+                    return 162;
                 }else{
-                    return 145;
+                    return 180;
                 }
             }
 

@@ -184,9 +184,11 @@
     if(isCloseFooter)
     {
         footerView.hidden = YES;
+        [self setTableFooterView:nil];
     }
     else{
         footerView.hidden = NO;
+        [self setTableFooterView:footerView];
     }
     
 }

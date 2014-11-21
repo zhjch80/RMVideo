@@ -529,6 +529,8 @@
 		9195B4D31A03767B005ED51B /* RMShouldSeeTVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9195B4D11A03767B005ED51B /* RMShouldSeeTVViewController.xib */; };
 		9195B4D71A0376A1005ED51B /* RMShouldSeeVarietViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9195B4D51A0376A1005ED51B /* RMShouldSeeVarietViewController.m */; };
 		9195B4D81A0376A1005ED51B /* RMShouldSeeVarietViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9195B4D61A0376A1005ED51B /* RMShouldSeeVarietViewController.xib */; };
+		919972081A1DDF190062A509 /* RMStarDetailsViewController_6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 919972061A1DDF190062A509 /* RMStarDetailsViewController_6.xib */; };
+		919972091A1DDF190062A509 /* RMStarDetailsViewController_6p.xib in Resources */ = {isa = PBXBuildFile; fileRef = 919972071A1DDF190062A509 /* RMStarDetailsViewController_6p.xib */; };
 		919E20721A1B3E6300EB13F0 /* user_head_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919E20711A1B3E6300EB13F0 /* user_head_Image@2x.png */; };
 		919E20741A1B3E7000EB13F0 /* user_head_Image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919E20731A1B3E7000EB13F0 /* user_head_Image@3x.png */; };
 		919E20761A1B483900EB13F0 /* start_all_downLoad_image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919E20751A1B483900EB13F0 /* start_all_downLoad_image@3x.png */; };
@@ -1340,6 +1342,8 @@
 		9195B4D41A0376A1005ED51B /* RMShouldSeeVarietViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMShouldSeeVarietViewController.h; sourceTree = "<group>"; };
 		9195B4D51A0376A1005ED51B /* RMShouldSeeVarietViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMShouldSeeVarietViewController.m; sourceTree = "<group>"; };
 		9195B4D61A0376A1005ED51B /* RMShouldSeeVarietViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMShouldSeeVarietViewController.xib; sourceTree = "<group>"; };
+		919972061A1DDF190062A509 /* RMStarDetailsViewController_6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarDetailsViewController_6.xib; sourceTree = "<group>"; };
+		919972071A1DDF190062A509 /* RMStarDetailsViewController_6p.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMStarDetailsViewController_6p.xib; sourceTree = "<group>"; };
 		919E20711A1B3E6300EB13F0 /* user_head_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_head_Image@2x.png"; sourceTree = "<group>"; };
 		919E20731A1B3E7000EB13F0 /* user_head_Image@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_head_Image@3x.png"; sourceTree = "<group>"; };
 		919E20751A1B483900EB13F0 /* start_all_downLoad_image@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start_all_downLoad_image@3x.png"; sourceTree = "<group>"; };
@@ -2500,6 +2504,8 @@
 				1D8480CB1A03633400A92879 /* RMStarDetailsViewController.h */,
 				1D8480CC1A03633400A92879 /* RMStarDetailsViewController.m */,
 				1D8480CD1A03633400A92879 /* RMStarDetailsViewController.xib */,
+				919972061A1DDF190062A509 /* RMStarDetailsViewController_6.xib */,
+				919972071A1DDF190062A509 /* RMStarDetailsViewController_6p.xib */,
 				1D8480CE1A03633400A92879 /* 电影 */,
 				1D8480D21A03633400A92879 /* 电视剧 */,
 				1D8480D61A03633400A92879 /* 综艺 */,
@@ -3589,6 +3595,7 @@
 				1DAB0D0D19EB647E0063A58E /* arrow_up1.png in Resources */,
 				1D9CB9D01A1084F900F185B1 /* RMDownLoadingViewController.xib in Resources */,
 				1D5D0D121A10BE9E00C83C49 /* RMStarCell_6p.xib in Resources */,
+				919972081A1DDF190062A509 /* RMStarDetailsViewController_6.xib in Resources */,
 				1D4C362A19F6050700AC8F1E /* complete_img@2x.png in Resources */,
 				916E1F531A1308D200AD4400 /* no_search_result.@2x.png in Resources */,
 				1D8481721A03633400A92879 /* RMStarFilmListViewController.xib in Resources */,
@@ -3735,6 +3742,7 @@
 				91AF40761A19E80400FB16FE /* mx_add_img@3x.png in Resources */,
 				1D847F3A1A0324D000A92879 /* UMSnsAccountViewController.xib in Resources */,
 				91AF40861A19E92800FB16FE /* paly_bg_img.png in Resources */,
+				919972091A1DDF190062A509 /* RMStarDetailsViewController_6p.xib in Resources */,
 				91B2C2461A07173D001F0220 /* unselect_all_btn@2x.png in Resources */,
 				1D71170519ED26000007D393 /* cell_accessoryType_red.png in Resources */,
 				912C099719F8D79E006B6305 /* teleplay_selected.png in Resources */,

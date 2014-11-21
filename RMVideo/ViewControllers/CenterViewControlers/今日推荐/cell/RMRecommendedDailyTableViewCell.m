@@ -39,6 +39,7 @@
     }else{
         ImageArray = movieArray;
     }
+//    ImageArray = [NSMutableArray arrayWithObjects:@"www.baidu.com",@"www.google.com.cn", nil];
     [self.MoviePostersView reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHeadImgeView) name:@"tableViewWillBeginDragging" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHeadImageView) name:@"tableViewDidEndDecelerating" object:nil];
@@ -71,10 +72,10 @@
     }else if (IS_IPHONE_6p_SCREEN){
         if(ImageArray.count == 1){
             self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 502);
-            self.headImageView.frame = CGRectMake(31, -2 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(31, -2 + 15, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }else{
             self.MoviePostersView.frame = CGRectMake(-50, 0, [UtilityFunc shareInstance].globleWidth + 50, 502);
-            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(10, 15, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }
     }
 }
@@ -140,6 +141,12 @@
         if (swipeView.currentPage == 0){
             self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 332);
             self.headImageView.frame = CGRectMake(18 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+        else if (swipeView.currentPage == ImageArray.count-1){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth+80, 332);
+                self.headImageView.frame = CGRectMake(18+70, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
         }else{
             self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 332);
             self.headImageView.frame = CGRectMake(50 - 5.5, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
@@ -150,7 +157,14 @@
                 self.MoviePostersView.frame = CGRectMake(-65, 0, [UtilityFunc shareInstance].globleWidth+65, 375);
                 self.headImageView.frame = CGRectMake(18 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
             }];
-        }else{
+        }
+        else if (swipeView.currentPage == ImageArray.count-1){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth+45, 375);
+                self.headImageView.frame = CGRectMake(18 - 5.5+55, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
+        }
+        else{
             [UIView animateWithDuration:0.3 animations:^{
                 self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 375);
                 self.headImageView.frame = CGRectMake(50 - 5.5, 11, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
@@ -160,6 +174,12 @@
         if (swipeView.currentPage == 0){
             self.MoviePostersView.frame = CGRectMake(-60, 0, [UtilityFunc shareInstance].globleWidth + 60, 460);
             self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+        else if (swipeView.currentPage == ImageArray.count-1){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth+45, 460);
+                self.headImageView.frame = CGRectMake(18 - 5.5+50, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
         }else{
             self.MoviePostersView.frame = CGRectMake(-15, 0, [UtilityFunc shareInstance].globleWidth + 15, 460);
             self.headImageView.frame = CGRectMake(32, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
@@ -167,10 +187,16 @@
     }else if (IS_IPHONE_6p_SCREEN){
         if(swipeView.currentPage == 0){
             self.MoviePostersView.frame = CGRectMake(-50, 0, [UtilityFunc shareInstance].globleWidth + 50, 502);
-            self.headImageView.frame = CGRectMake(10, 10, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(10, 15, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+        }
+        else if (swipeView.currentPage == ImageArray.count-1){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.MoviePostersView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth+25, 502);
+                self.headImageView.frame = CGRectMake(18 +30, 15, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            }];
         }else{
             self.MoviePostersView.frame = CGRectMake(-10.0, 0, [UtilityFunc shareInstance].globleWidth + 10, 502);
-            self.headImageView.frame = CGRectMake(31, -2 + 16, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
+            self.headImageView.frame = CGRectMake(31, -2 + 15, self.headImageView.frame.size.width, self.headImageView.frame.size.height);
         }
 
     }

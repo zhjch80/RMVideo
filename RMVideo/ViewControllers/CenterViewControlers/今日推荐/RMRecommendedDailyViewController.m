@@ -72,7 +72,7 @@
     RMRecommendedDailyTableViewCell *cell = [mainTableVeiew dequeueReusableCellWithIdentifier:cellName];
     if(cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMRecommendedDailyTableViewCell" owner:self options:nil] lastObject];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor greenColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     

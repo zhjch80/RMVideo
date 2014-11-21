@@ -222,7 +222,16 @@
         self.segmentWidth = 0;
         
         for (NSString *titleString in self.sectionTitles) {
-            CGFloat stringWidth = [titleString sizeWithFont:self.font].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
+            CGSize resultSize;
+            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+            CGRect rect = [titleString boundingRectWithSize:CGSizeMake(500, 500)
+                                               options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                            attributes:attrs
+                                               context:nil];
+            resultSize = rect.size;
+            resultSize = CGSizeMake(ceil(resultSize.width), ceil(resultSize.height));
+//            CGFloat stringWidth = [titleString sizeWithFont:self.font].width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
+            CGFloat stringWidth = resultSize.width + self.segmentEdgeInset.left + self.segmentEdgeInset.right;
             self.segmentWidth = MAX(stringWidth, self.segmentWidth);
         }
         
