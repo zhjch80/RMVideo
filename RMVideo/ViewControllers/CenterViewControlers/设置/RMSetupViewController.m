@@ -217,7 +217,7 @@
                     break;
                     //分享给朋友
                 case 1:{
-                    [SVProgressHUD showWithStatus:@"启动分享中..." maskType:SVProgressHUDMaskTypeBlack];
+                    [SVProgressHUD showWithStatus:@"请稍后..." maskType:SVProgressHUDMaskTypeBlack];
                     [self performSelector:@selector(willStartShare) withObject:nil afterDelay:1.0];
                 }
                     break;

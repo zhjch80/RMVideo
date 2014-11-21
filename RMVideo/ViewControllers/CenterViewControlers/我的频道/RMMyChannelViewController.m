@@ -213,7 +213,8 @@ typedef enum{
     }
     RMPublicModel *model = [dataArr objectAtIndex:indexPath.row];
     CGFloat width = [UtilityFunc boundingRectWithSize:CGSizeMake(0, 30) font:[UIFont systemFontOfSize:14.0] text:model.name].width;
-    cell.tag_title.frame = CGRectMake(2, 0, width + 30, 30);
+    cell.tag_title.frame = CGRectMake(10, 0, width + 30, 30);
+    cell.title_bgView.frame = CGRectMake(2, 0, width+20, 30);
     cell.tag_title.text = model.name;
     cell.moreBtn.tag = indexPath.row;
     

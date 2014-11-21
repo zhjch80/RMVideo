@@ -31,6 +31,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *tag_title;
 
+@property (weak, nonatomic) IBOutlet UIView *title_bgView;
+
 @property (weak, nonatomic) IBOutlet UILabel *videoFirstName;
 @property (weak, nonatomic) IBOutlet UILabel *videoSecondName;
 @property (weak, nonatomic) IBOutlet UILabel *videoThirdName;

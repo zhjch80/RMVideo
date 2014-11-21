@@ -27,7 +27,12 @@ typedef enum{
 @interface RMVideoPlaybackDetailsViewController ()<RMAFNRequestManagerDelegate,UMSocialUIDelegate> {
     LoadType loadType;
     BOOL isCollect;                 //1为收藏   0为未收藏
-    BOOL isFirstViewDidAppear;
+    BOOL isFirstViewDidAppear;      //第一次进入界面
+    
+    BOOL isDownload;                //该影片已经下载完成
+    BOOL isDownloading;             //该影片正在下载
+    BOOL isNotRecords;              //本地没有找到该影片的记录
+    BOOL isDownloadAddress;      //判断是否网络上有该影片的下载地址
     
 }
 @property (nonatomic, strong) NSMutableArray * dataArr;
@@ -245,37 +250,38 @@ typedef enum{
     RMPublicModel * model = [self.dataArr objectAtIndex:0];
     if ([model.video_type isEqualToString:@"1"]) {
         //电影  直接下载
-        if ([model.playurlArr count] == 0){
-            [SVProgressHUD showWithStatus:@"暂无片源可下"];
-            return;
-        }
-        if(model.downLoadURL == nil){
-//                    NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
-            RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-            model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
-            model.downLoadState = @"等待缓存";
-            model.totalMemory = @"0M";
-            model.alreadyCasheMemory = @"0M";
-            model.cacheProgress = @"0.0";
-            //已经下载过了
-            if([[Database sharedDatabase] isDownLoadMovieWith:model]){
-                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alerView show];
-            };
-            if(![rmDownLoading dataArrayContainsModel:model]){
-                
-                [rmDownLoading.dataArray addObject:model];
-                [rmDownLoading.downLoadIDArray addObject:model];
-                [rmDownLoading BeginDownLoad];
-                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        if (isDownloadAddress){
+            //有片源
+            if(model.downLoadURL == nil){
+//                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
+                RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+                model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
+                model.downLoadState = @"等待缓存";
+                model.totalMemory = @"0M";
+                model.alreadyCasheMemory = @"0M";
+                model.cacheProgress = @"0.0";
+                //已经下载过了
+                if([[Database sharedDatabase] isDownLoadMovieWith:model]){
+                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经下载成功了" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alerView show];
+                };
+                if(![rmDownLoading dataArrayContainsModel:model]){
+                    [rmDownLoading.dataArray addObject:model];
+                    [rmDownLoading.downLoadIDArray addObject:model];
+                    [rmDownLoading BeginDownLoad];
+                    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"添加成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alerView show];
+                }
+            }else{
+                UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alerView show];
             }
+
         }else{
-            UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"" message:@"已经在下载队列中" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alerView show];
+            //没有片源
+            [SVProgressHUD showSuccessWithStatus:@"暂无片源可下载" duration:0.44];
         }
     }else{
-        //电视剧 综艺 进download 界面 传video_id
         RMTVDownLoadViewController * TVDownLoadCtl = [[RMTVDownLoadViewController alloc] init];
         TVDownLoadCtl.modelID = model.video_id;
         TVDownLoadCtl.TVName = model.name;
@@ -348,7 +354,7 @@ typedef enum{
         }
         case 103:{
             [Flurry logEvent:@"Click_Share_Btn"];
-            [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:@"请稍后..." maskType:SVProgressHUDMaskTypeBlack];
             [self performSelector:@selector(willShare) withObject:nil afterDelay:1.0];
             break;
         }
@@ -396,6 +402,49 @@ typedef enum{
     }
     
     [self refreshPlotIntroducedDate:model];
+    
+    if ([model.playurlArr count] == 0){
+        //没有片源
+        [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+        isDownloadAddress = NO;
+        return ;
+    }
+    
+    if ([model.video_type integerValue] == 1){
+        //电影
+        if ([NSString stringWithFormat:@"%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]].length == 0){
+            //没有片源
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+            isDownloadAddress = NO;
+        }else{
+            //有片源
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+            isDownloadAddress = YES;
+        }
+        
+        RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
+        if ([[Database sharedDatabase] isDownLoadMovieWith:model]){
+            //该部影片已经下载完成了
+            isDownload = YES;
+            isDownloading = NO;
+            isNotRecords = YES;
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+        }else if ([rmDownLoading dataArrayContainsModel:model]){
+            //该部影片正在下载
+            isDownload = NO;
+            isDownloading = YES;
+            isNotRecords = YES;
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+        }else{
+            //本地没有该部影片的记录
+            isDownload = NO;
+            isDownloading = NO;
+            isNotRecords = NO;
+            [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg", kImageTypePNG) forState:UIControlStateNormal];
+        }
+    }else{
+        //电视剧 综艺
+    }
 }
 
 /**

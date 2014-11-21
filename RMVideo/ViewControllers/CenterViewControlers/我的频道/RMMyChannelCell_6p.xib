@@ -24,8 +24,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.7568628191947937" green="0.023529414087533951" blue="0.08235294371843338" alpha="1" colorSpace="deviceRGB"/>
                     </view>
+                    <view contentMode="scaleToFill" id="W14-WR-fMw">
+                        <rect key="frame" x="0.0" y="0.0" width="2" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.364705890417099" green="0.364705890417099" blue="0.364705890417099" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kQa-rZ-OfZ">
-                        <rect key="frame" x="5" y="0.0" width="370" height="30"/>
+                        <rect key="frame" x="10" y="0.0" width="370" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -106,6 +111,7 @@
                 <outlet property="secondMovieRateView" destination="839-fp-hqQ" id="OWi-J7-vO5"/>
                 <outlet property="tag_title" destination="kQa-rZ-OfZ" id="p2R-4Y-IiS"/>
                 <outlet property="thirdMovieRateView" destination="rpv-bh-kYR" id="rnq-gp-hHn"/>
+                <outlet property="title_bgView" destination="W14-WR-fMw" id="49q-XR-kds"/>
                 <outlet property="videoFirstImg" destination="Jr5-bd-M3f" id="pBY-T7-TLf"/>
                 <outlet property="videoFirstName" destination="4xa-B5-qbC" id="ksZ-fB-f0b"/>
                 <outlet property="videoSecondImg" destination="MIh-yV-ILy" id="dmO-2I-wMh"/>
