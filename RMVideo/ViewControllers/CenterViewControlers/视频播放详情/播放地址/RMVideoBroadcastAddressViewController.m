@@ -85,6 +85,7 @@
         //跳转
         [Flurry logEvent:@"Click_JumpCustomPlayVideo"];
         CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
+        
 //        playContro.playStyle = playNetWorVideo;
         playContro.playEpisodeNumber = 0;
         if([self.publicModel.video_type integerValue]!=1){

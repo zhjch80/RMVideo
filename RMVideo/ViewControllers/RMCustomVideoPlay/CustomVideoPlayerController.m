@@ -81,7 +81,7 @@
     // 获取Reachability对象的网络状态
     NetworkStatus status = [curReach currentReachabilityStatus];
     if (status == NotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"没有网络连接" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"网络连接失败，请检查网络连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"退出",nil];
         [alert show];
     }
     else if(status != ReachableViaWiFi){
@@ -95,10 +95,18 @@
     if(buttonIndex==0){
         [self.player play];
     }else{
-        [self.player CustomViewWillDisappear];
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self.player pause];
-        }];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+            [self.player CustomViewWillDisappear];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.player pause];
+            }];
+        }else{
+            [self.player CustomViewWillDisappear];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.player pause];
+            }];
+            
+        }
     }
 }
 - (void)playFail{
@@ -171,6 +179,7 @@
         [self dismissViewControllerAnimated:YES completion:^{
             [self.player pause];
         }];
+
     }
 }
 

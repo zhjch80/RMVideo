@@ -161,7 +161,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.selectEpisodeBtn addTarget:self action:@selector(selectTVEpisodebtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.playerHudBottom addSubview:self.selectEpisodeBtn];
     if(self.videoType==videoTypeIsMovie){
-        self.selectEpisodeBtn.enabled = YES;
+        [self.selectEpisodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        self.selectEpisodeBtn.enabled = NO;
     }
     
 
