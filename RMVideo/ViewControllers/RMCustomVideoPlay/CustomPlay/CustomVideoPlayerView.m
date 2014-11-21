@@ -114,7 +114,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.nextButton setTintColor:[UIColor blueColor]];
     [self.playerHudBottom addSubview:self.nextButton];
     if(self.videoType==videoTypeIsMovie){
-        self.nextButton.hidden = YES;
+        self.nextButton.enabled = NO;
     }
     //视频当前播放时间
     self.playBackTime = [[UILabel alloc] init];
@@ -161,7 +161,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [self.selectEpisodeBtn addTarget:self action:@selector(selectTVEpisodebtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.playerHudBottom addSubview:self.selectEpisodeBtn];
     if(self.videoType==videoTypeIsMovie){
-        self.selectEpisodeBtn.hidden = YES;
+        self.selectEpisodeBtn.enabled = YES;
     }
     
 
@@ -229,7 +229,11 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 //跳转下一集
 - (void)playNextButtonAction:(UIButton *)sender{
     
+    UIButton *buttnCurrent = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:self.videoEpisode+1];
+    [buttnCurrent setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.videoEpisode++;
+    UIButton *buttnNext = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:self.videoEpisode+1];
+    [buttnNext setTitleColor:[UIColor colorWithRed:0.76 green:0 blue:0.05 alpha:1] forState:UIControlStateNormal];
     
     if([self.delegate respondsToSelector:@selector(playViewWillPlayNext)]){
         [self.delegate playViewWillPlayNext];
@@ -280,7 +284,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     else{
         count = (int)tvArray.count/3+1;
     }
-    self.TVSelectEpisodeScrollView.contentSize = CGSizeMake([UtilityFunc shareInstance].globleWidth-96, count*50);
+    self.TVSelectEpisodeScrollView.contentSize = CGSizeMake(150, count*50);
     for(int i=0;i<tvArray.count;i++){
         RMPublicModel *model = [tvArray objectAtIndex:i];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -319,7 +323,7 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         return;
     self.videoEpisode = sender.tag-1;
     RMPublicModel *model = [self.videoDataArray objectAtIndex:self.videoEpisode];
-    UIButton *buttn = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:self.videoEpisode+1];
+    UIButton *buttn = (UIButton *)[self.TVSelectEpisodeScrollView viewWithTag:sender.tag-1];
     [buttn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sender setTitleColor:[UIColor colorWithRed:0.76 green:0 blue:0.05 alpha:1] forState:UIControlStateNormal];
     

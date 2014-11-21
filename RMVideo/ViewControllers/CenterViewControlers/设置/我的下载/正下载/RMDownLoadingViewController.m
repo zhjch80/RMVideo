@@ -8,8 +8,11 @@
 
 #import "RMDownLoadingViewController.h"
 #import "RMDownLoadingTableViewCell.h"
+#import "Reachability.h"
 
-@interface RMDownLoadingViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface RMDownLoadingViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
+    Reachability * reach;
+}
 
 @end
 
@@ -65,6 +68,7 @@ static id _instance;
     [super viewWillDisappear:animated];
     isCLickPauseCell = NO;
     [Flurry endTimedEvent:@"VIEW_Setup_Downloading" withParameters:nil];
+    [reach stopNotifier];
 }
 
 - (void)viewDidLoad {
@@ -99,6 +103,36 @@ static id _instance;
     isPauseAllDownLoadAssignment = NO;
     for (int i=0; i<self.dataArray.count; i++) {
         [cellEditingImageArray addObject:@"no-select_cellImage"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification_One object:nil];
+    // 获取访问指定站点的Reachability对象
+    reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+    // 让Reachability对象开启被监听状态
+    [reach startNotifier];
+
+}
+
+- (void)reachabilityChanged:(NSNotification *)note {
+    
+    // 通过通知对象获取被监听的Reachability对象
+    Reachability *curReach = [note object];
+    // 获取Reachability对象的网络状态
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    if (status == NotReachable&&self.downLoadIDArray.count>0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"没有网络连接" delegate:nil cancelButtonTitle:@"YES" otherButtonTitles:nil];
+        [alert show];
+    }
+    else if(status != ReachableViaWiFi&&self.downLoadIDArray.count>0){
+        [operation pause];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"当前不是wifi连接，是否继续下载" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消",nil];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex==0){
+        [operation resume];
     }
 }
 

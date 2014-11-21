@@ -13,6 +13,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
+#import "Reachability.h"
 
 #define kTopToolHeight 49
 #define kTopToolTitleHeight 35
@@ -20,8 +21,9 @@
 #define kVideoTitleX 50
 #define kVideoTitleY 21
 
-@interface CustomVideoPlayerController ()<playerViewDelegate>{
+@interface CustomVideoPlayerController ()<playerViewDelegate,UIAlertViewDelegate>{
     NSString *headTitle; //标题
+    Reachability * reach;
 }
 @property (nonatomic, strong) CustomVideoPlayerView *player;
 @property (nonatomic, strong) UIView *topTool;
@@ -55,12 +57,49 @@
     [super viewDidDisappear:animated];
     [UIApplication sharedApplication].statusBarHidden = NO;
     [Flurry endTimedEvent:@"VIEW_CustomPlayView" withParameters:nil];
+    [reach stopNotifier];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playFail) name:@"playFail_KEY" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tworeachabilityChanged:) name:kReachabilityChangedNotification_Two object:nil];
+    // 获取访问指定站点的Reachability对象
+    
+    reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+    // 让Reachability对象开启被监听状态
+    
+    [reach startNotifier];
+}
+
+- (void)tworeachabilityChanged:(NSNotification *)note {
+    
+    // 通过通知对象获取被监听的Reachability对象
+    Reachability *curReach = [note object];
+    // 获取Reachability对象的网络状态
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    if (status == NotReachable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"没有网络连接" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
+    else if(status != ReachableViaWiFi){
+        [self.player pause];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"当前不是wifi连接，是否继续播放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"退出",nil];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex==0){
+        [self.player play];
+    }else{
+        [self.player CustomViewWillDisappear];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.player pause];
+        }];
+    }
 }
 - (void)playFail{
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
@@ -132,7 +171,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             [self.player pause];
         }];
-
     }
 }
 

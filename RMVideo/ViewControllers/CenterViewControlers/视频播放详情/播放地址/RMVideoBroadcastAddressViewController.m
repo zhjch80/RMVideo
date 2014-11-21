@@ -85,17 +85,17 @@
         //跳转
         [Flurry logEvent:@"Click_JumpCustomPlayVideo"];
         CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-        NSMutableArray * downloadArr = [[NSMutableArray alloc] init];
-        for (int i=0; i<[dataArr count]; i++){
-            RMPublicModel * model = [[RMPublicModel alloc] init];
-            model.reurl = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];//mp4地址
-            model.topNum = [[dataArr objectAtIndex:i] objectForKey:@"curnum"];//所属第几集
-            [downloadArr addObject:model];
-        }
 //        playContro.playStyle = playNetWorVideo;
         playContro.playEpisodeNumber = 0;
         if([self.publicModel.video_type integerValue]!=1){
             //电视剧 综艺
+            NSMutableArray * downloadArr = [[NSMutableArray alloc] init];
+            for (int i=0; i<[dataArr count]; i++){
+                RMPublicModel * model = [[RMPublicModel alloc] init];
+                model.reurl = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];//mp4地址
+                model.topNum = [[dataArr objectAtIndex:i] objectForKey:@"curnum"];//所属第几集
+                [downloadArr addObject:model];
+            }
             playContro.videoArray = downloadArr;
             playContro.videoType = videoTypeisTV;
             [playContro createPlayerViewWithURL:[[dataArr objectAtIndex:0] objectForKey:@"m_down_url"] isPlayLocalVideo:NO];//默认播放第一集
