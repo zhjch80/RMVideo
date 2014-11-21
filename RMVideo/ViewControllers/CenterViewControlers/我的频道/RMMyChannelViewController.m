@@ -117,7 +117,7 @@ typedef enum{
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     dataArr = [[NSMutableArray alloc] init];
-    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"微博登录", @"QQ登录", nil];
+    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"新浪微博登录", @"腾讯微博登录", nil];
     [self.moreWonderfulImg addTarget:self WithSelector:@selector(moreWonderfulMethod)];
     
     
@@ -165,7 +165,7 @@ typedef enum{
         button.backgroundColor = [UIColor clearColor];
         [self.view addSubview:button];
         
-        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50, 100, 100, 40)];
+        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50 - 15, 100, 100, 40)];
         title.text = [self.btnImgWithTitleArr objectAtIndex:2+i];
         title.textAlignment = NSTextAlignmentLeft;
         title.font = [UIFont systemFontOfSize:14.0];
@@ -219,7 +219,7 @@ typedef enum{
     cell.moreBtn.tag = indexPath.row;
     
     if ([model.video_list count] == 0){
-        
+        [cell showEmptyView];
     } else if ([model.video_list count] == 1){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
@@ -265,11 +265,11 @@ typedef enum{
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (IS_IPHONE_6_SCREEN){
-        return 215;
+        return 225;
     }else if (IS_IPHONE_6p_SCREEN){
         return 225;
     }else{
-        return 205;
+        return 225;
     }
 }
 

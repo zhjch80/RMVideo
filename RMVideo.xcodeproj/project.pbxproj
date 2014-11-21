@@ -306,6 +306,7 @@
 		1DA2AC7119F65F5B0036C1AD /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC6919F65F5B0036C1AD /* SBJson4StreamWriterState.m */; };
 		1DA2AC7219F65F5B0036C1AD /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA2AC6B19F65F5B0036C1AD /* SBJson4Writer.m */; };
 		1DA8C34B1A1ED6F500D27AEE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8C34A1A1ED6F500D27AEE /* Reachability.m */; };
+		1DA8C39E1A1F386200D27AEE /* RMEmptyCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8C39D1A1F386200D27AEE /* RMEmptyCellView.m */; };
 		1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF319EB634D0063A58E /* ViewPagerController.m */; };
 		1DAB0D0919EB647E0063A58E /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF619EB647E0063A58E /* arrow_down.png */; };
 		1DAB0D0A19EB647E0063A58E /* arrow_down1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF719EB647E0063A58E /* arrow_down1.png */; };
@@ -1073,6 +1074,8 @@
 		1DA2AC6B19F65F5B0036C1AD /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
 		1DA8C3491A1ED6F500D27AEE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1DA8C34A1A1ED6F500D27AEE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		1DA8C39C1A1F386200D27AEE /* RMEmptyCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMEmptyCellView.h; sourceTree = "<group>"; };
+		1DA8C39D1A1F386200D27AEE /* RMEmptyCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMEmptyCellView.m; sourceTree = "<group>"; };
 		1DAB0CF219EB634D0063A58E /* ViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPagerController.h; sourceTree = "<group>"; };
 		1DAB0CF319EB634D0063A58E /* ViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewPagerController.m; sourceTree = "<group>"; };
 		1DAB0CF619EB647E0063A58E /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
@@ -2380,6 +2383,8 @@
 		1D8480A81A03633400A92879 /* 我的频道 */ = {
 			isa = PBXGroup;
 			children = (
+				1DA8C39C1A1F386200D27AEE /* RMEmptyCellView.h */,
+				1DA8C39D1A1F386200D27AEE /* RMEmptyCellView.m */,
 				1D8480A91A03633400A92879 /* RMMyChannelCell.h */,
 				1D8480AA1A03633400A92879 /* RMMyChannelCell.m */,
 				1D8480AB1A03633400A92879 /* RMMyChannelCell.xib */,
@@ -3843,6 +3848,7 @@
 				1DAB0D1C19EB64C80063A58E /* JSONKit.m in Sources */,
 				9195B4CD1A037663005ED51B /* RMShouldSeeMovieViewController.m in Sources */,
 				1D4D47B819D7B41C00E3A50B /* AFHTTPRequestOperationManager.m in Sources */,
+				1DA8C39E1A1F386200D27AEE /* RMEmptyCellView.m in Sources */,
 				9195B4D21A03767B005ED51B /* RMShouldSeeTVViewController.m in Sources */,
 				1D722AC219F7628000424446 /* UIImage+ImageEffects.m in Sources */,
 				1D8481561A03633400A92879 /* RMDailyMovieViewController.m in Sources */,

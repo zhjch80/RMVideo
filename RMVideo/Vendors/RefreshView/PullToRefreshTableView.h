@@ -111,4 +111,9 @@
  **/
 - (void)changeStateMethod;
 
+/**
+ * 设置footView 为 nil
+ */
+- (void)setTableViewFootNil;
+
 @end

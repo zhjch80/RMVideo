@@ -35,7 +35,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setTitle:@"登录"];
-    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"微博登录", @"QQ登录", nil];
+    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"新浪微博登录", @"腾讯微博登录", nil];
 
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
@@ -63,7 +63,7 @@
         button.backgroundColor = [UIColor clearColor];
         [self.view addSubview:button];
         
-        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50, 100, 100, 40)];
+        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50 - 15, 100, 100, 40)];
         title.text = [self.btnImgWithTitleArr objectAtIndex:2+i];
         title.textAlignment = NSTextAlignmentLeft;
         title.font = [UIFont systemFontOfSize:14.0];

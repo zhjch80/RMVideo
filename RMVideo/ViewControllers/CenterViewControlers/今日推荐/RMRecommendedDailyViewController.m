@@ -51,6 +51,7 @@
     mainTableVeiew.dataSource = self;
     mainTableVeiew.separatorStyle = UITableViewCellSeparatorStyleNone;
     [mainTableVeiew setIsCloseFooter:YES];
+    [mainTableVeiew setTableViewFootNil];
     [self.view addSubview:mainTableVeiew];
     
     [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];

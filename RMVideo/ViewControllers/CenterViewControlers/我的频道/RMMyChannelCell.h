@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RatingView.h"
 #import "RMImageView.h"
+#import "RMEmptyCellView.h"
 
 @protocol MyChannemMoreWonderfulDelegate <NSObject>
 
@@ -42,5 +43,7 @@
 @property (weak, nonatomic) IBOutlet RMImageView *videoThirdImg;
 
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
+
+- (void)showEmptyView;
 
 @end

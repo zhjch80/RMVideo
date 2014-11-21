@@ -156,11 +156,11 @@ typedef enum{
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        return 150;
+        return 180;
     }else if (IS_IPHONE_6_SCREEN){
-        return 160;
+        return 200;
     }else{
-        return 175;
+        return 210;
     }
 }
 

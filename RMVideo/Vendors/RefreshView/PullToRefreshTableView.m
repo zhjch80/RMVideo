@@ -184,13 +184,14 @@
     if(isCloseFooter)
     {
         footerView.hidden = YES;
-        [self setTableFooterView:nil];
     }
     else{
         footerView.hidden = NO;
-        [self setTableFooterView:footerView];
     }
-    
+}
+
+- (void)setTableViewFootNil {
+    [self setTableFooterView:nil];
 }
 
 - (void)dealloc{

@@ -15,7 +15,14 @@
     [self.videoFirstImg addTarget:self WithSelector:@selector(videoImageClick:)];
     [self.videoSecondImg addTarget:self WithSelector:@selector(videoImageClick:)];
     [self.videoThirdImg addTarget:self WithSelector:@selector(videoImageClick:)];
+}
 
+- (void)showEmptyView {
+    RMEmptyCellView * emptyView = [[RMEmptyCellView alloc] initWithFrame:self.frame];
+    emptyView.userInteractionEnabled = YES;
+    emptyView.backgroundColor = [UIColor clearColor];
+    [emptyView showEmptyView];
+    [self.contentView addSubview:emptyView];
 }
 
 - (void)videoImageClick:(RMImageView *)imageView {
