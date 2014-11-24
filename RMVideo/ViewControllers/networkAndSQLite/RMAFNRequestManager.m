@@ -307,12 +307,14 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMyChannelVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit_tag=%@&offset_tag=%@",url,token,count,[self setOffsetWith:page andCount:count]];
+    NSLog(@"url:%@",url);
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"tag_list"]){
             RMPublicModel *model = [[RMPublicModel alloc] init];
             model.tag_id = [dict objectForKey:@"tag_id"];
             model.name = [dict objectForKey:@"name"];
+            NSLog(@"----%@",model.name);
             model.video_list = [dict objectForKey:@"video_list"];
             model.rows = [responseObject objectForKey:@"rows"];
             [dataArray addObject:model];
@@ -515,6 +517,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getJoinMyChannel];
     url = [NSString stringWithFormat:@"%@token=%@&id=%@",url,token,ID];
+    NSLog(@"url:%@",url);
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){

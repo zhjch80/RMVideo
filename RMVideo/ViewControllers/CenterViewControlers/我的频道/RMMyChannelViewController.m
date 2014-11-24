@@ -40,6 +40,11 @@ typedef enum{
     NSMutableString *headImageURLString;
     RMAFNRequestManager *manager;
     NSInteger GetDeleteRow;
+    
+    NSInteger pageCount;
+    NSInteger AltogetherRows;
+    BOOL isRefresh;
+    BOOL isFirstViewDidAppear;
 }
 @property (nonatomic, strong) NSString * kLoginStatus;
 @property (nonatomic, strong) PullToRefreshTableView * tableView;
@@ -56,8 +61,6 @@ typedef enum{
 - (void)refreshCurrentCtl {
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     self.kLoginStatus = [AESCrypt decrypt:[storage objectForKey:LoginStatus_KEY] password:PASSWORD];
-    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];    
-
     if ([self.kLoginStatus isEqualToString:@"islogin"]){
         [self setTitle:@"我的频道"];
         self.moreWonderfulImg.hidden = NO;
@@ -69,8 +72,9 @@ typedef enum{
         [leftBarButton setBackgroundImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
         [rightBarButton setBackgroundImage:LOADIMAGE(@"search", kImageTypePNG) forState:UIControlStateNormal];
         self.tableView.hidden = NO;
-        loadType = requestMyChannelListType;
-        [manager getMyChannelVideoListWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] pageNumber:@"1" count:@"10"];
+        pageCount = 1;
+        isRefresh = YES;
+        [self startRequest];
 
         self.tipTitle.hidden = YES;
         self.verticalLine.hidden = YES;
@@ -176,7 +180,13 @@ typedef enum{
     }
     
     [self refreshCurrentCtl];
-    
+}
+
+- (void)startRequest {
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    loadType = requestMyChannelListType;
+    [manager getMyChannelVideoListWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] pageNumber:[NSString stringWithFormat:@"%d",pageCount] count:@"30"];
 }
 
 #pragma mark - UITableView Delegate
@@ -226,7 +236,6 @@ typedef enum{
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
-    
     }else if ([model.video_list count] == 2){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
@@ -239,8 +248,6 @@ typedef enum{
         [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondMovieRateView displayRating:[[[model.video_list objectAtIndex:1] objectForKey:@"gold"] integerValue]];
         cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
-
-        
     }else if ([model.video_list count] == 3){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
@@ -480,12 +487,21 @@ typedef enum{
         }
         case k_RETURN_REFRESH://刷新
         {
-            [self.tableView reloadData:NO];
+            isRefresh = YES;
+            pageCount = 1;
+            [self startRequest];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [self.tableView reloadData:NO];
+            if (pageCount * 30 > AltogetherRows){
+                [self.tableView reloadData:YES];
+            }else{
+                pageCount ++;
+                isRefresh = NO;
+                [self startRequest];
+            }
+            
             break;
         }
             
@@ -498,8 +514,17 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestMyChannelListType){
-        dataArr = data;
-        [self.tableView reloadData];
+        RMPublicModel * model_row = [data objectAtIndex:0];
+        AltogetherRows = [model_row.rows integerValue];
+        if (isRefresh){
+            dataArr = data;
+        }else{
+            for (int i=0; i<data.count; i++) {
+                RMPublicModel * model = [data objectAtIndex:i];
+                [dataArr addObject:model];
+            }
+        }
+        [self.tableView reloadData:NO];
     }else if (loadType == requestLoginType){
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setValue:userName forKey:@"userName"];

@@ -91,10 +91,10 @@
     //    if (view == nil)
     //    {
     view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor greenColor];
     RMImageView * subImage = [[RMImageView alloc] init];
     subImage.identifierString = cellImgageIdentifier;
-    
+    subImage.backgroundColor = [UIColor clearColor];
+    subImage.contentMode = UIViewContentModeScaleToFill;
     
 //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]]];
 //    if(data==nil){
