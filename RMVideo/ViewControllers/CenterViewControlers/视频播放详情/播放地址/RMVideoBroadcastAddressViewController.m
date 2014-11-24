@@ -94,7 +94,7 @@
             for (int i=0; i<[dataArr count]; i++){
                 RMPublicModel * model = [[RMPublicModel alloc] init];
                 model.reurl = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];//mp4地址
-                model.topNum = [[dataArr objectAtIndex:i] objectForKey:@"curnum"];//所属第几集
+                model.topNum = [NSString stringWithFormat:@"%@",[[dataArr objectAtIndex:i] objectForKey:@"curnum"]];//所属第几集
                 [downloadArr addObject:model];
             }
             playContro.videoArray = downloadArr;
