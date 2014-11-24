@@ -269,9 +269,9 @@
     }
     [SVProgressHUD dismiss];
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"544db5aafd98c570d2069586"
-                                      shareText:@"测试"
-                                     shareImage:[UIImage imageNamed:@"001.png"]
+                                         appKey:@"546f02cefd98c5c6a60041bb"
+                                      shareText:@"精彩内容，精准推荐，尽在小花儿视频，你想看的都在这里"
+                                     shareImage:nil
                                 shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
                                        delegate:self];
     
