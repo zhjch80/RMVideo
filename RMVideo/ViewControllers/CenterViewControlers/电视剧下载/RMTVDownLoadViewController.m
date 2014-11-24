@@ -157,7 +157,7 @@
 
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 }
 
 #pragma request finish

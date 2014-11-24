@@ -218,6 +218,7 @@ static id _instance;
             RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
             model.downLoadState =@"等待缓存";
             [self.downLoadIDArray addObject:model];
+            self.isDownLoadNow = NO;
             [self.pauseLoadingArray removeObject:model];
             cell.showDownLoadingState.text = model.downLoadState;
             if(!self.isDownLoadNow){
