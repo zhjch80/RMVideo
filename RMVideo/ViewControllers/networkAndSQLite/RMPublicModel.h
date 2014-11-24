@@ -45,7 +45,7 @@
 @property (nonatomic, strong) NSMutableArray * list;
 @property (nonatomic, strong) NSString *playTime;       //表示播放的时间，方便下次进来可以继续播放，用在数据库中
 @property (nonatomic, strong) NSString * rows;
-
+@property (nonatomic, strong) NSString * AppVersionUrl;
 
 
 

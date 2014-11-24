@@ -29,5 +29,5 @@
 #define Http_getMoreAppSpread                   319     //设置：更多应用
 #define Http_getDeleteMyChannelTag              320     //我的频道：删除tag
 #define Http_getDeviceHits                      321     //统计:播放影片次数
-
+#define Http_getAboutApp                        322     //关于
 

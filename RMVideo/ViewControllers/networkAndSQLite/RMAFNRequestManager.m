@@ -119,6 +119,10 @@
             strUrl = [NSString stringWithFormat:@"%@getDeviceHits?",baseUrl];
             break;
         }
+        case Http_getAboutApp:{
+            strUrl = [NSString stringWithFormat:@"%@about?",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -718,6 +722,29 @@
             NSLog(@"success");
         }else{
             NSLog(@"fail");
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 关于
+
+- (void)getAboutAppWithOS:(NSString *)os withVersionNumber:(NSString *)versionNumber {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getAboutApp];
+    url = [NSString stringWithFormat:@"%@os=%@&versionNumber=%@",url,os,versionNumber];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            RMPublicModel * model = [[RMPublicModel alloc] init];
+            model.AppVersionUrl = [responseObject objectForKey:@"url"];
+            NSMutableArray *dataArray = [NSMutableArray arrayWithObjects:model, nil];
+            if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+                [self.delegate requestFinishiDownLoadWith:dataArray];
+            }
+        }else{
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){

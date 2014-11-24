@@ -8,7 +8,7 @@
 
 #import "RMAboutAppViewController.h"
 
-@interface RMAboutAppViewController ()<UIWebViewDelegate>
+@interface RMAboutAppViewController ()<UIWebViewDelegate,RMAFNRequestManagerDelegate>
 @property (nonatomic, strong) UIWebView * webView;
 @end
 
@@ -32,11 +32,15 @@
 
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64)];
     [self.webView setUserInteractionEnabled:YES];
-    self.webView.scrollView.bounces = YES;
+    self.webView.scrollView.bounces = NO;
     self.webView.opaque = NO;
     self.webView.delegate = self;
     self.webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.webView];
+    
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getAboutAppWithOS:@"iPhone" withVersionNumber:AppVersionNumber];
+    request.delegate = self;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -44,10 +48,7 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:AboutAppUrl] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    [self.webView loadRequest:request];
-    
-    [SVProgressHUD showWithStatus:@"正在加载中..." maskType:SVProgressHUDMaskTypeBlack];
+   [SVProgressHUD showWithStatus:@"正在加载中..." maskType:SVProgressHUDMaskTypeBlack];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -74,6 +75,22 @@
         default:
             break;
     }
+}
+
+#pragma mark - request 
+
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
+    RMPublicModel * model = [data objectAtIndex:0];
+    if (model.AppVersionUrl.length == 0){
+        
+    }else{
+        NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:model.AppVersionUrl] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+        [self.webView loadRequest:request];
+    }
+}
+
+- (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 - (void)didReceiveMemoryWarning {

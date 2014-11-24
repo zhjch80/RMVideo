@@ -110,9 +110,10 @@
 #define kAppleId                            @"944155902"
 #define kAppAddress                         @"https://itunes.apple.com/cn/app/r-evolve/id944155902?mt=8"
 
-#define AboutAppUrl                 @"http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0"
-
 #define UMengAppKey         @"546f02cefd98c5c6a60041bb"
+#define AppVersionNumber        @"1.0"
+
+
 
 //https://itunes.apple.com/cn/app/r-evolve/id877939351?mt=8
 

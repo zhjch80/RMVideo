@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//获取 下载列表
-#define testLoad @"http://172.16.2.66/index.php/vod/getDownloadUrlById?video_id=980&video_type=2"
-
 typedef enum{
     requestReturnStatusNormalType = 4001,                           //正常
     requestReturnStatusNoVideosFoundType,                           //没有找到该视频
@@ -214,6 +211,11 @@ typedef enum{
  * @param device        设备 （iPhone android）
  */
 - (void)getDeviceHitsWithVideo_id:(NSString *)video_id WithDevice:(NSString *)device;
+
+/**
+ * 关于
+ */
+- (void)getAboutAppWithOS:(NSString *)os withVersionNumber:(NSString *)versionNumber;
 
 
 @end
