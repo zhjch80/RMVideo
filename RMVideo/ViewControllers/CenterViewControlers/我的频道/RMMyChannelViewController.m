@@ -121,7 +121,7 @@ typedef enum{
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     dataArr = [[NSMutableArray alloc] init];
-    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"新浪微博登录", @"腾讯微博登录", nil];
+    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"txwb", @"新浪微博登录", @"腾讯微博登录", nil];
     [self.moreWonderfulImg addTarget:self WithSelector:@selector(moreWonderfulMethod)];
     
     

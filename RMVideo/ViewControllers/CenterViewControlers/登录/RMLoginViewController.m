@@ -35,7 +35,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setTitle:@"登录"];
-    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"logo_qq", @"新浪微博登录", @"腾讯微博登录", nil];
+    self.btnImgWithTitleArr = [[NSArray alloc] initWithObjects:@"logo_weibo", @"txwb", @"新浪微博登录", @"腾讯微博登录", nil];
 
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
