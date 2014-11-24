@@ -514,6 +514,10 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestMyChannelListType){
+        if(dataArr.count==0||dataArr==nil){
+            [self.tableView reloadData:NO];
+            return;
+        }
         RMPublicModel * model_row = [data objectAtIndex:0];
         AltogetherRows = [model_row.rows integerValue];
         if (isRefresh){

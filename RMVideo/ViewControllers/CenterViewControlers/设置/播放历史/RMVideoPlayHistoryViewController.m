@@ -164,6 +164,7 @@
             [cell setCellViewFrame];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    NSLog(@"model.pic:%@",model.pic);
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     cell.movieName.text = model.name;

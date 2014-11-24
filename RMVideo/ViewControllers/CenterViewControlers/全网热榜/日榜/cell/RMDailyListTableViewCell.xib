@@ -37,9 +37,6 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="toppaiming.png" translatesAutoresizingMaskIntoConstraints="NO" id="qGq-d8-eBL" customClass="RMImageView">
-                        <rect key="frame" x="17" y="0.0" width="25" height="37"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="类型：剧情、喜剧" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sq-A8-r1G">
                         <rect key="frame" x="115" y="60" width="200" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -48,6 +45,9 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
                         <rect key="frame" x="17" y="7" width="90" height="135"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="toppaiming.png" translatesAutoresizingMaskIntoConstraints="NO" id="qGq-d8-eBL" customClass="RMImageView">
+                        <rect key="frame" x="17" y="0.0" width="25" height="37"/>
                     </imageView>
                 </subviews>
             </tableViewCellContentView>
