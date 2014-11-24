@@ -269,8 +269,8 @@
     }
     [SVProgressHUD dismiss];
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"546f02cefd98c5c6a60041bb"
-                                      shareText:@"精彩内容，精准推荐，尽在小花儿视频，你想看的都在这里"
+                                         appKey:UMengAppKey
+                                      shareText:[NSString stringWithFormat:@"精彩内容，精准推荐，尽在小花儿视频，你想看的都在这里 %@",kAppAddress]
                                      shareImage:nil
                                 shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
                                        delegate:self];
@@ -278,7 +278,6 @@
 }
 
 - (void)clearImageMemory{
-    
     NSLog(@"清理之前个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);
     [[SDImageCache sharedImageCache] clearDisk];
     NSLog(@"清理之后个数----%d",[[SDImageCache sharedImageCache] getDiskCount]);

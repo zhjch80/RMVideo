@@ -112,7 +112,7 @@
 
 #define AboutAppUrl                 @"http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0"
 
-
+#define UMengAppKey         @"546f02cefd98c5c6a60041bb"
 
 //https://itunes.apple.com/cn/app/r-evolve/id877939351?mt=8
 

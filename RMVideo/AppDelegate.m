@@ -90,7 +90,7 @@
 }
 
 - (void)loadSocial {
-    [UMSocialData setAppKey:@"546f02cefd98c5c6a60041bb"];
+    [UMSocialData setAppKey:UMengAppKey];
     [UMSocialWechatHandler setWXAppId:@"wxeb2fbbe81019f3b7" appSecret:@"3025a81418b686d9e38acafec6d21fc5" url:@"http://www.xiaohuatv.com"];
     [UMSocialQQHandler setQQWithAppId:@"1103514725" appKey:@"DPr140rgS4i2L53j" url:@"http://www.xiaohuatv.com"];
     [UMSocialQQHandler setSupportWebView:YES];
