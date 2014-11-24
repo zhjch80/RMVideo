@@ -44,6 +44,7 @@
     RMPublicModel * model = [self.resultData objectAtIndex:0];
     self.keyWord = model.name;
     self.dataArr = [NSMutableArray arrayWithArray:model.list];
+    AltogetherRows = [model.rows integerValue];
     
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;

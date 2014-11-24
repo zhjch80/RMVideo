@@ -47,6 +47,7 @@
     }else{
         self.keyWord = model.keyword;
         self.dataArr = [NSMutableArray arrayWithArray:model.list];
+        AltogetherRows = [model.rows integerValue];
     }
     
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
@@ -73,6 +74,11 @@
         [self isShouldSetHiddenEmptyView:NO];
     }else{
         [self isShouldSetHiddenEmptyView:YES];
+    }
+    if (self.dataArr.count < 20) {
+        self.tableView.isCloseFooter = YES;
+    }else{
+        self.tableView.isCloseFooter = NO;
     }
     return [self.dataArr count];
 }
@@ -221,6 +227,11 @@
         [self.dataArr removeAllObjects];
         for (int i=0; i<[model.list count]; i++){
             [self.dataArr addObject:[model.list objectAtIndex:i]];
+        }
+        if (self.dataArr.count < 20) {
+            self.tableView.isCloseFooter = YES;
+        }else{
+            self.tableView.isCloseFooter = NO;
         }
     }else{
         for (int i=0; i<[model.list count]; i++){

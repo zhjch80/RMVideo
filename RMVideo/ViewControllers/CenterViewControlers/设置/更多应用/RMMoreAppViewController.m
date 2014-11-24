@@ -58,7 +58,7 @@
     cell.delegate = self;
     
     RMPublicModel * model = [dataArr objectAtIndex:indexPath.row];
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.appPic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.appPic] placeholderImage:LOADIMAGE(@"Default60_60", kImageTypePNG)];
     cell.titleLable.text = model.appName;
     cell.openBtn.tag = indexPath.row;
     return cell;
