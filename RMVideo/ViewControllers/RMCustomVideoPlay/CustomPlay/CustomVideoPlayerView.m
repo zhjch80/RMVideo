@@ -42,8 +42,13 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         customSVP = [[[NSBundle mainBundle] loadNibNamed:@"CustomSVProgressHUD" owner:self options:nil] lastObject];
         customSVP.frame = CGRectMake(([UtilityFunc shareInstance].globleHeight-customSVP.frame.size.width)/2, ([UtilityFunc shareInstance].globleWidth-customSVP.frame.size.height)/2, customSVP.frame.size.width, customSVP.frame.size.height);
         self.videoDataArray = [[NSMutableArray alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginPlayMovie) name:@"beginPlayMovie" object:nil];
     }
     return self;
+}
+
+- (void)beginPlayMovie{
+    [self play];
 }
 - (void)contentURL:(NSURL *)contentURL {
     if (self.playerItem) {
