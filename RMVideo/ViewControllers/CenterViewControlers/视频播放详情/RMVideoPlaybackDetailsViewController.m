@@ -468,14 +468,26 @@ typedef enum{
             isTVDownlaodAddress = NO;
             [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
         }else{
-            if ([NSString stringWithFormat:@"%@",[[[[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"m_down_url"]].length == 0){
+            if ([model.playurlsArr count] == 0){
                 //无下载地址
                 isTVDownlaodAddress = NO;
                 [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
             }else{
-                //有下载地址
-                isTVDownlaodAddress = YES;
-                [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg", kImageTypePNG) forState:UIControlStateNormal];
+                if ([[[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"] count] == 0){
+                    //无下载地址
+                    isTVDownlaodAddress = NO;
+                    [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+                }else{
+                    if ([NSString stringWithFormat:@"%@",[[[[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"m_down_url"]].length == 0){
+                        //无下载地址
+                        isTVDownlaodAddress = NO;
+                        [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg_selected", kImageTypePNG) forState:UIControlStateNormal];
+                    }else{
+                        //有下载地址
+                        isTVDownlaodAddress = YES;
+                        [self.videoDownloadBtn setImage:LOADIMAGE(@"vd_loadImg", kImageTypePNG) forState:UIControlStateNormal];
+                    }
+                }
             }
         }
     }

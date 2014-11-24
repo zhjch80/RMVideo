@@ -100,14 +100,18 @@ typedef enum{
     NSMutableDictionary * dic_left = [dataArr objectAtIndex:indexPath.row * 3];
     cell.leftTitle.text = [dic_left objectForKey:@"name"];
     [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
+    cell.leftHeadImg.identifierString = [dic_left objectForKey:@"tag_id"];
+    cell.leftHeadImg.indexPath = indexPath;
     cell.leftAddImg.identifierString = [dic_left objectForKey:@"tag_id"];
     cell.leftAddImg.indexPath = indexPath;
     if ([[dic_left objectForKey:@"status"] integerValue] == 0){
         cell.leftAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
         cell.leftAddImg.isAttentionStarState = 0;
+        cell.leftHeadImg.isAttentionStarState = 0;
     }else{
         cell.leftAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
         cell.leftAddImg.isAttentionStarState = 1;
+        cell.leftHeadImg.isAttentionStarState = 1;
     }
     cell.leftRotatingTitle.text = [starTypeDic objectForKey:[dic_left objectForKey:@"type"]];
     [UtilityFunc rotatingView:cell.leftRotatView];
@@ -119,14 +123,18 @@ typedef enum{
         NSMutableDictionary * dic_center = [dataArr objectAtIndex:indexPath.row * 3 +1];
         cell.centerTitle.text = [dic_center objectForKey:@"name"];
         [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
+        cell.centerHeadImg.identifierString = [dic_center objectForKey:@"tag_id"];
+        cell.centerHeadImg.indexPath = indexPath;
         cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
         cell.centerAddImg.indexPath = indexPath;
         if ([[dic_center objectForKey:@"status"] integerValue] == 0){
             cell.centerAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
             cell.centerAddImg.isAttentionStarState = 0;
+            cell.centerHeadImg.isAttentionStarState = 0;
         }else{
             cell.centerAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
             cell.centerAddImg.isAttentionStarState = 1;
+            cell.centerHeadImg.isAttentionStarState = 1;
         }
         cell.centerRotatingTitle.text = [starTypeDic objectForKey:[dic_center objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.centerRotatView];
@@ -139,14 +147,18 @@ typedef enum{
         NSMutableDictionary * dic_right = [dataArr objectAtIndex:indexPath.row * 3 +2];
         cell.rightTitle.text = [dic_right objectForKey:@"name"];
         [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
+        cell.rightHeadImg.identifierString = [dic_right objectForKey:@"tag_id"];
+        cell.rightHeadImg.indexPath = indexPath;
         cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
         cell.rightAddImg.indexPath = indexPath;
         if ([[dic_right objectForKey:@"status"] integerValue] == 0){
             cell.rightAddImg.image = LOADIMAGE(@"mx_add_img", kImageTypePNG);
             cell.rightAddImg.isAttentionStarState = 0;
+            cell.rightHeadImg.isAttentionStarState = 0;
         }else{
             cell.rightAddImg.image = LOADIMAGE(@"mx_add_success_img", kImageTypePNG);
             cell.rightAddImg.isAttentionStarState = 1;
+            cell.rightHeadImg.isAttentionStarState = 1;
         }
         cell.rightRotatingTitle.text = [starTypeDic objectForKey:[dic_right objectForKey:@"type"]];
         [UtilityFunc rotatingView:cell.rightRotatView];
@@ -204,8 +216,12 @@ typedef enum{
     }
 }
 
+- (void)clickStaffHeadImageViewMehtod:(RMImageView *)imageView {
+    [self clickCreativeStaffCellAddMyChannelMethod:imageView];
+}
+
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
-    [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
     [self performSelector:@selector(willAddOrDeleteCreeativeStaff:) withObject:imageView afterDelay:1.0];
 }
 

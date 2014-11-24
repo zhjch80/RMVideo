@@ -13,6 +13,8 @@
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView;
 
+- (void)clickStaffHeadImageViewMehtod:(RMImageView *)imageView;
+
 @end
 @interface RMVideoCreativeStaffCell : UITableViewCell
 @property (assign ,nonatomic) id<CreativeStaffCellDelegate> delegate;
@@ -22,9 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIView *rightRotatView;
 
 
-@property (weak, nonatomic) IBOutlet UIImageView *leftHeadImg;
-@property (weak, nonatomic) IBOutlet UIImageView *centerHeadImg;
-@property (weak, nonatomic) IBOutlet UIImageView *rightHeadImg;
+@property (weak, nonatomic) IBOutlet RMImageView *leftHeadImg;
+@property (weak, nonatomic) IBOutlet RMImageView *centerHeadImg;
+@property (weak, nonatomic) IBOutlet RMImageView *rightHeadImg;
 
 @property (weak, nonatomic) IBOutlet RMImageView *leftAddImg;
 @property (weak, nonatomic) IBOutlet RMImageView *centerAddImg;
