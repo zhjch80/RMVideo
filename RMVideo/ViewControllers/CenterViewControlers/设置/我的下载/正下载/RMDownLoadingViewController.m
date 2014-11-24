@@ -221,9 +221,7 @@ static id _instance;
             self.isDownLoadNow = NO;
             [self.pauseLoadingArray removeObject:model];
             cell.showDownLoadingState.text = model.downLoadState;
-            if(!self.isDownLoadNow){
-                [self BeginDownLoad];
-            }
+            [self BeginDownLoad];
         }
         else if([cell.showDownLoadingState.text isEqualToString:@"等待缓存"]){
             RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
@@ -234,22 +232,10 @@ static id _instance;
         }
         else if ([cell.showDownLoadingState.text isEqualToString:@"下载失败"]){
             RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-            if(self.isDownLoadNow){
-                model.downLoadState =@"等待缓存";
-                cell.showDownLoadingState.text = model.downLoadState;
-                [self.downLoadIDArray addObject:model];
-                if(!self.isDownLoadNow){
-                    [self BeginDownLoad];
-                }
-                else if(self.downLoadIDArray.count==1&&self.isDownLoadNow){
-                    self.isDownLoadNow = NO;
-                   [self BeginDownLoad];
-                }
-            }
-            else{
-                [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
-                [operation pause];
-            }
+            model.downLoadState =@"等待缓存";
+            cell.showDownLoadingState.text = model.downLoadState;
+            [self.downLoadIDArray addObject:model];
+            [self BeginDownLoad];
         }
         else {
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
@@ -494,11 +480,7 @@ static id _instance;
             [weekSelf isShouldSetHiddenEmptyView:YES];
         }
         [weekSelf.mainTableView reloadData];
-        if(weekSelf.downLoadIDArray.count==0){
-            weekSelf.isDownLoadNow = YES;
-        }else{
-            weekSelf.isDownLoadNow = NO;
-        }
+        weekSelf.isDownLoadNow = NO;
         [weekOperation pause];
         [weekSelf BeginDownLoad];
         
@@ -541,13 +523,10 @@ static id _instance;
         model.totalMemory = @"0M";
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.mainTableView reloadData];
-        if(weekSelf.downLoadIDArray.count==0){
-            weekSelf.isDownLoadNow = YES;
-        }else{
-            weekSelf.isDownLoadNow = NO;
+        weekSelf.isDownLoadNow = NO;
+        if(weekSelf.downLoadIDArray.count>0){
+            [weekSelf BeginDownLoad];
         }
-        
-        [weekSelf BeginDownLoad];
     }];
     [operation start];
     
