@@ -178,7 +178,7 @@ static Database *gl_database=nil;
     [mdb close];
 }
 
-- (void)insertDownLoadArray:(NSArray *)array{
+- (void)insertDownLoadArray:(NSArray *)array {
     if([mdb open]){
         [mdb beginTransaction];
             for(RMPublicModel *item in array)
@@ -191,7 +191,7 @@ static Database *gl_database=nil;
 
 }
 //多条数据插入
--(void)insertArray:(NSArray *)array toListName:(NSString *)listName{
+-(void)insertArray:(NSArray *)array toListName:(NSString *)listName {
     if([mdb open]){
         [mdb beginTransaction];
         if([listName isEqualToString:PLAYHISTORYLISTNAME]){
@@ -206,8 +206,7 @@ static Database *gl_database=nil;
 }
 
 //表中数据个数
--(NSInteger)itemcountFromListName:(NSString *)listName
-{
+-(NSInteger)itemcountFromListName:(NSString *)listName {
     if([mdb open]){
         NSString *sql = nil;
         if([listName isEqualToString:PLAYHISTORYLISTNAME])
@@ -221,20 +220,13 @@ static Database *gl_database=nil;
     }
     [mdb close];
     return 0;
-    
 }
 
 //读取数据
--(NSArray *)readitemFromListName:(NSString *)listName
-{
+-(NSArray *)readitemFromListName:(NSString *)listName {
     if([mdb open]){
         NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
-        
-        NSString *sql = nil;
-        
-        if([listName isEqualToString:PLAYHISTORYLISTNAME]){
-            sql = [NSString stringWithFormat:@"select titleName,titleImage,movieURL,playTime,video_id,weburl from %@",PLAYHISTORYLISTNAME];
-        }
+        NSString *sql = [NSString stringWithFormat:@"select titleName,titleImage,movieURL,playTime,video_id,weburl from %@",PLAYHISTORYLISTNAME];
         FMResultSet *rs = [mdb executeQuery:sql];
         
         if([listName isEqualToString:PLAYHISTORYLISTNAME]){
@@ -248,14 +240,12 @@ static Database *gl_database=nil;
                 item.jumpurl = [rs stringForColumn:@"weburl"];
                 [array addObject:item];
             }
-
         }
         [mdb close];
         return array;
     }
     [mdb close];
     return nil;
-    
 }
 
 - (NSArray *)readItemFromDownLoadList{
