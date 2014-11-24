@@ -23,7 +23,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wq-WS-ZX5">
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wq-WS-ZX5">
                         <rect key="frame" x="212" y="20" width="80" height="25"/>
                         <state key="normal" title="打开" backgroundImage="open_all_back_image.png">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

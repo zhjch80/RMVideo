@@ -99,7 +99,7 @@ typedef enum{
     
     NSMutableDictionary * dic_left = [dataArr objectAtIndex:indexPath.row * 3];
     cell.leftTitle.text = [dic_left objectForKey:@"name"];
-    [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.leftHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_left objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     cell.leftAddImg.identifierString = [dic_left objectForKey:@"tag_id"];
     cell.leftAddImg.indexPath = indexPath;
     if ([[dic_left objectForKey:@"status"] integerValue] == 0){
@@ -118,7 +118,7 @@ typedef enum{
     }else{
         NSMutableDictionary * dic_center = [dataArr objectAtIndex:indexPath.row * 3 +1];
         cell.centerTitle.text = [dic_center objectForKey:@"name"];
-        [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        [cell.centerHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_center objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.centerAddImg.identifierString = [dic_center objectForKey:@"tag_id"];
         cell.centerAddImg.indexPath = indexPath;
         if ([[dic_center objectForKey:@"status"] integerValue] == 0){
@@ -138,7 +138,7 @@ typedef enum{
     }else{
         NSMutableDictionary * dic_right = [dataArr objectAtIndex:indexPath.row * 3 +2];
         cell.rightTitle.text = [dic_right objectForKey:@"name"];
-        [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        [cell.rightHeadImg sd_setImageWithURL:[NSURL URLWithString:[dic_right objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.rightAddImg.identifierString = [dic_right objectForKey:@"tag_id"];
         cell.rightAddImg.indexPath = indexPath;
         if ([[dic_right objectForKey:@"status"] integerValue] == 0){
@@ -211,7 +211,6 @@ typedef enum{
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
     dataArr = model.creatorArr;
-    NSLog(@"-------dataArr:%@",dataArr);
     [(UITableView *)[self.view viewWithTag:101] reloadData];
 }
 #pragma mark -

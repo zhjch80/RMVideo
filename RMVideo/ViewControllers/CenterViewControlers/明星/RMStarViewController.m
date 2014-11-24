@@ -476,7 +476,7 @@ typedef enum{
         model_left = [dataArr objectAtIndex:indexPath.row*3];
         [cell.leftTitle loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
         [cell.leftTitle startScrolling];
-        [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        [cell.starLeftImg sd_setImageWithURL:[NSURL URLWithString:model_left.pic_url] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.starLeftImg.identifierString = model_left.tag_id;
         cell.starAddLeftImg.identifierString = model_left.tag_id;
         cell.starAddLeftImg.indexPath = indexPath;
@@ -494,7 +494,7 @@ typedef enum{
             model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
             [cell.centerTitle loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
             [cell.centerTitle startScrolling];            
-            [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+            [cell.starCenterImg sd_setImageWithURL:[NSURL URLWithString:model_center.pic_url] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
             cell.starCenterImg.identifierString = model_center.tag_id;
             cell.starAddCenterImg.identifierString = model_center.tag_id;
             cell.starAddCenterImg.indexPath = indexPath;
@@ -513,7 +513,7 @@ typedef enum{
             model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
             [cell.rightTitle loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:6];
             [cell.rightTitle startScrolling];
-            [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+            [cell.starRightImg sd_setImageWithURL:[NSURL URLWithString:model_right.pic_url] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
             cell.starRightImg.identifierString = model_right.tag_id;
             cell.starAddRightImg.identifierString = model_right.tag_id;
             cell.starAddRightImg.indexPath = indexPath;

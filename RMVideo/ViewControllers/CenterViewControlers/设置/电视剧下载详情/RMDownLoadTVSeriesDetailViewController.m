@@ -178,7 +178,7 @@
     NSString *tmpStr = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
     //    tmpStr = [tmpStr substringToIndex:[tmpStr rangeOfString:@"_"].location];
     cell.movieName.text = tmpStr;
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
     cell.memoryCount.text = model.totalMemory;
     return cell;

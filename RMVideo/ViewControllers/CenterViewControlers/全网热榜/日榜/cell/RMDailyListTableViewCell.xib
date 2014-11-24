@@ -14,9 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
-                        <rect key="frame" x="17" y="7" width="90" height="135"/>
-                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VBc-dj-ylE">
                         <rect key="frame" x="17" y="7" width="24" height="25"/>
                     </imageView>
@@ -49,6 +46,9 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
+                        <rect key="frame" x="17" y="7" width="90" height="135"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>

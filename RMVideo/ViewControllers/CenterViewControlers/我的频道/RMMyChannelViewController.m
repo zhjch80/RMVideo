@@ -232,37 +232,37 @@ typedef enum{
         [cell showEmptyView];
     } else if ([model.video_list count] == 1){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
-        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
     }else if ([model.video_list count] == 2){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
-        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
         
         cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
-        [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondMovieRateView displayRating:[[[model.video_list objectAtIndex:1] objectForKey:@"gold"] integerValue]];
         cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
     }else if ([model.video_list count] == 3){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
-        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
 
         cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
-        [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondMovieRateView displayRating:[[[model.video_list objectAtIndex:1] objectForKey:@"gold"] integerValue]];
         cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
         
         cell.videoThirdName.text = [[model.video_list objectAtIndex:2] objectForKey:@"name"];
-        [cell.videoThirdImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:2] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+        [cell.videoThirdImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:2] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.thirdMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.thirdMovieRateView displayRating:[[[model.video_list objectAtIndex:2] objectForKey:@"gold"] integerValue]];
         cell.videoThirdImg.identifierString = [[model.video_list objectAtIndex:2] objectForKey:@"video_id"];

@@ -140,7 +140,7 @@
         cell.movieName.text = tmpStr;
         cell.movieCount.text = [NSString stringWithFormat:@"有%d个视频",[self searchTVCountWith:tmpStr]];
     }else{
-        [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+        [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.movieName.text = model.name;
     }
     NSString *count = [model.totalMemory substringToIndex:[model.totalMemory rangeOfString:@"M"].location];

@@ -88,7 +88,7 @@
         cell.backgroundColor = [UIColor clearColor];
     }
     
-    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"pic_url"]] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     cell.name.text = [[self.dataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
     return cell;
 }

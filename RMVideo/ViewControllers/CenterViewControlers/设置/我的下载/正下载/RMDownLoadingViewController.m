@@ -178,7 +178,7 @@ static id _instance;
 //        titel = [titel substringToIndex:[titel rangeOfString:@"_"].location];
         cell.titleLable.text = titel;
     }
-    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
     cell.showDownLoadingState.text = model.downLoadState;
     if([[self setMemoryString:model.totalMemory] floatValue]==0){
@@ -192,7 +192,7 @@ static id _instance;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 84.f;
+    return 140.f;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

@@ -359,7 +359,7 @@ typedef enum{
 - (void)refreshIntroductionView {
     RMPublicModel * model = [introDataArr objectAtIndex:0];
     [self setTitle:model.name];
-    [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:LOADIMAGE(@"rb_loadingImg", kImageTypePNG)];
+    [self.starPhoto sd_setImageWithURL:[NSURL URLWithString:model.pic_url] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     
     [self.starName loadTextViewWithString:model.name WithTextFont:[UIFont systemFontOfSize:16.0]WithTextColor:[UIColor whiteColor] WithTextAlignment:NSTextAlignmentLeft WithSetupLabelCenterPoint:NO WithTextOffset:0];
     [self.starName startScrolling];

@@ -401,7 +401,7 @@ typedef enum{
     }else if ([model.video_type isEqualToString:@"3"]) {
         [self setTitle:@"综艺"];
     }
-    [self.videoImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"sp_loadingImg", kImageTypePNG)];
+    [self.videoImg sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     self.videoTitle.text = model.name;
     [self.videoRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
     [self.videoRateView displayRating:[model.gold integerValue]];

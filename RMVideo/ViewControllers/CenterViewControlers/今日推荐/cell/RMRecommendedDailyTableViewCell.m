@@ -101,19 +101,22 @@
 //        NSLog(@"预备图片");
 //    }
 //    subImage.image = [UIImage imageWithData:data];
-    [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"jr_loadingImg", kImageTypePNG)];
     
     if(IS_IPHONE_4_SCREEN){
+        [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"Default215_322", kImageTypePNG)];
         view.frame = CGRectMake(0.0f, 0.0f, 230.0f, 332);
         subImage.frame = CGRectMake(5, 10, 215, 332-10);
     }
     else if(IS_IPHONE_5_SCREEN){
+        [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"Default240_350", kImageTypePNG)];
         view.frame = CGRectMake(0.0f, 0.0f, 250.0f, 372);
         subImage.frame = CGRectMake(10, 10, 240, 375-25);
     }else if (IS_IPHONE_6_SCREEN){
+        [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"Default300_450", kImageTypePNG)];
         view.frame = CGRectMake(0.0f, 0.0f, 310, 460);
         subImage.frame = CGRectMake(10, 10, 300, 450);
     }else if (IS_IPHONE_6p_SCREEN){
+        [subImage sd_setImageWithURL:[NSURL URLWithString:[ImageArray objectAtIndex:index]] placeholderImage:LOADIMAGE(@"Default352_487", kImageTypePNG)];
         view.frame = CGRectMake(0.0f, 0.0f, 365.0f, 502);
         subImage.frame = CGRectMake(13, 15, 352, 502-15);
     }
