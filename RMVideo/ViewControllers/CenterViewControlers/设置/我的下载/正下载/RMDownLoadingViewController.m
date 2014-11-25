@@ -218,10 +218,12 @@ static id _instance;
             RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
             model.downLoadState =@"等待缓存";
             [self.downLoadIDArray addObject:model];
-            self.isDownLoadNow = NO;
+//            self.isDownLoadNow = NO;
             [self.pauseLoadingArray removeObject:model];
             cell.showDownLoadingState.text = model.downLoadState;
-            [self BeginDownLoad];
+            if(!self.isDownLoadNow){
+                [self BeginDownLoad];
+            }
         }
         else if([cell.showDownLoadingState.text isEqualToString:@"等待缓存"]){
             RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
@@ -260,7 +262,7 @@ static id _instance;
     }
 }
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender {
-    if(self.dataArray.count==0){
+    if(self.dataArray.count==0||isBeginEditing){
         return;
     }
     if(!isPauseAllDownLoadAssignment){

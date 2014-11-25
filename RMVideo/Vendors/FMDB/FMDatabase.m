@@ -878,7 +878,7 @@
                     NSLog(@"data: %ld bytes", (unsigned long)[(NSData*)obj length]);
                 }
                 else {
-                    NSLog(@"obj: %@", obj);
+//                    NSLog(@"obj: %@", obj);
                 }
             }
             
