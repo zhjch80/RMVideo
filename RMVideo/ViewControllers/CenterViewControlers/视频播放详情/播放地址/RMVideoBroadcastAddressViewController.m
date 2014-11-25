@@ -110,6 +110,7 @@
             
         }];
     }
+    //统计播放次数
     UIDevice *device = [[UIDevice alloc] init];
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getDeviceHitsWithVideo_id:self.publicModel.video_id WithDevice:device.model];

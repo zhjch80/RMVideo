@@ -251,6 +251,9 @@
                 NSLog(@"删除成功");
             }
             [self.dataArray removeObjectAtIndex:number.integerValue];
+            NSIndexPath * indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self.maiTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
         }
         if (self.dataArray.count==0) {
@@ -259,9 +262,6 @@
             [self isShouldSetHiddenEmptyView:YES];
         }
     }
-    
-    [self.maiTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
-    [self.maiTableView reloadData];
     [selectCellArray removeAllObjects];
     [[NSNotificationCenter defaultCenter] postNotificationName:kFinishViewControEndEditing object:nil];
 }

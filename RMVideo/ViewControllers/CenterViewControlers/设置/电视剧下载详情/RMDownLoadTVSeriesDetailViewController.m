@@ -140,6 +140,9 @@
                 NSLog(@"删除成功");
             }
             [tableDataArray removeObjectAtIndex:number.integerValue];
+            NSIndexPath * indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self.mainTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             [cellEditingImageArray removeObjectAtIndex:number.integerValue];
             if (tableDataArray.count==0) {
                 [self isShouldSetHiddenEmptyView:NO];
@@ -147,9 +150,6 @@
                 [self isShouldSetHiddenEmptyView:YES];
             }
         }
-        
-        [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
-        [self.mainTableView reloadData];
         [selectCellArray removeAllObjects];
         [UIView animateWithDuration:0.5 animations:^{
             btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);

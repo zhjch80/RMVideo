@@ -97,7 +97,7 @@
 }
 - (void)setRightBarBtnItemImageWith:(BOOL)state{
     if(!state){
-        [rightBarButton setBackgroundImage:LOADIMAGE(@"complete_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+        [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     }
     else{
         [rightBarButton setBackgroundImage:LOADIMAGE(@"editing_btn_image", kImageTypePNG) forState:UIControlStateNormal];

@@ -97,6 +97,9 @@
             RMPublicModel *model = [self.dataArray objectAtIndex:number.integerValue];
             [[Database sharedDatabase] deleteItem:model fromListName:PLAYHISTORYLISTNAME];
             [self.dataArray removeObjectAtIndex:number.integerValue];
+            NSIndexPath * indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self.mainTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             if (self.dataArray.count==0) {
                 [self isShouldSetHiddenEmptyView:NO];
                 rightBarButton.hidden = YES;
@@ -105,9 +108,6 @@
                 rightBarButton.hidden = NO;
             }
         }
-        
-        [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
-        [self.mainTableView reloadData];
         [selectCellArray removeAllObjects];
         [UIView animateWithDuration:0.5 animations:^{
             btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);

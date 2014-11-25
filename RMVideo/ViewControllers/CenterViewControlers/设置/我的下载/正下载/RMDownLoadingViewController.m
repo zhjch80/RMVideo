@@ -167,7 +167,6 @@ static id _instance;
         if(isBeginEditing)
             [cell setCellViewOfFrame];
     }
-    
     //[cell setCellViewOfFrame];
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.editingImageView setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
@@ -179,12 +178,14 @@ static id _instance;
         cell.titleLable.text = titel;
     }
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
-    [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
+    
     cell.showDownLoadingState.text = model.downLoadState;
     if([[self setMemoryString:model.totalMemory] floatValue]==0){
         cell.showDownLoading.text = @"";
+        [cell.downLoadProgress setProgress:0 animated:YES];
     }
     else{
+        [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
         cell.showDownLoading.text = [NSString stringWithFormat:@"%@/%@",model.alreadyCasheMemory,model.totalMemory];
 
     }
@@ -346,11 +347,13 @@ static id _instance;
     [self.mainTableView reloadData];
 }
 
+#pragma mark - 删除
+
 - (void)deleteAllTableViewCell{
     
     NSMutableArray *deleteArray = [NSMutableArray array];
     NSArray *sort = [selectCellArray sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
-        return obj1.integerValue<obj2.integerValue;
+        return obj1.integerValue < obj2.integerValue;
     }];
     for(int i=0;i<sort.count;i++){
         NSNumber *number = [sort objectAtIndex:i];
@@ -361,6 +364,9 @@ static id _instance;
         NSNumber *number = [sort objectAtIndex:i];
         RMPublicModel *model = [self.dataArray objectAtIndex:number.integerValue];
         [self.dataArray removeObjectAtIndex:number.integerValue];
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:number.integerValue inSection:0];
+        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+        [self.mainTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
         if (self.dataArray.count==0) {
             [self isShouldSetHiddenEmptyView:NO];
         }else{
@@ -396,8 +402,6 @@ static id _instance;
         self.haveReadTheSchedule = 0;
         self.totalDownLoad = 0;
     }
-    [self.mainTableView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationNone];
-    [self.mainTableView reloadData];
     [selectCellArray removeAllObjects];
     [[NSNotificationCenter defaultCenter ] postNotificationName:kDownLoadingControEndEditing object:nil];
 }
@@ -545,12 +549,15 @@ static id _instance;
     if([model.totalMemory isEqualToString:@"0M"]){
         cell.downLoadProgress.progress = progress;
         cell.showDownLoading.text = [NSString stringWithFormat:@"%lldM/%lldM",_haveReadTheSchedule/2048/1024,_totalDownLoad/2028/1024];
+        model.totalMemory = [NSString stringWithFormat:@"%lldM",_totalDownLoad/2028/1024];
+        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",_haveReadTheSchedule/2048/1024];
     }
     //暂停之后，或者继续下载之后
     else{
         float cashe = _haveReadTheSchedule/2048.0/1024.0+[[self setMemoryString:model.alreadyCasheMemory] floatValue];
         cell.showDownLoading.text = [NSString stringWithFormat:@"%.0fM/%@",cashe,model.totalMemory];
         cell.downLoadProgress.progress = cashe/[[self setMemoryString:model.totalMemory] floatValue];
+        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",_haveReadTheSchedule/2048/1024];
     }
     _downLoadSpeed = 0;
     [self performSelector:@selector(showNetWorkingspeed) withObject:nil afterDelay:1];
@@ -574,6 +581,9 @@ static id _instance;
 }
 
 - (void)saveData{
+    if(self.dataArray.count==0){
+        return;
+    }
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
     [operation pause];
     [operation cancel];
