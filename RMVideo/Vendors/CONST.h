@@ -110,8 +110,8 @@
 #define kAppleId                            @"944155902"
 #define kAppAddress                         @"https://itunes.apple.com/cn/app/r-evolve/id944155902?mt=8"
 
-#define UMengAppKey         @"546f02cefd98c5c6a60041bb"
-#define AppVersionNumber        @"1.0"
+#define UMengAppKey                         @"546f02cefd98c5c6a60041bb"
+#define AppVersionNumber                    @"1.0"
 
 
 

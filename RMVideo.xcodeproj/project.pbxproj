@@ -368,6 +368,7 @@
 		1DB8E2BE1A1DB7D3008ADB78 /* vd_loadImg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB8E2BC1A1DB7D3008ADB78 /* vd_loadImg@3x.png */; };
 		1DB8E2C11A1DB82C008ADB78 /* vd_loadImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB8E2BF1A1DB82C008ADB78 /* vd_loadImg.png */; };
 		1DB8E2C21A1DB82C008ADB78 /* vd_loadImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB8E2C01A1DB82C008ADB78 /* vd_loadImg@2x.png */; };
+		1DD1CA281A2444AE00E98283 /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CA261A2444AE00E98283 /* Harpy.m */; };
 		1DD2BFE619D90F3D0073D9F8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD2BFE519D90F3D0073D9F8 /* AudioToolbox.framework */; };
 		1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD2BFEB19D919950073D9F8 /* AFSoundManager.m */; };
 		1DD2BFEF19D919950073D9F8 /* AFAudioRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD2BFED19D919950073D9F8 /* AFAudioRouter.m */; };
@@ -1167,6 +1168,9 @@
 		1DB8E2BC1A1DB7D3008ADB78 /* vd_loadImg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "vd_loadImg@3x.png"; path = "../明星/vd_loadImg@3x.png"; sourceTree = "<group>"; };
 		1DB8E2BF1A1DB82C008ADB78 /* vd_loadImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vd_loadImg.png; sourceTree = "<group>"; };
 		1DB8E2C01A1DB82C008ADB78 /* vd_loadImg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vd_loadImg@2x.png"; sourceTree = "<group>"; };
+		1DD1CA251A2444AE00E98283 /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
+		1DD1CA261A2444AE00E98283 /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
+		1DD1CA271A2444AE00E98283 /* HarpyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarpyConstants.h; sourceTree = "<group>"; };
 		1DD2BFE519D90F3D0073D9F8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1DD2BFEA19D919950073D9F8 /* AFSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundManager.h; sourceTree = "<group>"; };
 		1DD2BFEB19D919950073D9F8 /* AFSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSoundManager.m; sourceTree = "<group>"; };
@@ -1684,6 +1688,7 @@
 				1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
+				1DD1CA241A2444AE00E98283 /* Harpy */,
 				1DA8C3481A1ED6F500D27AEE /* Reachability */,
 				1DD39F151A135104000A215A /* GPLoadingView */,
 				1D5D0D281A13337000C83C49 /* Flurry */,
@@ -3084,6 +3089,16 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
+		1DD1CA241A2444AE00E98283 /* Harpy */ = {
+			isa = PBXGroup;
+			children = (
+				1DD1CA251A2444AE00E98283 /* Harpy.h */,
+				1DD1CA261A2444AE00E98283 /* Harpy.m */,
+				1DD1CA271A2444AE00E98283 /* HarpyConstants.h */,
+			);
+			path = Harpy;
+			sourceTree = "<group>";
+		};
 		1DD2BFE919D919890073D9F8 /* AFSoundManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3956,6 +3971,7 @@
 				1DA2AC6D19F65F5B0036C1AD /* SBJson4StreamParser.m in Sources */,
 				1D4D47F119D7B42800E3A50B /* FMDatabasePool.m in Sources */,
 				1D84816D1A03633400A92879 /* RMStarDetailsCell.m in Sources */,
+				1DD1CA281A2444AE00E98283 /* Harpy.m in Sources */,
 				1D8481771A03633400A92879 /* RMTVDownLoadViewController.m in Sources */,
 				1D8481461A03633400A92879 /* RMBaseView.m in Sources */,
 				1DA8C34B1A1ED6F500D27AEE /* Reachability.m in Sources */,

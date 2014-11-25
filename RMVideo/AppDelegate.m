@@ -28,6 +28,7 @@
 #import "RMCustomNavViewController.h"
 #import "RMDownLoadingViewController.h"
 #import "Flurry.h"
+#import "Harpy.h"
 
 #define COLOR_RGB(r,g,b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1]
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
@@ -79,6 +80,11 @@
         NSString * loginStatus = [AESCrypt encrypt:@"notlogin" password:PASSWORD];
         [storage setObject:loginStatus forKey:LoginStatus_KEY];
         [storage endUpdates];
+    }
+    
+    //检查App更新(UpData)
+    if ([UtilityFunc isConnectionAvailable] != 0) {
+        [Harpy checkVersion];
     }
     
     return YES;
