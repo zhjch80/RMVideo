@@ -95,18 +95,10 @@
     if(buttonIndex==0){
         [self.player play];
     }else{
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-            [self.player CustomViewWillDisappear];
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.player pause];
-            }];
-        }else{
-            [self.player CustomViewWillDisappear];
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.player pause];
-            }];
-            
-        }
+        [self.player CustomViewWillDisappear];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.player pause];
+        }];
     }
 }
 - (void)playFail{
@@ -169,18 +161,10 @@
 }
 
 - (void)buttonClick:(UIButton *)sender {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [self.player CustomViewWillDisappear];
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self.player pause];
-        }];
-    }else{
-        [self.player CustomViewWillDisappear];
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self.player pause];
-        }];
-
-    }
+    [self.player CustomViewWillDisappear];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.player pause];
+    }];
 }
 
 - (void)delayViewDisAppear{
@@ -269,8 +253,11 @@
     //[self.player setAVPlayerWithTime:130];
 }
 -(void)playerFinishedPlayback:(CustomVideoPlayerView*)view{
-    [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"播放完成");
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)playViewTouchesEnded{
     if(self.topTool.frame.origin.y==0){

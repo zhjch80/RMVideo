@@ -568,7 +568,6 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         //控制屏幕亮度
         else if([position isEqualToString:@"right"]){
             float num =[UIScreen mainScreen].brightness;
-            NSLog(@"num:%f",num);
             num += space/100;
             [UIScreen mainScreen].brightness = num;
         }
@@ -589,7 +588,6 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         //控制屏幕亮度
         else if ([position isEqualToString:@"right"]){
             float num =[UIScreen mainScreen].brightness;
-            NSLog(@"num:%f",num);
             num += space/100;
             [UIScreen mainScreen].brightness = num;
         }
