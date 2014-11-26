@@ -63,6 +63,16 @@
  */
 - (void) startSpeaking:(NSString *)text;
 
+
+/** 开始合成不播放
+ 
+ 调用此函数进行合成，如果发生错误会回调错误`onCompleted`
+ @param text  合成的文本,最大的字节数为1k
+ @param toUri 合成后，保存在本地的音频路径
+ */
+-(void)synthesize:(NSString *)text toUri:(NSString*)uri;
+
+
 /** 暂停播放
  
  暂停播放之后，合成不会暂停，仍会继续，如果发生错误则会回调错误`onCompleted`

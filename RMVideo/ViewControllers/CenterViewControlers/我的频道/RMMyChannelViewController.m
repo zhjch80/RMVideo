@@ -514,7 +514,7 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestMyChannelListType){
-        if(dataArr.count==0||dataArr==nil){
+        if(data.count==0||data==nil){
             [self.tableView reloadData:NO];
             return;
         }

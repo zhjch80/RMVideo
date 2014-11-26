@@ -288,11 +288,11 @@ typedef enum{
 #pragma mark - Tag delegate
 
 - (void)tagDidAddTag:(AOTag *)tag {
-    NSLog(@"Tag > %@ has been added", tag);
+//    NSLog(@"Tag > %@ has been added", tag);
 }
 
 - (void)tagDidRemoveTag:(AOTag *)tag {
-    NSLog(@"Tag > %@ has been removed", tag);
+//    NSLog(@"Tag > %@ has been removed", tag);
 }
 
 - (void)tagDidSelectTag:(AOTag *)tag {
@@ -309,11 +309,11 @@ typedef enum{
 #pragma mark - Tag delegate
 
 - (void)tagDistantImageDidLoad:(AOTag *)tag {
-    NSLog(@"Distant image has been downloaded for tag > %@", tag);
+//    NSLog(@"Distant image has been downloaded for tag > %@", tag);
 }
 
 - (void)tagDistantImageDidFailLoad:(AOTag *)tag withError:(NSError *)error {
-    NSLog(@"Distant image has failed to download > %@ for tag > %@", error, tag);
+//    NSLog(@"Distant image has failed to download > %@ for tag > %@", error, tag);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -12,6 +12,7 @@
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
 #import "AESCrypt.h"
+#import "CommonFunc.h"
 
 #if 0
 //测试
@@ -145,11 +146,11 @@
     NSRange range = [url rangeOfString:@"php/vod/"];
     NSString * newUrl = [url substringFromIndex:range.location + 8];
     newUrl = [AESCrypt encrypt:newUrl password:kPassWord];
-    newUrl = [NSString stringWithFormat:@"%@decode?data=%@",baseUrl,newUrl];
     NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes
     (NULL, (CFStringRef)newUrl, NULL,
-     (CFStringRef)@"+", kCFStringEncodingUTF8));//!*’();:@&=+$,/?%#[]    选择要转义的的字符
-    return encodedString;
+    (CFStringRef)@"!*’();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
+    newUrl = [NSString stringWithFormat:@"%@decode?data=%@",baseUrl,encodedString];
+    return newUrl;
 }
 
 #pragma mark - 今日推荐
@@ -552,7 +553,7 @@
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
-                [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+                [self performSelector:@selector(showAddSuccess) withObject:nil afterDelay:0.2];
                 [self.delegate requestFinishiDownLoadWith:nil];
             }
         }else if([[responseObject objectForKey:@"code"] integerValue] == 4006) {
@@ -566,6 +567,10 @@
         }
         [SVProgressHUD showErrorWithStatus:@"添加失败"];
     }];
+}
+
+- (void)showAddSuccess {
+    [SVProgressHUD showSuccessWithStatus:@"添加成功" duration:1.0];
 }
 
 #pragma mark - 设置：我的收藏视频列表
