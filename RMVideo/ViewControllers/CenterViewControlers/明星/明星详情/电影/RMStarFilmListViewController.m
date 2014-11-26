@@ -239,7 +239,6 @@
     }else {
         ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
     }
-    dataArr = data;
     if (isRefresh){
         dataArr = data;
     }else{
