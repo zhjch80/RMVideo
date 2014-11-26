@@ -31,6 +31,7 @@
     sunSliderSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"finish_downLoad_selectImage",@"downLoading_selectImage", nil];
     downLoadingViewContr = [[RMDownLoadingViewController shared] init];
 //    __unsafe_unretained RMMyDownLoadViewController *weekSelf = self;
+    downLoadingViewContr.myDownLoadDelegate = self;
     [downLoadingViewContr selectTableViewCellWithIndex:^(NSInteger index) {
 //        RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
 //        [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
@@ -141,7 +142,6 @@
     
 }
 
-
 #pragma mark - 滑动tab视图代理方法
 - (NSUInteger)numberOfTab:(SUNSlideSwitchView *)view {
     return 2;
@@ -166,9 +166,12 @@
     selectViewControl = number;
     [self setRightBarBtnItemState];
     isSeleltAllCell = YES;
-    if (number == 0 && !isEditing) {
-        //当开启编辑状态的时候才进行结束cell的动画
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDownLoadingControEndEditing object:nil];
+    if (number == 0) {
+        [finishDownViewContr takeTheDataFromDataBase];
+        if(!isEditing){
+            //当开启编辑状态的时候才进行结束cell的动画
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDownLoadingControEndEditing object:nil];
+        }
     } else if (number == 1 && !isEditing) {
         [[NSNotificationCenter defaultCenter ] postNotificationName:kFinishViewControEndEditing object:nil];
     }
@@ -179,7 +182,6 @@
     [(UIButton *)[btnView viewWithTag:10] setImage:LOADIMAGE(@"unselect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
     btnView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth, 49);
 }
-
 
 - (void) navgationBarButtonClick:(UIBarButtonItem *)sender{
     
@@ -229,6 +231,8 @@
     }
     if(count>0){
         rightBarButton.hidden = NO;
+        [self setRightBarBtnItemImageWith:YES];
+        
     }else{
         rightBarButton.hidden = YES;
     }

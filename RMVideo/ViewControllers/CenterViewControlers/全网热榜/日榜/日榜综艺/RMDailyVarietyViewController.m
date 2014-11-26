@@ -60,7 +60,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *cellName = @"DailyListCell";
+    static NSString *cellName = @"DailyListCellIndex";
     RMDailyListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     if(cell ==nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"RMDailyListTableViewCell" owner:self options:nil] lastObject];
@@ -136,11 +136,13 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"综艺暂无数据"];
         return;
     }
     [SVProgressHUD dismiss];
+    self.dataArray = data;
     [self.mainTableView reloadData:NO];
 }
 

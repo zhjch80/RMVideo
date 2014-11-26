@@ -92,7 +92,7 @@
     RMPublicModel *model = [self.TVdataArray objectAtIndex:sender.tag-1];
     RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
     NSString *tvString = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
-    NSLog(@"--%@",tvString);
+//    NSLog(@"--%@",tvString);
 
     //判断改电视剧是否已经下载成功
     if([[Database sharedDatabase] isDownLoadMovieWithModelName:tvString]){

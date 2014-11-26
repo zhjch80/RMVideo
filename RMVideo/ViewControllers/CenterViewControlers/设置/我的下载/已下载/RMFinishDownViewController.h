@@ -31,4 +31,7 @@
 //删除
 - (void)deleteAllTableViewCell;
 
+//刷新已下载界面
+- (void)takeTheDataFromDataBase;
+
 @end

@@ -20,6 +20,7 @@
     NSInteger downLoadIndex; //标记当前下载位置。即那个电影正在下载
     //该值主要在开始下载的时候用。假若为YES的，说明当前下载进度被暂停，要下载下一个。若为NO，则表示从其他界面控制该界面进行下载该电影
     BOOL isCLickPauseCell;
+    unsigned long long downloadedBytes;
 }
 @property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (weak, nonatomic) IBOutlet UIButton *showDownLoadState;
@@ -31,6 +32,8 @@
 @property (nonatomic)NSUInteger downLoadSpeed;
 @property (nonatomic)long long haveReadTheSchedule;
 @property (nonatomic)long long totalDownLoad;
+@property (nonatomic, assign) id myDownLoadDelegate;
+
 
 - (IBAction)pauseOrStarAllBtnClick:(UIButton *)sender;
 

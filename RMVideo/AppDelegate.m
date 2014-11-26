@@ -292,11 +292,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     RMDownLoadingViewController *downLoading = [RMDownLoadingViewController shared];
-//    if(downLoading.dataArray.count>0){
+    if(downLoading.dataArray.count>0){
         [downLoading saveData];
         NSData * data = [NSKeyedArchiver archivedDataWithRootObject:downLoading.dataArray];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:DownLoadDataArray_KEY];
-//    }
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:DownLoadDataArray_KEY];
+
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

@@ -9,6 +9,7 @@
 #import "RMDownLoadingViewController.h"
 #import "RMDownLoadingTableViewCell.h"
 #import "Reachability.h"
+#import "RMMyDownLoadViewController.h"
 
 @interface RMDownLoadingViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>{
     Reachability * reach;
@@ -154,6 +155,7 @@ static id _instance;
     [selectCellArray removeAllObjects];
     self.mainTableView.frame = CGRectMake(self.mainTableView.frame.origin.x, self.mainTableView.frame.origin.y, self.mainTableView.frame.size.width, self.mainTableView.frame.size.height+25);
 }
+
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
@@ -187,7 +189,6 @@ static id _instance;
     else{
         [cell.downLoadProgress setProgress:[model.cacheProgress floatValue] animated:YES];
         cell.showDownLoading.text = [NSString stringWithFormat:@"%@/%@",model.alreadyCasheMemory,model.totalMemory];
-
     }
     return cell;
     
@@ -422,7 +423,8 @@ static id _instance;
                 break;
             }
         }
-        
+        [self.showDownLoadState setTitle:@"全部暂停" forState:UIControlStateNormal];
+        isPauseAllDownLoadAssignment = NO;
         [self startDownloadWithMovieName:model];
     }
     
@@ -431,7 +433,6 @@ static id _instance;
 
 //开始下载
 - (void)startDownloadWithMovieName:(RMPublicModel *)model {
-    
     self.isDownLoadNow = YES;
     NSString *downloadUrl = model.downLoadURL;
     
@@ -440,7 +441,7 @@ static id _instance;
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:downloadUrl]];
     //检查文件是否已经下载了一部分
-    unsigned long long downloadedBytes = 0;
+    downloadedBytes = 0;
     if ([[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
         //获取已下载的文件长度
         downloadedBytes = [self fileSizeForPath:downloadPath];
@@ -474,22 +475,23 @@ static id _instance;
     AFHTTPRequestOperation *weekOperation = operation;
     //成功和失败回调
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:weekSelf selector:@selector(showNetWorkingspeed) object:nil];
         
+        [NSObject cancelPreviousPerformRequestsWithTarget:weekSelf selector:@selector(showNetWorkingspeed) object:nil];
         RMPublicModel *model = [weekSelf.dataArray objectAtIndex:index];
         model.downLoadState = @"下载中...";
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.dataArray removeObject:model];
+        [weekSelf.mainTableView reloadData];
+        weekSelf.isDownLoadNow = NO;
+        [weekOperation pause];
         if (weekSelf.dataArray.count==0) {
             [weekSelf isShouldSetHiddenEmptyView:NO];
         }else{
             [weekSelf isShouldSetHiddenEmptyView:YES];
+            if(weekSelf.downLoadIDArray.count>0){
+                [weekSelf BeginDownLoad];
+            }
         }
-        [weekSelf.mainTableView reloadData];
-        weekSelf.isDownLoadNow = NO;
-        [weekOperation pause];
-        [weekSelf BeginDownLoad];
-        
         NSFileManager *fileManeger = [NSFileManager defaultManager];
         
         NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -508,10 +510,11 @@ static id _instance;
             
             //第一次下载的时候
             if([model.totalMemory isEqualToString:@"0M"]){
-                model.totalMemory = [NSString stringWithFormat:@"%lldM",weekSelf.totalDownLoad/2028/1024];
+                model.totalMemory = [NSString stringWithFormat:@"%lldM",weekSelf.totalDownLoad/1024/1024];
             }
             [[Database sharedDatabase] insertDownLoadItem:model];
-            [[NSNotificationCenter defaultCenter] postNotificationName:DownLoadSuccess_KEY object:nil];
+            RMMyDownLoadViewController * myDownLoadCtl = weekSelf.myDownLoadDelegate;
+            [myDownLoadCtl setRightBarBtnItemState];
             
         }else{
             NSLog(@"error 处理  error:%@",error);
@@ -525,8 +528,8 @@ static id _instance;
         [weekOperation pause];
         RMPublicModel *model = [weekSelf.dataArray objectAtIndex:index];
         model.downLoadState = @"下载失败";
-        model.cacheProgress = @"0";
-        model.totalMemory = @"0M";
+//        model.cacheProgress = @"0";
+//        model.totalMemory = @"0M";
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.mainTableView reloadData];
         weekSelf.isDownLoadNow = NO;
@@ -540,24 +543,26 @@ static id _instance;
 
 - (void)showNetWorkingspeed{
     
-    float progress = ((float)_haveReadTheSchedule) / (float)(_totalDownLoad );
+//    float progress = ((float)_haveReadTheSchedule) / (float)(_totalDownLoad );
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:downLoadIndex inSection:0];
     RMDownLoadingTableViewCell *cell = (RMDownLoadingTableViewCell *)[self.mainTableView cellForRowAtIndexPath:indexPath];
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
-    cell.showDownLoadingState.text = [NSString stringWithFormat:@"%.1fkb/s",_downLoadSpeed/2048.0];
+    cell.showDownLoadingState.text = [NSString stringWithFormat:@"%.1fkb/s",_downLoadSpeed/1024.0];
     //第一次下载的时候
     if([model.totalMemory isEqualToString:@"0M"]){
-        cell.downLoadProgress.progress = progress;
-        cell.showDownLoading.text = [NSString stringWithFormat:@"%lldM/%lldM",_haveReadTheSchedule/2048/1024,_totalDownLoad/2028/1024];
-        model.totalMemory = [NSString stringWithFormat:@"%lldM",_totalDownLoad/2028/1024];
-        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",_haveReadTheSchedule/2048/1024];
+        cell.downLoadProgress.progress = 0;
+        cell.showDownLoading.text = [NSString stringWithFormat:@"%lldM/%lldM",(_haveReadTheSchedule+downloadedBytes)/1024/1024,_totalDownLoad/1024/1024];
+        model.totalMemory = [NSString stringWithFormat:@"%lldM",_totalDownLoad/1024/1024];
+        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",(_haveReadTheSchedule+downloadedBytes)/1024/1024];
     }
+   
     //暂停之后，或者继续下载之后
     else{
-        float cashe = _haveReadTheSchedule/2048.0/1024.0+[[self setMemoryString:model.alreadyCasheMemory] floatValue];
+        float cashe = (_haveReadTheSchedule+downloadedBytes)/1024.0/1024.0;
         cell.showDownLoading.text = [NSString stringWithFormat:@"%.0fM/%@",cashe,model.totalMemory];
         cell.downLoadProgress.progress = cashe/[[self setMemoryString:model.totalMemory] floatValue];
-        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",_haveReadTheSchedule/2048/1024];
+        model.alreadyCasheMemory = [NSString stringWithFormat:@"%lldM",(_haveReadTheSchedule+downloadedBytes)/1024/1024];
+//        model.totalMemory = [NSString stringWithFormat:@"%lldM",_totalDownLoad/1024/1024];
     }
     _downLoadSpeed = 0;
     [self performSelector:@selector(showNetWorkingspeed) withObject:nil afterDelay:1];
@@ -581,9 +586,7 @@ static id _instance;
 }
 
 - (void)saveData{
-    if(self.dataArray.count==0){
-        return;
-    }
+    
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showNetWorkingspeed) object:nil];
     [operation pause];
     [operation cancel];

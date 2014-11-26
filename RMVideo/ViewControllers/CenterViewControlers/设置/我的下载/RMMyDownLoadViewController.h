@@ -18,4 +18,6 @@
     RMFinishDownViewController *finishDownViewContr;
     NSInteger selectViewControl; //标记当前显示的页面
 }
+//刷新导航right but 状态
+- (void)setRightBarBtnItemState;
 @end

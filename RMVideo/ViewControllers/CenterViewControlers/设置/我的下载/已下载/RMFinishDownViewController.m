@@ -63,8 +63,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginAnimation) name:kFinishViewControStartEditing object:nil];
         //结束编辑的时候接受到的通知
         [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(endAnimation) name:kFinishViewControEndEditing object:nil];
-        //正在下载界面，但有视频下载成功的时候接受到的通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downLoadSuccess) name:DownLoadSuccess_KEY object:nil];
         //电视机下载详情页面中，编辑完电视机的时候，该界面要进行更新
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TVSericesDetailFinishEditing) name:kTVSeriesDetailDeleteFinish object:nil];
         
@@ -104,10 +102,7 @@
     [selectCellArray removeAllObjects];
     self.maiTableView.frame = CGRectMake(self.maiTableView.frame.origin.x, self.maiTableView.frame.origin.y, self.maiTableView.frame.size.width, self.maiTableView.frame.size.height+25);
 }
-//电影下载成功。更新界面
-- (void)downLoadSuccess{
-    [self takeTheDataFromDataBase];
-}
+
 //电视剧下载详情编辑完成之后要更新主界面
 - (void) TVSericesDetailFinishEditing{
     [self takeTheDataFromDataBase];
@@ -153,7 +148,7 @@
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 84.f;
+    return 140.f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

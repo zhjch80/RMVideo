@@ -255,7 +255,7 @@ typedef enum{
             if(model.downLoadURL == nil){
 //                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
-                model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
+                model.downLoadURL = @"http://106.38.249.114/youku/6971CEA08D64D7D5A803B29ED/03002001005439CC9580451A5769AC4BF48DC8-145C-4B0A-359C-FD5DD83F2B8D.mp4";//[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
                 model.downLoadState = @"等待缓存";
                 model.totalMemory = @"0M";
                 model.alreadyCasheMemory = @"0M";
