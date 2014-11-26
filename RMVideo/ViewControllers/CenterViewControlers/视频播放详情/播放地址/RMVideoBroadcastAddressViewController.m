@@ -52,6 +52,11 @@
 
 - (void)subButtonClick:(UIButton *)sender {
     NSInteger index = sender.tag - 301;
+    if(dataArr.count==0){
+        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂没有播放地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alerView show];
+        return;
+    }
     NSMutableDictionary * dic = [dataArr objectAtIndex:index];
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = self.videoPlayDelegate;
     if ([NSString stringWithFormat:@"%@",[dic objectForKey:@"m_down_url"]].length == 0){
