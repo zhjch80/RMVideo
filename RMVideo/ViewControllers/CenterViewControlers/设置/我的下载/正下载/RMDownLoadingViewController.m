@@ -413,7 +413,9 @@ static id _instance;
         if(cellEditingImageArray==nil){
             cellEditingImageArray = [[NSMutableArray alloc] init];
         }
-        [cellEditingImageArray addObject:@"no-select_cellImage"];
+        for(int i=0;i<self.dataArray.count-cellEditingImageArray.count;i++){
+            [cellEditingImageArray addObject:@"no-select_cellImage"];
+        }
     }
     if(!self.isDownLoadNow){
         RMPublicModel *model = [self.downLoadIDArray objectAtIndex:0];
@@ -502,7 +504,7 @@ static id _instance;
         {
             [fileManeger createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
         }
-
+        
         NSError *error;
         NSString *toPath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
         BOOL success = [fileManeger moveItemAtPath:downloadPath toPath:toPath  error:&error];
@@ -530,12 +532,22 @@ static id _instance;
         model.downLoadState = @"下载失败";
 //        model.cacheProgress = @"0";
 //        model.totalMemory = @"0M";
+//        model.alreadyCasheMemory = @"0M";
         [weekSelf.downLoadIDArray removeObject:model];
         [weekSelf.mainTableView reloadData];
         weekSelf.isDownLoadNow = NO;
         if(weekSelf.downLoadIDArray.count>0){
             [weekSelf BeginDownLoad];
         }
+//        NSFileManager *fileManeger = [NSFileManager defaultManager];
+//        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//        NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
+//        NSError *myError;
+//        NSString *toPath = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+//        BOOL delete = [fileManeger removeItemAtPath:toPath error:&myError];
+//        if(delete)
+//            NSLog(@"删除成功");
+
     }];
     [operation start];
     

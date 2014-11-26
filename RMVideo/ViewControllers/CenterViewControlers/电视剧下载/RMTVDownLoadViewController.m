@@ -72,7 +72,7 @@
         RMPublicModel *model = [self.TVdataArray objectAtIndex:i];
         
         NSString *tvString = [NSString stringWithFormat:@"电视剧_%@_%@",self.TVName,model.topNum];
-        NSLog(@"--%@",tvString);
+//        NSLog(@"--%@",tvString);
         
         //判断改电视剧是否已经下载成功
         if([[Database sharedDatabase] isDownLoadMovieWithModelName:tvString]){
@@ -151,6 +151,7 @@
             [rmDownLoading.downLoadIDArray addObject:model];
         }
     }
+    [rmDownLoading BeginDownLoad];
 }
 
 #pragma mark - Base Method

@@ -1578,8 +1578,8 @@
 				1D9CB9B61A10824B00F185B1 /* Database.m */,
 				1D357D0D1A0B07AD000C5C44 /* RMAFNRequestManager.h */,
 				1D357D0E1A0B07AD000C5C44 /* RMAFNRequestManager.m */,
-				1D357D0F1A0B07AD000C5C44 /* RMPublicModel.h */,
 				1D357D101A0B07AD000C5C44 /* RMPublicModel.m */,
+				1D357D0F1A0B07AD000C5C44 /* RMPublicModel.h */,
 			);
 			path = NetworkAndSQLite;
 			sourceTree = "<group>";
