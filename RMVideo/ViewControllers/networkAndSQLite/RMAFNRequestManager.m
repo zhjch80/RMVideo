@@ -208,7 +208,6 @@
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        
     }];
 }
 
