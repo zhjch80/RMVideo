@@ -11,14 +11,17 @@
 #import "AFNetworking.h"
 #import "RMPublicModel.h"
 #import "SVProgressHUD.h"
+#import "AESCrypt.h"
 
 #if 0
 //测试
-#define baseUrl     @"http://vodapi.runmobile.cn/debug/index.php/vod/"
+#define baseUrl         @"http://vodapi.runmobile.cn/debug/index.php/vod/"
 #else
 //线上
-#define baseUrl     @"http://vodapi.runmobile.cn/index.php/vod/"
+#define baseUrl         @"http://vodapi.runmobile.cn/index.php/vod/"
 #endif
+
+#define kPassWord       @"yu32uzy4"
 
 @implementation RMAFNRequestManager
 
@@ -96,7 +99,7 @@
             break;
         }
         case Http_postUserFeedback:{
-            strUrl = [NSString stringWithFormat:@"%@userFeedback?",baseUrl];
+            strUrl = [NSString stringWithFormat:@"%@userFeedback",baseUrl];
             break;
         }
         case Http_getSearchVidieo:{
@@ -104,7 +107,7 @@
             break;
         }
         case Http_postLogin:{
-            strUrl = [NSString stringWithFormat:@"%@login?",baseUrl];
+            strUrl = [NSString stringWithFormat:@"%@login",baseUrl];
             break;
         }
         case Http_getMoreAppSpread:{
@@ -136,11 +139,25 @@
     return [NSString stringWithFormat:@"%d",([page intValue] -1)*[count intValue]];
 }
 
+#pragma mark - 接口 加密
+
+- (NSString *)encryptUrl:(NSString *)url {
+    NSRange range = [url rangeOfString:@"php/vod/"];
+    NSString * newUrl = [url substringFromIndex:range.location + 8];
+    newUrl = [AESCrypt encrypt:newUrl password:kPassWord];
+    newUrl = [NSString stringWithFormat:@"%@decode?data=%@",baseUrl,newUrl];
+    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes
+    (NULL, (CFStringRef)newUrl, NULL,
+     (CFStringRef)@"+", kCFStringEncodingUTF8));//!*’();:@&=+$,/?%#[]    选择要转义的的字符
+    return encodedString;
+}
+
 #pragma mark - 今日推荐
 
 - (void)getDailyRecommend{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDailyRecommend];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
@@ -200,6 +217,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getTopList];
     url = [NSString stringWithFormat:@"%@video_type=%@&top_type=%@&limit=%@&offset=%@",url,videoType,topType,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
@@ -230,6 +248,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getVideoDetail];
     url = [NSString stringWithFormat:@"%@video_id=%@&token=%@",url,ID,token];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -262,6 +281,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDownloadDiversity];
     url = [NSString stringWithFormat:@"%@video_id=%@",url,ID];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSMutableArray *dataArray = [NSMutableArray array];
@@ -288,6 +308,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getAddFavorite];
     url = [NSString stringWithFormat:@"%@token=%@&video_id=%@",url,token,ID];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if ([[responseObject objectForKey:@"code"] integerValue] == 4001){
             [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
@@ -311,6 +332,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMyChannelVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit_tag=%@&offset_tag=%@",url,token,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"tag_list"]){
@@ -337,6 +359,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMoreWonderfulVideoList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -362,6 +385,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getReplaceChannel];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@",url,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -387,6 +411,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getCustomTag];
     url = [NSString stringWithFormat:@"%@token=%@&tag=%@",url,token,[name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -408,6 +433,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getTagOfVideoList];
     url = [NSString stringWithFormat:@"%@tag_id=%@&video_type=%@&limit=%@&offset=%@",url,ID,type,count,page];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue]==4001){
             NSMutableArray *array = [NSMutableArray array];
@@ -442,6 +468,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStarList];
     url = [NSString stringWithFormat:@"%@limit=%@&offset=%@&token=%@",url,count,[self setOffsetWith:page andCount:count],token];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -470,6 +497,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStartSearch];
     url = [NSString stringWithFormat:@"%@name=%@&limit=%@&offset=%@",url,name,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -494,6 +522,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getStartDetail];
     url = [NSString stringWithFormat:@"%@id=%@&token=%@",url,ID,token];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray * dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -519,6 +548,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getJoinMyChannel];
     url = [NSString stringWithFormat:@"%@token=%@&id=%@",url,token,ID];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -544,6 +574,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getFavoriteVideoList];
     url = [NSString stringWithFormat:@"%@token=%@&limit=%@&offset=%@",url,token,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] integerValue] == 4001){
             NSMutableArray *array = [NSMutableArray array];
@@ -577,6 +608,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDeleteFavoriteVideo];
     url = [NSString stringWithFormat:@"%@token=%@&video_ids=%@",url,token,ID];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -599,8 +631,11 @@
 - (void)postUserFeedbackWithToken:(NSString *)token andFeedBackString:(NSString *)string{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_postUserFeedback];
-    url = [NSString stringWithFormat:@"%@token=%@&text=%@",url,token,string];
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+    NSDictionary * parameter = @{
+                                 @"token": [NSString stringWithFormat:@"%@",token],
+                                 @"text": [NSString stringWithFormat:@"%@",string]
+                                 };
+    [manager POST:url parameters:parameter success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue]==4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:nil];
@@ -622,6 +657,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getSearchVidieo];
     url = [NSString stringWithFormat:@"%@keyword=%@&limit=%@&offset=%@",url,string,count,[self setOffsetWith:page andCount:count]];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel *model = [[RMPublicModel alloc] init];
@@ -645,8 +681,13 @@
 - (void)postLoginWithSourceType:(NSString *)type sourceId:(NSString *)ID username:(NSString *)name headImageURL:(NSString *)imageUrl{
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_postLogin];
-    url = [NSString stringWithFormat:@"%@source_type=%@&source_id=%@&username=%@&face=%@",url,type,ID,name,imageUrl];
-    [manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+    NSDictionary * parameter = @{
+                                 @"source_type": [NSString stringWithFormat:@"%@",type],
+                                 @"source_id": [NSString stringWithFormat:@"%@",ID],
+                                 @"username": [NSString stringWithFormat:@"%@",name],
+                                 @"face": [NSString stringWithFormat:@"%@",imageUrl]
+                                 };
+    [manager POST:url parameters:parameter success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:[NSMutableArray arrayWithObjects:[ responseObject objectForKey:@"token"], nil]];
@@ -668,6 +709,7 @@
 - (void)getMoreAppSpread {
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getMoreAppSpread];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
         for(NSDictionary *dict in [responseObject objectForKey:@"list"]){
@@ -694,6 +736,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDeleteMyChannelTag];
     url = [NSString stringWithFormat:@"%@tag_id=%@&token=%@",url,tag_id,token];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -717,6 +760,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getDeviceHits];
     url = [NSString stringWithFormat:@"%@video_id=%@&device=%@",url,video_id,device];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             NSLog(@"success");
@@ -736,6 +780,7 @@
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getAboutApp];
     url = [NSString stringWithFormat:@"%@os=%@&versionNumber=%@",url,os,versionNumber];
+    url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
             RMPublicModel * model = [[RMPublicModel alloc] init];
