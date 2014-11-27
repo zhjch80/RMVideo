@@ -35,6 +35,7 @@
 		1D357D171A0B07D9000C5C44 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D357D151A0B07D9000C5C44 /* MediaToolbox.framework */; };
 		1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */; };
 		1D49A6461A25BA570008206A /* CommonFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D49A6451A25BA570008206A /* CommonFunc.m */; };
+		1D49A64C1A2701F10008206A /* RMBaseTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D49A64B1A2701F10008206A /* RMBaseTextView.m */; };
 		1D4C35F819F5F91800AC8F1E /* logo_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */; };
 		1D4C35FB19F5F91800AC8F1E /* rotating_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */; };
 		1D4C35FC19F5F91800AC8F1E /* tv_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35F019F5F91800AC8F1E /* tv_download.png */; };
@@ -688,6 +689,8 @@
 		1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAAutoScrollView.m; sourceTree = "<group>"; };
 		1D49A6441A25BA570008206A /* CommonFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonFunc.h; sourceTree = "<group>"; };
 		1D49A6451A25BA570008206A /* CommonFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonFunc.m; sourceTree = "<group>"; };
+		1D49A64A1A2701F10008206A /* RMBaseTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBaseTextView.h; sourceTree = "<group>"; };
+		1D49A64B1A2701F10008206A /* RMBaseTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBaseTextView.m; sourceTree = "<group>"; };
 		1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_weibo@2x.png"; sourceTree = "<group>"; };
 		1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating_img@2x.png"; sourceTree = "<group>"; };
 		1D4C35F019F5F91800AC8F1E /* tv_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv_download.png; sourceTree = "<group>"; };
@@ -2316,6 +2319,8 @@
 				1D8480841A03633400A92879 /* RMImageView.m */,
 				1D8480851A03633400A92879 /* UIButton+EnlargeEdge.h */,
 				1D8480861A03633400A92879 /* UIButton+EnlargeEdge.m */,
+				1D49A64A1A2701F10008206A /* RMBaseTextView.h */,
+				1D49A64B1A2701F10008206A /* RMBaseTextView.m */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -3898,6 +3903,7 @@
 				1D99745C19E92D62007E53DB /* DBImage.m in Sources */,
 				1D8481601A03633400A92879 /* RMMyChannelShouldSeeViewController.m in Sources */,
 				913D15CE1A01E4BB000A50E2 /* MKAnnotationView+WebCache.m in Sources */,
+				1D49A64C1A2701F10008206A /* RMBaseTextView.m in Sources */,
 				1D4D47B519D7B41C00E3A50B /* NSData+CommonCrypto.m in Sources */,
 				1D9CB9BF1A1084BF00F185B1 /* RMFinishDownTableViewCell.m in Sources */,
 				1D4D47F919D7B42800E3A50B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
