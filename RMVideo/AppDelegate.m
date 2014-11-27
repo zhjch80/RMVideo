@@ -85,7 +85,12 @@
     if ([UtilityFunc isConnectionAvailable] != 0) {
         [Harpy checkVersion];
     }
-    
+    if (launchOptions) {
+        NSDictionary * pushDict = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (pushDict) {
+            [application setApplicationIconBadgeNumber:0];
+        }
+    }
     //JPush
     [self loadJPushWithOptions:launchOptions];
 
@@ -315,6 +320,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [application setApplicationIconBadgeNumber:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"beginPlayMovie" object:nil];
 }
 
@@ -352,6 +358,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [application setApplicationIconBadgeNumber:0];
     // Required
     [APService handleRemoteNotification:userInfo];
 }
