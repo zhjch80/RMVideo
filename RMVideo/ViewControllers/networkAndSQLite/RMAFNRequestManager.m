@@ -146,10 +146,13 @@
     NSRange range = [url rangeOfString:@"php/vod/"];
     NSString * newUrl = [url substringFromIndex:range.location + 8];
     newUrl = [AESCrypt encrypt:newUrl password:kPassWord];
+    /*
+     转义
     NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes
     (NULL, (CFStringRef)newUrl, NULL,
     (CFStringRef)@"!*’();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
-    newUrl = [NSString stringWithFormat:@"%@decode?data=%@",baseUrl,encodedString];
+    */
+    newUrl = [NSString stringWithFormat:@"%@decode?data=%@",baseUrl,[CommonFunc base64StringFromText:newUrl]];
     return newUrl;
 }
 
