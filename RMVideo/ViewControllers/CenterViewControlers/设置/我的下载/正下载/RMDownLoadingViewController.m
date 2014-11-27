@@ -627,6 +627,16 @@ static id _instance;
 }
 //判断在dataArray中是否存在这个model
 - (BOOL)dataArrayContainsModel:(RMPublicModel *)model{
+    if(self.dataArray.count==0){
+        NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:DownLoadDataArray_KEY];
+        if(data==nil){
+            return NO;
+        }
+        NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        for(RMPublicModel *model in SavedownLoad){
+            [self.dataArray addObject:model];
+        }
+    }
     for (RMPublicModel *tmpModel in self.dataArray){
         if([tmpModel.name isEqualToString:model.name]){
             return YES;
