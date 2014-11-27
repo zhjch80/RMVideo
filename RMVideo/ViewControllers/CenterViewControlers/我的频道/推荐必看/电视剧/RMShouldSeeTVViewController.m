@@ -10,7 +10,12 @@
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMMyChannelShouldSeeViewController.h"
 
-@interface RMShouldSeeTVViewController ()
+@interface RMShouldSeeTVViewController (){
+    BOOL isDownLoad;
+    NSInteger pageNum;//请求的页码
+    BOOL isRefresh;
+    NSInteger allPageCount;
+}
 
 @end
 
@@ -31,14 +36,24 @@
     self.dataArray = [[NSMutableArray alloc] init];
     self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
     self.mainTableView.backgroundColor = [UIColor clearColor];
-    [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
-    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
-    manager.delegate = self;
-    //视频类型（1：电影 2：电视剧 3：综艺）
-    //排行类型（1：日榜 2：周榜 3：月榜）
-    [manager getTagOfVideoListWithID:self.downLoadID andVideoType:@"2" WithPage:@"0" count:@"12"];
-    [self setExtraCellLineHidden:self.mainTableView];
+    self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.mainTableView setIsCloseFooter:NO];
+    [self.mainTableView setIsCloseHeader:NO];
+//    [self setExtraCellLineHidden:self.mainTableView];
+    pageNum = 0;
+    isRefresh = YES;
+}
 
+- (void)requestData{
+    if(!isDownLoad){
+        [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
+        RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+        manager.delegate = self;
+        //视频类型（1：电影 2：电视剧 3：综艺）
+        //排行类型（1：日榜 2：周榜 3：月榜）
+        [manager getTagOfVideoListWithID:self.downLoadID andVideoType:@"2" WithPage:[NSString stringWithFormat:@"%d",pageNum] count:@"12"];
+        isDownLoad = YES;
+    }
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.dataArray.count == 0){
@@ -127,15 +142,26 @@
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"电视剧暂无数据"];
+        [self.mainTableView reloadData:NO];
         return;
     }
     [SVProgressHUD dismiss];
-    self.dataArray = data;
-    [self.mainTableView reloadData];
+    RMPublicModel * model_row = [data objectAtIndex:0];
+    allPageCount = [model_row.rows integerValue];
+    if (isRefresh){
+        self.dataArray = data;
+    }else{
+        for (int i=0; i<data.count; i++) {
+            RMPublicModel * model = [data objectAtIndex:i];
+            [self.dataArray addObject:model];
+        }
+    }
+    [self.mainTableView reloadData:NO];
 }
 
 - (void)requestError:(NSError *)error{
     [SVProgressHUD showErrorWithStatus:@"下载失败"];
+    [self.mainTableView reloadData:NO];
 }
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
     NSLog(@"identifer:%@",imageView.identifierString);
@@ -153,7 +179,7 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
+    NSInteger returnKey = [self.mainTableView tableViewDidEndDragging];
     
     //  returnKey用来判断执行的拖动是下拉还是上拖
     //  如果数据正在加载，则回返DO_NOTHING
@@ -179,12 +205,22 @@
         }
         case k_RETURN_REFRESH://刷新
         {
-           [self.mainTableView reloadData:NO];
+            isRefresh = YES;
+            pageNum = 0;
+            isDownLoad = NO;
+            [self requestData];
             break;
         }
         case k_RETURN_LOADMORE://加载更多
         {
-            [self.mainTableView reloadData:NO];
+            if (pageNum * 12 + 12 > allPageCount){
+                [self.mainTableView reloadData:YES];
+            }else{
+                isDownLoad = NO;
+                pageNum ++;
+                isRefresh = NO;
+                [self requestData];
+            }
             break;
         }
             

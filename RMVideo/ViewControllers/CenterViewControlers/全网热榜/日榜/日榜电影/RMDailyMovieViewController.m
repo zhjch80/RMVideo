@@ -13,7 +13,7 @@
 #import "UIImageView+WebCache.h"
 
 @interface RMDailyMovieViewController (){
-
+    BOOL isAlreadyDownLoad;
 }
 
 @end
@@ -42,15 +42,19 @@
         self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-54-64);
     }
     [self.mainTableView setIsCloseFooter:YES];
-    [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
-    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
-    manager.delegate = self;
-    //视频类型（1：电影 2：电视剧 3：综艺）
-    //排行类型（1：日榜 2：周榜 3：月榜）
-    [manager getTopListWithVideoTpye:@"1" andTopType:self.downLoadTopType searchPageNumber:@"1"andCount:@"10"];
-
     [self setExtraCellLineHidden:self.mainTableView];
     
+}
+- (void) requestData{
+    if(!isAlreadyDownLoad){
+        [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
+        RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+        manager.delegate = self;
+        //视频类型（1：电影 2：电视剧 3：综艺）
+        //排行类型（1：日榜 2：周榜 3：月榜）
+        [manager getTopListWithVideoTpye:@"1" andTopType:self.downLoadTopType searchPageNumber:@"1"andCount:@"10"];
+        isAlreadyDownLoad = YES;
+    }
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.dataArray.count == 0){

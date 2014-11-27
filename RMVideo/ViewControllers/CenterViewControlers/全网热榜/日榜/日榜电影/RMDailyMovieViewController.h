@@ -21,4 +21,6 @@
 @property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
 @property (nonatomic,copy)NSString *downLoadTopType;
 @property (nonatomic, assign) id<RMDailyMovieViewControllerDelegate> delegate;
+
+- (void) requestData;
 @end

@@ -22,4 +22,7 @@
 @property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
 @property (nonatomic,copy)NSString *downLoadTopType;
 @property (assign,nonatomic)id<RMDailyVarietyViewControllerDelegate> delegate;
+
+- (void) requestData;
+
 @end

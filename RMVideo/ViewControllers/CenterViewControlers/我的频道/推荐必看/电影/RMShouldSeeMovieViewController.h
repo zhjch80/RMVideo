@@ -16,4 +16,5 @@
 @property (nonatomic,copy)NSString *downLoadID;
 
 @property (nonatomic, assign) id myChannelShouldDelegate;
+- (void)requestData;
 @end

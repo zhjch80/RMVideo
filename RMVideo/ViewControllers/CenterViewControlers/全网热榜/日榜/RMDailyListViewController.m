@@ -90,10 +90,13 @@
 
 - (void)slideSwitchView:(SUNSlideSwitchView *)view didselectTab:(NSUInteger)number {
     if (number == 0) {
+        [self.starFilmListCtl requestData];
         NSLog(@"slie to 第一个");
     } else if (number == 1) {
+        [self.starTeleplayListCtl requestData];
         NSLog(@"slie to 第二个");
     } else if (number == 2) {
+        [self.starVarietyListCtl requestData];
         NSLog(@"slie to 第三个");
     }
 }

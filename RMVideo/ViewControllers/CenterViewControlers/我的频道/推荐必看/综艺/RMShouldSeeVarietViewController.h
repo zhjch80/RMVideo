@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
 @property (nonatomic,copy)NSString *downLoadID;
 @property (nonatomic, assign) id myChannelShouldDelegate;
+- (void)requestData;
 @end
