@@ -113,15 +113,6 @@
 #define UMengAppKey                         @"546f02cefd98c5c6a60041bb"
 #define AppVersionNumber                    @"1.0"
 
-
-
-//https://itunes.apple.com/cn/app/r-evolve/id877939351?mt=8
-
-//http://xiubo.runmobile.cn/about/index.php?versionNumber=%@&os=iPhone1.1.0
-
-
-
-
 #if __has_feature(objc_arc)
 // ARC
 #else

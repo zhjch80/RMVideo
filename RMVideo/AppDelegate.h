@@ -10,9 +10,7 @@
 #define SharedApp ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-{
-    BOOL isfristRun;
-}
+
 @property (strong, nonatomic) UIWindow *window;
 
 @end

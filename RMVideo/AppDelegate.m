@@ -34,12 +34,10 @@
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 #define NAVI_COLOR [UIColor colorWithRed:0.76 green:0.03 blue:0.09 alpha:1]
 #define APP @"APP"
-#define ITUNES_APP @"https://itunes.apple.com/cn/app/i.-huang-hai-bo/id791488787?mt=8" //itunes
+#define ITUNES_APP @"https://itunes.apple.com/cn/app/r-evolve/id944155902?mt=8" //itunes
 
+@interface AppDelegate ()
 
-@interface AppDelegate () {
-//    HJMTabBar * tab;
-}
 @property (nonatomic, strong) MMDrawerController * drawerController;
 
 @property (nonatomic) UIBackgroundTaskIdentifier bgTask;

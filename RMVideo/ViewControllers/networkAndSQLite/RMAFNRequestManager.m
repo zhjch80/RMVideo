@@ -572,7 +572,7 @@
 }
 
 - (void)showAddSuccess {
-    [SVProgressHUD showSuccessWithStatus:@"添加成功" duration:1.0];
+    [SVProgressHUD showSuccessWithStatus:@"已添加到我到的频道" duration:1.0];
 }
 
 #pragma mark - 设置：我的收藏视频列表
