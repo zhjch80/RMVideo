@@ -17,6 +17,8 @@
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;
     NSMutableArray * dataArr;
+    NSMutableArray * arr;//保存共有几部第三方片源
+    NSInteger videoType; //    video_type ==1 为电影   video_type ==2 电视剧  video_type ==3 综艺
 }
 @property (nonatomic, strong) RMPublicModel *publicModel;
 @end
@@ -52,6 +54,11 @@
 
 - (void)subButtonClick:(UIButton *)sender {
     NSInteger index = sender.tag - 301;
+    if(videoType==1){
+        dataArr = arr;
+    }else{
+        dataArr = [[arr objectAtIndex:index] objectForKey:@"urls"];   //拿到集数
+    }
     if(dataArr.count==0){
         UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂没有播放地址" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alerView show];
@@ -129,13 +136,14 @@
         return;
     }
     self.publicModel = model;
-    NSMutableArray * arr = [[NSMutableArray alloc] init];
+    arr = [[NSMutableArray alloc] init];
+    videoType = [model.video_type integerValue];
     if ([model.video_type integerValue] == 1){
         arr = model.playurlArr;//保存电影数据      按第三方来源区分
-        dataArr = model.playurlArr;
+//        dataArr = model.playurlArr;
     }else{
         arr = model.playurlsArr;//保存电视剧及综艺数据
-        dataArr = [[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"];   //拿到集数
+//        dataArr = [[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"];   //拿到集数
     }
 
     if (IS_IPHONE_6p_SCREEN){
