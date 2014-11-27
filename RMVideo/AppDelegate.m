@@ -29,6 +29,7 @@
 #import "RMDownLoadingViewController.h"
 #import "Flurry.h"
 #import "Harpy.h"
+#import "APService.h"
 
 #define COLOR_RGB(r,g,b) [UIColor colorWithRed:(r/255.0f) green:(g/255.0f) blue:(b/255.0f) alpha:1]
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
@@ -85,6 +86,9 @@
         [Harpy checkVersion];
     }
     
+    //JPush
+    [self loadJPushWithOptions:launchOptions];
+
     return YES;
 }
 
@@ -98,6 +102,33 @@
     [UMSocialWechatHandler setWXAppId:@"wxeb2fbbe81019f3b7" appSecret:@"3025a81418b686d9e38acafec6d21fc5" url:ITUNES_APP];
     [UMSocialQQHandler setQQWithAppId:@"1103514725" appKey:@"DPr140rgS4i2L53j" url:ITUNES_APP];
     [UMSocialQQHandler setSupportWebView:YES];
+}
+
+- (void)loadJPushWithOptions:(NSDictionary *)launchOptions {
+    // Required
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                       UIUserNotificationTypeSound |
+                                                       UIUserNotificationTypeAlert)
+                                           categories:nil];
+    } else {
+        //categories 必须为nil
+        [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil];
+    }
+#else
+    //categories 必须为nil
+    [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                   UIRemoteNotificationTypeSound |
+                                                   UIRemoteNotificationTypeAlert)
+                                       categories:nil];
+#endif
+    // Required
+    [APService setupWithOption:launchOptions];
 }
 
 #pragma mark - MSC 科大讯飞 语音
@@ -300,6 +331,8 @@
     }
 }
 
+#pragma mark- 社会化
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return  [UMSocialSnsService handleOpenURL:url];
 }
@@ -309,6 +342,24 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     return  [UMSocialSnsService handleOpenURL:url];
+}
+
+#pragma mark- JPush
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Required
+    [APService registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Required
+    [APService handleRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    // IOS 7 Support Required
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 @end

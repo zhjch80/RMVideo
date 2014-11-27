@@ -113,6 +113,10 @@
 #define UMengAppKey                         @"546f02cefd98c5c6a60041bb"
 #define AppVersionNumber                    @"1.0"
 
+/*
+JPush 证书的密码：dev:123456abcd  dis:123456abcd
+ */
+
 #if __has_feature(objc_arc)
 // ARC
 #else

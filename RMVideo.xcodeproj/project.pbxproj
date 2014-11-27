@@ -36,6 +36,8 @@
 		1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357D351A0B2381000C5C44 /* DAAutoScrollView.m */; };
 		1D49A6461A25BA570008206A /* CommonFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D49A6451A25BA570008206A /* CommonFunc.m */; };
 		1D49A64C1A2701F10008206A /* RMBaseTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D49A64B1A2701F10008206A /* RMBaseTextView.m */; };
+		1D49A6501A27088A0008206A /* libPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49A64F1A27088A0008206A /* libPushSDK.a */; };
+		1D49A6521A2708FF0008206A /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D49A6511A2708FF0008206A /* PushConfig.plist */; };
 		1D4C35F819F5F91800AC8F1E /* logo_weibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */; };
 		1D4C35FB19F5F91800AC8F1E /* rotating_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */; };
 		1D4C35FC19F5F91800AC8F1E /* tv_download.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4C35F019F5F91800AC8F1E /* tv_download.png */; };
@@ -691,6 +693,9 @@
 		1D49A6451A25BA570008206A /* CommonFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonFunc.m; sourceTree = "<group>"; };
 		1D49A64A1A2701F10008206A /* RMBaseTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBaseTextView.h; sourceTree = "<group>"; };
 		1D49A64B1A2701F10008206A /* RMBaseTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBaseTextView.m; sourceTree = "<group>"; };
+		1D49A64E1A27088A0008206A /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
+		1D49A64F1A27088A0008206A /* libPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPushSDK.a; sourceTree = "<group>"; };
+		1D49A6511A2708FF0008206A /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		1D4C35EC19F5F91800AC8F1E /* logo_weibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_weibo@2x.png"; sourceTree = "<group>"; };
 		1D4C35EF19F5F91800AC8F1E /* rotating_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating_img@2x.png"; sourceTree = "<group>"; };
 		1D4C35F019F5F91800AC8F1E /* tv_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv_download.png; sourceTree = "<group>"; };
@@ -1483,6 +1488,7 @@
 				1D357D171A0B07D9000C5C44 /* MediaToolbox.framework in Frameworks */,
 				918DE7001A05F6E200287E06 /* StoreKit.framework in Frameworks */,
 				913D15E01A01E56D000A50E2 /* ImageIO.framework in Frameworks */,
+				1D49A6501A27088A0008206A /* libPushSDK.a in Frameworks */,
 				1D847F411A0324D000A92879 /* libSocialTencentWeibo.a in Frameworks */,
 				1D847F3F1A0324D000A92879 /* TencentOpenAPI.framework in Frameworks */,
 				1DA2AC5419F65CAA0036C1AD /* AddressBook.framework in Frameworks */,
@@ -1611,6 +1617,16 @@
 			path = AutoScrollView;
 			sourceTree = "<group>";
 		};
+		1D49A64D1A27088A0008206A /* JPush */ = {
+			isa = PBXGroup;
+			children = (
+				1D49A64E1A27088A0008206A /* APService.h */,
+				1D49A64F1A27088A0008206A /* libPushSDK.a */,
+				1D49A6511A2708FF0008206A /* PushConfig.plist */,
+			);
+			path = JPush;
+			sourceTree = "<group>";
+		};
 		1D4D475719D7AAD900E3A50B = {
 			isa = PBXGroup;
 			children = (
@@ -1696,6 +1712,7 @@
 				1DD39F191A1351FD000A215A /* UserBehaviorList.rtf */,
 				1D4D479019D7B39100E3A50B /* CONST.h */,
 				910169981A00D7B70028A5EA /* CONSTURL.h */,
+				1D49A64D1A27088A0008206A /* JPush */,
 				1DD1CA241A2444AE00E98283 /* Harpy */,
 				1DA8C3481A1ED6F500D27AEE /* Reachability */,
 				1DD39F151A135104000A215A /* GPLoadingView */,
@@ -3738,6 +3755,7 @@
 				1D4C363919F6050700AC8F1E /* logo_weibo.png in Resources */,
 				1D847F3B1A0324D000A92879 /* UMSShareListController.xib in Resources */,
 				91AF40891A19F5A800FB16FE /* fastforward@2x.png in Resources */,
+				1D49A6521A2708FF0008206A /* PushConfig.plist in Resources */,
 				1DED75C41A0B59BF004ADBD1 /* jr_Variety.png in Resources */,
 				1DA8C3C21A22E42000D27AEE /* Default90_119@2x.png in Resources */,
 				91AF40401A19E4D900FB16FE /* logo_fx@3x.png in Resources */,
@@ -4175,6 +4193,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentWeibo",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/RMVideo/Vendors/Flurry",
+					"$(PROJECT_DIR)/RMVideo/Vendors/JPush",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4205,6 +4224,7 @@
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/TencentWeibo",
 					"$(PROJECT_DIR)/RMVideo/Vendors/umeng_ios_social_sdk_4.2_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/RMVideo/Vendors/Flurry",
+					"$(PROJECT_DIR)/RMVideo/Vendors/JPush",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "70f0f284-b49d-4879-bb68-878c52906b9a";
