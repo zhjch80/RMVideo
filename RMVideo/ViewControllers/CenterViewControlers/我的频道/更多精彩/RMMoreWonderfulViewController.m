@@ -93,13 +93,15 @@ typedef enum{
     [self.changeBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.changeBtn];
     
+    /*
+     功能屏蔽
     self.customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.customBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth-25-117, [UtilityFunc shareInstance].globleAllHeight-69-64, 117, 39);
     [self.customBtn setBackgroundImage:LOADIMAGE(@"customBtn_img", kImageTypePNG) forState:UIControlStateNormal];
     [self.customBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.customBtn.tag = 102;
     [self.view addSubview:self.customBtn];
-
+     */
     [self loadTagList];
     
     request = [[RMAFNRequestManager alloc] init];

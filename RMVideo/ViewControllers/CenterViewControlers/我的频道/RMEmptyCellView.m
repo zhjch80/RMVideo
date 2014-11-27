@@ -19,10 +19,17 @@
 */
 
 - (void)showEmptyView {
-    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width - 154)/2, 50, 154, 154)];
-    image.image = [UIImage imageNamed:@"no_cashe_video"];
-    image.backgroundColor = [UIColor clearColor];
-    [self addSubview:image];
+    UILabel * title = [[UILabel alloc] init];
+    title.text = @"暂无视频";
+    title.frame = CGRectMake((self.frame.size.width - 154)/2, 50, 154, 154);
+    title.textAlignment = NSTextAlignmentCenter;
+    title.font = [UIFont systemFontOfSize:16.0];
+    title.backgroundColor = [UIColor clearColor];
+    [self addSubview:title];
+//    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width - 154)/2, 50, 154, 154)];
+//    image.image = [UIImage imageNamed:@"no_cashe_video"];
+//    image.backgroundColor = [UIColor clearColor];
+//    [self addSubview:image];
 }
 
 @end
