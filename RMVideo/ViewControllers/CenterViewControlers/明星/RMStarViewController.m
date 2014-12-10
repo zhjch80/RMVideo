@@ -914,6 +914,7 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     [SVProgressHUD dismiss];
+    ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
     if (loadType == requestStarListType){
         RMPublicModel * model_row = [data objectAtIndex:0];
         AltogetherRows = [model_row.rows integerValue];
@@ -952,6 +953,7 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
+    ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
     [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     [SVProgressHUD dismiss];
     if (loadType == requestSearchStarType){

@@ -514,6 +514,7 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestMyChannelListType){
+        self.tableView.isCloseFooter = NO;
         if(data.count==0||data==nil){
             [self.tableView reloadData:NO];
             return;
@@ -553,6 +554,7 @@ typedef enum{
 
 - (void)requestError:(NSError *)error {
     [self.tableView reloadData:NO];
+    self.tableView.isCloseFooter = YES;
     NSLog(@"error:%@",error);
 }
 
