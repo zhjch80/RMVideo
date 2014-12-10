@@ -209,6 +209,7 @@
 }
 
 - (void)requestError:(NSError *)error {
+    [self.tableView reloadData:NO];
     NSLog(@"error:%@",error);
 }
 

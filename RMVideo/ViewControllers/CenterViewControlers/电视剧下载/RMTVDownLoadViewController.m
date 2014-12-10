@@ -181,7 +181,6 @@
 }
 - (void)requestError:(NSError *)error{
     NSLog(@"error:%@",error);
-    [SVProgressHUD showErrorWithStatus:@"下载失败"];
 }
 
 - (BOOL)isContainsModel:(NSMutableArray *)dataArray modelName:(NSString *)string{

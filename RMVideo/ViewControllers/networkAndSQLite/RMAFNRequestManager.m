@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "AESCrypt.h"
 #import "CommonFunc.h"
+#import "Reachability.h"
 
 #if 0
 //测试
@@ -156,6 +157,20 @@
     return newUrl;
 }
 
+void checkTheNetworkConnection(NSString *title){
+    Reachability *r = [Reachability reachabilityWithHostName:@"www.baidu.com"];
+    switch ([r currentReachabilityStatus]) {
+        case NotReachable:{
+            [SVProgressHUD showErrorWithStatus:@"网络连接失败，请检查网络连接"];
+            break;
+        }
+        default:{
+            [SVProgressHUD showErrorWithStatus:title];
+            break;
+        }
+    }
+}
+
 #pragma mark - 今日推荐
 
 - (void)getDailyRecommend{
@@ -208,6 +223,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -239,6 +255,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -272,6 +289,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -299,6 +317,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -322,8 +341,8 @@
             [self.delegate requestFinishiDownLoadWith:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            checkTheNetworkConnection(@"收藏失败");
         if ([self.delegate respondsToSelector:@selector(requestError:)]) {
-            [SVProgressHUD showErrorWithStatus:@"收藏失败"];
             [self.delegate requestError:error];
         }
     }];
@@ -350,6 +369,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if ([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -376,6 +396,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -402,6 +423,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"获取失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -424,6 +446,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -458,10 +481,10 @@
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
 }
 
@@ -488,6 +511,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if ([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -513,6 +537,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"搜索失败");
         if ([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -539,6 +564,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -564,10 +590,10 @@
             [SVProgressHUD showErrorWithStatus:@"添加失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"添加失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"添加失败"];
     }];
 }
 
@@ -602,10 +628,10 @@
             [SVProgressHUD showErrorWithStatus:@"下载失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"下载失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"下载失败"];
     }];
 }
 
@@ -626,10 +652,10 @@
             [SVProgressHUD showErrorWithStatus:@"取消收藏失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"取消收藏失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"取消收藏失败"];
     }];
 }
 
@@ -651,10 +677,10 @@
             [SVProgressHUD showErrorWithStatus:@"提交失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"提交失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"提交失败"];
     }];
 }
 
@@ -677,6 +703,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"搜索失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -704,10 +731,10 @@
             [SVProgressHUD showErrorWithStatus:@"登录失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"登录失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
-        [SVProgressHUD showErrorWithStatus:@"登录失败"];
     }];
 }
 
@@ -731,6 +758,7 @@
             [self.delegate requestFinishiDownLoadWith:dataArray];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"获取失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }
@@ -754,9 +782,9 @@
             [SVProgressHUD showErrorWithStatus:@"删除失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"删除失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
-            [SVProgressHUD showErrorWithStatus:@"删除失败"];
         }
     }];
 }
@@ -799,6 +827,7 @@
         }else{
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        checkTheNetworkConnection(@"获取失败");
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }

@@ -133,7 +133,6 @@ typedef enum{
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
             [manager getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:deleteID];
-            rightBarButton.hidden = YES;
         }
         else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请选择要删除的选项" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -230,6 +229,7 @@ typedef enum{
             }else{
                 [self isShouldSetHiddenEmptyView:YES];
                 rightBarButton.hidden = NO;
+                [self setRightBarBtnItemImageWith:YES];
             }
 
         }

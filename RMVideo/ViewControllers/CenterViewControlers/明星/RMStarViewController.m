@@ -952,6 +952,7 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
+    [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     [SVProgressHUD dismiss];
     if (loadType == requestSearchStarType){
         [SVProgressHUD showErrorWithStatus:@"搜索失败,请重新尝试"];

@@ -398,7 +398,6 @@
 }
 
 - (void)requestError:(NSError *)error {
-    [SVProgressHUD showErrorWithStatus:@"搜索失败,请重新尝试"];
 }
 
 #pragma mark - Base Method

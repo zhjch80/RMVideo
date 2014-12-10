@@ -160,7 +160,7 @@
 }
 
 - (void)requestError:(NSError *)error{
-    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+    [self.mainTableView reloadData:NO];
 }
 
 

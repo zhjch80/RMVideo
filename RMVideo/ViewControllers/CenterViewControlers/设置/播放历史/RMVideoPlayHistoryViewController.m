@@ -106,6 +106,7 @@
             }else{
                 [self isShouldSetHiddenEmptyView:YES];
                 rightBarButton.hidden = NO;
+                [self setRightBarBtnItemImageWith:YES];
             }
         }
         [selectCellArray removeAllObjects];

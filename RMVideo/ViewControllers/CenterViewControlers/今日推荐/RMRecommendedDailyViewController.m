@@ -213,7 +213,7 @@
 }
 
 - (void)requestError:(NSError *)error{
-    [SVProgressHUD showErrorWithStatus:@"下载失败"];
+    [mainTableVeiew reloadData:NO];
 }
 
 #pragma mark - Animation 广告展示页面

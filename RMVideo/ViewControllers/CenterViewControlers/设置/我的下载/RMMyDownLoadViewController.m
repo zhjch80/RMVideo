@@ -232,7 +232,6 @@
     if(count>0){
         rightBarButton.hidden = NO;
         [self setRightBarBtnItemImageWith:YES];
-        
     }else{
         rightBarButton.hidden = YES;
     }

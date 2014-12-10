@@ -239,6 +239,7 @@
 }
 
 -(void)requestError:(NSError *)error {
+    [(PullToRefreshTableView *)[self.view viewWithTag:202] reloadData:NO];
     NSLog(@"star 电影 error:%@",error);
 }
 
