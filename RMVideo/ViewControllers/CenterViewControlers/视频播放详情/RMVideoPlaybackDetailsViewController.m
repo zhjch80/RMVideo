@@ -348,7 +348,7 @@ typedef enum{
     }
     [SVProgressHUD dismiss];
     RMPublicModel * model = [self.dataArr objectAtIndex:0];
-    NSString *shareString = [NSString stringWithFormat:@"我正在看《%@》,精彩内容,精准推荐,尽在小花儿视频 %@",model.name,kAppAddress];
+    NSString *shareString = [NSString stringWithFormat:@"我正在看《%@》,精彩内容,精准推荐,尽在小花视频 %@",model.name,kAppAddress];
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:UMengAppKey
                                       shareText:shareString

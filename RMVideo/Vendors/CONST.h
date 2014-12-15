@@ -106,7 +106,7 @@
 
 
 //APP 相关信息
-#define kAppName                            @"小花儿视频"
+#define kAppName                            @"小花视频"
 #define kAppleId                            @"944155902"
 #define kAppAddress                         @"https://itunes.apple.com/cn/app/r-evolve/id944155902?mt=8"
 

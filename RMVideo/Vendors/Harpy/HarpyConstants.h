@@ -18,6 +18,6 @@ static BOOL harpyForceUpdate = NO;
 #define kHarpyAppID                 @"944155902"
 
 // 3. Customize the alert title and action buttons
-#define kHarpyAlertViewTitle        @"小花儿视频 发现新版本"
+#define kHarpyAlertViewTitle        @"小花视频 发现新版本"
 #define kHarpyCancelButtonTitle     @"下次更新"
 #define kHarpyUpdateButtonTitle     @"更新"

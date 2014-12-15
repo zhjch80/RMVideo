@@ -270,7 +270,7 @@
     [SVProgressHUD dismiss];
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:UMengAppKey
-                                      shareText:[NSString stringWithFormat:@"精彩内容，精准推荐，尽在小花儿视频，你想看的都在这里 %@",kAppAddress]
+                                      shareText:[NSString stringWithFormat:@"精彩内容，精准推荐，尽在小花视频，你想看的都在这里 %@",kAppAddress]
                                      shareImage:nil
                                 shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToTencent,nil]
                                        delegate:self];
