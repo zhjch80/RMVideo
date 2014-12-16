@@ -1,14 +1,14 @@
 //
-//  RMStarSearchResultCell.m
+//  RMLastRecordsCell.m
 //  RMVideo
 //
-//  Created by runmobile on 14-11-3.
+//  Created by runmobile on 14-12-15.
 //  Copyright (c) 2014年 runmobile. All rights reserved.
 //
 
-#import "RMStarSearchResultCell.h"
+#import "RMLastRecordsCell.h"
 
-@implementation RMStarSearchResultCell
+@implementation RMLastRecordsCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -20,4 +20,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)lastClickMethod:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(moreRecordsMethod)]) {
+        [self.delegate moreRecordsMethod];
+    }
+}
 @end

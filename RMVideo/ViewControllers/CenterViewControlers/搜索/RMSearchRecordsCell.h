@@ -7,9 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMImageView.h"
+
+@protocol SearchRecordsDelegate <NSObject>
+
+- (void)deleteSearchRecordsMethod:(int)value;
+
+@end
 
 @interface RMSearchRecordsCell : UITableViewCell
+@property (assign ,nonatomic) id<SearchRecordsDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UILabel *recordsName;
-@property (weak, nonatomic) IBOutlet UIImageView *recordsImg;
+@property (weak, nonatomic) IBOutlet RMImageView *recordsImg;
+- (IBAction)buttonRecordsClickMethod:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *clickbtn;
 
 @end

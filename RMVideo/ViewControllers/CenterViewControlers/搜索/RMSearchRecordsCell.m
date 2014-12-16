@@ -20,4 +20,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)buttonRecordsClickMethod:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(deleteSearchRecordsMethod:)]) {
+        [self.delegate deleteSearchRecordsMethod:sender.tag];
+    }
+}
 @end

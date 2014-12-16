@@ -14,35 +14,66 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDo-lQ-pEx">
-                        <rect key="frame" x="10" y="5" width="264" height="24"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRN-4l-WfJ">
-                        <rect key="frame" x="10" y="35" width="300" height="1"/>
-                        <color key="backgroundColor" red="0.67289402173913038" green="0.67289402173913038" blue="0.67289402173913038" alpha="1" colorSpace="calibratedRGB"/>
+                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lRN-4l-WfJ">
+                        <rect key="frame" x="10" y="43" width="300" height="1"/>
+                        <color key="backgroundColor" red="0.92941182850000004" green="0.92941182850000004" blue="0.92941182850000004" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="dsN-YF-Zgs"/>
+                            <constraint firstAttribute="width" constant="300" id="LPJ-m6-6TK"/>
                         </constraints>
                     </view>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rm8-0F-KXl">
-                        <rect key="frame" x="295" y="14" width="15" height="15"/>
-                        <color key="backgroundColor" red="0.75686281919999998" green="0.023529414089999999" blue="0.082352943720000002" alpha="1" colorSpace="deviceRGB"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_del.png" translatesAutoresizingMaskIntoConstraints="NO" id="Rm8-0F-KXl" customClass="RMImageView">
+                        <rect key="frame" x="292" y="11" width="17" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="17" id="fYe-2u-faH"/>
+                        </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zep-0o-zJn">
+                        <rect key="frame" x="274" y="-1" width="46" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="5Mg-Nn-7Nt"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="buttonRecordsClickMethod:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lm2-xn-V4I"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDo-lQ-pEx">
+                        <rect key="frame" x="10" y="5" width="263" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="263" id="see-VD-iHZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.364705890417099" green="0.364705890417099" blue="0.364705890417099" alpha="1" colorSpace="deviceRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="lRN-4l-WfJ" secondAttribute="trailing" constant="10" id="IGk-QZ-OVO"/>
-                    <constraint firstAttribute="bottom" secondItem="lRN-4l-WfJ" secondAttribute="bottom" constant="7" id="PYq-xv-SRh"/>
-                    <constraint firstItem="lRN-4l-WfJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="dLh-CU-vNJ"/>
+                    <constraint firstAttribute="bottom" secondItem="lRN-4l-WfJ" secondAttribute="bottom" id="3EM-vF-IbF"/>
+                    <constraint firstAttribute="bottom" secondItem="Rm8-0F-KXl" secondAttribute="bottom" constant="15" id="ATX-Rp-dya"/>
+                    <constraint firstAttribute="bottom" secondItem="xDo-lQ-pEx" secondAttribute="bottom" constant="15" id="BKr-Dy-noO"/>
+                    <constraint firstItem="Zep-0o-zJn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="-1" id="M2F-QU-lqb"/>
+                    <constraint firstItem="Rm8-0F-KXl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="QLW-0L-LnD"/>
+                    <constraint firstAttribute="bottom" secondItem="Zep-0o-zJn" secondAttribute="bottom" constant="-4" id="WmZ-Ai-9oM"/>
+                    <constraint firstAttribute="trailing" secondItem="lRN-4l-WfJ" secondAttribute="trailing" constant="10" id="X3f-A4-FkN"/>
+                    <constraint firstItem="xDo-lQ-pEx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="aV0-Dm-FbX"/>
+                    <constraint firstItem="lRN-4l-WfJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="d9m-5F-RrW"/>
+                    <constraint firstAttribute="trailing" secondItem="Rm8-0F-KXl" secondAttribute="trailing" constant="11" id="kdt-Vr-fNe"/>
+                    <constraint firstAttribute="trailing" secondItem="xDo-lQ-pEx" secondAttribute="trailing" constant="47" id="q3v-7Y-9VS"/>
+                    <constraint firstAttribute="trailing" secondItem="Zep-0o-zJn" secondAttribute="trailing" id="zuB-7V-rwg"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="clickbtn" destination="Zep-0o-zJn" id="5rd-dJ-Xpo"/>
                 <outlet property="recordsImg" destination="Rm8-0F-KXl" id="gi4-ZR-5ku"/>
                 <outlet property="recordsName" destination="xDo-lQ-pEx" id="7sn-zo-n2x"/>
             </connections>
-            <point key="canvasLocation" x="-15" y="171"/>
+            <point key="canvasLocation" x="-118" y="129"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_del.png" width="17" height="17"/>
+    </resources>
 </document>

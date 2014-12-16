@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface RMBaseView : UIView {
+    id _target;
+    SEL _sel;
 }
+- (void)addTarget:(id)target WithSelector:(SEL)sel;
+
+
+- (void)loadSearchViewWithTitle:(NSString *)str;
 
 @end

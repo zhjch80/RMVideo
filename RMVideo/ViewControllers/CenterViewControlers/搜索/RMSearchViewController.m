@@ -25,12 +25,15 @@
 #import "ISRDataHelper.h"
 #import "RMCustomNavViewController.h"
 #import "RMCustomPresentNavViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "RMTagList.h"
+#import "RMLastRecordsCell.h"
 
 #define searchTextField_TAG             101
 #define cancelBtn_TAG                   102
 #define voiceBtn_TAG                    103
 
-@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate>{
+@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate>{
     NSMutableArray * recordsDataArr;
 }
 @property (nonatomic, strong) AMBlurView * blurView;
@@ -44,6 +47,10 @@
 @property (nonatomic, strong) NSArray * onVoiceImgArr;
 @property (nonatomic, strong) RMImageView * voiceImage;
 @property (nonatomic, strong) RMHistoricalRecordsView * historicalRecordsView;
+@property (nonatomic, assign) BOOL isDisplayMoreRecords;               //是否显示 展开更多搜索记录
+
+@property (nonatomic, strong) UIView * footView;                        //tableView 的 footView
+@property (nonatomic, strong) RMTagList * tagList;                      //taglistView
 
 @end
 
@@ -71,6 +78,11 @@
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
     recordsDataArr = arr;
+    if (recordsDataArr.count > 2){
+        self.isDisplayMoreRecords = YES;
+    }else{
+        self.isDisplayMoreRecords = NO;
+    }
     [self.searchTableView reloadData];
     [self refreshRecodsView];
 }
@@ -93,72 +105,10 @@
     [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
     
     [self loadCustom];
-    //默认隐藏 调用语音时显示
-    [self loadDefaultVoiceSearchView];
 }
 
 - (void)loadCustom {
-    RMImageView * searchImg = [[RMImageView alloc] init];
-    searchImg.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 45);
-    searchImg.backgroundColor = [UIColor clearColor];
-    searchImg.image = LOADIMAGE(@"mx_searchBar", kImageTypePNG);
-    searchImg.userInteractionEnabled = YES;
-    [self.view addSubview:searchImg];
-    
-    RMBaseTextField * searchTextField = [[RMBaseTextField alloc] init];
-    searchTextField.tag = searchTextField_TAG;
-    searchTextField.delegate = self;
-    [[RMBaseTextField appearance] setTintColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1]];
-    searchTextField.returnKeyType = UIReturnKeySearch;
-    searchTextField.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        searchTextField.frame = CGRectMake(18, 72 - 64, 180, 30);
-    }else if (IS_IPHONE_6_SCREEN){
-        searchTextField.frame = CGRectMake(18, 72 - 64, 200, 30);
-    }else{
-        searchTextField.frame = CGRectMake(18, 72 - 64, 240, 30);
-    }
-    searchTextField.placeholder = @"搜索你感兴趣的影片";
-    searchTextField.font = [UIFont systemFontOfSize:14.0];
-    searchTextField.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:searchTextField];
-    
-    UIButton * cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN) {
-        cancelBtn.frame = CGRectMake(210, 72-64, 70, 30);
-    }else if (IS_IPHONE_6_SCREEN){
-        cancelBtn.frame = CGRectMake(255, 72-64, 70, 30);
-    }else {
-        cancelBtn.frame = CGRectMake(280, 72-64, 70, 30);
-    }
-    cancelBtn.hidden = YES;
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    cancelBtn.tag = cancelBtn_TAG;
-    [self.view addSubview:cancelBtn];
-    
-    UIButton * voiceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    voiceBtn.tag = voiceBtn_TAG;
-    voiceBtn.backgroundColor = [UIColor clearColor];
-    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        voiceBtn.frame = CGRectMake(280, 72-64, 30, 30);
-    }else if (IS_IPHONE_6_SCREEN){
-        voiceBtn.frame = CGRectMake(330, 72-64, 30, 30);
-    }else{
-        voiceBtn.frame = CGRectMake(365, 72-64, 30, 30);
-    }
-    [voiceBtn setBackgroundImage:LOADIMAGE(@"mx_voiceBtn_img", kImageTypePNG) forState:UIControlStateNormal];
-    [voiceBtn addTarget:self action:@selector(mbuttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:voiceBtn];
-    
-    [self loadDefaultSearchView];
-}
-
-#pragma mark - 默认搜索界面
-
-- (void)loadDefaultSearchView {
-    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 44 - 64) style:UITableViewStylePlain];
+    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
     self.searchTableView.tag = 201;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
@@ -166,18 +116,62 @@
     self.searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.searchTableView];
     
-    //初始化 清空历史记录View
-    self.historicalRecordsView = [[RMHistoricalRecordsView alloc] init];
-    self.historicalRecordsView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 40);
-    self.historicalRecordsView.userInteractionEnabled = YES;
-    self.historicalRecordsView.backgroundColor = [UIColor clearColor];
-    self.searchTableView.tableHeaderView = self.historicalRecordsView;
+    UIView * headView = [[UIView alloc] init];
+    headView.backgroundColor = [UIColor whiteColor];
+    headView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 90);
+    headView.userInteractionEnabled = YES;
     
-    UITapGestureRecognizer *historicalRecordsViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clearHistoryRecords:)];
-    historicalRecordsViewRecognizer.numberOfTouchesRequired = 1; //手指数
-    historicalRecordsViewRecognizer.numberOfTapsRequired = 1; //tap次数
-    historicalRecordsViewRecognizer.delegate = self;
-    [self.historicalRecordsView addGestureRecognizer:historicalRecordsViewRecognizer];
+    UIView *roundBgView =[[UIView alloc] initWithFrame:CGRectMake(10, 15, [UtilityFunc shareInstance].globleWidth - 20, 60)];
+    [[roundBgView layer] setBorderWidth:2.0];//画线的宽度
+    [[roundBgView layer] setBorderColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1].CGColor];//颜色
+    roundBgView.userInteractionEnabled = YES;
+    roundBgView.multipleTouchEnabled = YES;
+    [[roundBgView layer]setCornerRadius:30.0];//圆角
+    roundBgView.backgroundColor = [UIColor clearColor];
+    [headView addSubview:roundBgView];
+    
+    RMBaseTextField * searchTextField = [[RMBaseTextField alloc] init];
+    searchTextField.tag = searchTextField_TAG;
+    searchTextField.delegate = self;
+    [[RMBaseTextField appearance] setTintColor:[UIColor redColor]];
+    searchTextField.returnKeyType = UIReturnKeySearch;
+    searchTextField.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
+    searchTextField.frame = CGRectMake(18, 20, [UtilityFunc shareInstance].globleWidth - 40, 50);
+    searchTextField.placeholder = @"搜索你喜欢的电影或明星";
+    searchTextField.font = [UIFont systemFontOfSize:20.0];
+    searchTextField.backgroundColor = [UIColor clearColor];
+    [searchTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [headView addSubview:searchTextField];
+
+    RMImageView * searchImg = [[RMImageView alloc] init];
+    searchImg.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - 50, 33, 25, 24);
+    searchImg.backgroundColor = [UIColor clearColor];
+    searchImg.userInteractionEnabled = YES;
+    [searchImg addTarget:self WithSelector:@selector(searchMethod)];
+    searchImg.image = LOADIMAGE(@"ic_search", kImageTypePNG);
+    [headView addSubview:searchImg];
+    self.searchTableView.tableHeaderView = headView;
+    
+    self.footView = [[UIView alloc] init];
+    self.footView.backgroundColor = [UIColor clearColor];
+    self.footView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 255); //176
+    self.footView.userInteractionEnabled = YES;
+    self.footView.multipleTouchEnabled = YES;
+    
+    UILabel * footTitle = [[UILabel alloc] init];
+    footTitle.backgroundColor = [UIColor clearColor];
+    footTitle.frame = CGRectMake(10, 10, 100, 30);
+    footTitle.text = @"全网热榜";
+    footTitle.textColor = [UIColor colorWithRed:0.22 green:0.22 blue:0.22 alpha:1];
+    footTitle.font = [UIFont systemFontOfSize:20];
+    [self.footView addSubview:footTitle];
+    
+    self.tagList = [[RMTagList alloc] initWithFrame:CGRectMake(10, 50.0f, [UtilityFunc shareInstance].globleWidth - 20, 176)];
+    self.tagList.delegate = self;
+    NSArray *array = [[NSArray alloc] initWithObjects:@"红高粱", @"变形金刚", @"致我们终将逝去的青春", @"空中求援", @"碟中谍", @"不能说的秘密", nil];
+    [self.tagList setTags:array];
+    [self.footView addSubview:self.tagList];
+    self.searchTableView.tableFooterView = self.footView;
 }
 
 - (void)refreshRecodsView {
@@ -188,29 +182,19 @@
     }
 }
 
-#pragma mark - 默认语音搜索界面
-
-- (void)loadDefaultVoiceSearchView {
-    self.blurView = [[AMBlurView alloc] initWithFrame:CGRectMake(0, 44, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44)];
-    [self.view addSubview:self.blurView];
+- (void)searchMethod{
+    //TODO: 开始搜索四
+    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    NSString * text = ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text;
     
-    self.voiceImage = [[RMImageView alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/2 - 45, [UtilityFunc shareInstance].globleHeight/2 - 45 - 44, 90, 90)];
-    self.voiceImage.backgroundColor = [UIColor clearColor];
-    self.voiceImage.userInteractionEnabled = YES;
-    self.voiceImage.image = LOADIMAGE([self.onVoiceImgArr objectAtIndex:3], kImageTypePNG);
-    [self.voiceImage addTarget:self WithSelector:@selector(clickVoiceImageMethod)];
-    [self.blurView addSubview:self.voiceImage];
-    [self showVoiceView:NO];
-}
-
-- (void)showVoiceView:(BOOL)hidden {
-    self.blurView.hidden = !hidden;
-    self.voiceImage.hidden = !hidden;
-}
-
-- (void)clickVoiceImageMethod {
-    [_iFlySpeechRecognizer cancel];
-    [self showVoiceView:NO];
+    if ([UtilityFunc isConnectionAvailable] == 0) {
+        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+    }else {
+        [SVProgressHUD dismiss];
+        [self updateUserSearchRecord:text];
+        [self.searchTableView reloadData];
+        [self startSearchRequest:text];
+    }
 }
 
 #pragma mark - 更新用户查询记录  并持久化数据
@@ -241,46 +225,7 @@
     [self refreshRecodsView];
 }
 
-#pragma mark - UIGestureRecognizerDelegate-清空历史记录 UITextField Delegate
-
-/**
- * 清空历史记录 并刷新界面
- */
-- (void)judgeUserClearRecord {
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要清空搜索记录么？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:{
-            
-            break;
-        }
-        case 1:{
-            CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-            NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
-            [arr removeAllObjects];
-            [recordsDataArr removeAllObjects];
-            [storage beginUpdates];
-            [storage setObject:arr forKey:UserSearchRecordData_KEY];
-            [storage endUpdates];
-            [self refreshRecodsView];
-            [self.searchTableView reloadData];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)clearHistoryRecords:(id)sender {
-    if ([recordsDataArr count] == 0){
-        return;
-    }
-    [self judgeUserClearRecord];
-}
+#pragma mark - UIScrollViewDelegate UITextField Delegate TagListDelegate
 
 - (void)startSearch {
     ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
@@ -296,28 +241,19 @@
     [self cancelSearch];
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //TODO: 开始搜索一
-    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
-    [self performSelector:@selector(willStartSearch_ONE:) withObject:textField afterDelay:1.0];
-    return YES;
-}
-
-- (void)willStartSearch_ONE:(UITextField *)textField {
-    if ([UtilityFunc isConnectionAvailable] == 0) {
+    if ([UtilityFunc isConnectionAvailable] == 0){
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
-    }else {
+        return NO;
+    }else{
         [SVProgressHUD dismiss];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
         [self updateUserSearchRecord:textField.text];
         [self.searchTableView reloadData];
         [self startSearchRequest:textField.text];
     }
+    return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -325,56 +261,125 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [self cancelSearch];
-    return YES;
+- (void)textFieldDidChange:(UITextField *)textField {
+    if (textField.text.length > 20) {
+        textField.text = [textField.text substringToIndex:20];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+}
+
+- (void)clickTagWithValue:(int)value {
+    NSLog(@"value:%d",value);
+}
+
+- (void)refreshTagListViewHeight:(float)height {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.footView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, height + 85);
+        self.searchTableView.tableFooterView = self.footView;
+        self.tagList.frame = CGRectMake(10, 50.0f, [UtilityFunc shareInstance].globleWidth - 20, height + 20);
+    }];
 }
 
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [recordsDataArr count];
+    if (recordsDataArr.count > 2){
+        if (self.isDisplayMoreRecords){
+            return 3;
+        }else{
+            return [recordsDataArr count];
+        }
+    }else{
+        return [recordsDataArr count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier = @"RMSearchCellIdentifier";
-    RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (! cell) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
-        cell = [array objectAtIndex:0];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        cell.backgroundColor = [UIColor clearColor];
+    if (self.isDisplayMoreRecords){
+        if (indexPath.row == 2){
+            static NSString * CellIdentifier = @"RMLastSearchCellIdentifier";
+            RMLastRecordsCell * cell = (RMLastRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (! cell) {
+                NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMLastRecordsCell" owner:self options:nil];
+                cell = [array objectAtIndex:0];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.backgroundColor = [UIColor whiteColor];
+                cell.delegate = self;
+            }
+            return cell;
+        }else{
+            static NSString * CellIdentifier = @"RMSearchCellIdentifier";
+            RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (! cell) {
+                NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
+                cell = [array objectAtIndex:0];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.backgroundColor = [UIColor whiteColor];
+                cell.delegate = self;
+            }
+            cell.clickbtn.tag = indexPath.row;
+            cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+            return cell;
+        }
+    }else{
+        static NSString * CellIdentifier = @"RMSearchCellIdentifier";
+        RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (! cell) {
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
+            cell = [array objectAtIndex:0];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.delegate = self;
+        }
+        cell.clickbtn.tag = indexPath.row;
+        cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+        return cell;
     }
-    cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == [recordsDataArr count] - 1){
-        return 44;
-    }else {
-        return 50;
-    }
+    return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //TODO:开始搜索二
-    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
-    NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
-    [self performSelector:@selector(willStartSearch_TWO:) withObject:str afterDelay:1.0];
-}
-
-- (void)willStartSearch_TWO:(NSString *)str {
     if ([UtilityFunc isConnectionAvailable] == 0){
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
-        return;
+        return ;
     }
+    NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
     [SVProgressHUD dismiss];
+    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
     [self startSearchRequest:str];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self cancelSearch];
+/**
+ *  删除单个搜索记录
+ */
+- (void)deleteSearchRecordsMethod:(int)value {
+    [recordsDataArr removeObjectAtIndex:value];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:value inSection:0];
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.searchTableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
+    [arr removeObjectAtIndex:value];
+    [storage beginUpdates];
+    [storage setObject:arr forKey:UserSearchRecordData_KEY];
+    [storage endUpdates];
+    [self refreshRecodsView];
+    [self.searchTableView reloadData];
+}
+
+/**
+ *  多于两个搜索记录的时候，显示更多搜索记录
+ */
+- (void)moreRecordsMethod {
+    self.isDisplayMoreRecords = NO;
+    [self.searchTableView reloadData];
 }
 
 #pragma mark - requset RMAFNRequestManagerDelegate
@@ -393,11 +398,11 @@
     searchResultCtl.resultData = data;
     RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:searchResultCtl];
     [self presentViewController:searchResultNav animated:YES completion:^{
-        [self showVoiceView:NO];
     }];
 }
 
 - (void)requestError:(NSError *)error {
+    NSLog(@"error:%@",error);
 }
 
 #pragma mark - Base Method
@@ -408,6 +413,7 @@
             break;
         }
         case 2:{
+            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
                 [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
             }
@@ -422,49 +428,19 @@
     }
 }
 
-#pragma mark - 
-
-- (void)willStartVoiceSearch {
-    if ([UtilityFunc isConnectionAvailable] == 0){
-        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
-        return;
-    }
-    [SVProgressHUD dismiss];
-    self.isCanceled = NO;
-    ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
-    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-    
-    //设置为录音模式
-    [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
-    bool ret = [_iFlySpeechRecognizer startListening];
-    if (ret) {
-        ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
-    }else{
-        NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
-        [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
-    }
-    [self showVoiceView:YES];
-}
-
-- (void)mbuttonClick:(UIButton *)sender {
-    switch (sender.tag) {
-        case cancelBtn_TAG:{
-            [self cancelSearch];
-            break;
-        }
-        case voiceBtn_TAG:{
-            [SVProgressHUD showWithStatus:@"启动语音搜索服务..." maskType:SVProgressHUDMaskTypeBlack];
-            [self performSelector:@selector(willStartVoiceSearch) withObject:nil afterDelay:1.0];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - IFlySpeechRecognizerDelegate
 
+/*
+ //设置为录音模式
+ [_iFlySpeechRecognizer setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source"];
+ bool ret = [_iFlySpeechRecognizer startListening];
+ if (ret) {
+ ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = NO;
+ }else{
+ NSLog(@"启动识别服务失败，请稍后重试");//可能是上次请求未结束，暂不支持多路并发
+ [SVProgressHUD showErrorWithStatus:@"启动语音搜索服务失败" duration:0.44];
+ }
+ */
 /**
  * @fn      onVolumeChanged
  * @brief   音量变化回调
@@ -472,7 +448,7 @@
  * @param   volume      -[in] 录音的音量，音量范围1~100
  * @see
  */
-- (void) onVolumeChanged: (int)volume {
+- (void)onVolumeChanged: (int)volume {
     if (self.isCanceled) {
         return;
     }
@@ -500,7 +476,7 @@
  *
  * @see
  */
-- (void) onBeginOfSpeech {
+- (void)onBeginOfSpeech {
     NSLog(@"正在录音");
     [SVProgressHUD showSuccessWithStatus:@"开始语音搜索" duration:0.44];
 }
@@ -511,9 +487,8 @@
  *
  * @see
  */
-- (void) onEndOfSpeech {
+- (void)onEndOfSpeech {
     NSLog(@"停止录音");
-    [self showVoiceView:NO];
 }
 
 /**
@@ -522,7 +497,7 @@
  *
  * @param   errorCode   -[out] 错误类，具体用法见IFlySpeechError
  */
-- (void) onError:(IFlySpeechError *) error {
+- (void)onError:(IFlySpeechError *) error {
     NSString *text ;
     
     if (self.isCanceled) {
@@ -538,7 +513,6 @@
         text = [NSString stringWithFormat:@"发生错误：%d %@",error.errorCode,error.errorDesc];
     }
     ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = YES;
-    [self showVoiceView:NO];
 }
 
 /**
@@ -548,7 +522,7 @@
  * @param   result      -[out] 识别结果，NSArray的第一个元素为NSDictionary，NSDictionary的key为识别结果，value为置信度
  * @see
  */
-- (void) onResults:(NSArray *) results isLast:(BOOL)isLast {
+- (void)onResults:(NSArray *) results isLast:(BOOL)isLast {
     [SVProgressHUD show];
     NSMutableString *resultString = [[NSMutableString alloc] init];
     
@@ -586,7 +560,7 @@
  * @param
  * @see
  */
-- (void) onCancel {
+- (void)onCancel {
     NSLog(@"识别取消");
     [SVProgressHUD showSuccessWithStatus:@"取消语音搜索" duration:0.3];
 }
@@ -595,15 +569,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -37,9 +37,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    
-    [leftBarButton setImage:[UIImage imageNamed:@"setup"] forState:UIControlStateNormal];
-    [rightBarButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
+    [leftBarButton setImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
+    [rightBarButton setImage:LOADIMAGE(@"search", kImageTypePNG) forState:UIControlStateNormal];
     CellScrollimageArray = [[NSMutableArray alloc] init];
     cellHeadImageArray = [NSArray arrayWithObjects:@"jr_movie",@"jr_teleplay",@"jr_Variety", nil];
     self.title = @"今日推荐";

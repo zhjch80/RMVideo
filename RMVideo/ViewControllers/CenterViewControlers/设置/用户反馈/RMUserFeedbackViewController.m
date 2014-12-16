@@ -9,7 +9,7 @@
 #import "RMUserFeedbackViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface RMUserFeedbackViewController ()
+@interface RMUserFeedbackViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -58,13 +58,17 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的意见已成功提交" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的意见已成功提交" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alertView show];
     self.feedBackTextView.text = @"";
 }
 
 - (void)requestError:(NSError *)error {
     
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

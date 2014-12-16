@@ -24,7 +24,7 @@
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-    return CGRectMake(10, 0, bounds.size.width-5, bounds.size.height);
+    return CGRectMake(10, 0, bounds.size.width - 35, bounds.size.height);
 }
 
 //控制placeHolder的位置
@@ -44,7 +44,8 @@
 - (void)drawPlaceholderInRect:(CGRect)rect {
     if (self.placeHolderColor) {
         [self.placeHolderColor setFill];
-        [[self placeholder] drawInRect:rect withFont:self.font];
+        NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:self.font, NSFontAttributeName, nil];
+        [[self placeholder] drawInRect:rect withAttributes:attrs];
     } else {
         [super drawPlaceholderInRect:rect];
     }

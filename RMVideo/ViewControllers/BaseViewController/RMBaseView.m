@@ -10,28 +10,35 @@
 
 @implementation RMBaseView
 
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
+- (void)addTarget:(id)target WithSelector:(SEL)sel{
+    _target = target;
+    _sel = sel;
+    self.userInteractionEnabled = YES;
+}
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    if (_target) {
+        [_target performSelector:_sel withObject:self];
     }
-    return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-    }
-    return self;
+- (void)loadSearchViewWithTitle:(NSString *)str {
+    UIView * bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1];
+    bgView.userInteractionEnabled = YES;
+    bgView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    [self addSubview:bgView];
+    
+    UILabel * title = [[UILabel alloc] init];
+    title.text = str;
+    title.textColor = [UIColor whiteColor];
+    title.numberOfLines = 1;
+    title.textAlignment = NSTextAlignmentCenter;
+    title.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    title.font = [UIFont systemFontOfSize:20.0];
+    title.userInteractionEnabled = YES;
+    title.backgroundColor = [UIColor clearColor];
+    [self addSubview:title];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
