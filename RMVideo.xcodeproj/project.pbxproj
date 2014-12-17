@@ -532,6 +532,10 @@
 		916E1F551A1308D200AD4400 /* no_search_result.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E1F491A1308D200AD4400 /* no_search_result.png */; };
 		918322F41A144BBF00BACEC0 /* RMWebViewPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 918322F21A144BBF00BACEC0 /* RMWebViewPlayViewController.m */; };
 		918322F51A144BBF00BACEC0 /* RMWebViewPlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 918322F31A144BBF00BACEC0 /* RMWebViewPlayViewController.xib */; };
+		9184457B1A41639D00DB844B /* jr_play_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 918445781A41639D00DB844B /* jr_play_@2x.png */; };
+		9184457C1A41639D00DB844B /* jr_play_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 918445791A41639D00DB844B /* jr_play_@3x.png */; };
+		9184457D1A41639D00DB844B /* jr_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9184457A1A41639D00DB844B /* jr_play.png */; };
+		9184457E1A41691F00DB844B /* RMRecommendedDailyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D84808B1A03633400A92879 /* RMRecommendedDailyTableViewCell.m */; };
 		918DE7001A05F6E200287E06 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918DE6FF1A05F6E200287E06 /* StoreKit.framework */; };
 		918DE7041A0628D500287E06 /* tijiao.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE7011A0628D500287E06 /* tijiao.png */; };
 		918DE7051A0628D500287E06 /* tijiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 918DE7021A0628D500287E06 /* tijiao@2x.png */; };
@@ -1388,6 +1392,9 @@
 		918322F11A144BBF00BACEC0 /* RMWebViewPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMWebViewPlayViewController.h; sourceTree = "<group>"; };
 		918322F21A144BBF00BACEC0 /* RMWebViewPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMWebViewPlayViewController.m; sourceTree = "<group>"; };
 		918322F31A144BBF00BACEC0 /* RMWebViewPlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMWebViewPlayViewController.xib; sourceTree = "<group>"; };
+		918445781A41639D00DB844B /* jr_play_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jr_play_@2x.png"; sourceTree = "<group>"; };
+		918445791A41639D00DB844B /* jr_play_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jr_play_@3x.png"; sourceTree = "<group>"; };
+		9184457A1A41639D00DB844B /* jr_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jr_play.png; sourceTree = "<group>"; };
 		918DE6FF1A05F6E200287E06 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		918DE7011A0628D500287E06 /* tijiao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tijiao.png; sourceTree = "<group>"; };
 		918DE7021A0628D500287E06 /* tijiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tijiao@2x.png"; sourceTree = "<group>"; };
@@ -2017,6 +2024,9 @@
 		1D7116F719ED21270007D393 /* 今日推荐 */ = {
 			isa = PBXGroup;
 			children = (
+				918445781A41639D00DB844B /* jr_play_@2x.png */,
+				918445791A41639D00DB844B /* jr_play_@3x.png */,
+				9184457A1A41639D00DB844B /* jr_play.png */,
 				1DED75B51A0B59BF004ADBD1 /* jr_teleplay.png */,
 				1DED75B61A0B59BF004ADBD1 /* jr_teleplay@2x.png */,
 				1DED75B71A0B59BF004ADBD1 /* dianshiju@3.png */,
@@ -3498,6 +3508,7 @@
 				1D4C365419F6051800AC8F1E /* SoHotList_red.png in Resources */,
 				1D84818F1A03633400A92879 /* RMAboutAppViewController.xib in Resources */,
 				1D71171919ED27230007D393 /* teleplay_unSelected@2x.png in Resources */,
+				9184457B1A41639D00DB844B /* jr_play_@2x.png in Resources */,
 				918DE72C1A0651D100287E06 /* cancle_select_all.png in Resources */,
 				1DD39F4B1A15A6B5000A215A /* setup@2x.png in Resources */,
 				1DAB0D7519EBDBB10063A58E /* HJMTabBar.xib in Resources */,
@@ -3649,8 +3660,10 @@
 				1D8481551A03633400A92879 /* RMDailyListViewController.xib in Resources */,
 				1DA8C3D51A22E48B00D27AEE /* Default90_125@3x.png in Resources */,
 				1D357CC91A0A1CDF000C5C44 /* vd_collectionWhiteImg@3x.png in Resources */,
+				9184457D1A41639D00DB844B /* jr_play.png in Resources */,
 				1DD39F851A15D588000A215A /* rb_day_5@2x.png in Resources */,
 				1DAB0DB819ECC2EC0063A58E /* SoHotList_black@2x.png in Resources */,
+				9184457C1A41639D00DB844B /* jr_play_@3x.png in Resources */,
 				1D71170419ED26000007D393 /* cell_accessoryType_white.png in Resources */,
 				91B2C2471A07173D001F0220 /* unselect_all_btn@3x.png in Resources */,
 				91AF404A1A19E52600FB16FE /* logo_yk@3x.png in Resources */,
@@ -4104,6 +4117,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9184457E1A41691F00DB844B /* RMRecommendedDailyTableViewCell.m in Sources */,
 				1D4D478319D7AADA00E3A50B /* RMVideoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
