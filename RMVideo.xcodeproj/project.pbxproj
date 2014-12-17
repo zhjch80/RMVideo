@@ -27,6 +27,9 @@
 		1D1C3C921A3ECB7600B70C82 /* RMTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C3C911A3ECB7600B70C82 /* RMTagList.m */; };
 		1D1C3C961A3ED84B00B70C82 /* RMLastRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C3C941A3ED84B00B70C82 /* RMLastRecordsCell.m */; };
 		1D1C3C971A3ED84B00B70C82 /* RMLastRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1C3C951A3ED84B00B70C82 /* RMLastRecordsCell.xib */; };
+		1D2B878F1A402DA000D8DE35 /* RMNewStarDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B878D1A402DA000D8DE35 /* RMNewStarDetailsViewController.m */; };
+		1D2B87901A402DA000D8DE35 /* RMNewStarDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D2B878E1A402DA000D8DE35 /* RMNewStarDetailsViewController.xib */; };
+		1D2B87931A402DFD00D8DE35 /* RMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D2B87921A402DFD00D8DE35 /* RMSegmentedControl.m */; };
 		1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */; };
 		1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */; };
 		1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C881A0748E9000C5C44 /* RMSearchCell.m */; };
@@ -686,6 +689,11 @@
 		1D1C3C931A3ED84B00B70C82 /* RMLastRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLastRecordsCell.h; sourceTree = "<group>"; };
 		1D1C3C941A3ED84B00B70C82 /* RMLastRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLastRecordsCell.m; sourceTree = "<group>"; };
 		1D1C3C951A3ED84B00B70C82 /* RMLastRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMLastRecordsCell.xib; sourceTree = "<group>"; };
+		1D2B878C1A402DA000D8DE35 /* RMNewStarDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMNewStarDetailsViewController.h; sourceTree = "<group>"; };
+		1D2B878D1A402DA000D8DE35 /* RMNewStarDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMNewStarDetailsViewController.m; sourceTree = "<group>"; };
+		1D2B878E1A402DA000D8DE35 /* RMNewStarDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMNewStarDetailsViewController.xib; sourceTree = "<group>"; };
+		1D2B87911A402DFD00D8DE35 /* RMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSegmentedControl.h; sourceTree = "<group>"; };
+		1D2B87921A402DFD00D8DE35 /* RMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSegmentedControl.m; sourceTree = "<group>"; };
 		1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchRecordsCell.h; sourceTree = "<group>"; };
 		1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchRecordsCell.m; sourceTree = "<group>"; };
 		1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchRecordsCell.xib; sourceTree = "<group>"; };
@@ -2537,11 +2545,16 @@
 		1D8480C71A03633400A92879 /* 明星详情 */ = {
 			isa = PBXGroup;
 			children = (
+				1D2B87911A402DFD00D8DE35 /* RMSegmentedControl.h */,
+				1D2B87921A402DFD00D8DE35 /* RMSegmentedControl.m */,
 				1D8480C81A03633400A92879 /* RMStarDetailsCell.h */,
 				1D8480C91A03633400A92879 /* RMStarDetailsCell.m */,
 				1D8480CA1A03633400A92879 /* RMStarDetailsCell.xib */,
 				1D9CB9B11A10556E00F185B1 /* RMStarDetailsCell_6.xib */,
 				1D5D0D151A10C27300C83C49 /* RMStarDetailsCell_6p.xib */,
+				1D2B878C1A402DA000D8DE35 /* RMNewStarDetailsViewController.h */,
+				1D2B878D1A402DA000D8DE35 /* RMNewStarDetailsViewController.m */,
+				1D2B878E1A402DA000D8DE35 /* RMNewStarDetailsViewController.xib */,
 				1D8480CB1A03633400A92879 /* RMStarDetailsViewController.h */,
 				1D8480CC1A03633400A92879 /* RMStarDetailsViewController.m */,
 				1D8480CD1A03633400A92879 /* RMStarDetailsViewController.xib */,
@@ -3615,6 +3628,7 @@
 				1DED75C21A0B59BF004ADBD1 /* jr_movie@2x.png in Resources */,
 				1D847F381A0324D000A92879 /* UMShareEditViewControlleriPad.xib in Resources */,
 				1D847F321A0324D000A92879 /* UMSocialLocalizable.strings in Resources */,
+				1D2B87901A402DA000D8DE35 /* RMNewStarDetailsViewController.xib in Resources */,
 				91AF40691A19E6E000FB16FE /* cell_accessoryType_red@2x.png in Resources */,
 				1D9CB9CB1A1084F200F185B1 /* RMDownLoadingTableViewCell.xib in Resources */,
 				1DD39F6F1A15A885000A215A /* logo_ls.png in Resources */,
@@ -4020,6 +4034,7 @@
 				1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */,
 				1D357D121A0B07AD000C5C44 /* RMAFNRequestManager.m in Sources */,
 				1DAB0D1C19EB64C80063A58E /* JSONKit.m in Sources */,
+				1D2B87931A402DFD00D8DE35 /* RMSegmentedControl.m in Sources */,
 				9195B4CD1A037663005ED51B /* RMShouldSeeMovieViewController.m in Sources */,
 				1D4D47B819D7B41C00E3A50B /* AFHTTPRequestOperationManager.m in Sources */,
 				1DA8C39E1A1F386200D27AEE /* RMEmptyCellView.m in Sources */,
@@ -4072,6 +4087,7 @@
 				1D16BC0119E664D0008BBB08 /* MMDrawerController.m in Sources */,
 				1DED761C1A0C5168004ADBD1 /* RMCustomNavViewController.m in Sources */,
 				1DD39F181A13510F000A215A /* GPLoadingView.m in Sources */,
+				1D2B878F1A402DA000D8DE35 /* RMNewStarDetailsViewController.m in Sources */,
 				1DDBB6B11A0CD9DE003B9845 /* EGOImageView.m in Sources */,
 				913D15D31A01E4BB000A50E2 /* SDWebImageDownloader.m in Sources */,
 				1D8481501A03633400A92879 /* RMSoHotListViewController.m in Sources */,

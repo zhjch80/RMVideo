@@ -17,6 +17,10 @@
 #import "RMCustomPresentNavViewController.h"
 #import "RMSearchViewController.h"
 
+#import "RMNewStarDetailsViewController.h"
+
+
+
 #import <QuartzCore/QuartzCore.h>
 
 typedef enum{
@@ -205,12 +209,18 @@ typedef enum{
 #pragma mark - 进入明星详情页面
 
 - (void)clickVideoImageViewMehtod:(RMImageView *)imageView {
-    if (imageView.identifierString) {
-        RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
-        [self.navigationController pushViewController:starDetailsCtl animated:YES];
-        [starDetailsCtl setStarID:imageView.identifierString];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
-    }
+//    if (imageView.identifierString) {
+//        RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
+//        [self.navigationController pushViewController:starDetailsCtl animated:YES];
+//        [starDetailsCtl setStarID:imageView.identifierString];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+//    }
+    
+    RMNewStarDetailsViewController * newStarDetailsCtl = [[RMNewStarDetailsViewController alloc] init];
+    [self.navigationController pushViewController:newStarDetailsCtl animated:YES];
+    newStarDetailsCtl.star_id = imageView.identifierString;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+
 }
 
 #pragma mark - 添加或者删除 明星 在我的频道里
