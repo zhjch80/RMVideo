@@ -17,7 +17,7 @@
 #import "RMCustomPresentNavViewController.h"
 #import "RMSearchViewController.h"
 
-#import "RMNewStarDetailsViewController.h"
+#import "RMStarDetailsViewController.h"
 
 
 
@@ -216,7 +216,7 @@ typedef enum{
 //        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 //    }
     
-    RMNewStarDetailsViewController * newStarDetailsCtl = [[RMNewStarDetailsViewController alloc] init];
+    RMStarDetailsViewController * newStarDetailsCtl = [[RMStarDetailsViewController alloc] init];
     [self.navigationController pushViewController:newStarDetailsCtl animated:YES];
     newStarDetailsCtl.star_id = imageView.identifierString;
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];

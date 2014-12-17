@@ -1,42 +1,27 @@
 //
-//  RMStarDetailsViewController.h
+//  RMNewStarDetailsViewController.h
 //  RMVideo
 //
-//  Created by runmobile on 14-10-13.
+//  Created by runmobile on 14-12-16.
 //  Copyright (c) 2014年 runmobile. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "RMBaseViewController.h"
-#import "DAAutoScrollView.h"
 #import "RMBaseTextView.h"
 
-@interface RMStarDetailsViewController : RMBaseViewController{
-    
-}
-@property (weak, nonatomic) IBOutlet UIView *headView;
-@property (weak, nonatomic) IBOutlet UIView *headSubView;
-@property (weak, nonatomic) IBOutlet UIView *headSubChannelView;
+@interface RMStarDetailsViewController : RMBaseViewController
+@property (weak, nonatomic) IBOutlet UIView *upsideView;//上视图的View
+@property (weak, nonatomic) IBOutlet UIView *belowView;//下视图的View
+@property (nonatomic, strong) UIView * aboveView;
+@property (nonatomic, strong) UIView * blackView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *starPhoto;
-@property (weak, nonatomic) IBOutlet DAAutoScrollView *starName;
-@property (weak, nonatomic) IBOutlet RMBaseTextView *starIntrduce;
+@property (weak, nonatomic) IBOutlet UIImageView *starHeadImg;//明星头像
+@property (weak, nonatomic) IBOutlet UILabel *starName;//明星名字
+@property (strong, nonatomic) RMBaseTextView *starIntroduction;//明星介绍
+@property (weak, nonatomic) UIButton *addOrDeleteBtn;//添加或者删除
+@property (weak, nonatomic) UIButton *openOrCloseBtn;//打开或者合上
 
-@property (weak, nonatomic) IBOutlet UILabel *foldMarkTitle;
-@property (weak, nonatomic) IBOutlet UIImageView *foldImg;
-@property (weak, nonatomic) IBOutlet UIButton *foldBtn;
-
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-
-- (IBAction)mbuttonClick:(UIButton *)sender;
-
-
-@property (weak, nonatomic) IBOutlet UILabel *myChannelState;
-@property (weak, nonatomic) IBOutlet UIImageView *myChannelImgState;
-
-/**
- 把明星的tag_id传过来
- */
-- (void)setStarID:(NSString *)star_id;
+@property (nonatomic, copy) NSString * star_id;//明星id
 
 @end
