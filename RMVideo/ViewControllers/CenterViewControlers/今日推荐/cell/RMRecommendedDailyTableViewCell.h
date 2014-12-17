@@ -11,7 +11,9 @@
 
 @protocol RecommendedDailyTableViewCellDelegate <NSObject>
 
+@optional
 - (void)didSelectCellImageWithTag:(NSInteger)tag andImageViewIdentifier:(NSString *)identifier;
+- (void)clickDirectlyPlayBtnWithTag:(NSInteger)tag andtypeIdentifier:(NSString *)identifier;
 
 @end
 @interface RMRecommendedDailyTableViewCell : UITableViewCell<SwipeViewDelegate, SwipeViewDataSource>{

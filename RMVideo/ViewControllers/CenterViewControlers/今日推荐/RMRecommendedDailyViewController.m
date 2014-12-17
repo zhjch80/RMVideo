@@ -174,6 +174,9 @@
     [self.navigationController pushViewController:videoPlay animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 }
+- (void)clickDirectlyPlayBtnWithTag:(NSInteger)tag andtypeIdentifier:(NSString *)identifier{
+    NSLog(@"tag:%d  identifier:%@",tag,identifier);
+}
 
 #pragma mark - Base Method
 

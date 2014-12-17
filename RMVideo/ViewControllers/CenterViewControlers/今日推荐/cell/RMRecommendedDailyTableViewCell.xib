@@ -33,7 +33,7 @@
                 <outlet property="MoviePostersView" destination="zkb-Dv-0Ub" id="NyQ-ah-wF8"/>
                 <outlet property="headImageView" destination="Mib-Gp-irW" id="yx7-kt-3cj"/>
             </connections>
-            <point key="canvasLocation" x="284" y="377"/>
+            <point key="canvasLocation" x="298" y="379"/>
         </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

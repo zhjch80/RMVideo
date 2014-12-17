@@ -124,6 +124,12 @@
     //        view = nil;
     //        view = view;
     //    }
+    UIButton *playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    playBtn.frame = CGRectMake((subImage.frame.origin.x+subImage.frame.size.width)-60, (subImage.frame.origin.y+subImage.frame.size.height)-60, 60, 60);
+    [playBtn setImage:LOADIMAGE(@"jr_play", kImageTypePNG) forState:UIControlStateNormal];
+    playBtn.tag = index;
+    [playBtn addTarget:self action:@selector(playMovie:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:playBtn];
     view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     return view;
 }
@@ -228,6 +234,12 @@
 }
 - (void)selectImageView:(RMImageView *)imageView{
     
+}
+
+- (void)playMovie:(UIButton *)btn{
+    if([self.delegate respondsToSelector:@selector(clickDirectlyPlayBtnWithTag:andtypeIdentifier:)]){
+        [self.delegate clickDirectlyPlayBtnWithTag:btn.tag andtypeIdentifier:cellImgageIdentifier];
+    }
 }
 
 @end
