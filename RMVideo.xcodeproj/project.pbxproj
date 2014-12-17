@@ -397,6 +397,9 @@
 		1DA9298D1A4184380033690F /* RMLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA9298C1A4184380033690F /* RMLoadingView.m */; };
 		1DA929901A4184430033690F /* RMTickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA9298F1A4184430033690F /* RMTickerView.m */; };
 		1DA929931A4184520033690F /* RMTouchVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA929921A4184520033690F /* RMTouchVIew.m */; };
+		1DA929961A418B370033690F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA929951A418B370033690F /* EGORefreshTableHeaderView.m */; };
+		1DA9299C1A418C0C0033690F /* PullToRefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA9299B1A418C0C0033690F /* PullToRefreshTableView.m */; };
+		1DA9299F1A418C630033690F /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA9299E1A418C630033690F /* RefreshView.m */; };
 		1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF319EB634D0063A58E /* ViewPagerController.m */; };
 		1DAB0D0919EB647E0063A58E /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF619EB647E0063A58E /* arrow_down.png */; };
 		1DAB0D0A19EB647E0063A58E /* arrow_down1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CF719EB647E0063A58E /* arrow_down1.png */; };
@@ -409,10 +412,7 @@
 		1DAB0D1119EB647E0063A58E /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CFE19EB647E0063A58E /* blueArrow@2x.png */; };
 		1DAB0D1219EB647E0063A58E /* blueArrow_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0CFF19EB647E0063A58E /* blueArrow_up.png */; };
 		1DAB0D1319EB647E0063A58E /* blueArrow_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0019EB647E0063A58E /* blueArrow_up@2x.png */; };
-		1DAB0D1419EB647E0063A58E /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0219EB647E0063A58E /* EGORefreshTableHeaderView.m */; };
-		1DAB0D1519EB647E0063A58E /* PullToRefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0419EB647E0063A58E /* PullToRefreshTableView.m */; };
 		1DAB0D1619EB647E0063A58E /* refresh_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0519EB647E0063A58E /* refresh_bg.png */; };
-		1DAB0D1719EB647E0063A58E /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0719EB647E0063A58E /* RefreshView.m */; };
 		1DAB0D1819EB647E0063A58E /* RefreshView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0D0819EB647E0063A58E /* RefreshView.xib */; };
 		1DAB0D1C19EB64C80063A58E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAB0D1B19EB64C80063A58E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1DAB0D2119EB684D0063A58E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1DAB0D1E19EB684D0063A58E /* SVProgressHUD.bundle */; };
@@ -1250,6 +1250,12 @@
 		1DA9298F1A4184430033690F /* RMTickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTickerView.m; sourceTree = "<group>"; };
 		1DA929911A4184520033690F /* RMTouchVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTouchVIew.h; sourceTree = "<group>"; };
 		1DA929921A4184520033690F /* RMTouchVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTouchVIew.m; sourceTree = "<group>"; };
+		1DA929941A418B370033690F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		1DA929951A418B370033690F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		1DA9299A1A418C0C0033690F /* PullToRefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshTableView.h; sourceTree = "<group>"; };
+		1DA9299B1A418C0C0033690F /* PullToRefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshTableView.m; sourceTree = "<group>"; };
+		1DA9299D1A418C630033690F /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshView.h; sourceTree = "<group>"; };
+		1DA9299E1A418C630033690F /* RefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshView.m; sourceTree = "<group>"; };
 		1DAB0CF219EB634D0063A58E /* ViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewPagerController.h; sourceTree = "<group>"; };
 		1DAB0CF319EB634D0063A58E /* ViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewPagerController.m; sourceTree = "<group>"; };
 		1DAB0CF619EB647E0063A58E /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
@@ -1263,13 +1269,7 @@
 		1DAB0CFE19EB647E0063A58E /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
 		1DAB0CFF19EB647E0063A58E /* blueArrow_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow_up.png; sourceTree = "<group>"; };
 		1DAB0D0019EB647E0063A58E /* blueArrow_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow_up@2x.png"; sourceTree = "<group>"; };
-		1DAB0D0119EB647E0063A58E /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		1DAB0D0219EB647E0063A58E /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		1DAB0D0319EB647E0063A58E /* PullToRefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshTableView.h; sourceTree = "<group>"; };
-		1DAB0D0419EB647E0063A58E /* PullToRefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshTableView.m; sourceTree = "<group>"; };
 		1DAB0D0519EB647E0063A58E /* refresh_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_bg.png; sourceTree = "<group>"; };
-		1DAB0D0619EB647E0063A58E /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshView.h; sourceTree = "<group>"; };
-		1DAB0D0719EB647E0063A58E /* RefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshView.m; sourceTree = "<group>"; };
 		1DAB0D0819EB647E0063A58E /* RefreshView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefreshView.xib; sourceTree = "<group>"; };
 		1DAB0D1A19EB64C80063A58E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		1DAB0D1B19EB64C80063A58E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
@@ -3141,13 +3141,13 @@
 				1DAB0CFE19EB647E0063A58E /* blueArrow@2x.png */,
 				1DAB0CFF19EB647E0063A58E /* blueArrow_up.png */,
 				1DAB0D0019EB647E0063A58E /* blueArrow_up@2x.png */,
-				1DAB0D0119EB647E0063A58E /* EGORefreshTableHeaderView.h */,
-				1DAB0D0219EB647E0063A58E /* EGORefreshTableHeaderView.m */,
-				1DAB0D0319EB647E0063A58E /* PullToRefreshTableView.h */,
-				1DAB0D0419EB647E0063A58E /* PullToRefreshTableView.m */,
+				1DA929941A418B370033690F /* EGORefreshTableHeaderView.h */,
+				1DA929951A418B370033690F /* EGORefreshTableHeaderView.m */,
+				1DA9299A1A418C0C0033690F /* PullToRefreshTableView.h */,
+				1DA9299B1A418C0C0033690F /* PullToRefreshTableView.m */,
 				1DAB0D0519EB647E0063A58E /* refresh_bg.png */,
-				1DAB0D0619EB647E0063A58E /* RefreshView.h */,
-				1DAB0D0719EB647E0063A58E /* RefreshView.m */,
+				1DA9299D1A418C630033690F /* RefreshView.h */,
+				1DA9299E1A418C630033690F /* RefreshView.m */,
 				1DAB0D0819EB647E0063A58E /* RefreshView.xib */,
 			);
 			path = RefreshView;
@@ -4088,6 +4088,7 @@
 				1D8481471A03633400A92879 /* RMBaseViewController.m in Sources */,
 				1DA2AC6E19F65F5B0036C1AD /* SBJson4StreamParserState.m in Sources */,
 				1D8481521A03633400A92879 /* RMDailyListTableViewCell.m in Sources */,
+				1DA929961A418B370033690F /* EGORefreshTableHeaderView.m in Sources */,
 				913D15DA1A01E4BB000A50E2 /* UIImage+WebP.m in Sources */,
 				1DD2BFEF19D919950073D9F8 /* AFAudioRouter.m in Sources */,
 				1D5B82971A0E201C00A4A29B /* DropDownTabelViewCell.m in Sources */,
@@ -4115,10 +4116,8 @@
 				1D8481481A03633400A92879 /* RMDownLoadBaseViewController.m in Sources */,
 				1D84818A1A03633400A92879 /* RMSetUpTableViewCell.m in Sources */,
 				1DDBB6AF1A0CD9DE003B9845 /* EGOImageLoadConnection.m in Sources */,
-				1DAB0D1719EB647E0063A58E /* RefreshView.m in Sources */,
 				1D8481861A03633400A92879 /* RMVideoPlotIntroducedViewController.m in Sources */,
 				1DDBB6B41A0CD9ED003B9845 /* AOTagList.m in Sources */,
-				1DAB0D1419EB647E0063A58E /* EGORefreshTableHeaderView.m in Sources */,
 				913D15D01A01E4BB000A50E2 /* SDImageCache.m in Sources */,
 				1D8481731A03633400A92879 /* RMStarTeleplayListViewController.m in Sources */,
 				1D8481691A03633400A92879 /* RMStarCell.m in Sources */,
@@ -4177,6 +4176,7 @@
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
 				1D5B82961A0E201C00A4A29B /* DropDownListView.m in Sources */,
 				913D15D91A01E4BB000A50E2 /* UIImage+MultiFormat.m in Sources */,
+				1DA9299C1A418C0C0033690F /* PullToRefreshTableView.m in Sources */,
 				1D4D47ED19D7B42800E3A50B /* CUSFileStorage.m in Sources */,
 				1D99745E19E92D62007E53DB /* DBImageView.m in Sources */,
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
@@ -4205,6 +4205,7 @@
 				1D4D47F219D7B42800E3A50B /* FMDatabaseQueue.m in Sources */,
 				1D8481541A03633400A92879 /* RMDailyListViewController.m in Sources */,
 				913D15D51A01E4BB000A50E2 /* SDWebImageManager.m in Sources */,
+				1DA9299F1A418C630033690F /* RefreshView.m in Sources */,
 				1DA929901A4184430033690F /* RMTickerView.m in Sources */,
 				1DA2AC6D19F65F5B0036C1AD /* SBJson4StreamParser.m in Sources */,
 				1D4D47F119D7B42800E3A50B /* FMDatabasePool.m in Sources */,
@@ -4216,7 +4217,6 @@
 				1D84819A1A03633400A92879 /* RMDownMoreViewController.m in Sources */,
 				1DA2AC6F19F65F5B0036C1AD /* SBJson4StreamTokeniser.m in Sources */,
 				1D4D47FB19D7B42800E3A50B /* UIButton+AFNetworking.m in Sources */,
-				1DAB0D1519EB647E0063A58E /* PullToRefreshTableView.m in Sources */,
 				1D5D0D1A1A10D6FB00C83C49 /* RMMyDownLoadViewController.m in Sources */,
 				1D8481681A03633400A92879 /* RMHistoricalRecordsView.m in Sources */,
 				1DA2AC5819F65F160036C1AD /* RecognizerFactory.m in Sources */,

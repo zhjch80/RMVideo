@@ -6,7 +6,7 @@
 //  Copyright 2012年 Yulong. All rights reserved.
 //
 
-// Refresh view controller show label 
+// Refresh view controller show label
 #define REFRESH_LOADING_STATUS @"加载中..."
 #define REFRESH_PULL_DOWN_STATUS @"下拉更新..."
 #define REFRESH_RELEASED_STATUS @"松开开始更新..."

@@ -12,23 +12,23 @@
 #import <QuartzCore/QuartzCore.h>
 
 typedef enum{
-	EGOOPullRefreshPulling = 0,
-	EGOOPullRefreshNormal,
-	EGOOPullRefreshLoading,	
+    EGOOPullRefreshPulling = 0,
+    EGOOPullRefreshNormal,
+    EGOOPullRefreshLoading,
 } EGOPullRefreshState;
 
 @protocol EGORefreshTableHeaderDelegate;
 @interface EGORefreshTableHeaderView : UIView {
-	
-	__unsafe_unretained id _delegate;
-	EGOPullRefreshState _state;
-
-	UILabel *_lastUpdatedLabel;
-	UILabel *_statusLabel;
-	CALayer *_arrowImage;
-	UIActivityIndicatorView *_activityView;
-	
-
+    
+    __unsafe_unretained id _delegate;
+    EGOPullRefreshState _state;
+    
+    UILabel *_lastUpdatedLabel;
+    UILabel *_statusLabel;
+    CALayer *_arrowImage;
+    UIActivityIndicatorView *_activityView;
+    
+    
 }
 
 @property(nonatomic,assign) id <EGORefreshTableHeaderDelegate> delegate;

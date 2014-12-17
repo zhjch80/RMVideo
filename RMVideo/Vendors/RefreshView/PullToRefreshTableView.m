@@ -1,6 +1,6 @@
 //
 //  PullToRefreshTableView.m
-// 
+//
 //  Version 1.0
 //
 //  Created by hsit on 12-1-30.
@@ -35,7 +35,7 @@
         viewType = type == k_VIEW_TYPE_HEADER ? k_VIEW_TYPE_HEADER : k_VIEW_TYPE_FOOTER;
         self.backgroundColor = [UIColor clearColor];
         
-        //  初始化加载指示器（菊花圈）  
+        //  初始化加载指示器（菊花圈）
         indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((k_STATE_VIEW_INDICATE_WIDTH - 20) / 2, (k_STATE_VIEW_HEIGHT - 20) / 2, 20, 20)];
         indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         indicatorView.hidesWhenStopped = YES;
@@ -126,7 +126,7 @@
 //    [arrowView release];
 //    [stateLabel release];
 //    [timeLabel release];
-//    
+//
 //    [super dealloc];
 //}
 
@@ -259,7 +259,7 @@
     }
     //  改变“上拉加载更多”视图的文字及箭头提示
     CGFloat differenceY = self.contentSize.height > self.frame.size.height ? (self.contentSize.height - self.frame.size.height) : 0;
-    if (footerView.currentState != k_PULL_STATE_END && 
+    if (footerView.currentState != k_PULL_STATE_END &&
         offsetY > differenceY + k_STATE_VIEW_HEIGHT / 3 * 2) {
         if(self.isCloseFooter)
         {

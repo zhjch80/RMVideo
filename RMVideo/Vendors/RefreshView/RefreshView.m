@@ -30,7 +30,7 @@
 //    [refreshIndicator release];
 //    [refreshStatusLabel release];
 //    [refreshLastUpdatedTimeLabel release];
-//    
+//
 //    [owner release];
 //    [super dealloc];
 //}
@@ -59,7 +59,7 @@
     NSDateFormatter *outFormat = [[NSDateFormatter alloc] init];
     [outFormat setDateFormat:@"MM'-'dd HH':'mm':'ss"];
     NSString *timeStr = [outFormat stringFromDate:nowDate];
-
+    
     // UI 赋值
     refreshLastUpdatedTimeLabel.text = [NSString stringWithFormat:@"%@%@", REFRESH_UPDATE_TIME_PREFIX, timeStr];
     refreshStatusLabel.text = REFRESH_PULL_DOWN_STATUS;

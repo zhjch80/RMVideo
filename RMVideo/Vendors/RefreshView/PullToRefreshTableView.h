@@ -1,11 +1,11 @@
 //
 //  PullToRefreshTableView.h
-//  
+//
 //  Version 1.0
 //
 //  下拉刷新 及 上拖加载 表视图
 //  使用本类，您无需去关注StateView中的方法，只要调用PullToRefreshTableView中以下三种方法即可
-// 
+//
 //  - (void)tableViewDidDragging;
 //  - (int)tableViewDidEndDragging;
 //  - (void)reloadData:(BOOL)dataIsAllLoaded;
@@ -44,7 +44,7 @@
     UIActivityIndicatorView * indicatorView;  //  加载指示器（菊花圈）
     UIImageView             * arrowView;      //  箭头视图
     UILabel                 * stateLabel;     //  状态文本
-    UILabel                 * timeLabel;      //  时间文本 
+    UILabel                 * timeLabel;      //  时间文本
     int                       viewType;       //  标识是下拉还是上拖视图
     int                       currentState;   //  标识视图当前状态
 }
@@ -53,11 +53,11 @@
 @property (nonatomic, retain) UIImageView             * arrowView;
 @property (nonatomic, retain) UILabel                 * stateLabel;
 @property (nonatomic, retain) UILabel                 * timeLabel;
-@property (nonatomic)         int                       viewType; 
-@property (nonatomic)         int                       currentState; 
+@property (nonatomic)         int                       viewType;
+@property (nonatomic)         int                       currentState;
 
-/** 
- *  初始化视图 
+/**
+ *  初始化视图
  *  type : 下拉/上拖视图标识  k_VIEW_TYPE_HEADER 或 k_VIEW_TYPE_FOOTER
  **/
 - (id)initWithFrame:(CGRect)frame viewType:(int)type;
@@ -70,7 +70,7 @@
 
 /**
  *  更新时间文本（当前时间）
- **/ 
+ **/
 - (void)updateTimeLabel;
 
 @end
