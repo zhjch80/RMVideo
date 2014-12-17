@@ -105,7 +105,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
 }
-#pragma mark delegate
+#pragma mark delegate  进入详情页面
 //电影
 - (void)selectMovieTableViewWithIndex:(NSInteger)index andStringID:(NSString *)stringID{
     
@@ -129,6 +129,16 @@
     videoPlay.currentVideo_id = stringID;
     [self.navigationController pushViewController:videoPlay animated:YES];
 
+}
+#pragma mark delegate  直接播放页面
+- (void)playMovieWithModel:(RMPublicModel *)model{
+    NSLog(@"影片名称：%@",model.name);
+}
+- (void)playTVWithModel:(RMPublicModel *)model{
+    NSLog(@"影片名称：%@",model.name);
+}
+- (void)playVarietyWithModel:(RMPublicModel *)model{
+    NSLog(@"影片名称：%@",model.name);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

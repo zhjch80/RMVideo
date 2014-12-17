@@ -12,6 +12,7 @@
 @protocol RMDailyVarietyViewControllerDelegate <NSObject>
 
 - (void)selectVarietyTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
+- (void)playVarietyWithModel:(RMPublicModel *)model;
 
 @end
 

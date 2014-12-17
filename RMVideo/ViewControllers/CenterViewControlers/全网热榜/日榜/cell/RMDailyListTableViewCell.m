@@ -20,4 +20,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)clickPlayBtn:(UIButton *)sender {
+    if([self.delegate respondsToSelector:@selector(palyMovieWithIndex:)]){
+        [self.delegate palyMovieWithIndex:sender.tag];
+    }
+}
 @end

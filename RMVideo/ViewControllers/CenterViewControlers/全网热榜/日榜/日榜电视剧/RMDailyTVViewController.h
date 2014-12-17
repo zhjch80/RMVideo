@@ -12,6 +12,7 @@
 @protocol RMDailyTVViewControllerDelegate <NSObject>
 
 - (void)selectTVTableViewCellWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
+- (void)playTVWithModel:(RMPublicModel *)model;
 
 @end
 @interface RMDailyTVViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{

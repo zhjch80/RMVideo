@@ -10,7 +10,7 @@
 #import "RMDailyListTableViewCell.h"
 #import "RMImageView.h"
 
-@interface RMDailyVarietyViewController (){
+@interface RMDailyVarietyViewController ()<RMDailyListTableViewCellDelegate>{
      BOOL isAlreadyDownLoad;
 }
 
@@ -77,6 +77,8 @@
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
     cell.movieName.text = model.name;
     cell.playCount.text = model.sum_i_hits;
+    cell.playBtn.tag = indexPath.row;
+    cell.delegate = self;
     cell.movieKind.text = [NSString stringWithFormat:@"分类:%@",model.video_type];
     [(RMImageView *)cell.TopImage addTopNumber:[model.topNum intValue]];
     return cell;
@@ -158,4 +160,10 @@
     [self.mainTableView reloadData:NO];
 }
 
+- (void)palyMovieWithIndex:(NSInteger)index{
+    if([self.delegate respondsToSelector:@selector(playVarietyWithModel:)]){
+        RMPublicModel *model = [self.dataArray objectAtIndex:index];
+        [self.delegate playVarietyWithModel:model];
+    }
+}
 @end

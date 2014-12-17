@@ -12,6 +12,7 @@
 @protocol RMDailyMovieViewControllerDelegate <NSObject>
 
 - (void)selectMovieTableViewWithIndex:(NSInteger)index andStringID:(NSString *)stringID;
+- (void)playMovieWithModel:(RMPublicModel *)model;
 
 @end
 @interface RMDailyMovieViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -17,14 +18,17 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VBc-dj-ylE">
                         <rect key="frame" x="17" y="7" width="24" height="25"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="被解放的讲台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLY-It-XaX">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="被解放的讲台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLY-It-XaX">
                         <rect key="frame" x="115" y="8" width="200" height="33"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="Sbd-vd-YUa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgY-8R-Rng">
-                        <rect key="frame" x="118" y="97" width="10" height="10"/>
+                        <rect key="frame" x="117" y="83" width="10" height="10"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" backgroundImage="paly_bg_img.png">
                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -32,24 +36,51 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="播放1582次" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdE-pR-EN2">
-                        <rect key="frame" x="135" y="95" width="180" height="15"/>
+                        <rect key="frame" x="135" y="80" width="180" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="类型：剧情、喜剧" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sq-A8-r1G">
-                        <rect key="frame" x="115" y="60" width="200" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wNA-ca-CsS" customClass="RMImageView">
                         <rect key="frame" x="17" y="7" width="90" height="135"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="0Ow-XM-S4o"/>
+                        </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="toppaiming.png" translatesAutoresizingMaskIntoConstraints="NO" id="qGq-d8-eBL" customClass="RMImageView">
                         <rect key="frame" x="17" y="0.0" width="25" height="37"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OmI-oy-zzb">
+                        <rect key="frame" x="115" y="103" width="97" height="32"/>
+                        <state key="normal" image="play_btn.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="clickPlayBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iiN-4z-Sgj"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型：剧情、喜剧" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sq-A8-r1G">
+                        <rect key="frame" x="115" y="49" width="200" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="umr-xM-aCf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="RLY-It-XaX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="0fh-Pr-Wdh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="6Sq-A8-r1G" secondAttribute="trailing" constant="-3" id="C1q-tM-E6H"/>
+                    <constraint firstItem="6Sq-A8-r1G" firstAttribute="top" secondItem="RLY-It-XaX" secondAttribute="bottom" constant="8" id="E4t-jx-34x"/>
+                    <constraint firstItem="wNA-ca-CsS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="9" id="Io5-dg-HrT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="RLY-It-XaX" secondAttribute="trailing" constant="-3" id="L5t-h6-Tdd"/>
+                    <constraint firstItem="6Sq-A8-r1G" firstAttribute="leading" secondItem="wNA-ca-CsS" secondAttribute="trailing" constant="8" id="LHP-dJ-cnM"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="wNA-ca-CsS" secondAttribute="bottom" constant="-1" id="XCc-PO-7Vd"/>
+                    <constraint firstItem="wNA-ca-CsS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-1" id="cNs-ZG-yw1"/>
+                    <constraint firstItem="RLY-It-XaX" firstAttribute="leading" secondItem="wNA-ca-CsS" secondAttribute="trailing" constant="8" id="edF-ch-IM1"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="ToPromoteImage" destination="VBc-dj-ylE" id="Xfo-3o-XXS"/>
@@ -57,13 +88,15 @@
                 <outlet property="headImage" destination="wNA-ca-CsS" id="N2c-Q9-VIe"/>
                 <outlet property="movieKind" destination="6Sq-A8-r1G" id="5fH-hg-zsd"/>
                 <outlet property="movieName" destination="RLY-It-XaX" id="KVY-eB-doN"/>
+                <outlet property="playBtn" destination="OmI-oy-zzb" id="RE7-P5-E2C"/>
                 <outlet property="playCount" destination="BdE-pR-EN2" id="dVa-YS-js9"/>
             </connections>
-            <point key="canvasLocation" x="357" y="239.5"/>
+            <point key="canvasLocation" x="495" y="272"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="paly_bg_img.png" width="10" height="10"/>
+        <image name="play_btn.png" width="137" height="45"/>
         <image name="toppaiming.png" width="24" height="35"/>
     </resources>
 </document>
