@@ -9,7 +9,7 @@
 #import "RMDownLoadTVSeriesDetailViewController.h"
 #import "RMFinishDownTableViewCell.h"
 #import "RMTVDownLoadViewController.h"
-#import "CustomVideoPlayerController.h"
+#import "RMPlayer.h"
 
 @interface RMDownLoadTVSeriesDetailViewController (){
     NSMutableArray *tableDataArray;
@@ -216,6 +216,7 @@
         NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
         
+        /*
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         customVideo.videoArray = tableDataArray;
         customVideo.videoType = videoTypeisTV;
@@ -225,6 +226,8 @@
         [customVideo createTopToolWithTitle:model.name];
         
         [self presentViewController:customVideo animated:YES completion:nil];
+         
+         */
     }
 }
 

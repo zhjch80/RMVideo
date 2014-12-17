@@ -8,7 +8,7 @@
 
 #import "RMMyDownLoadViewController.h"
 #import "RMDownLoadTVSeriesDetailViewController.h"
-#import "CustomVideoPlayerController.h"
+#import "RMPlayer.h"
 #import "RMCustomNavViewController.h"
 
 @interface RMMyDownLoadViewController ()
@@ -55,6 +55,7 @@
         NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,movieName];
 
+        /*
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         customVideo.videoType = videoTypeIsMovie;
 //        customVideo.playStyle = playLocalVideo;
@@ -63,6 +64,8 @@
         [customVideo createTopToolWithTitle:movieName];
         
         [self presentViewController:customVideo animated:YES completion:nil];
+         
+         */
     }];
     [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];

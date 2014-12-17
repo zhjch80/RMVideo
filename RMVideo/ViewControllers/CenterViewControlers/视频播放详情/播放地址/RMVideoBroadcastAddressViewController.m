@@ -7,7 +7,7 @@
 //
 
 #import "RMVideoBroadcastAddressViewController.h"
-#import "CustomVideoPlayerController.h"
+#import "RMPlayer.h"
 #import "Database.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMWebViewPlayViewController.h"
@@ -84,6 +84,7 @@
         [videoPlaybackDetailsCtl presentViewController:webNav animated:YES completion:^{
         }];
     }else{
+        /*
         //使用custom play 播放mp4
         //保存数据sqlit
         RMPublicModel *insertModel = [[RMPublicModel alloc] init];
@@ -121,6 +122,7 @@
         [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
             
         }];
+         */
     }
     //统计播放次数
     UIDevice *device = [[UIDevice alloc] init];
