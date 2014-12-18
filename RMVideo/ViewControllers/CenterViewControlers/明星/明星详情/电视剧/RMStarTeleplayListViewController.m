@@ -141,7 +141,7 @@
     }else if (IS_IPHONE_6_SCREEN){
         return 165;
     }else{
-        return 190;
+        return 225;
     }
     return 155;
 }

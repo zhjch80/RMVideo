@@ -29,9 +29,6 @@
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6OQ-zg-Kr8" customClass="DAAutoScrollView">
                         <rect key="frame" x="14" y="120" width="84" height="16"/>
                     </scrollView>
-                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Gq-lb-wKz" customClass="DAAutoScrollView">
-                        <rect key="frame" x="117" y="120" width="84" height="16"/>
-                    </scrollView>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Mx-nn-FP5" customClass="DAAutoScrollView">
                         <rect key="frame" x="220" y="120" width="84" height="16"/>
                     </scrollView>
@@ -47,6 +44,9 @@
                         <rect key="frame" x="228" y="140" width="84" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Gq-lb-wKz" customClass="DAAutoScrollView">
+                        <rect key="frame" x="117" y="120" width="84" height="16"/>
+                    </scrollView>
                 </subviews>
                 <color key="backgroundColor" red="0.93725496530532837" green="0.93333339691162109" blue="0.92549026012420654" alpha="1" colorSpace="deviceRGB"/>
             </tableViewCellContentView>
@@ -61,7 +61,7 @@
                 <outlet property="threeImage" destination="sOr-pL-Irc" id="GJZ-R0-BzD"/>
                 <outlet property="threeLable" destination="5Mx-nn-FP5" id="kYq-sW-sa1"/>
             </connections>
-            <point key="canvasLocation" x="140" y="146"/>
+            <point key="canvasLocation" x="260" y="169.5"/>
         </tableViewCell>
     </objects>
 </document>

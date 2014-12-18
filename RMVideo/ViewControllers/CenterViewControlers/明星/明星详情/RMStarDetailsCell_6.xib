@@ -61,7 +61,7 @@
                 <outlet property="threeImage" destination="sOr-pL-Irc" id="GJZ-R0-BzD"/>
                 <outlet property="threeLable" destination="5Mx-nn-FP5" id="kYq-sW-sa1"/>
             </connections>
-            <point key="canvasLocation" x="140" y="146"/>
+            <point key="canvasLocation" x="366.5" y="193.5"/>
         </tableViewCell>
     </objects>
 </document>

@@ -274,7 +274,7 @@ typedef enum{
     if (IS_IPHONE_6_SCREEN){
         return 225;
     }else if (IS_IPHONE_6p_SCREEN){
-        return 225;
+        return 260;
     }else{
         return 225;
     }
