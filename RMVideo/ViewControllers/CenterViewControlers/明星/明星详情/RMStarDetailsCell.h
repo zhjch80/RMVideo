@@ -15,6 +15,8 @@
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView;
 
+- (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location;
+
 @end
 
 @interface RMStarDetailsCell : UITableViewCell
@@ -34,5 +36,8 @@
 @property (weak, nonatomic) IBOutlet RatingView *secondStarRateView;
 
 @property (weak, nonatomic) IBOutlet RatingView *thirdStarRateView;
+@property (weak, nonatomic) IBOutlet UIButton *fristDirectlyPlayBtn;
+@property (weak, nonatomic) IBOutlet UIButton *secondDirectlyPlayBtn;
+@property (weak, nonatomic) IBOutlet UIButton *thirdDirectlyPlayBtn;
 
 @end

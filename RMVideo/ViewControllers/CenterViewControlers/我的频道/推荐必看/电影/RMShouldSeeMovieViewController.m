@@ -72,9 +72,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        return 155;
+        return 185;
     }else if (IS_IPHONE_6_SCREEN){
-        return 165;
+        return 190;
     }else{
         return 225;
     }
@@ -102,29 +102,37 @@
     [cell.fristLable loadTextViewWithString:model_left.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
     [cell.fristLable startScrolling];
     [cell.firstStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+    [cell.fristDirectlyPlayBtn setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+    cell.fristDirectlyPlayBtn.tag = indexPath.row;
+    cell.secondDirectlyPlayBtn.hidden = YES;
+    cell.thirdDirectlyPlayBtn.hidden = YES;
     [cell.firstStarRateView displayRating:[model_left.gold integerValue]];
     
-    if (indexPath.row * 3 + 1 >= [self.dataArray count]){
+    if (indexPath.row * 3 + 1 < [self.dataArray count]){
         
-    }else{
         RMPublicModel *model_center = [self.dataArray objectAtIndex:indexPath.row*3 + 1];
         [cell.secondImage sd_setImageWithURL:[NSURL URLWithString:model_center.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.secondImage.identifierString = model_center.video_id;
         [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.secondLable startScrolling];
         [cell.secondStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.secondDirectlyPlayBtn setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.secondDirectlyPlayBtn.tag = indexPath.row;
+        cell.secondDirectlyPlayBtn.hidden = NO;
         [cell.secondStarRateView displayRating:[model_center.gold integerValue]];
     }
     
-    if (indexPath.row * 3 + 2 >= [self.dataArray count]){
+    if (indexPath.row * 3 + 2 < [self.dataArray count]){
         
-    }else{
         RMPublicModel *model_right = [self.dataArray objectAtIndex:indexPath.row*3 + 2];
         [cell.threeImage sd_setImageWithURL:[NSURL URLWithString:model_right.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
         cell.threeImage.identifierString = model_right.video_id;
         [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.threeLable startScrolling];
         [cell.thirdStarRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+        [cell.thirdDirectlyPlayBtn setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.thirdDirectlyPlayBtn.tag = indexPath.row;
+        cell.thirdDirectlyPlayBtn.hidden = NO;
         [cell.thirdStarRateView displayRating:[model_right.gold integerValue]];
     }
     return cell;
@@ -164,6 +172,15 @@
     videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
     [myChannelShouldDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
+}
+/**
+ *  直接播放
+ *
+ *  @param index    对应cell的位置
+ *  @param location 相应cell上button的位置
+ */
+- (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
+    
 }
 
 #pragma mark -

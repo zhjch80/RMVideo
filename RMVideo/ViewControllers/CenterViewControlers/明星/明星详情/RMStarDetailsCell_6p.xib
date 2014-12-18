@@ -49,40 +49,52 @@
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUY-jJ-Fs4">
                         <rect key="frame" x="25" y="183" width="105" height="37"/>
-                        <state key="normal" image="play_btn.png">
+                        <state key="normal" title="1">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8vY-X7-UDG"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkQ-ab-HBE">
                         <rect key="frame" x="155" y="183" width="105" height="37"/>
-                        <state key="normal" image="play_btn.png">
+                        <state key="normal" title="2">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="L2K-mE-9ai"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEl-Tf-L6h">
                         <rect key="frame" x="285" y="183" width="105" height="37"/>
-                        <state key="normal" image="play_btn.png">
+                        <state key="normal" title="3">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cS9-hu-N5H"/>
+                        </connections>
                     </button>
                 </subviews>
                 <color key="backgroundColor" red="0.93725496530532837" green="0.93333339691162109" blue="0.92549026012420654" alpha="1" colorSpace="deviceRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="firstStarRateView" destination="tlt-wc-EDp" id="Rmg-70-IG9"/>
+                <outlet property="fristDirectlyPlayBtn" destination="pUY-jJ-Fs4" id="F7V-2J-bEv"/>
                 <outlet property="fristImage" destination="Jdf-xN-mQn" id="vsO-kv-HyG"/>
                 <outlet property="fristLable" destination="6OQ-zg-Kr8" id="AXl-rK-TrD"/>
+                <outlet property="secondDirectlyPlayBtn" destination="nkQ-ab-HBE" id="vvi-ht-Af2"/>
                 <outlet property="secondImage" destination="CsL-2i-Uij" id="6jj-3R-0zX"/>
                 <outlet property="secondLable" destination="1Gq-lb-wKz" id="R5h-ik-Yf6"/>
                 <outlet property="secondStarRateView" destination="gPN-eO-HVh" id="HOc-i0-MdO"/>
+                <outlet property="thirdDirectlyPlayBtn" destination="yEl-Tf-L6h" id="9OV-Bl-1tT"/>
                 <outlet property="thirdStarRateView" destination="zy0-d5-pl0" id="1Vl-6i-HSv"/>
                 <outlet property="threeImage" destination="sOr-pL-Irc" id="GJZ-R0-BzD"/>
                 <outlet property="threeLable" destination="5Mx-nn-FP5" id="kYq-sW-sa1"/>
             </connections>
-            <point key="canvasLocation" x="304" y="170"/>
+            <point key="canvasLocation" x="416" y="329.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="play_btn.png" width="137" height="45"/>
-    </resources>
 </document>

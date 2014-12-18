@@ -26,4 +26,10 @@
 - (void)cellImageClick:(RMImageView *)image {
     [self.delegate startDetailsCellDidSelectWithImage:image];
 }
+- (IBAction)directlyPlayBtnClick:(UIButton *)sender {
+    if([self.delegate respondsToSelector:@selector(playBtnWithIndex:andLocation:)]){
+        NSLog(@"index:%d location:%d",sender.tag,[sender.titleLabel.text integerValue]-1);
+        [self.delegate playBtnWithIndex:sender.tag andLocation:([sender.titleLabel.text integerValue]-1)];
+    }
+}
 @end

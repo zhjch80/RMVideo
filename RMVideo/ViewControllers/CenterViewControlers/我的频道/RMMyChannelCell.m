@@ -36,6 +36,11 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)directlyPlayBtnClick:(UIButton *)sender {
+    if([self.delegate respondsToSelector:@selector(playBtnWithIndex:andLocation:)]){
+        [self.delegate playBtnWithIndex:sender.tag andLocation:([sender.titleLabel.text integerValue]-1)];
+    }
+}
 
 - (IBAction)cellbuttonClick:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(startCellDidSelectWithIndex:)]){

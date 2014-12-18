@@ -17,6 +17,8 @@
 
 - (void)clickVideoImageViewMehtod:(RMImageView *)imageView;
 
+- (void)playBtnWithIndex:(NSInteger)Index andLocation:(NSInteger)location;
+
 @end
 
 @interface RMMyChannelCell : UITableViewCell
@@ -43,6 +45,9 @@
 @property (weak, nonatomic) IBOutlet RMImageView *videoThirdImg;
 
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fristDirectlyPlay;
+@property (weak, nonatomic) IBOutlet UIButton *secondDirectlyPlay;
+@property (weak, nonatomic) IBOutlet UIButton *thridDirectlyPlay;
 
 - (void)showEmptyView;
 

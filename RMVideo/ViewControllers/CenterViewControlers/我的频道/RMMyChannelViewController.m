@@ -235,36 +235,51 @@ typedef enum{
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
+        [cell.fristDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.fristDirectlyPlay.tag = indexPath.row;
+        cell.secondDirectlyPlay.hidden = YES;
+        cell.thridDirectlyPlay.hidden = YES;
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
     }else if ([model.video_list count] == 2){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
+        [cell.fristDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.fristDirectlyPlay.tag = indexPath.row;
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
         
         cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
         [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondMovieRateView displayRating:[[[model.video_list objectAtIndex:1] objectForKey:@"gold"] integerValue]];
+        [cell.secondDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.secondDirectlyPlay.tag = indexPath.row;
+        cell.thridDirectlyPlay.hidden = YES;
         cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
     }else if ([model.video_list count] == 3){
         cell.videoFirstName.text = [[model.video_list objectAtIndex:0] objectForKey:@"name"];
         [cell.videoFirstImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:0] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.firstMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.firstMovieRateView displayRating:[[[model.video_list objectAtIndex:0] objectForKey:@"gold"] integerValue]];
+        [cell.fristDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.fristDirectlyPlay.tag = indexPath.row;
         cell.videoFirstImg.identifierString = [[model.video_list objectAtIndex:0] objectForKey:@"video_id"];
 
         cell.videoSecondName.text = [[model.video_list objectAtIndex:1] objectForKey:@"name"];
         [cell.videoSecondImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:1] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.secondMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.secondMovieRateView displayRating:[[[model.video_list objectAtIndex:1] objectForKey:@"gold"] integerValue]];
+        [cell.secondDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.secondDirectlyPlay.tag = indexPath.row;
         cell.videoSecondImg.identifierString = [[model.video_list objectAtIndex:1] objectForKey:@"video_id"];
         
         cell.videoThirdName.text = [[model.video_list objectAtIndex:2] objectForKey:@"name"];
         [cell.videoThirdImg sd_setImageWithURL:[NSURL URLWithString:[[model.video_list objectAtIndex:2] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default90_135", kImageTypePNG)];
         [cell.thirdMovieRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
         [cell.thirdMovieRateView displayRating:[[[model.video_list objectAtIndex:2] objectForKey:@"gold"] integerValue]];
+        [cell.thridDirectlyPlay setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        cell.thridDirectlyPlay.tag = indexPath.row;
         cell.videoThirdImg.identifierString = [[model.video_list objectAtIndex:2] objectForKey:@"video_id"];
     }
     return cell;
@@ -272,11 +287,11 @@ typedef enum{
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (IS_IPHONE_6_SCREEN){
-        return 225;
+        return 245;
     }else if (IS_IPHONE_6p_SCREEN){
         return 260;
     }else{
-        return 225;
+        return 240;
     }
 }
 
@@ -352,6 +367,14 @@ typedef enum{
         videoPlaybackDetailsCtl.currentVideo_id = imageView.identifierString;
         [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
     }
+}
+#pragma mark 直接播放
+- (void)playBtnWithIndex:(NSInteger)Index andLocation:(NSInteger)location{
+
+    /**
+     *  index 对应的是cell的位置  location对应的“直接播放”按钮的位置
+     */
+    NSLog(@"index:%d location:%d",Index,location);
 }
 
 - (IBAction)mbuttonClick:(UIButton *)sender {

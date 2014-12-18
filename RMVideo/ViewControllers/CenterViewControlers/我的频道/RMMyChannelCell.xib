@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RMMyChannelCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -78,17 +78,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" id="pjF-64-kJU" customClass="RatingView">
-                        <rect key="frame" x="26" y="200" width="90" height="20"/>
+                        <rect key="frame" x="26" y="194" width="64" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" id="839-fp-hqQ" customClass="RatingView">
-                        <rect key="frame" x="126" y="200" width="90" height="20"/>
+                        <rect key="frame" x="126" y="194" width="64" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" id="rpv-bh-kYR" customClass="RatingView">
-                        <rect key="frame" x="226" y="200" width="90" height="20"/>
+                        <rect key="frame" x="226" y="194" width="64" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
@@ -103,14 +103,50 @@
                             <action selector="cellbuttonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fep-Os-yrF"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qyE-Mw-4TH">
+                        <rect key="frame" x="15" y="207" width="90" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="1">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HwM-eN-gN6"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8Vf-T3-K21">
+                        <rect key="frame" x="115" y="207" width="90" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="2">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6tS-AA-Swb"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C6w-M2-qrb">
+                        <rect key="frame" x="215" y="207" width="90" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="3">
+                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="directlyPlayBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ebS-ao-zcf"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="firstMovieRateView" destination="pjF-64-kJU" id="cFM-b5-U9J"/>
+                <outlet property="fristDirectlyPlay" destination="qyE-Mw-4TH" id="dIC-3n-azu"/>
                 <outlet property="moreBtn" destination="POd-ay-TY9" id="zjc-kY-jYW"/>
+                <outlet property="secondDirectlyPlay" destination="8Vf-T3-K21" id="xZ7-t6-mz0"/>
                 <outlet property="secondMovieRateView" destination="839-fp-hqQ" id="OWi-J7-vO5"/>
                 <outlet property="tag_title" destination="kQa-rZ-OfZ" id="p2R-4Y-IiS"/>
                 <outlet property="thirdMovieRateView" destination="rpv-bh-kYR" id="rnq-gp-hHn"/>
+                <outlet property="thridDirectlyPlay" destination="C6w-M2-qrb" id="q6q-Od-edn"/>
                 <outlet property="title_bgView" destination="hQb-Uv-fDO" id="Msd-Vt-skf"/>
                 <outlet property="videoFirstImg" destination="Jr5-bd-M3f" id="pBY-T7-TLf"/>
                 <outlet property="videoFirstName" destination="4xa-B5-qbC" id="ksZ-fB-f0b"/>
@@ -119,7 +155,7 @@
                 <outlet property="videoThirdImg" destination="Q4D-xZ-spE" id="dut-hM-MKL"/>
                 <outlet property="videoThirdName" destination="22B-Ur-s0B" id="nTW-X9-3lM"/>
             </connections>
-            <point key="canvasLocation" x="-58" y="194.5"/>
+            <point key="canvasLocation" x="735" y="312"/>
         </tableViewCell>
     </objects>
     <resources>
