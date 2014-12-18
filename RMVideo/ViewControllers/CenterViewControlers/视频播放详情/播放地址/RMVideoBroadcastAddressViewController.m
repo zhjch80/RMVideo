@@ -8,6 +8,7 @@
 
 #import "RMVideoBroadcastAddressViewController.h"
 #import "RMPlayer.h"
+#import "RMModel.h"
 #import "Database.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMWebViewPlayViewController.h"
@@ -17,8 +18,8 @@
     NSMutableArray * logoNameArr;
     NSMutableDictionary * logoDic;
     NSMutableArray * dataArr;
-    NSMutableArray * arr;//保存共有几部第三方片源
-    NSInteger videoType; //    video_type ==1 为电影   video_type ==2 电视剧  video_type ==3 综艺
+    NSMutableArray * arr;       //保存共有几部第三方片源
+    NSInteger videoType;        //video_type ==1 为电影   video_type ==2 电视剧  video_type ==3 综艺
 }
 @property (nonatomic, strong) RMPublicModel *publicModel;
 @end
@@ -84,7 +85,6 @@
         [videoPlaybackDetailsCtl presentViewController:webNav animated:YES completion:^{
         }];
     }else{
-        /*
         //使用custom play 播放mp4
         //保存数据sqlit
         RMPublicModel *insertModel = [[RMPublicModel alloc] init];
@@ -97,32 +97,24 @@
         
         //跳转
         [Flurry logEvent:@"Click_JumpCustomPlayVideo"];
-        CustomVideoPlayerController *playContro = [[CustomVideoPlayerController alloc] init];
-        
-//        playContro.playStyle = playNetWorVideo;
-        playContro.playEpisodeNumber = 0;
-        if([self.publicModel.video_type integerValue]!=1){
+        if ([self.publicModel.video_type integerValue] != 1){
             //电视剧 综艺
-            NSMutableArray * downloadArr = [[NSMutableArray alloc] init];
+            NSMutableArray * playArr = [[NSMutableArray alloc] init];
             for (int i=0; i<[dataArr count]; i++){
-                RMPublicModel * model = [[RMPublicModel alloc] init];
-                model.reurl = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];//mp4地址
-                model.topNum = [NSString stringWithFormat:@"%@",[[dataArr objectAtIndex:i] objectForKey:@"curnum"]];//所属第几集
-                [downloadArr addObject:model];
+                RMModel * model = [[RMModel alloc] init];
+                model.title = self.publicModel.name;
+                model.url = [[dataArr objectAtIndex:i] objectForKey:@"m_down_url"];
+                model.EpisodeValue = [NSString stringWithFormat:@"%@",[[dataArr objectAtIndex:i] objectForKey:@"curnum"]];
+                [playArr addObject:model];
             }
-            playContro.videoArray = downloadArr;
-            playContro.videoType = videoTypeisTV;
-            [playContro createPlayerViewWithURL:[[dataArr objectAtIndex:0] objectForKey:@"m_down_url"] isPlayLocalVideo:NO];//默认播放第一集
+            [RMPlayer presentVideoPlayerWithPlayArr:playArr withUIViewController:videoPlaybackDetailsCtl withVideoType:2];
         }else{
             //电影
-            playContro.videoType = videoTypeIsMovie;
-            [playContro createPlayerViewWithURL:[dic objectForKey:@"m_down_url"] isPlayLocalVideo:NO];
+            RMModel * model = [[RMModel alloc] init];
+            model.url = [dic objectForKey:@"m_down_url"];
+            model.title = self.publicModel.name;
+            [RMPlayer presentVideoPlayerWithPlayModel:model withUIViewController:videoPlaybackDetailsCtl withVideoType:1];
         }
-        [playContro createTopToolWithTitle:self.publicModel.name];
-        [videoPlaybackDetailsCtl presentViewController:playContro animated:YES completion:^{
-            
-        }];
-         */
     }
     //统计播放次数
     UIDevice *device = [[UIDevice alloc] init];
@@ -142,10 +134,8 @@
     videoType = [model.video_type integerValue];
     if ([model.video_type integerValue] == 1){
         arr = model.playurlArr;//保存电影数据      按第三方来源区分
-//        dataArr = model.playurlArr;
     }else{
         arr = model.playurlsArr;//保存电视剧及综艺数据
-//        dataArr = [[model.playurlsArr objectAtIndex:0] objectForKey:@"urls"];   //拿到集数
     }
 
     if (IS_IPHONE_6p_SCREEN){

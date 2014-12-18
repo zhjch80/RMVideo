@@ -155,6 +155,12 @@ typedef enum{
                     blockSelf.videoPlotIntroducedCtl.view.frame = CGRectMake(0, 245 + 62, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 225);
                 }
                 [blockSelf.view addSubview:blockSelf.videoPlotIntroducedCtl.view];
+                if (blockSelf.dataArr.count == 0){
+                    [blockSelf refreshPlotIntroducedDate:nil];
+                }else{
+                    RMPublicModel * model = [blockSelf.dataArr objectAtIndex:0];
+                    [blockSelf refreshPlotIntroducedDate:model];
+                }
                 break;
             }
             case 1:{
@@ -212,7 +218,7 @@ typedef enum{
     }else if (IS_IPHONE_6p_SCREEN){
         _segmentedControl.frame = CGRectMake(0, 267, [UtilityFunc shareInstance].globleWidth, 40);
     }
-    [_segmentedControl setSelectedIndex:0];
+    [_segmentedControl setSelectedIndex:1];
     [_segmentedControl setBackgroundColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1]];
     [_segmentedControl setTextColor:[UIColor clearColor]];
     [_segmentedControl setSelectionIndicatorColor:[UIColor clearColor]];
@@ -419,7 +425,7 @@ typedef enum{
         isCollect = NO;
     }
     
-    [self refreshPlotIntroducedDate:model];
+    [self refreshBroadcastAddressDate:model];
     
     if ([model.video_type integerValue] == 1){
         //电影
@@ -550,15 +556,5 @@ typedef enum{
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
