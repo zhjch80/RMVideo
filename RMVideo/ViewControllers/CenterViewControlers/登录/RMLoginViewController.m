@@ -44,6 +44,7 @@
     self.lableTitle.text = [NSString stringWithFormat:@"使用社交账号登录到%@",kAppName];
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dissmissCurrentCtl) name:@"completethesurvey" object:nil];
 }
 
 - (IBAction)buttonMethod:(UIButton *)sender {
@@ -161,17 +162,17 @@
     NSLog(@"error:%@",error);
 }
 
-//#pragma mark - 返回上个CTL 并且登录后即推荐
-//
-//- (void)dissmissCurrentCtl {
-//    [SVProgressHUD dismiss];
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-//        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
-//    }
-//    [self dismissViewControllerAnimated:NO completion:^{
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
-//    }];
-//}
+#pragma mark - 返回上个CTL 并且登录后即推荐
+
+- (void)dissmissCurrentCtl {
+    [SVProgressHUD dismiss];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
+    }];
+}
 
 #pragma mark - base Method
 

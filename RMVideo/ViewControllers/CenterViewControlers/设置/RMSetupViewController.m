@@ -63,6 +63,7 @@
 #pragma mark - 登录后即推荐
 
 - (void)loginSuccessRecommendmethod {
+    
     RMMoreWonderfulViewController * moreWonderfulCtl = [[RMMoreWonderfulViewController alloc] init];
     RMCustomPresentNavViewController * moreWonderfulNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:moreWonderfulCtl];
     [self presentViewController:moreWonderfulNav animated:YES completion:^{

@@ -61,18 +61,7 @@
 }
 
 - (IBAction)finishBtnClick:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"successUserSurvey" object:nil];
-//    [self performSelector:@selector(dissmissCurrentCtl) withObject:nil afterDelay:1];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"completethesurvey" object:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
-- (void)dissmissCurrentCtl {
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
-    }
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
-    }];
-}
-
 @end

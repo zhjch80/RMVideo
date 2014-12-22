@@ -21,12 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popVIewConTrol) name:@"successUserSurvey" object:nil];
 }
-- (void)popVIewConTrol{
-    [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -34,7 +30,6 @@
 
 - (IBAction)NextClick:(UIButton *)sender {
     RMConstellationTabViewController *viewContro = [[RMConstellationTabViewController alloc] init];
-    NSLog(@"----%@-----%@",genderString,yearString);
     [self.navigationController pushViewController:viewContro animated:YES];
 }
 - (IBAction)afterYearBtnClick:(UIButton *)sender {
