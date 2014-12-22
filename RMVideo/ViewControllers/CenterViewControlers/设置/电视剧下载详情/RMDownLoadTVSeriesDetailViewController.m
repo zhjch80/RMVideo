@@ -10,6 +10,7 @@
 #import "RMFinishDownTableViewCell.h"
 #import "RMTVDownLoadViewController.h"
 #import "RMPlayer.h"
+#import "RMModel.h"
 
 @interface RMDownLoadTVSeriesDetailViewController (){
     NSMutableArray *tableDataArray;
@@ -211,11 +212,25 @@
         [self.mainTableView reloadData];
     }
     else{
-        RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
+//        RMPublicModel *model = [tableDataArray objectAtIndex:indexPath.row];
         NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
-        NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
         
+        //播放本地电视剧视频 调用 RMPlayer presemtVideoPlayerWithLocationTVArry的方法，其中array中每个model的类型值具体为：
+        //title   需要将该页面的model.name字符串截取（该字符串为保存方便，认为改变了电视剧名称，全称为：电视剧_电视剧名称_集数）
+        //url     对应的在沙河中的目录位置
+        //EpisodeValue  集数
+        NSMutableArray *tvArrya = [NSMutableArray array];
+        for(RMPublicModel *model in tableDataArray){
+            RMModel *tmpModel = [[RMModel alloc] init];
+            tmpModel.url = [NSString stringWithFormat:@"%@/%@.mp4",path,model.name];
+            NSString *tmpTitle = [model.name substringFromIndex:[model.name rangeOfString:@"_"].location+1];
+            NSString *title = tmpTitle;
+            tmpModel.title = [title substringToIndex:[title rangeOfString:@"_"].location];
+            tmpModel.EpisodeValue = [tmpTitle substringFromIndex:[tmpTitle rangeOfString:@"_"].location+1];
+            [tvArrya addObject:tmpModel];
+        }
+        [RMPlayer presemtVideoPlayerWithLocationTVArry:tvArrya withUIViewController:self];
         /*
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         customVideo.videoArray = tableDataArray;

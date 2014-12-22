@@ -52,5 +52,19 @@
                         withPlayArr:(NSArray *)playArr
                   withUIViewController:(id)sender
                          withVideoType:(NSInteger)type;
+/**
+ *  播放本地电影
+ *  @param model 播放电影model
+ *  @param viewController   需要加载播放器的视图控制器
+ */
++ (void)presemtVideoPlayerWithLocationVieoModel:(RMModel *)model withUIViewController:(id)viewController;
+
+/**
+ *  播放本地电视剧视频
+ *
+ *  @param array          model array
+ *  @param viewController 需要加载播放器的视图控制器
+ */
++ (void)presemtVideoPlayerWithLocationTVArry:(NSMutableArray *)array withUIViewController:(id)viewController;
 
 @end

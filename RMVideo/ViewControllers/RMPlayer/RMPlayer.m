@@ -58,6 +58,20 @@
     customVideoplayerCtl.videoType = type;
 }
 
++ (void)presemtVideoPlayerWithLocationVieoModel:(RMModel *)model withUIViewController:(id)viewController{
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:viewController];
+    customVideoplayerCtl.videoType = MovieType;
+    customVideoplayerCtl.videlModel = model;
+    customVideoplayerCtl.isLocationVideo = YES;
+}
++ (void)presemtVideoPlayerWithLocationTVArry:(NSMutableArray *)array withUIViewController:(id)viewController{
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:viewController];
+    customVideoplayerCtl.videoType = TeleplayType;
+    customVideoplayerCtl.currentPlayOrder = 0;
+    customVideoplayerCtl.playModelArr = array;
+    customVideoplayerCtl.isLocationVideo = YES;
+}
+
 + (void)getUIScreenBounds{
     //屏幕宽 高
     CGRect screenRect = [[UIScreen mainScreen] bounds];

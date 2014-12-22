@@ -10,6 +10,7 @@
 #import "RMDownLoadTVSeriesDetailViewController.h"
 #import "RMPlayer.h"
 #import "RMCustomNavViewController.h"
+#import "RMModel.h"
 
 @interface RMMyDownLoadViewController ()
 
@@ -54,7 +55,10 @@
         NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *path = [document stringByAppendingPathComponent:@"DownLoadSuccess"];
         NSString *str = [NSString stringWithFormat:@"%@/%@.mp4",path,movieName];
-
+        RMModel *model = [[RMModel alloc] init];
+        model.title = movieName;
+        model.url = str;
+        [RMPlayer presemtVideoPlayerWithLocationVieoModel:model withUIViewController:self];
         /*
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         customVideo.videoType = videoTypeIsMovie;

@@ -237,7 +237,12 @@
 }
 
 - (void)playerWithURL:(NSString *)url {
-    NSURL * _URL = [NSURL URLWithString:url];
+    NSURL * _URL = nil;
+    if(self.isLocationVideo){
+        _URL = [NSURL fileURLWithPath:url];
+    }else{
+        _URL = [NSURL URLWithString:url];
+    }
     [self.player contentURL:_URL];
     [self.player play];
     [self.playBtn setImage:[UIImage imageNamed:@"rm_play_btn"] forState:UIControlStateNormal];
@@ -272,10 +277,48 @@
             playbackObserver = nil;
         }
         [self.player removeObserver];
+        self.player = nil;
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
-    }else{
+    }
+    else if(self.videoType == TeleplayType){
+        self.currentPlayOrder ++;
+        if (self.currentPlayOrder < self.playModelArr.count){
+            RMModel * model = [self.playModelArr objectAtIndex:self.currentPlayOrder];
+            [self playerWithURL:model.url];
+            NSArray *tickerStrings;
+            CGSize  titleSize;
+
+            tickerStrings = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",model.title], nil];
+            titleSize = [UtilityFunc boundingRectWithSize:CGSizeMake(100000, 100000) font:[UIFont systemFontOfSize:22.0] text:model.title];
+            
+            if (titleSize.width > [UtilityFunc shareInstance].globleAllHeight - 60){
+                self.videoTitleCycle.frame = CGRectMake(60, 13, titleSize.width, 40);
+                [self.videoTitleCycle setDirection:JHTickerDirectionLTR];
+                [self.videoTitleCycle setTickerStrings:tickerStrings];
+                [self.videoTitleCycle setTickerSpeed:30.0f];
+                [self.videoTitleCycle start];
+                self.videoTitle.hidden = YES;
+                self.videoTitleCycle.hidden = NO;
+                self.isCycle = YES;
+            }else{
+                self.videoTitle.text = model.title;
+                self.videoTitle.hidden = NO;
+                self.videoTitleCycle.hidden = YES;
+                self.isCycle = NO;
+            }
+        }else{
+            if (playbackObserver) {
+                [self.player.moviePlayer removeTimeObserver:playbackObserver];
+                playbackObserver = nil;
+            }
+            [self.player removeObserver];
+            self.player = nil;
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
+    else{
         if ([UtilityFunc isConnectionAvailable] == 0){
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络连接，请检查网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
