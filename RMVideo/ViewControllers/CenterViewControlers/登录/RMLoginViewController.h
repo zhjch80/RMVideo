@@ -17,5 +17,6 @@ typedef enum{
 @interface RMLoginViewController : RMBaseViewController{
     LoginType loginType;
 }
+@property (weak, nonatomic) IBOutlet UILabel *lableTitle;
 
 @end

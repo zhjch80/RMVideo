@@ -176,12 +176,14 @@
     if (alertView.tag == 201){
         switch (buttonIndex) {
             case 0:{
+                [self.player removeFromSuperview];
                 [self.player pause];
                 if (playbackObserver) {
                     [self.player.moviePlayer removeTimeObserver:playbackObserver];
                     playbackObserver = nil;
                 }
                 [self.player removeObserver];
+                self.player = nil;
                 [self dismissViewControllerAnimated:YES completion:^{
                     
                 }];
@@ -291,14 +293,14 @@
  *  创建播放器UI
  */
 - (void)loadPlayView {
-    self.topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, 44)];
+    self.topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, 64)];
     self.topView.alpha = 0.8;
     self.topView.userInteractionEnabled = YES;
     self.topView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.topView];
     
     UIButton * backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(15, 5, 35, 35);
+    backBtn.frame = CGRectMake(15, 20, 35, 35);
     [backBtn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     backBtn.tag = 101;
     [backBtn setEnlargeEdgeWithTop:10 right:15 bottom:10 left:10];
@@ -324,7 +326,7 @@
     }
     
     if (titleSize.width > [UtilityFunc shareInstance].globleAllHeight - 60){
-        self.videoTitleCycle.frame = CGRectMake(60, 13, titleSize.width, 40);
+        self.videoTitleCycle.frame = CGRectMake(60, 20, titleSize.width, 40);
         [self.videoTitleCycle setDirection:JHTickerDirectionLTR];
         [self.videoTitleCycle setTickerStrings:tickerStrings];
         [self.videoTitleCycle setTickerSpeed:30.0f];
@@ -333,7 +335,7 @@
         self.videoTitleCycle.hidden = NO;
         self.isCycle = YES;
     }else{
-        self.videoTitle.frame = CGRectMake(60, 2, [UtilityFunc shareInstance].globleAllHeight - 60, 40);
+        self.videoTitle.frame = CGRectMake(60, 18, [UtilityFunc shareInstance].globleAllHeight - 60, 40);
         self.videoTitle.font = FONT(22.0);
         self.videoTitle.backgroundColor = [UIColor clearColor];
         self.videoTitle.textColor = [UIColor whiteColor];
@@ -440,7 +442,7 @@
         Vertical ++;
     }
     
-    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 240, [UtilityFunc shareInstance].globleWidth - 104);
+    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 64, 240, [UtilityFunc shareInstance].globleWidth - 104);
     self.selectEpisodeScr.frame = CGRectMake(0, 0, 240, [UtilityFunc shareInstance].globleWidth - 104);
     self.selectEpisodeScr.contentSize = CGSizeMake(240, 20 + 50*Vertical);
     
@@ -505,7 +507,7 @@
  *  添加手势
  */
 - (void)loadTouchView {
-    self.touchView = [[RMTouchVIew alloc] initWithFrame:CGRectMake(0, 44, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth-44-49)];
+    self.touchView = [[RMTouchVIew alloc] initWithFrame:CGRectMake(0, 64, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth-64-49)];
     self.touchView.delegate = self;
     [self.view addSubview:self.touchView];
 }
@@ -606,14 +608,14 @@
 - (void)gestureRecognizerOneTapMetohd {
     if (self.isHidenToolView){
         [UIView animateWithDuration:0.3 animations:^{
-            self.topView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, 44);
+            self.topView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, 64);
             self.belowView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleWidth - 60, [UtilityFunc shareInstance].globleAllHeight, 60);
         } completion:^(BOOL finished) {
             self.isHidenToolView = NO;
         }];
     }else{
         [UIView animateWithDuration:0.3 animations:^{
-            self.topView.frame = CGRectMake(0, -44, [UtilityFunc shareInstance].globleAllHeight, 44);
+            self.topView.frame = CGRectMake(0, -64, [UtilityFunc shareInstance].globleAllHeight, 64);
             self.belowView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight, 60);
         } completion:^(BOOL finished) {
             self.isHidenToolView = YES;
@@ -621,7 +623,7 @@
     }
     if (self.isPop){
         [UIView animateWithDuration:0.3 animations:^{
-            self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 240, [UtilityFunc shareInstance].globleWidth - 104);
+            self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 64, 240, [UtilityFunc shareInstance].globleWidth - 104);
         } completion:^(BOOL finished) {
             self.isPop = NO;
             self.selectEpisodeView.hidden = YES;
@@ -719,7 +721,7 @@
         case 104:{//弹出选集 或者 隐藏选集
             if (self.isPop){
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 240, [UtilityFunc shareInstance].globleWidth - 104);
+                    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 64, 240, [UtilityFunc shareInstance].globleWidth - 104);
                 } completion:^(BOOL finished) {
                     self.isPop = NO;
                     self.selectEpisodeView.hidden = YES;
@@ -727,7 +729,7 @@
             }else{
                 self.selectEpisodeView.hidden = NO;
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight - 240, 44, 240, [UtilityFunc shareInstance].globleWidth - 104);
+                    self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight - 240, 64, 240, [UtilityFunc shareInstance].globleWidth - 104);
                 } completion:^(BOOL finished) {
                     self.isPop = YES;
                 }];
@@ -771,14 +773,14 @@
 - (void)automaticHidenToolView {
     if (!self.isHidenToolView){
         [UIView animateWithDuration:0.3 animations:^{
-            self.topView.frame = CGRectMake(0, -44, [UtilityFunc shareInstance].globleAllHeight, 44);
+            self.topView.frame = CGRectMake(0, -64, [UtilityFunc shareInstance].globleAllHeight, 64);
             self.belowView.frame = CGRectMake(0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight, 60);
         } completion:^(BOOL finished) {
             self.isHidenToolView = YES;
         }];
     }
     [UIView animateWithDuration:0.3 animations:^{
-        self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 44, 240, [UtilityFunc shareInstance].globleWidth - 104);
+        self.selectEpisodeView.frame = CGRectMake([UtilityFunc shareInstance].globleAllHeight, 64, 240, [UtilityFunc shareInstance].globleWidth - 104);
     } completion:^(BOOL finished) {
         self.isPop = NO;
         self.selectEpisodeView.hidden = YES;

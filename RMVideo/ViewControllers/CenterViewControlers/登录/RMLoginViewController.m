@@ -8,6 +8,7 @@
 
 #import "RMLoginViewController.h"
 #import "UMSocial.h"
+#import "RMGenderTabViewController.h"
 
 @interface RMLoginViewController ()<UMSocialUIDelegate,RMAFNRequestManagerDelegate>
 {
@@ -40,44 +41,12 @@
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
     [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
-
-    
-    UILabel* tipTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 50)];
-    tipTitle.backgroundColor = [UIColor clearColor];
-    tipTitle.text = [NSString stringWithFormat:@"使用社交账号登录到%@",kAppName];
-    tipTitle.textAlignment = NSTextAlignmentCenter;
-    tipTitle.font = [UIFont systemFontOfSize:16.0];
-    tipTitle.textColor = [UIColor colorWithRed:0.16 green:0.16 blue:0.16 alpha:1];
-    [self.view addSubview:tipTitle];
-    
-    UIView* verticalLine = [[UIView alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/2-0.5, 50, 1, 50)];
-    verticalLine.backgroundColor = [UIColor colorWithRed:0.69 green:0.69 blue:0.69 alpha:1];
-    [self.view addSubview:verticalLine];
-    
-    for (int i=0; i<2; i++) {
-        UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50, 50, 50, 50);
-        [button setBackgroundImage:LOADIMAGE([self.btnImgWithTitleArr objectAtIndex:i], kImageTypePNG) forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonMethod:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = 101+i;
-        button.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:button];
-        
-        UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake([UtilityFunc shareInstance].globleWidth/4 * (1-i)+ ([UtilityFunc shareInstance].globleWidth/4)*3*i - i*50 - 15, 100, 100, 40)];
-        title.text = [self.btnImgWithTitleArr objectAtIndex:2+i];
-        title.textAlignment = NSTextAlignmentLeft;
-        title.font = [UIFont systemFontOfSize:14.0];
-        title.tag = 201+i;
-        title.textColor = [UIColor colorWithRed:0.38 green:0.38 blue:0.38 alpha:1];
-        title.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:title];
-    }
-
+    self.lableTitle.text = [NSString stringWithFormat:@"使用社交账号登录到%@",kAppName];
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
 }
 
-- (void)buttonMethod:(UIButton *)sender {
+- (IBAction)buttonMethod:(UIButton *)sender {
     switch (sender.tag) {
         case 101:{
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
@@ -182,24 +151,27 @@
     [storage setObject:dict forKey:UserLoginInformation_KEY];
      [storage setObject:loginStatus forKey:LoginStatus_KEY];
      [storage endUpdates];
-    [self performSelector:@selector(dissmissCurrentCtl) withObject:nil afterDelay:1];
+    [SVProgressHUD dismiss];
+    RMGenderTabViewController *viewContro = [[RMGenderTabViewController alloc] init];
+    [self.navigationController pushViewController:viewContro animated:YES];
+//    [self performSelector:@selector(dissmissCurrentCtl) withObject:nil afterDelay:1];
 }
 
 - (void)requestError:(NSError *)error {
     NSLog(@"error:%@",error);
 }
 
-#pragma mark - 返回上个CTL 并且登录后即推荐
-
-- (void)dissmissCurrentCtl {
-    [SVProgressHUD dismiss];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
-    }
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
-    }];
-}
+//#pragma mark - 返回上个CTL 并且登录后即推荐
+//
+//- (void)dissmissCurrentCtl {
+//    [SVProgressHUD dismiss];
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+//        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+//    }
+//    [self dismissViewControllerAnimated:NO completion:^{
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
+//    }];
+//}
 
 #pragma mark - base Method
 

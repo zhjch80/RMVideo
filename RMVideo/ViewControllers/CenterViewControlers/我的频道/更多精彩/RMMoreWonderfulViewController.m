@@ -253,6 +253,7 @@ typedef enum{
                 [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
             }
             [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"popViewControllerAnimated" object:nil];
             }];
             break;
         }

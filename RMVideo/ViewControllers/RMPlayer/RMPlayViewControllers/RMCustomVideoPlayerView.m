@@ -65,6 +65,8 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     [self.playerItem removeObserver:self forKeyPath:@"status"];
     [self.playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+    [self.playerLayer removeFromSuperlayer];
+    [self.moviePlayer replaceCurrentItemWithPlayerItem:nil];
 }
 
 #pragma mark -

@@ -18,6 +18,7 @@
 #import "UMSocial.h"
 #import "RMCustomNavViewController.h"
 #import "RMCustomPresentNavViewController.h"
+#import "RMGenderTabViewController.h"
 
 typedef enum{
     usingSinaLogin = 1,
@@ -180,6 +181,7 @@ typedef enum{
     }
     
     [self refreshCurrentCtl];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myChannelLoginSuccessRecommendmethod) name:@"successUserSurvey" object:nil];
 }
 
 - (void)startRequest {
@@ -554,6 +556,9 @@ typedef enum{
         }
         [self.tableView reloadData:NO];
     }else if (loadType == requestLoginType){
+        RMGenderTabViewController *vc = [[RMGenderTabViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setValue:userName forKey:@"userName"];
         [dict setValue:headImageURLString forKey:@"HeadImageURL"];
@@ -566,7 +571,7 @@ typedef enum{
         [storage endUpdates];
         [SVProgressHUD dismiss];
         [self refreshCurrentCtl];
-        [self performSelector:@selector(myChannelLoginSuccessRecommendmethod) withObject:nil afterDelay:1];
+//        [self performSelector:@selector(myChannelLoginSuccessRecommendmethod) withObject:nil afterDelay:1];
     }else if (loadType == requestDeleteMyChannel){
         [dataArr removeObjectAtIndex:GetDeleteRow];
         NSIndexPath * indexPath = [NSIndexPath indexPathForRow:GetDeleteRow inSection:0];

@@ -426,6 +426,7 @@ static id _instance;
             }
         }
         [self.showDownLoadState setTitle:@"全部暂停" forState:UIControlStateNormal];
+        [self.pauseOrStarBtn setBackgroundImage:[UIImage imageNamed:@"pause_all_downLoad_Image"] forState:UIControlStateNormal];
         isPauseAllDownLoadAssignment = NO;
         [self startDownloadWithMovieName:model];
     }

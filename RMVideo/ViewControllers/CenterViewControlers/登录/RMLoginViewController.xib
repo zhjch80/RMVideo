@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RMLoginViewController">
             <connections>
+                <outlet property="lableTitle" destination="TtX-OZ-xhM" id="wjt-Jf-3uH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,9 +15,80 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtX-OZ-xhM">
+                    <rect key="frame" x="24" y="15" width="272" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Jb6-ei-HvC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWA-jr-U5C">
+                    <rect key="frame" x="160" y="63" width="1" height="50"/>
+                    <color key="backgroundColor" red="0.69019609689712524" green="0.69019609689712524" blue="0.69019609689712524" alpha="1" colorSpace="deviceRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="bqe-0C-KST"/>
+                        <constraint firstAttribute="height" constant="50" id="qPK-pl-fV8"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VO-Rz-uw1">
+                    <rect key="frame" x="68" y="63" width="50" height="50"/>
+                    <state key="normal" image="logo_weibo.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonMethod:" destination="-1" eventType="touchUpInside" id="hBf-6e-fjL"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-cI-1QP">
+                    <rect key="frame" x="210" y="63" width="50" height="50"/>
+                    <state key="normal" image="txwb.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonMethod:" destination="-1" eventType="touchUpInside" id="39V-A5-xRu"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新浪微博登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y57-Wp-fIf">
+                    <rect key="frame" x="51" y="127" width="84" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.46666669849999998" green="0.46666669849999998" blue="0.46666669849999998" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="腾讯微博登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zE3-sP-Y1Q">
+                    <rect key="frame" x="193" y="127" width="84" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.46666669849999998" green="0.46666669849999998" blue="0.46666669849999998" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WWA-jr-U5C" firstAttribute="top" secondItem="TtX-OZ-xhM" secondAttribute="bottom" constant="27" id="2JM-wu-Tbo"/>
+                <constraint firstAttribute="centerX" secondItem="Y57-Wp-fIf" secondAttribute="centerX" constant="67" id="4eT-fs-VnC"/>
+                <constraint firstItem="Blh-cI-1QP" firstAttribute="top" secondItem="TtX-OZ-xhM" secondAttribute="bottom" constant="27" id="7pK-Xu-keB"/>
+                <constraint firstItem="zE3-sP-Y1Q" firstAttribute="top" secondItem="Blh-cI-1QP" secondAttribute="bottom" constant="14" id="7uT-0y-xXV"/>
+                <constraint firstItem="TtX-OZ-xhM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="24" id="FUq-tz-rL6"/>
+                <constraint firstItem="TtX-OZ-xhM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="Fje-Gu-XYw"/>
+                <constraint firstAttribute="centerX" secondItem="9VO-Rz-uw1" secondAttribute="centerX" constant="67" id="KcY-8h-wok"/>
+                <constraint firstAttribute="centerX" secondItem="WWA-jr-U5C" secondAttribute="centerX" id="VEE-7B-qZr"/>
+                <constraint firstItem="9VO-Rz-uw1" firstAttribute="top" secondItem="TtX-OZ-xhM" secondAttribute="bottom" constant="27" id="f8j-YU-EGf"/>
+                <constraint firstAttribute="centerX" secondItem="zE3-sP-Y1Q" secondAttribute="centerX" constant="-75" id="ilA-4z-BKo"/>
+                <constraint firstAttribute="centerX" secondItem="Blh-cI-1QP" secondAttribute="centerX" constant="-75" id="mN9-Zb-drK"/>
+                <constraint firstItem="Y57-Wp-fIf" firstAttribute="top" secondItem="9VO-Rz-uw1" secondAttribute="bottom" constant="14" id="s0l-Yy-gLE"/>
+                <constraint firstAttribute="centerX" secondItem="TtX-OZ-xhM" secondAttribute="centerX" id="vGP-bO-wi9"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="-136" y="102"/>
+            <point key="canvasLocation" x="367" y="34"/>
         </view>
     </objects>
+    <resources>
+        <image name="logo_weibo.png" width="50" height="50"/>
+        <image name="txwb.png" width="50" height="50"/>
+    </resources>
 </document>

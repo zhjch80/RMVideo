@@ -11,6 +11,7 @@
 @interface RMMoreWonderfulViewController : RMBaseViewController{
   
 }
+@property (nonatomic) BOOL isMyChannelLogin;
 - (void)setupNavTitle:(NSString *)title SwitchingBarButtonDirection:(NSString *)direction;
 
 @end
