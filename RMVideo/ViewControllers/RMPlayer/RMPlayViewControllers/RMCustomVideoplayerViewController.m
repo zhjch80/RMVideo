@@ -584,7 +584,6 @@
 
 - (void)touchInViewOfLocation:(float)space andDirection:(NSString *)direction slidingPosition:(NSString *)position {
     if([direction isEqualToString:@"right"]){
-        [self showHUD];
         self.positionIdentifier = direction;
         if(self.player.isPlaying){
             [self.player pause];
@@ -597,7 +596,6 @@
         [self.customHUD showWithState:isfastForward andNowTime:self.fastForwardOrRetreatQuickly];
         self.fastForwardOrRetreatQuickly = self.fastForwardOrRetreatQuickly - space;
     }else if([direction isEqualToString:@"left"]){
-        [self showHUD];
         self.positionIdentifier = direction;
         if(self.player.isPlaying){
             [self.player pause];

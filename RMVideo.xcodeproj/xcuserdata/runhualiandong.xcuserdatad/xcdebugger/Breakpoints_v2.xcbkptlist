@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RMVideo/ViewControllers/RMPlayer/RMPlayViewControllers/RMCustomVideoPlayerView.m"
-            timestampString = "440929648.562365"
+            filePath = "RMVideo/ViewControllers/RMPlayer/RMPlayer.m"
+            timestampString = "441004006.070254"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "+persentVideoPlayerWithFromAPointInTime:withPlayModel:withUIViewController:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
