@@ -87,6 +87,8 @@
     self.isPop = NO;
     self.isHidenToolView = NO;
     self.isCycle = NO;
+    self.isLocationVideo = NO;
+    self.isFromAPointInTime = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -802,6 +804,21 @@
     [self.player play];
     [self.playBtn setImage:[UIImage imageNamed:@"rm_play_btn"] forState:UIControlStateNormal];
     [self RefreshTimerWithAutomaticHidenToolView];
+}
+
+/**
+ *  从特定时间开始播放
+ */
+- (void)setAVPlayerWithTime:(int)time{
+    if (self.player.isPlaying) {
+        [self.player.moviePlayer pause];
+        [self.playBtn setImage:[UIImage imageNamed:@"rm_pause_btn"] forState:UIControlStateNormal];
+    }
+    
+    CMTime seekTime = CMTimeMakeWithSeconds(time, self.player.moviePlayer.currentTime.timescale);
+    [self.player.moviePlayer seekToTime:seekTime];
+    [self.player play];
+    [self.playBtn setImage:[UIImage imageNamed:@"rm_play_btn"] forState:UIControlStateNormal];
 }
 
 #pragma mark - 工具

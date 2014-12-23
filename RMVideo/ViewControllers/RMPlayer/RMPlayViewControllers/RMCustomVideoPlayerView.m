@@ -106,21 +106,6 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
 }
 
 /**
- *  从特定时间开始播放
- */
-- (void)setAVPlayerWithTime:(int)time{
-    if (self.isPlaying) {
-        [self.moviePlayer pause];
-        [self.customVideoplayerCtl.playBtn setImage:[UIImage imageNamed:@"rm_pause_btn"] forState:UIControlStateNormal];
-    }
-    
-    CMTime seekTime = CMTimeMakeWithSeconds(time, self.moviePlayer.currentTime.timescale);
-    [self.moviePlayer seekToTime:seekTime];
-    [self play];
-    [self.customVideoplayerCtl.playBtn setImage:[UIImage imageNamed:@"rm_play_btn"] forState:UIControlStateNormal];
-}
-
-/**
  *  监听播放状态
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -153,9 +138,11 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         [self.customVideoplayerCtl.cacheProgress setProgress:timeInterval / totalDuration animated:YES];
     }
 }
+
 - (void)cacheProgress:(void (^)(float))block{
     haveCacheProgress = block;
 }
+
 - (NSTimeInterval)availableDuration {
     NSArray *loadedTimeRanges = [[self.moviePlayer currentItem] loadedTimeRanges];
     CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域

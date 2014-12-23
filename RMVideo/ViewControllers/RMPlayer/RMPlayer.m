@@ -37,39 +37,57 @@
     RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
     customVideoplayerCtl.videlModel = model;
     customVideoplayerCtl.videoType = type;
+    customVideoplayerCtl.isLocationVideo = NO;
 }
 
-+ (void)presentVideoPlayerWithPlayArr:(NSMutableArray *)playArr
-                    withUIViewController:(id)sender
-                           withVideoType:(NSInteger)type {
++ (void)presentVideoPlayerWithPlayArray:(NSMutableArray *)playArr
+                   withUIViewController:(id)sender
+                          withVideoType:(NSInteger)type {
     RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
     customVideoplayerCtl.currentPlayOrder = 0;
     customVideoplayerCtl.playModelArr = playArr;
     customVideoplayerCtl.videoType = type;
+    customVideoplayerCtl.isLocationVideo = NO;
 }
 
 + (void)presentVideoPlayerCurrentOrder:(NSInteger)current
-                        withPlayArr:(NSMutableArray *)playArr
+                         withPlayArray:(NSMutableArray *)playArr
                   withUIViewController:(id)sender
                          withVideoType:(NSInteger)type {
     RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
     customVideoplayerCtl.currentPlayOrder = current;
     customVideoplayerCtl.playModelArr = playArr;
     customVideoplayerCtl.videoType = type;
+    customVideoplayerCtl.isLocationVideo = NO;
 }
 
-+ (void)presemtVideoPlayerWithLocationVieoModel:(RMModel *)model withUIViewController:(id)viewController{
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:viewController];
++ (void)presentVideoPlayerWithLocationVieoModel:(RMModel *)model
+                           withUIViewController:(id)sender {
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
     customVideoplayerCtl.videoType = MovieType;
     customVideoplayerCtl.videlModel = model;
     customVideoplayerCtl.isLocationVideo = YES;
 }
-+ (void)presemtVideoPlayerWithLocationTVArry:(NSMutableArray *)array withUIViewController:(id)viewController{
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:viewController];
+
++ (void)presentVideoPlayerWithLocationCurrentOrder:(NSInteger)current
+                                     withPlayArray:(NSMutableArray *)array
+                              withUIViewController:(id)sender {
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
     customVideoplayerCtl.videoType = TeleplayType;
-    customVideoplayerCtl.currentPlayOrder = 0;
+    customVideoplayerCtl.currentPlayOrder = current;
     customVideoplayerCtl.playModelArr = array;
     customVideoplayerCtl.isLocationVideo = YES;
+}
+
++ (void)persentVideoPlayerWithFromAPointInTime:(int)time
+                                 withPlayModel:(RMModel *)model
+                          withUIViewController:(id)sender {
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+    customVideoplayerCtl.videoType = MovieType;
+    customVideoplayerCtl.pointInTime = time;
+    customVideoplayerCtl.videlModel = model;
+    customVideoplayerCtl.isLocationVideo = NO;
+    customVideoplayerCtl.isFromAPointInTime = YES;
 }
 
 + (void)getUIScreenBounds{

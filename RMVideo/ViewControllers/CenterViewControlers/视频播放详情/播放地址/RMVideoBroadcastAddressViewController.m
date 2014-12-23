@@ -107,7 +107,7 @@
                 model.EpisodeValue = [NSString stringWithFormat:@"%@",[[dataArr objectAtIndex:i] objectForKey:@"curnum"]];
                 [playArr addObject:model];
             }
-            [RMPlayer presentVideoPlayerWithPlayArr:playArr withUIViewController:videoPlaybackDetailsCtl withVideoType:2];
+            [RMPlayer presentVideoPlayerWithPlayArray:playArr withUIViewController:videoPlaybackDetailsCtl withVideoType:2];
         }else{
             //电影
             RMModel * model = [[RMModel alloc] init];

@@ -58,18 +58,7 @@
         RMModel *model = [[RMModel alloc] init];
         model.title = movieName;
         model.url = str;
-        [RMPlayer presemtVideoPlayerWithLocationVieoModel:model withUIViewController:self];
-        /*
-        CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
-        customVideo.videoType = videoTypeIsMovie;
-//        customVideo.playStyle = playLocalVideo;
-        customVideo.playEpisodeNumber = 0;
-        [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
-        [customVideo createTopToolWithTitle:movieName];
-        
-        [self presentViewController:customVideo animated:YES completion:nil];
-         
-         */
+        [RMPlayer presentVideoPlayerWithLocationVieoModel:model withUIViewController:self];
     }];
     [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];

@@ -230,7 +230,7 @@
             tmpModel.EpisodeValue = [tmpTitle substringFromIndex:[tmpTitle rangeOfString:@"_"].location+1];
             [tvArrya addObject:tmpModel];
         }
-        [RMPlayer presemtVideoPlayerWithLocationTVArry:tvArrya withUIViewController:self];
+        [RMPlayer presentVideoPlayerWithLocationCurrentOrder:0 withPlayArray:tvArrya withUIViewController:self];
         /*
         CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
         customVideo.videoArray = tableDataArray;

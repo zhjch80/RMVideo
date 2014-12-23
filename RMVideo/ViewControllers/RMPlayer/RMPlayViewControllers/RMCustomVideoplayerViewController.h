@@ -27,7 +27,10 @@ typedef enum : NSInteger {
 @property (nonatomic, strong) UIProgressView * cacheProgress;       //已缓存进度条
 @property (nonatomic, strong) UIImageView * belowView;              //下工具条
 @property (nonatomic, assign) NSInteger currentPlayOrder;           //电视剧当前播放的集数
-@property (nonatomic) BOOL isLocationVideo;
+
+@property (nonatomic, assign) int pointInTime;                      //时间点
+@property (nonatomic) BOOL isFromAPointInTime;                      //是否从一个时间点开始播放
+@property (nonatomic) BOOL isLocationVideo;                         //是否播放本地视频
 
 - (void)playerFinishedPlay;
 - (void)showHUD;
