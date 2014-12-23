@@ -147,12 +147,15 @@ static void *CustomVideoPlayerViewStatusObservationContext = &CustomVideoPlayerV
         NSTimeInterval timeInterval = [self availableDuration];// 计算缓冲进度
         CMTime duration = self.playerItem.duration;
         CGFloat totalDuration = CMTimeGetSeconds(duration);
+        haveCacheProgress(timeInterval / totalDuration);
         [self customVideoSlider:duration];
 
         [self.customVideoplayerCtl.cacheProgress setProgress:timeInterval / totalDuration animated:YES];
     }
 }
-
+- (void)cacheProgress:(void (^)(float))block{
+    haveCacheProgress = block;
+}
 - (NSTimeInterval)availableDuration {
     NSArray *loadedTimeRanges = [[self.moviePlayer currentItem] loadedTimeRanges];
     CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域

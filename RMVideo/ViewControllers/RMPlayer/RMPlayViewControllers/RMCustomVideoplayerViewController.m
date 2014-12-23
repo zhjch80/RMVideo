@@ -216,6 +216,9 @@
 - (void)loadMediaPlayerView {
     if (!self.player) {
         self.player = [[RMCustomVideoPlayerView alloc] init];
+        [self.player cacheProgress:^(float progress) {
+            [self.cacheProgress setProgress:progress animated:YES];
+        }];
         self.player.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleAllHeight, [UtilityFunc shareInstance].globleWidth);
         self.player.RMCustomVideoplayerDeleagte = self;
         self.player.backgroundColor = [UIColor blackColor];
@@ -431,6 +434,8 @@
     [self.belowView addSubview:self.totalTime];
     
     self.cacheProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(182, 29, [UtilityFunc shareInstance].globleAllHeight - 324, 30)];
+    self.cacheProgress.progressTintColor = [UIColor colorWithRed:0.89 green:0.11 blue:0.04 alpha:1];
+    self.cacheProgress.trackTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     [self.belowView addSubview:self.cacheProgress];
     
     self.progressBar = [[UISlider alloc] init];

@@ -12,7 +12,9 @@
 
 @class RMCustomVideoPlayerView;
 
-@interface RMCustomVideoPlayerView : UIView
+@interface RMCustomVideoPlayerView : UIView{
+    void(^haveCacheProgress)(float progress);
+}
 @property (assign, nonatomic) BOOL isFullScreenMode;
 @property (assign, nonatomic) BOOL isPlaying;
 
@@ -23,6 +25,8 @@
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 
 @property (nonatomic, assign) id RMCustomVideoplayerDeleagte;
+
+- (void)cacheProgress:(void(^)(float progress))block;
 
 - (void)contentURL:(NSURL*)contentURL;      //加载url
 - (void)replaceCurrentItem;                 //释放当前播放资源
