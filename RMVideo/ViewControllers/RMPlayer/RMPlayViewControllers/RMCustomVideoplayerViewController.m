@@ -84,11 +84,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.isPop = NO;
-    self.isHidenToolView = NO;
-    self.isCycle = NO;
-    self.isLocationVideo = NO;
-    self.isFromAPointInTime = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
