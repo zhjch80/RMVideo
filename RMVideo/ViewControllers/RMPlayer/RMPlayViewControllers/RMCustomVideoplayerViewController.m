@@ -100,12 +100,14 @@
     [self StartTimerWithAutomaticHidenToolView];
     [self loadHUD];
 
-    //开启网络状况的监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification_One object: nil];
+    if (!self.isLocationVideo){
+        //开启网络状况的监听
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name: kReachabilityChangedNotification_One object: nil];
         hostReach = [Reachability reachabilityWithHostName:@"www.apple.com"];
-    [hostReach startNotifier];
-    [self updateInterfaceWithReachability:hostReach];
-    
+        [hostReach startNotifier];
+        [self updateInterfaceWithReachability:hostReach];
+    }
+ 
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         [self prefersStatusBarHidden];
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
@@ -270,6 +272,10 @@
         [weakself.totalTime sizeToFit];
         weakself.customHUD.totalTimeString = weakself.totalTime.text;
     }];
+    
+    if (self.isFromAPointInTime){
+        [self setAVPlayerWithTime:self.pointInTime];
+    }
 }
 
 /**

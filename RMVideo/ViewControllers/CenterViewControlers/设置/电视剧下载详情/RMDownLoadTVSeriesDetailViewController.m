@@ -230,19 +230,7 @@
             tmpModel.EpisodeValue = [tmpTitle substringFromIndex:[tmpTitle rangeOfString:@"_"].location+1];
             [tvArrya addObject:tmpModel];
         }
-        [RMPlayer presentVideoPlayerWithLocationCurrentOrder:0 withPlayArray:tvArrya withUIViewController:self];
-        /*
-        CustomVideoPlayerController *customVideo = [[CustomVideoPlayerController alloc] init];
-        customVideo.videoArray = tableDataArray;
-        customVideo.videoType = videoTypeisTV;
-//        customVideo.playStyle = playLocalVideo;
-        customVideo.playEpisodeNumber = indexPath.row;
-        [customVideo createPlayerViewWithURL:str isPlayLocalVideo:YES];
-        [customVideo createTopToolWithTitle:model.name];
-        
-        [self presentViewController:customVideo animated:YES completion:nil];
-         
-         */
+        [RMPlayer presentVideoPlayerWithLocationCurrentOrder:0 withPlayArray:tvArrya withUIViewController:self withIsLocation:YES];
     }
 }
 

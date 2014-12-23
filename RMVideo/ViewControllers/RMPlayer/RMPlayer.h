@@ -56,9 +56,11 @@
  *  播放本地 电影
  *  @param model        播放电影model
  *  @param sender       当前控制器
+ *  @param isLocation   是否播放本地视频
  */
 + (void)presentVideoPlayerWithLocationVieoModel:(RMModel *)model
-                           withUIViewController:(id)sender;
+                           withUIViewController:(id)sender
+                                 withIsLocation:(BOOL)isLocation;
 
 /**
  *  播放本地 电视剧 综艺
@@ -68,7 +70,8 @@
  */
 + (void)presentVideoPlayerWithLocationCurrentOrder:(NSInteger)current
                                      withPlayArray:(NSMutableArray *)array
-                              withUIViewController:(id)sender;
+                              withUIViewController:(id)sender
+                                    withIsLocation:(BOOL)isLocation;
 
 /**
  *  从一个时间点开始播放视频

@@ -58,7 +58,7 @@
         RMModel *model = [[RMModel alloc] init];
         model.title = movieName;
         model.url = str;
-        [RMPlayer presentVideoPlayerWithLocationVieoModel:model withUIViewController:self];
+        [RMPlayer presentVideoPlayerWithLocationVieoModel:model withUIViewController:self withIsLocation:YES];
     }];
     [finishDownViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];

@@ -10,20 +10,18 @@
 #import "RMCustomVideoplayerViewController.h"
 #import "UtilityFunc.h"
 
-@interface RMPlayer () {
-
-}
-
-@end
-
 @implementation RMPlayer
 
-+ (RMCustomVideoplayerViewController *)initVideoPlay:(id)sender {
-    if ([UtilityFunc isConnectionAvailable] == 0){
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络连接，请检查网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-        return nil;
++ (RMCustomVideoplayerViewController *)initVideoPlay:(id)sender
+                                      withIsLocation:(BOOL)isLocation {
+    if (!isLocation){
+        if ([UtilityFunc isConnectionAvailable] == 0){
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络连接，请检查网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            return nil;
+        }
     }
+
     [self getUIScreenBounds];
     RMCustomVideoplayerViewController * customVideoplayerCtl = [[RMCustomVideoplayerViewController alloc] init];
     [sender presentViewController:customVideoplayerCtl animated:YES completion:^{
@@ -34,7 +32,7 @@
 + (void)presentVideoPlayerWithPlayModel:(RMModel *)model
                    withUIViewController:(id)sender
                           withVideoType:(NSInteger)type {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:NO];
     customVideoplayerCtl.videlModel = model;
     customVideoplayerCtl.videoType = type;
     customVideoplayerCtl.isLocationVideo = NO;
@@ -43,7 +41,7 @@
 + (void)presentVideoPlayerWithPlayArray:(NSMutableArray *)playArr
                    withUIViewController:(id)sender
                           withVideoType:(NSInteger)type {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:NO];
     customVideoplayerCtl.currentPlayOrder = 0;
     customVideoplayerCtl.playModelArr = playArr;
     customVideoplayerCtl.videoType = type;
@@ -54,7 +52,7 @@
                          withPlayArray:(NSMutableArray *)playArr
                   withUIViewController:(id)sender
                          withVideoType:(NSInteger)type {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:NO];
     customVideoplayerCtl.currentPlayOrder = current;
     customVideoplayerCtl.playModelArr = playArr;
     customVideoplayerCtl.videoType = type;
@@ -62,27 +60,29 @@
 }
 
 + (void)presentVideoPlayerWithLocationVieoModel:(RMModel *)model
-                           withUIViewController:(id)sender {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+                           withUIViewController:(id)sender
+                                 withIsLocation:(BOOL)isLocation {
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:isLocation];
     customVideoplayerCtl.videoType = MovieType;
     customVideoplayerCtl.videlModel = model;
-    customVideoplayerCtl.isLocationVideo = YES;
+    customVideoplayerCtl.isLocationVideo = isLocation;
 }
 
 + (void)presentVideoPlayerWithLocationCurrentOrder:(NSInteger)current
                                      withPlayArray:(NSMutableArray *)array
-                              withUIViewController:(id)sender {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+                              withUIViewController:(id)sender
+                                    withIsLocation:(BOOL)isLocation {
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:isLocation];
     customVideoplayerCtl.videoType = TeleplayType;
     customVideoplayerCtl.currentPlayOrder = current;
     customVideoplayerCtl.playModelArr = array;
-    customVideoplayerCtl.isLocationVideo = YES;
+    customVideoplayerCtl.isLocationVideo = isLocation;
 }
 
 + (void)persentVideoPlayerWithFromAPointInTime:(int)time
                                  withPlayModel:(RMModel *)model
                           withUIViewController:(id)sender {
-    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender];
+    RMCustomVideoplayerViewController * customVideoplayerCtl = [self initVideoPlay:sender withIsLocation:NO];
     customVideoplayerCtl.videoType = MovieType;
     customVideoplayerCtl.pointInTime = time;
     customVideoplayerCtl.videlModel = model;
