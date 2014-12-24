@@ -80,6 +80,20 @@ static id _instance;
     [self showEmptyViewWithImage:[UIImage imageNamed:@"no_cashe_video"] WithTitle:@"您没有缓存记录"];
     NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if(SavedownLoad==nil){
+        NSFileManager *fileManeger = [NSFileManager defaultManager];
+        NSError *error ;
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSArray *array = [fileManeger contentsOfDirectoryAtPath:document error:&error];
+        for(NSString *movieString in array){
+            if([movieString rangeOfString:@".mp4"].location != NSNotFound){
+                NSLog(@"movieString:%@",movieString);
+                NSString *removePath = [NSString stringWithFormat:@"%@/%@",document,movieString];
+                NSError *removeError;
+                if([fileManeger removeItemAtPath:removePath error:&removeError]){
+                    NSLog(@"删除成功");
+                }
+            }
+        }
         if(self.dataArray.count==0){
             [self isShouldSetHiddenEmptyView:NO];
         }else{
@@ -89,6 +103,7 @@ static id _instance;
         for(RMPublicModel *model in SavedownLoad){
             [self.dataArray addObject:model];
         }
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:DownLoadDataArray_KEY];
         [self isShouldSetHiddenEmptyView:YES];
     }
     [self.mainTableView reloadData];
@@ -634,9 +649,26 @@ static id _instance;
             return NO;
         }
         NSArray * SavedownLoad = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if(SavedownLoad==nil){
+            NSFileManager *fileManeger = [NSFileManager defaultManager];
+            NSError *error ;
+            NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSArray *array = [fileManeger contentsOfDirectoryAtPath:document error:&error];
+            for(NSString *movieString in array){
+                if([movieString rangeOfString:@".mp4"].location != NSNotFound){
+                    NSLog(@"movieString:%@",movieString);
+                    NSString *removePath = [NSString stringWithFormat:@"%@/%@",document,movieString];
+                    NSError *removeError;
+                    if([fileManeger removeItemAtPath:removePath error:&removeError]){
+                        NSLog(@"删除成功");
+                    }
+                }
+            }
+        }
         for(RMPublicModel *model in SavedownLoad){
             [self.dataArray addObject:model];
         }
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:DownLoadDataArray_KEY];
     }
     for (RMPublicModel *tmpModel in self.dataArray){
         if([tmpModel.name isEqualToString:model.name]){

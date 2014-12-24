@@ -327,6 +327,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    [self beingBackgroundUpdateTask];
+    // 在这里加上你需要长久运行的代码
     RMDownLoadingViewController *downLoading = [RMDownLoadingViewController shared];
     if(downLoading.dataArray.count>0){
         [downLoading saveData];
@@ -334,8 +337,9 @@
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:DownLoadDataArray_KEY];
     }else{
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:DownLoadDataArray_KEY];
-
+        
     }
+    [self endBackgroundUpdateTask];
 }
 
 #pragma mark- 社会化
@@ -369,5 +373,16 @@
     [APService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
+- (void)beingBackgroundUpdateTask
+{
+    self.backgroundUpdateTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackgroundUpdateTask];
+    }];
+}
 
+- (void)endBackgroundUpdateTask
+{
+    [[UIApplication sharedApplication] endBackgroundTask: self.backgroundUpdateTask];
+    self.backgroundUpdateTask = UIBackgroundTaskInvalid;
+}
 @end
