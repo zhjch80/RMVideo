@@ -20,7 +20,10 @@
 #define baseUrl         @"http://vodapi.runmobile.cn/debug/index.php/vod/"
 #else
 //线上
-#define baseUrl         @"http://vodapi.runmobile.cn/index.php/vod/"
+//#define baseUrl         @"http://vodapi.runmobile.cn/index.php/vod/"
+
+#define baseUrl         @"http://vodapi.runmobile.cn/version1_02/api.php/vod/"
+
 #endif
 
 #define kPassWord       @"yu32uzy4"
@@ -105,7 +108,7 @@
             break;
         }
         case Http_getSearchVidieo:{
-            strUrl = [NSString stringWithFormat:@"%@searchByVideoName?",baseUrl];
+            strUrl = [NSString stringWithFormat:@"%@search?",baseUrl];
             break;
         }
         case Http_postLogin:{
@@ -518,32 +521,6 @@ void checkTheNetworkConnection(NSString *title){
     }];
 }
 
-#pragma mark - 明星：明星搜索
-
-- (void)getSearchStartWithName:(NSString *)name page:(NSString *)page count:(NSString *)count{
-    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
-    NSString *url = [self urlPathadress:Http_getStartSearch];
-    url = [NSString stringWithFormat:@"%@name=%@&limit=%@&offset=%@",url,name,count,[self setOffsetWith:page andCount:count]];
-    url = [self encryptUrl:url];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *dataArray = [NSMutableArray array];
-        RMPublicModel *model = [[RMPublicModel alloc] init];
-        model.code = [responseObject objectForKey:@"code"];
-        model.name = [responseObject objectForKey:@"name"];
-        model.list = [responseObject objectForKey:@"list"];
-        model.rows = [responseObject objectForKey:@"rows"];
-        [dataArray addObject:model];
-        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
-            [self.delegate requestFinishiDownLoadWith:dataArray];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        checkTheNetworkConnection(@"搜索失败");
-        if ([self.delegate respondsToSelector:@selector(requestError:)]){
-            [self.delegate requestError:error];
-        }
-    }];
-}
-
 #pragma mark - 明星：明星详情
 
 - (void)getStartDetailWithID:(NSString *)ID WithToken:(NSString *)token {
@@ -693,11 +670,12 @@ void checkTheNetworkConnection(NSString *title){
     url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *dataArray = [NSMutableArray array];
-        RMPublicModel *model = [[RMPublicModel alloc] init];
-        model.code = [responseObject objectForKey:@"code"];
-        model.keyword = [responseObject objectForKey:@"keyword"];
-        model.list = [responseObject objectForKey:@"list"];
-        model.rows = [responseObject objectForKey:@"rows"];
+        RMPublicModel * model = [[RMPublicModel alloc] init];
+        model.keyword = [[responseObject objectForKey:@"data"] objectForKey:@"keyword"];
+        model.rows = [[responseObject objectForKey:@"data"] objectForKey:@"rows"];
+        model.star_list = [[responseObject objectForKey:@"data"] objectForKey:@"star_list"];
+        model.video_list = [[responseObject objectForKey:@"data"] objectForKey:@"video_list"];
+        model.message = [responseObject objectForKey:@"message"];
         [dataArray addObject:model];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:dataArray];

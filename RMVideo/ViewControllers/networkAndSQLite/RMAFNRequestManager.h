@@ -126,15 +126,6 @@ typedef enum{
 - (void)getStarListWithPage:(NSString *)page count:(NSString *)count WithToken:(NSString *)token;
 
 /**
- *  明星：明星搜索
- *
- *  @param name  明星名字
- *  @param page  页码
- *  @param count 条数
- */
-- (void)getSearchStartWithName:(NSString *)name page:(NSString *)page count:(NSString *)count;
-
-/**
  *  明星：明星详情
  *
  *  @param ID 明星id

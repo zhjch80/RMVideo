@@ -15,6 +15,10 @@
 #import "RMCustomPresentNavViewController.h"
 #import "RMTagList.h"
 #import "RMLastRecordsCell.h"
+#import "RefreshControl.h"
+#import "CustomRefreshView.h"
+#import "RMSearchResultCell.h"
+#import "UIButton+EnlargeEdge.h"
 
 //语音
 #import "iflyMSC/IFlySpeechRecognizerDelegate.h"
@@ -28,11 +32,18 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate>{
-    NSMutableArray * recordsDataArr;
+#define kMaxLength 20
+
+@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate,RefreshControlDelegate>{
+    NSMutableArray * recordsDataArr;            //搜索记录的Arr
+    NSMutableArray * resultDataArr;             //搜索结果的Arr
 }
 @property (nonatomic, strong) UITableView * searchTableView;                        //默认搜索的tableView
 @property (nonatomic, strong) UITableView * displayResultTableView;                 //搜索结果的tableView
+@property (nonatomic, strong) RMBaseTextField * searchTextField;
+
+@property (nonatomic, strong) RefreshControl * refreshControl;
+@property (nonatomic, strong) RMPublicModel * publicModel;
 
 @property (nonatomic, strong) IFlySpeechRecognizer    * iFlySpeechRecognizer;
 @property (nonatomic)         BOOL                      isCanceled;                 //语音搜索是否取消
@@ -47,6 +58,12 @@
 @end
 
 @implementation RMSearchViewController
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self
+                                                   name:@"UITextFieldTextDidChangeNotification"
+                                                 object:self.searchTextField];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -70,77 +87,164 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    recordsDataArr = [[NSMutableArray alloc] init];
+    self.navigationController.navigationBar.hidden = YES;
 
+    recordsDataArr = [[NSMutableArray alloc] init];
+    resultDataArr = [[NSMutableArray alloc] init];
     self.result = @"";
     self.onResult = @"";
     
-    [self setTitle:@"搜索"];
     leftBarButton.hidden = YES;
-    rightBarButton.frame = CGRectMake(0, 0, 35, 20);
-    [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+    rightBarButton.hidden = YES;
     
     _iFlySpeechRecognizer = [RecognizerFactory CreateRecognizer:self Domain:@"iat"];
     [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
     
+    [self loadCustomNav];
     [self loadDefaultView];
+    [self loadResultView];
+}
+
+- (void)loadCustomNav {
+    UIView * CustomNav = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 64)];
+    CustomNav.backgroundColor = [UIColor colorWithRed:0.8 green:0.03 blue:0.12 alpha:1];
+    [self.view addSubview:CustomNav];
     
+    UIView *roundBgView =[[UIView alloc] initWithFrame:CGRectMake(10, 24, [UtilityFunc shareInstance].globleWidth - 20 - 40, 32)];
+    [[roundBgView layer] setBorderWidth:2.0];//画线的宽度
+    [[roundBgView layer] setBorderColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1].CGColor];//颜色
+    roundBgView.userInteractionEnabled = YES;
+    roundBgView.multipleTouchEnabled = YES;
+    [[roundBgView layer]setCornerRadius:16.0];//圆角
+    roundBgView.backgroundColor = [UIColor clearColor];
+    [CustomNav addSubview:roundBgView];
+    
+    self.searchTextField = [[RMBaseTextField alloc] init];
+    self.searchTextField.delegate = self;
+    [[RMBaseTextField appearance] setTintColor:[UIColor whiteColor]];
+    self.searchTextField.returnKeyType = UIReturnKeySearch;
+    self.searchTextField.textColor = [UIColor whiteColor];
+    self.searchTextField.frame = CGRectMake(18, 16, [UtilityFunc shareInstance].globleWidth - 40 - 30, 50);
+    self.searchTextField.placeholder = @"搜索你喜欢的电影或明星";
+    [self.searchTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    self.searchTextField.font = [UIFont systemFontOfSize:16.0];
+    self.searchTextField.backgroundColor = [UIColor clearColor];
+    [CustomNav addSubview:self.searchTextField];
+    
+    RMImageView * searchImg = [[RMImageView alloc] init];
+    searchImg.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - 50 - 30, 30, 19, 19);
+    searchImg.backgroundColor = [UIColor clearColor];
+    searchImg.userInteractionEnabled = YES;
+    [searchImg addTarget:self WithSelector:@selector(searchMethod)];
+    searchImg.image = LOADIMAGE(@"ic_search", kImageTypePNG);
+    [CustomNav addSubview:searchImg];
+    
+    UIButton * backupBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backupBtn.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - 45, 32, 34, 20);
+    [backupBtn setEnlargeEdgeWithTop:10 right:10 bottom:10 left:10];
+    [backupBtn addTarget:self action:@selector(backupMethod) forControlEvents:UIControlEventTouchUpInside];
+    [backupBtn setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
+    [CustomNav addSubview:backupBtn];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFiledEditChanged:)
+                                                name:@"UITextFieldTextDidChangeNotification"
+                                              object:self.searchTextField];
+}
+
+-(void)textFiledEditChanged:(NSNotification *)obj{
+    UITextField *textField = (UITextField *)obj.object;
+    NSString *toBeString = textField.text;
+    NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            if (toBeString.length > kMaxLength) {
+                textField.text = [toBeString substringToIndex:kMaxLength];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+            
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        if (toBeString.length > kMaxLength) {
+            textField.text = [toBeString substringToIndex:kMaxLength];
+        }
+    }
+}
+
+/**
+ *  返回上一级
+ */
+- (void)backupMethod {
+    [self.searchTextField resignFirstResponder];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
 }
 
 - (void)loadResultView {
-    self.displayResultTableView = [[UITableView alloc] init];
+    self.displayResultTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
+    self.displayResultTableView.hidden = YES;
+    self.displayResultTableView.delegate = self;
+    self.displayResultTableView.dataSource = self;
+    self.displayResultTableView.backgroundColor = [UIColor brownColor];
     self.displayResultTableView.tag = 202;
-    
-    
-    
-    
+    self.displayResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.displayResultTableView];
+    
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.displayResultTableView delegate:self];
+    self.refreshControl.topEnabled=YES;
+    self.refreshControl.bottomEnabled=YES;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
+}
+
+#pragma mark 刷新代理
+
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
+    if (direction == RefreshDirectionTop) { //下拉刷新
+        
+
+    }else if(direction == RefreshDirectionBottom) { //上拉加载
+
+    }
+    
+    
+    __weak typeof(self)weakSelf=self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf)strongSelf=weakSelf;
+        [strongSelf reloadData];
+    });
+}
+
+-(void)reloadData {
+    //do something ...
+    
+    [self.displayResultTableView reloadData];
+    
+    if (self.refreshControl.refreshingDirection == RefreshingDirectionTop) {
+        [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
+    }else if(self.refreshControl.refreshingDirection==RefreshingDirectionBottom) {
+        [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+    }
 }
 
 - (void)loadDefaultView {
-    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
+    self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
     self.searchTableView.tag = 201;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.searchTableView.backgroundColor = [UIColor clearColor];
     self.searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.searchTableView];
-    
-    UIView * headView = [[UIView alloc] init];
-    headView.backgroundColor = [UIColor whiteColor];
-    headView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 90);
-    headView.userInteractionEnabled = YES;
-    
-    UIView *roundBgView =[[UIView alloc] initWithFrame:CGRectMake(10, 15, [UtilityFunc shareInstance].globleWidth - 20, 60)];
-    [[roundBgView layer] setBorderWidth:2.0];//画线的宽度
-    [[roundBgView layer] setBorderColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1].CGColor];//颜色
-    roundBgView.userInteractionEnabled = YES;
-    roundBgView.multipleTouchEnabled = YES;
-    [[roundBgView layer]setCornerRadius:30.0];//圆角
-    roundBgView.backgroundColor = [UIColor clearColor];
-    [headView addSubview:roundBgView];
-    
-    RMBaseTextField * searchTextField = [[RMBaseTextField alloc] init];
-    searchTextField.tag = 101;
-    searchTextField.delegate = self;
-    [[RMBaseTextField appearance] setTintColor:[UIColor redColor]];
-    searchTextField.returnKeyType = UIReturnKeySearch;
-    searchTextField.textColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
-    searchTextField.frame = CGRectMake(18, 20, [UtilityFunc shareInstance].globleWidth - 40, 50);
-    searchTextField.placeholder = @"搜索你喜欢的电影或明星";
-    searchTextField.font = [UIFont systemFontOfSize:20.0];
-    searchTextField.backgroundColor = [UIColor clearColor];
-    [searchTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [headView addSubview:searchTextField];
-
-    RMImageView * searchImg = [[RMImageView alloc] init];
-    searchImg.frame = CGRectMake([UtilityFunc shareInstance].globleWidth - 50, 33, 25, 24);
-    searchImg.backgroundColor = [UIColor clearColor];
-    searchImg.userInteractionEnabled = YES;
-    [searchImg addTarget:self WithSelector:@selector(searchMethod)];
-    searchImg.image = LOADIMAGE(@"ic_search", kImageTypePNG);
-    [headView addSubview:searchImg];
-    self.searchTableView.tableHeaderView = headView;
     
     self.footView = [[UIView alloc] init];
     self.footView.backgroundColor = [UIColor clearColor];
@@ -168,16 +272,16 @@
  *  点击输入框右边的搜索按钮进行搜索
  */
 - (void)searchMethod{
-    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
-    NSString * text = ((RMBaseTextField *)[self.view viewWithTag:101]).text;
-    
+    [self.searchTextField resignFirstResponder];
     if ([UtilityFunc isConnectionAvailable] == 0) {
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+        return ;
     }else {
         [SVProgressHUD dismiss];
-        [self updateUserSearchRecord:text];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        [self updateUserSearchRecord:self.searchTextField.text];
         [self.searchTableView reloadData];
-        [self startSearchRequest:text];
+        [self startSearchRequest:self.searchTextField.text];
     }
 }
 
@@ -208,8 +312,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
-    ((RMBaseTextField *)[self.view viewWithTag:101]).text = @"";
+    [self.searchTextField resignFirstResponder];
 }
 
 /**
@@ -229,17 +332,12 @@
     return YES;
 }
 
-/**
- *  限制输入框的长度 不大于20
- */
-- (void)textFieldDidChange:(UITextField *)textField {
-    if (textField.text.length > 20) {
-        textField.text = [textField.text substringToIndex:20];
-    }
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return YES;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
+    [self.searchTextField resignFirstResponder];
 }
 
 /**
@@ -263,30 +361,49 @@
 #pragma mark - UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (recordsDataArr.count > 2){
-        if (self.isDisplayMoreRecords){
-            return 3;
+    if (tableView == self.searchTableView){
+        if (recordsDataArr.count > 2){
+            if (self.isDisplayMoreRecords){
+                return 3;
+            }else{
+                return [recordsDataArr count];
+            }
         }else{
             return [recordsDataArr count];
         }
     }else{
-        return [recordsDataArr count];
+        return [resultDataArr count];
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.isDisplayMoreRecords){
-        if (indexPath.row == 2){
-            static NSString * CellIdentifier = @"RMLastSearchCellIdentifier";
-            RMLastRecordsCell * cell = (RMLastRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (! cell) {
-                NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMLastRecordsCell" owner:self options:nil];
-                cell = [array objectAtIndex:0];
-                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                cell.backgroundColor = [UIColor whiteColor];
-                cell.delegate = self;
+    if (tableView == self.searchTableView){//默认搜索界面
+        if (self.isDisplayMoreRecords){
+            if (indexPath.row == 2){
+                static NSString * CellIdentifier = @"RMLastSearchCellIdentifier";
+                RMLastRecordsCell * cell = (RMLastRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (! cell) {
+                    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMLastRecordsCell" owner:self options:nil];
+                    cell = [array objectAtIndex:0];
+                    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                    cell.backgroundColor = [UIColor whiteColor];
+                    cell.delegate = self;
+                }
+                return cell;
+            }else{
+                static NSString * CellIdentifier = @"RMSearchCellIdentifier";
+                RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (! cell) {
+                    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
+                    cell = [array objectAtIndex:0];
+                    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                    cell.backgroundColor = [UIColor whiteColor];
+                    cell.delegate = self;
+                }
+                cell.clickbtn.tag = indexPath.row;
+                cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+                return cell;
             }
-            return cell;
         }else{
             static NSString * CellIdentifier = @"RMSearchCellIdentifier";
             RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -301,35 +418,42 @@
             cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
             return cell;
         }
-    }else{
-        static NSString * CellIdentifier = @"RMSearchCellIdentifier";
-        RMSearchRecordsCell * cell = (RMSearchRecordsCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    }else{//显示搜索结果
+        static NSString * CellIdentifier = @"RMSearchResultCellIdentifier";
+        RMSearchResultCell * cell = (RMSearchResultCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (! cell) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchRecordsCell" owner:self options:nil];
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchResultCell" owner:self options:nil];
             cell = [array objectAtIndex:0];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.backgroundColor = [UIColor whiteColor];
-            cell.delegate = self;
+            cell.backgroundColor = [UIColor clearColor];
         }
-        cell.clickbtn.tag = indexPath.row;
-        cell.recordsName.text = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+        cell.hits.text = [NSString stringWithFormat:@"点击量:%@",[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"hits"]];
         return cell;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    if (tableView == self.searchTableView){
+        return 44;
+    }else{
+        return 155;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([UtilityFunc isConnectionAvailable] == 0){
-        [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
-        return ;
+    if (tableView == self.searchTableView){
+        if ([UtilityFunc isConnectionAvailable] == 0){
+            [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
+            return ;
+        }
+        NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        [self startSearchRequest:str];
+    }else{
+        
     }
-    NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
-    [SVProgressHUD dismiss];
-    [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
-    [self startSearchRequest:str];
 }
 
 /**
@@ -360,7 +484,7 @@
 #pragma mark - requset RMAFNRequestManagerDelegate
 
 - (void)startSearchRequest:(NSString *)key {
-    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
+    [self.searchTextField resignFirstResponder];
     [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeBlack];
     self.requestManager = [[RMAFNRequestManager alloc] init];
     [self.requestManager getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:@"1" count:@"20"];
@@ -369,38 +493,22 @@
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     [SVProgressHUD dismiss];
-    RMSearchResultViewController * searchResultCtl = [[RMSearchResultViewController alloc] init];
-    searchResultCtl.resultData = data;
-    RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:searchResultCtl];
-    [self presentViewController:searchResultNav animated:YES completion:^{
-    }];
+    self.searchTableView.hidden = YES;
+    self.displayResultTableView.hidden = NO;
+    
+    self.publicModel = [data objectAtIndex:0];
+    resultDataArr = [NSMutableArray arrayWithArray:self.publicModel.video_list];
+    [self.displayResultTableView reloadData];
+    
+//    RMSearchResultViewController * searchResultCtl = [[RMSearchResultViewController alloc] init];
+//    searchResultCtl.resultData = data;
+//    RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:searchResultCtl];
+//    [self presentViewController:searchResultNav animated:YES completion:^{
+//    }];
 }
 
 - (void)requestError:(NSError *)error {
     NSLog(@"error:%@",error);
-}
-
-#pragma mark - Base Method
-
-- (void)navgationBarButtonClick:(UIBarButtonItem *)sender {
-    switch (sender.tag) {
-        case 1:{
-            break;
-        }
-        case 2:{
-            [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
-            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-                [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
-            }
-            [self dismissViewControllerAnimated:YES completion:^{
-            }];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kAppearTabbar object:nil];
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - IFlySpeechRecognizerDelegate

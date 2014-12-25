@@ -24,7 +24,6 @@
 @property (nonatomic, strong) NSString * tag_list;
 @property (nonatomic, strong) NSString * tag_id;
 @property (nonatomic, strong) NSString * gold;
-@property (nonatomic, strong) NSMutableArray * video_list;
 @property (nonatomic, strong) NSString * detail;
 @property (nonatomic, strong) NSString * pic_url;
 @property (nonatomic, strong) NSMutableArray * playurlArr;      //电影
@@ -46,6 +45,10 @@
 @property (nonatomic, strong) NSString *playTime;       //表示播放的时间，方便下次进来可以继续播放，用在数据库中
 @property (nonatomic, strong) NSString * rows;
 @property (nonatomic, strong) NSString * AppVersionUrl;
+@property (nonatomic, strong) NSMutableArray * star_list;               //明星列表
+@property (nonatomic, strong) NSMutableArray * video_list;              //视频列表
+@property (nonatomic, strong) NSString * message;                       //请求返回信息
+
 
 
 
