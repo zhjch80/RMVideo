@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RatingView.h"
-@interface RMSearchCell : UITableViewCell
+@interface RMSearchResultCell : UITableViewCell
 
 
 @property (weak, nonatomic) IBOutlet UILabel *hits;

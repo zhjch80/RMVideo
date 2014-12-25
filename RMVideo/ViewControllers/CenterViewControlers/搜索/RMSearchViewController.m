@@ -11,9 +11,11 @@
 #import "RMBaseTextField.h"
 #import "RMSearchRecordsCell.h"
 #import "RMSearchResultViewController.h"
-//搜索
-#import "AMBlurView.h"
-#import "RMHistoricalRecordsView.h"
+#import "RMCustomNavViewController.h"
+#import "RMCustomPresentNavViewController.h"
+#import "RMTagList.h"
+#import "RMLastRecordsCell.h"
+
 //语音
 #import "iflyMSC/IFlySpeechRecognizerDelegate.h"
 #import "iflyMSC/IFlySpeechUtility.h"
@@ -23,34 +25,24 @@
 #import <QuartzCore/QuartzCore.h>
 #import "RecognizerFactory.h"
 #import "ISRDataHelper.h"
-#import "RMCustomNavViewController.h"
-#import "RMCustomPresentNavViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "RMTagList.h"
-#import "RMLastRecordsCell.h"
 
-#define searchTextField_TAG             101
-#define cancelBtn_TAG                   102
-#define voiceBtn_TAG                    103
+#import <QuartzCore/QuartzCore.h>
 
 @interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate>{
     NSMutableArray * recordsDataArr;
 }
-@property (nonatomic, strong) AMBlurView * blurView;
-@property (nonatomic, strong) UITableView * searchTableView;
+@property (nonatomic, strong) UITableView * searchTableView;                        //默认搜索的tableView
+@property (nonatomic, strong) UITableView * displayResultTableView;                 //搜索结果的tableView
 
-@property (nonatomic, strong) IFlySpeechRecognizer * iFlySpeechRecognizer;
-@property (nonatomic)         BOOL                 isCanceled;          //语音搜索是否取消
-@property (nonatomic, strong) NSString             * onResult;          //语音正在搜索的结果
-@property (nonatomic, strong) NSString             * result;            //语音搜索结束的结果
-@property (nonatomic, strong) RMAFNRequestManager * request;
-@property (nonatomic, strong) NSArray * onVoiceImgArr;
-@property (nonatomic, strong) RMImageView * voiceImage;
-@property (nonatomic, strong) RMHistoricalRecordsView * historicalRecordsView;
-@property (nonatomic, assign) BOOL isDisplayMoreRecords;               //是否显示 展开更多搜索记录
+@property (nonatomic, strong) IFlySpeechRecognizer    * iFlySpeechRecognizer;
+@property (nonatomic)         BOOL                      isCanceled;                 //语音搜索是否取消
+@property (nonatomic, strong) NSString                * onResult;                   //语音正在搜索的结果
+@property (nonatomic, strong) NSString                * result;                     //语音搜索结束的结果
+@property (nonatomic, strong) RMAFNRequestManager     * requestManager;
+@property (nonatomic)         BOOL                      isDisplayMoreRecords;       //是否显示 展开更多搜索记录
 
-@property (nonatomic, strong) UIView * footView;                        //tableView 的 footView
-@property (nonatomic, strong) RMTagList * tagList;                      //taglistView
+@property (nonatomic, strong) UIView                  * footView;                   //tableView 的 footView
+@property (nonatomic, strong) RMTagList               * tagList;                    //全网热榜推荐list
 
 @end
 
@@ -74,40 +66,38 @@
     [_iFlySpeechRecognizer setDelegate: self];
     self.onResult = @"";
     self.result = @"";
-    
-    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-    NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
-    recordsDataArr = arr;
-    if (recordsDataArr.count > 2){
-        self.isDisplayMoreRecords = YES;
-    }else{
-        self.isDisplayMoreRecords = NO;
-    }
-    [self.searchTableView reloadData];
-    [self refreshRecodsView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     recordsDataArr = [[NSMutableArray alloc] init];
-    self.onVoiceImgArr = [NSArray arrayWithObjects:@"onVoice_1", @"onVoice_2", @"onVoice_3", @"onVoice_4", nil];
 
+    self.result = @"";
+    self.onResult = @"";
+    
     [self setTitle:@"搜索"];
     leftBarButton.hidden = YES;
     rightBarButton.frame = CGRectMake(0, 0, 35, 20);
     [rightBarButton setBackgroundImage:LOADIMAGE(@"cancle_btn_image", kImageTypePNG) forState:UIControlStateNormal];
     
-    self.result = @"";
-    self.onResult = @"";
-    
     _iFlySpeechRecognizer = [RecognizerFactory CreateRecognizer:self Domain:@"iat"];
     [_iFlySpeechRecognizer setParameter:@"0" forKey:@"asr_ptt"];
     
-    [self loadCustom];
+    [self loadDefaultView];
+    
 }
 
-- (void)loadCustom {
+- (void)loadResultView {
+    self.displayResultTableView = [[UITableView alloc] init];
+    self.displayResultTableView.tag = 202;
+    
+    
+    
+    
+    [self.view addSubview:self.displayResultTableView];
+}
+
+- (void)loadDefaultView {
     self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
     self.searchTableView.tag = 201;
     self.searchTableView.delegate = self;
@@ -131,7 +121,7 @@
     [headView addSubview:roundBgView];
     
     RMBaseTextField * searchTextField = [[RMBaseTextField alloc] init];
-    searchTextField.tag = searchTextField_TAG;
+    searchTextField.tag = 101;
     searchTextField.delegate = self;
     [[RMBaseTextField appearance] setTintColor:[UIColor redColor]];
     searchTextField.returnKeyType = UIReturnKeySearch;
@@ -174,18 +164,12 @@
     self.searchTableView.tableFooterView = self.footView;
 }
 
-- (void)refreshRecodsView {
-    if ([recordsDataArr count] == 0) {
-        [self.historicalRecordsView updateDisplayTitle:@"没有历史记录"];
-    }else{
-        [self.historicalRecordsView updateDisplayTitle:@"清空历史记录"];
-    }
-}
-
+/**
+ *  点击输入框右边的搜索按钮进行搜索
+ */
 - (void)searchMethod{
-    //TODO: 开始搜索四
-    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-    NSString * text = ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text;
+    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
+    NSString * text = ((RMBaseTextField *)[self.view viewWithTag:101]).text;
     
     if ([UtilityFunc isConnectionAvailable] == 0) {
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
@@ -197,7 +181,6 @@
     }
 }
 
-#pragma mark - 更新用户查询记录  并持久化数据
 /**
  * 更新用户查询记录  并持久化数据
  */
@@ -222,27 +205,17 @@
     }
     [storage setObject:recordsDataArr forKey:UserSearchRecordData_KEY];
     [storage endUpdates];
-    [self refreshRecodsView];
-}
-
-#pragma mark - UIScrollViewDelegate UITextField Delegate TagListDelegate
-
-- (void)startSearch {
-    ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = NO;
-}
-
-- (void)cancelSearch {
-    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
-    ((UIButton *)[self.view viewWithTag:cancelBtn_TAG]).hidden = YES;
-    ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = @"";
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self cancelSearch];
+    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
+    ((RMBaseTextField *)[self.view viewWithTag:101]).text = @"";
 }
 
+/**
+ *  点击键盘上的搜索按钮开始搜索
+ */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    //TODO: 开始搜索一
     if ([UtilityFunc isConnectionAvailable] == 0){
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
         return NO;
@@ -256,11 +229,9 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [self startSearch];
-    return YES;
-}
-
+/**
+ *  限制输入框的长度 不大于20
+ */
 - (void)textFieldDidChange:(UITextField *)textField {
     if (textField.text.length > 20) {
         textField.text = [textField.text substringToIndex:20];
@@ -268,13 +239,19 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
 }
 
+/**
+ *  点击全网热榜推荐标签的事件
+ */
 - (void)clickTagWithValue:(int)value {
     NSLog(@"value:%d",value);
 }
 
+/**
+ *  根据标签刷新全网热榜界面的高度
+ */
 - (void)refreshTagListViewHeight:(float)height {
     [UIView animateWithDuration:0.2 animations:^{
         self.footView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, height + 85);
@@ -345,7 +322,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO:开始搜索二
     if ([UtilityFunc isConnectionAvailable] == 0){
         [SVProgressHUD showErrorWithStatus:kShowConnectionAvailableError duration:1.0];
         return ;
@@ -370,7 +346,6 @@
     [storage beginUpdates];
     [storage setObject:arr forKey:UserSearchRecordData_KEY];
     [storage endUpdates];
-    [self refreshRecodsView];
     [self.searchTableView reloadData];
 }
 
@@ -385,11 +360,11 @@
 #pragma mark - requset RMAFNRequestManagerDelegate
 
 - (void)startSearchRequest:(NSString *)key {
-    [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+    [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
     [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeBlack];
-    self.request = [[RMAFNRequestManager alloc] init];
-    [self.request getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:@"1" count:@"20"];
-    self.request.delegate = self;
+    self.requestManager = [[RMAFNRequestManager alloc] init];
+    [self.requestManager getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:@"1" count:@"20"];
+    self.requestManager.delegate = self;
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
@@ -413,7 +388,7 @@
             break;
         }
         case 2:{
-            [(RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG] resignFirstResponder];
+            [(RMBaseTextField *)[self.view viewWithTag:101] resignFirstResponder];
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
                 [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
             }
@@ -451,19 +426,6 @@
 - (void)onVolumeChanged: (int)volume {
     if (self.isCanceled) {
         return;
-    }
-    if (volume>=0 && volume <=5){
-        self.voiceImage.image = NULL;
-        self.voiceImage.image = LOADIMAGE([self.onVoiceImgArr objectAtIndex:3], kImageTypePNG);
-    }else if (volume >=6 && volume <=10){
-        self.voiceImage.image = NULL;
-        self.voiceImage.image = LOADIMAGE([self.onVoiceImgArr objectAtIndex:2], kImageTypePNG);
-    }else if (volume >=11 && volume <=15){
-        self.voiceImage.image = NULL;
-        self.voiceImage.image = LOADIMAGE([self.onVoiceImgArr objectAtIndex:1], kImageTypePNG);
-    }else if (volume >= 16 && volume <=100){
-        self.voiceImage.image = NULL;
-        self.voiceImage.image = LOADIMAGE([self.onVoiceImgArr objectAtIndex:0], kImageTypePNG);
     }
 
     NSString * vol = [NSString stringWithFormat:@"音量：%d",volume];
@@ -512,7 +474,6 @@
     }else{
         text = [NSString stringWithFormat:@"发生错误：%d %@",error.errorCode,error.errorDesc];
     }
-    ((UIButton *)[self.view viewWithTag:voiceBtn_TAG]).enabled = YES;
 }
 
 /**
@@ -539,8 +500,7 @@
     
     if (isLast) {
         NSLog(@"听写结果(json)：%@测试",  self.result);
-        //TODO:搜索三
-        ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).text = self.result;
+        ((RMBaseTextField *)[self.view viewWithTag:101]).text = self.result;
         [SVProgressHUD dismiss];
         [self performSelector:@selector(willStartJumpSearchResult) withObject:nil afterDelay:1.0];
     }
@@ -550,7 +510,7 @@
     [self updateUserSearchRecord:self.result];
     [self.searchTableView reloadData];
     [self startSearchRequest:self.result];
-    ((RMBaseTextField *)[self.view viewWithTag:searchTextField_TAG]).enabled = YES;
+    ((RMBaseTextField *)[self.view viewWithTag:101]).enabled = YES;
 }
 
 /**
@@ -563,11 +523,6 @@
 - (void)onCancel {
     NSLog(@"识别取消");
     [SVProgressHUD showSuccessWithStatus:@"取消语音搜索" duration:0.3];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

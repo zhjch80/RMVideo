@@ -8,7 +8,7 @@
 
 #import "RMSearchResultViewController.h"
 #import "PullToRefreshTableView.h"
-#import "RMSearchCell.h"
+#import "RMSearchResultCell.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 
 @interface RMSearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,RMAFNRequestManagerDelegate> {
@@ -85,9 +85,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier = @"RMSearchResultCellIdentifier";
-    RMSearchCell * cell = (RMSearchCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    RMSearchResultCell * cell = (RMSearchResultCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (! cell) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchCell" owner:self options:nil];
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchResultCell" owner:self options:nil];
         cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         cell.backgroundColor = [UIColor clearColor];

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 runmobile. All rights reserved.
 //
 
-#import "RMSearchCell.h"
+#import "RMSearchResultCell.h"
 
-@implementation RMSearchCell
+@implementation RMSearchResultCell
 
 - (void)awakeFromNib {
     // Initialization code

@@ -41,8 +41,8 @@
 		1D2B87CA1A415CE400D8DE35 /* mx_open@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D2B87C61A415CE400D8DE35 /* mx_open@3x.png */; };
 		1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */; };
 		1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */; };
-		1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C881A0748E9000C5C44 /* RMSearchCell.m */; };
-		1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C891A0748E9000C5C44 /* RMSearchCell.xib */; };
+		1D357C8D1A0748E9000C5C44 /* RMSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */; };
+		1D357C8E1A0748E9000C5C44 /* RMSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */; };
 		1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */; };
 		1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */; };
 		1D357C941A076A1C000C5C44 /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */; };
@@ -754,9 +754,9 @@
 		1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchRecordsCell.h; sourceTree = "<group>"; };
 		1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchRecordsCell.m; sourceTree = "<group>"; };
 		1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchRecordsCell.xib; sourceTree = "<group>"; };
-		1D357C871A0748E9000C5C44 /* RMSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchCell.h; sourceTree = "<group>"; };
-		1D357C881A0748E9000C5C44 /* RMSearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchCell.m; sourceTree = "<group>"; };
-		1D357C891A0748E9000C5C44 /* RMSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchCell.xib; sourceTree = "<group>"; };
+		1D357C871A0748E9000C5C44 /* RMSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultCell.h; sourceTree = "<group>"; };
+		1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultCell.m; sourceTree = "<group>"; };
+		1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultCell.xib; sourceTree = "<group>"; };
 		1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultViewController.h; sourceTree = "<group>"; };
 		1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultViewController.m; sourceTree = "<group>"; };
 		1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultViewController.xib; sourceTree = "<group>"; };
@@ -1683,9 +1683,9 @@
 		1D357C861A0748E9000C5C44 /* 搜索结果 */ = {
 			isa = PBXGroup;
 			children = (
-				1D357C871A0748E9000C5C44 /* RMSearchCell.h */,
-				1D357C881A0748E9000C5C44 /* RMSearchCell.m */,
-				1D357C891A0748E9000C5C44 /* RMSearchCell.xib */,
+				1D357C871A0748E9000C5C44 /* RMSearchResultCell.h */,
+				1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */,
+				1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */,
 				1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */,
 				1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */,
 				1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */,
@@ -2446,23 +2446,23 @@
 		1D8480771A03633400A92879 /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1D84807C1A03633400A92879 /* RMBaseView.h */,
+				1D84807D1A03633400A92879 /* RMBaseView.m */,
+				1D8480831A03633400A92879 /* RMImageView.h */,
+				1D8480841A03633400A92879 /* RMImageView.m */,
 				1D8480781A03633400A92879 /* RMBaseLabel.h */,
 				1D8480791A03633400A92879 /* RMBaseLabel.m */,
 				1D84807A1A03633400A92879 /* RMBaseTextField.h */,
 				1D84807B1A03633400A92879 /* RMBaseTextField.m */,
-				1D84807C1A03633400A92879 /* RMBaseView.h */,
-				1D84807D1A03633400A92879 /* RMBaseView.m */,
+				1D49A64A1A2701F10008206A /* RMBaseTextView.h */,
+				1D49A64B1A2701F10008206A /* RMBaseTextView.m */,
 				1D84807E1A03633400A92879 /* RMBaseViewController.h */,
 				1D84807F1A03633400A92879 /* RMBaseViewController.m */,
 				1D8480801A03633400A92879 /* RMDownLoadBaseViewController.h */,
 				1D8480811A03633400A92879 /* RMDownLoadBaseViewController.m */,
 				1D8480821A03633400A92879 /* RMDownLoadBaseViewController.xib */,
-				1D8480831A03633400A92879 /* RMImageView.h */,
-				1D8480841A03633400A92879 /* RMImageView.m */,
 				1D8480851A03633400A92879 /* UIButton+EnlargeEdge.h */,
 				1D8480861A03633400A92879 /* UIButton+EnlargeEdge.m */,
-				1D49A64A1A2701F10008206A /* RMBaseTextView.h */,
-				1D49A64B1A2701F10008206A /* RMBaseTextView.m */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -3914,7 +3914,7 @@
 				1D847F371A0324D000A92879 /* UMShareEditViewController.xib in Resources */,
 				912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */,
 				912C099A19F8D79E006B6305 /* variety_selected.png in Resources */,
-				1D357C8E1A0748E9000C5C44 /* RMSearchCell.xib in Resources */,
+				1D357C8E1A0748E9000C5C44 /* RMSearchResultCell.xib in Resources */,
 				1DD5E5FC1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png in Resources */,
 				91AF406A1A19E6E000FB16FE /* cell_accessoryType_red@3x.png in Resources */,
 				91AF40441A19E4F600FB16FE /* logo_xlkk@3x.png in Resources */,
@@ -4285,7 +4285,7 @@
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
 				1D9CB9C41A1084C800F185B1 /* RMFinishDownViewController.m in Sources */,
 				913D15D21A01E4BB000A50E2 /* SDWebImageDecoder.m in Sources */,
-				1D357C8D1A0748E9000C5C44 /* RMSearchCell.m in Sources */,
+				1D357C8D1A0748E9000C5C44 /* RMSearchResultCell.m in Sources */,
 				1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */,
 				1D4D47BD19D7B41C00E3A50B /* AFSecurityPolicy.m in Sources */,
 				1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */,
