@@ -543,7 +543,7 @@ typedef enum{
  */
 - (void)startDynamicAssociativeSearchRequest:(NSString *)key {
     requestManagerType = requestDynamicAssociativeSearchType;
-    [self.requestManager getDynamicAssociativeSearchWithKeyWord:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [self.requestManager getDynamicAssociativeSearchWithKeyWord:key];
     self.requestManager.delegate = self;
 }
 
