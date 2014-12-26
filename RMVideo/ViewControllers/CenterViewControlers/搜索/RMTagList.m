@@ -99,12 +99,12 @@
         [label setTextAlignment:NSTextAlignmentCenter];
         [label.layer setMasksToBounds:YES];
         
-        label.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1];
-        label.textColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor whiteColor];
+        label.textColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1];
 
 //        [label setShadowColor:TEXT_SHADOW_COLOR];
 //        [label setShadowOffset:TEXT_SHADOW_OFFSET];
-//        [label.layer setCornerRadius:CORNER_RADIUS];
+        [label.layer setCornerRadius:CORNER_RADIUS];
 //        [label.layer setBorderColor:BORDER_COLOR];
 //        [label.layer setBorderWidth: BORDER_WIDTH];
         [self addSubview:label];
