@@ -10,7 +10,6 @@
 #import "RMImageView.h"
 #import "RMBaseTextField.h"
 #import "RMSearchRecordsCell.h"
-#import "RMSearchResultViewController.h"
 #import "RMCustomNavViewController.h"
 #import "RMCustomPresentNavViewController.h"
 #import "RMTagList.h"
@@ -34,9 +33,17 @@
 
 #define kMaxLength 20
 
-@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate,RefreshControlDelegate>{
+typedef enum{
+    requestSearchType = 1,                  //搜索
+    requestDynamicAssociativeSearchType     //动态联想搜索
+}RequestManagerType;
+
+@interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate,RefreshControlDelegate,SearchResultDelegate>{
     NSMutableArray * recordsDataArr;            //搜索记录的Arr
     NSMutableArray * resultDataArr;             //搜索结果的Arr
+    RequestManagerType requestManagerType;      //请求类型
+    NSInteger pageCount;                        //分页
+    BOOL isRefresh;                             //是否刷新
 }
 @property (nonatomic, strong) UITableView * searchTableView;                        //默认搜索的tableView
 @property (nonatomic, strong) UITableView * displayResultTableView;                 //搜索结果的tableView
@@ -83,6 +90,16 @@
     [_iFlySpeechRecognizer setDelegate: self];
     self.onResult = @"";
     self.result = @"";
+    
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSMutableArray * arr = [[NSMutableArray alloc] initWithArray:[storage objectForKey:UserSearchRecordData_KEY]];
+    recordsDataArr = arr;
+    if (recordsDataArr.count > 2){
+        self.isDisplayMoreRecords = YES;
+    }else{
+        self.isDisplayMoreRecords = NO;
+    }
+    [self.searchTableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -93,7 +110,10 @@
     resultDataArr = [[NSMutableArray alloc] init];
     self.result = @"";
     self.onResult = @"";
-    
+    pageCount = 1;
+    isRefresh = YES;
+    self.requestManager = [[RMAFNRequestManager alloc] init];
+
     leftBarButton.hidden = YES;
     rightBarButton.hidden = YES;
     
@@ -151,7 +171,10 @@
                                               object:self.searchTextField];
 }
 
--(void)textFiledEditChanged:(NSNotification *)obj{
+/**
+ *  限制输入长度 kMaxLength ＝ 20
+ */
+- (void)textFiledEditChanged:(NSNotification *)obj {
     UITextField *textField = (UITextField *)obj.object;
     NSString *toBeString = textField.text;
     NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage]; // 键盘输入模式
@@ -176,6 +199,14 @@
             textField.text = [toBeString substringToIndex:kMaxLength];
         }
     }
+    
+    NSLog(@"toBeString:%d   toBeString:%@",toBeString.length,toBeString);
+    if (toBeString.length == 0){ //显示默认搜索界面
+        self.searchTableView.hidden = NO;
+        self.displayResultTableView.hidden = YES;
+    }else{ //显示搜索结果界面 启动联想搜索接口
+        [self startDynamicAssociativeSearchRequest:textField.text];
+    }
 }
 
 /**
@@ -196,8 +227,7 @@
     self.displayResultTableView.hidden = YES;
     self.displayResultTableView.delegate = self;
     self.displayResultTableView.dataSource = self;
-    self.displayResultTableView.backgroundColor = [UIColor brownColor];
-    self.displayResultTableView.tag = 202;
+    self.displayResultTableView.backgroundColor = [UIColor clearColor];
     self.displayResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.displayResultTableView];
     
@@ -211,35 +241,18 @@
 
 - (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
     if (direction == RefreshDirectionTop) { //下拉刷新
-        
-
+        isRefresh = YES;
+        pageCount = 1;
+        [self startSearchRequest:self.searchTextField.text];
     }else if(direction == RefreshDirectionBottom) { //上拉加载
-
-    }
-    
-    
-    __weak typeof(self)weakSelf=self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(weakSelf)strongSelf=weakSelf;
-        [strongSelf reloadData];
-    });
-}
-
--(void)reloadData {
-    //do something ...
-    
-    [self.displayResultTableView reloadData];
-    
-    if (self.refreshControl.refreshingDirection == RefreshingDirectionTop) {
-        [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
-    }else if(self.refreshControl.refreshingDirection==RefreshingDirectionBottom) {
-        [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+        isRefresh = NO;
+        pageCount ++;
+        [self startSearchRequest:self.searchTextField.text];
     }
 }
 
 - (void)loadDefaultView {
     self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
-    self.searchTableView.tag = 201;
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     self.searchTableView.backgroundColor = [UIColor clearColor];
@@ -278,6 +291,10 @@
         return ;
     }else {
         [SVProgressHUD dismiss];
+        if (self.searchTextField.text.length == 0){
+            [SVProgressHUD showErrorWithStatus:@"输入内容为空" duration:1.0];
+            return ;
+        }
         [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
         [self updateUserSearchRecord:self.searchTextField.text];
         [self.searchTableView reloadData];
@@ -324,6 +341,10 @@
         return NO;
     }else{
         [SVProgressHUD dismiss];
+        if (self.searchTextField.text.length == 0){
+            [SVProgressHUD showErrorWithStatus:@"输入内容为空" duration:1.0];
+            return NO;
+        }
         [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
         [self updateUserSearchRecord:textField.text];
         [self.searchTableView reloadData];
@@ -419,17 +440,35 @@
             return cell;
         }
 
-    }else{//显示搜索结果
-        static NSString * CellIdentifier = @"RMSearchResultCellIdentifier";
-        RMSearchResultCell * cell = (RMSearchResultCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (! cell) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchResultCell" owner:self options:nil];
-            cell = [array objectAtIndex:0];
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.backgroundColor = [UIColor clearColor];
+    }else{//显示搜索结果   或者  显示动态搜索结果
+        if (requestManagerType == requestSearchType){
+            static NSString * CellIdentifier = @"RMSearchResultCellIdentifier";
+            RMSearchResultCell * cell = (RMSearchResultCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (! cell) {
+                NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"RMSearchResultCell" owner:self options:nil];
+                cell = [array objectAtIndex:0];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.backgroundColor = [UIColor clearColor];
+                cell.delegate = self;
+            }
+            cell.DirectBroadcastBtn.tag = indexPath.row;
+            [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"pic"]] placeholderImage:LOADIMAGE(@"Default85_135", kImageTypePNG)];
+            cell.name.text = [[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+            [cell.searchFirstRateView setImagesDeselected:@"mx_rateEmpty_img" partlySelected:@"mx_rateEmpty_img" fullSelected:@"mx_rateFull_img" andDelegate:nil];
+            [cell.searchFirstRateView displayRating:[[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"gold"] integerValue]];
+            cell.hits.text = [NSString stringWithFormat:@"播放:%@次",[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"hits"]];
+            return cell;
+        }else{
+            static NSString * CellIdentifier = @"RMDynamicAssociativeCellIdentifier";
+            UITableViewCell * cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (! cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                cell.backgroundColor = [UIColor clearColor];
+            }
+            cell.textLabel.text = [[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+            return cell;
         }
-        cell.hits.text = [NSString stringWithFormat:@"点击量:%@",[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"hits"]];
-        return cell;
     }
 }
 
@@ -437,7 +476,11 @@
     if (tableView == self.searchTableView){
         return 44;
     }else{
-        return 155;
+        if (requestManagerType == requestSearchType){
+            return 155;
+        }else{
+            return 30;
+        }
     }
 }
 
@@ -450,10 +493,22 @@
         NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
         [SVProgressHUD dismiss];
         [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        self.searchTextField.text = str;
         [self startSearchRequest:str];
     }else{
-        
+        if (requestManagerType == requestSearchType){ //目标搜索
+            NSLog(@"SearchResult:%d",indexPath.row);
+        }else{ //联想搜索
+            NSLog(@"DynamicAssociative:%@",[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"name"]);
+        }
     }
+}
+
+/**
+ *  直接播放 事件
+ */
+- (void)DirectBroadcastMethodWithValue:(NSInteger)value {
+    NSLog(@"value:%d",value);
 }
 
 /**
@@ -483,28 +538,61 @@
 
 #pragma mark - requset RMAFNRequestManagerDelegate
 
+/**
+ *  动态联想搜索
+ */
+- (void)startDynamicAssociativeSearchRequest:(NSString *)key {
+    requestManagerType = requestDynamicAssociativeSearchType;
+    [self.requestManager getDynamicAssociativeSearchWithKeyWord:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    self.requestManager.delegate = self;
+}
+
+/**
+ *  目标搜索
+ */
 - (void)startSearchRequest:(NSString *)key {
     [self.searchTextField resignFirstResponder];
     [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeBlack];
-    self.requestManager = [[RMAFNRequestManager alloc] init];
-    [self.requestManager getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:@"1" count:@"20"];
+    requestManagerType = requestSearchType;
+    [self.requestManager getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
     self.requestManager.delegate = self;
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    [SVProgressHUD dismiss];
-    self.searchTableView.hidden = YES;
-    self.displayResultTableView.hidden = NO;
-    
-    self.publicModel = [data objectAtIndex:0];
-    resultDataArr = [NSMutableArray arrayWithArray:self.publicModel.video_list];
-    [self.displayResultTableView reloadData];
-    
-//    RMSearchResultViewController * searchResultCtl = [[RMSearchResultViewController alloc] init];
-//    searchResultCtl.resultData = data;
-//    RMCustomPresentNavViewController * searchResultNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:searchResultCtl];
-//    [self presentViewController:searchResultNav animated:YES completion:^{
-//    }];
+    if (requestManagerType == requestSearchType){ //目标搜索
+        [SVProgressHUD dismiss];
+        self.refreshControl.topEnabled = YES;
+        self.refreshControl.bottomEnabled = YES;
+        self.searchTableView.hidden = YES;
+        self.displayResultTableView.hidden = NO;
+        self.publicModel = [data objectAtIndex:0];
+
+        if (self.publicModel.video_list.count == 0){
+            [SVProgressHUD showErrorWithStatus:@"没有获取到你想要的内容" duration:1.0];
+        }
+            
+        if (isRefresh){
+            [resultDataArr removeAllObjects];
+            resultDataArr = [NSMutableArray arrayWithArray:self.publicModel.video_list];
+            [self.displayResultTableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
+        }else{
+            for (int i=0; i<self.publicModel.video_list.count; i++) {
+                [resultDataArr addObject:[self.publicModel.video_list objectAtIndex:i]];
+            }
+            [self.displayResultTableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+        }
+    }else{ //联想搜索
+        self.refreshControl.topEnabled = NO;
+        self.refreshControl.bottomEnabled = NO;
+        self.searchTableView.hidden = YES;
+        self.displayResultTableView.hidden = NO;
+        self.publicModel = [data objectAtIndex:0];
+        NSLog(@"self.publicModel.DynamicAssociativeArr:%@",self.publicModel.DynamicAssociativeArr);
+        resultDataArr = [NSMutableArray arrayWithArray:self.publicModel.DynamicAssociativeArr];
+        [self.displayResultTableView reloadData];
+    }
 }
 
 - (void)requestError:(NSError *)error {

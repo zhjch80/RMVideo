@@ -48,8 +48,7 @@
 @property (nonatomic, strong) NSMutableArray * star_list;               //明星列表
 @property (nonatomic, strong) NSMutableArray * video_list;              //视频列表
 @property (nonatomic, strong) NSString * message;                       //请求返回信息
-
-
+@property (nonatomic, strong) NSMutableArray * DynamicAssociativeArr;   //动态搜索返回的数据
 
 
 @property (nonatomic)BOOL isTVModel;

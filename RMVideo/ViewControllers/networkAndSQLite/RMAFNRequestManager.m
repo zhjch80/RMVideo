@@ -131,7 +131,10 @@
             strUrl = [NSString stringWithFormat:@"%@about?",baseUrl];
             break;
         }
-            
+        case Http_getSearchTips:{
+            strUrl = [NSString stringWithFormat:@"%@getSearchTips?",baseUrl];
+            break;
+        }
         default:{
             strUrl = nil;
         }
@@ -655,6 +658,30 @@ void checkTheNetworkConnection(NSString *title){
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         checkTheNetworkConnection(@"提交失败");
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 联想动态搜索
+
+- (void)getDynamicAssociativeSearchWithKeyWord:(NSString *)string {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getSearchTips];
+    url = [NSString stringWithFormat:@"%@word=%@",url,string];
+    NSLog(@"url:%@",url);
+    url = [self encryptUrl:url];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"responseObject:%@",responseObject);
+        NSMutableArray *dataArray = [NSMutableArray array];
+        RMPublicModel * model = [[RMPublicModel alloc] init];
+        model.DynamicAssociativeArr = [responseObject objectForKey:@"data"];
+        [dataArray addObject:model];
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:dataArray];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }

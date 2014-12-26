@@ -164,6 +164,11 @@ typedef enum{
 - (void)postUserFeedbackWithToken:(NSString *)token andFeedBackString:(NSString *)string;
 
 /**
+ *  联想动态搜索
+ */
+- (void)getDynamicAssociativeSearchWithKeyWord:(NSString *)string;
+
+/**
  *  搜索
  *
  *  @param string 输入的关键字

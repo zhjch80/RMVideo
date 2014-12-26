@@ -8,14 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "RatingView.h"
+
+@protocol SearchResultDelegate <NSObject>
+
+- (void)DirectBroadcastMethodWithValue:(NSInteger)value;
+
+@end
 @interface RMSearchResultCell : UITableViewCell
 
+@property (assign ,nonatomic) id<SearchResultDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *hits;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UIImageView *headImg;
 @property (weak, nonatomic) IBOutlet RatingView *searchFirstRateView;
+@property (weak, nonatomic) IBOutlet UIButton *DirectBroadcastBtn;
 
-@property (weak, nonatomic) IBOutlet UILabel *type;
+- (IBAction)DirectBroadcastClick:(UIButton *)sender;
 
 @end

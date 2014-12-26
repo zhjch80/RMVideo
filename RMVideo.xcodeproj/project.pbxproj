@@ -49,10 +49,6 @@
 		1D2B87CA1A415CE400D8DE35 /* mx_open@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D2B87C61A415CE400D8DE35 /* mx_open@3x.png */; };
 		1D357C7F1A071B4D000C5C44 /* RMSearchRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */; };
 		1D357C801A071B4D000C5C44 /* RMSearchRecordsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */; };
-		1D357C8D1A0748E9000C5C44 /* RMSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */; };
-		1D357C8E1A0748E9000C5C44 /* RMSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */; };
-		1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */; };
-		1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */; };
 		1D357C941A076A1C000C5C44 /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */; };
 		1D357CC41A0A1CDF000C5C44 /* vd_collectionRedImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357CBE1A0A1CDF000C5C44 /* vd_collectionRedImg.png */; };
 		1D357CC51A0A1CDF000C5C44 /* vd_collectionRedImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D357CBF1A0A1CDF000C5C44 /* vd_collectionRedImg@2x.png */; };
@@ -297,6 +293,8 @@
 		1D8481A71A03633400A92879 /* LeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D84813A1A03633400A92879 /* LeftMenuViewController.xib */; };
 		1D8481AA1A03633400A92879 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8481421A03633400A92879 /* RightMenuViewController.m */; };
 		1D8481AB1A03633400A92879 /* RightMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8481431A03633400A92879 /* RightMenuViewController.xib */; };
+		1D921C3D1A4D24040075512B /* RMSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D921C3B1A4D24040075512B /* RMSearchResultCell.m */; };
+		1D921C3E1A4D24040075512B /* RMSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D921C3C1A4D24040075512B /* RMSearchResultCell.xib */; };
 		1D99741B19E90814007E53DB /* SDiPhoneVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99741A19E90814007E53DB /* SDiPhoneVersion.m */; };
 		1D99745C19E92D62007E53DB /* DBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99745519E92D62007E53DB /* DBImage.m */; };
 		1D99745D19E92D62007E53DB /* DBImageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D99745719E92D62007E53DB /* DBImageRequest.m */; };
@@ -775,12 +773,6 @@
 		1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchRecordsCell.h; sourceTree = "<group>"; };
 		1D357C7D1A071B4D000C5C44 /* RMSearchRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchRecordsCell.m; sourceTree = "<group>"; };
 		1D357C7E1A071B4D000C5C44 /* RMSearchRecordsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchRecordsCell.xib; sourceTree = "<group>"; };
-		1D357C871A0748E9000C5C44 /* RMSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultCell.h; sourceTree = "<group>"; };
-		1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultCell.m; sourceTree = "<group>"; };
-		1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultCell.xib; sourceTree = "<group>"; };
-		1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultViewController.h; sourceTree = "<group>"; };
-		1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultViewController.m; sourceTree = "<group>"; };
-		1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultViewController.xib; sourceTree = "<group>"; };
 		1D357C921A076A1C000C5C44 /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
 		1D357C931A076A1C000C5C44 /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
 		1D357CBE1A0A1CDF000C5C44 /* vd_collectionRedImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vd_collectionRedImg.png; sourceTree = "<group>"; };
@@ -1150,6 +1142,9 @@
 		1D8481411A03633400A92879 /* RightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightMenuViewController.h; sourceTree = "<group>"; };
 		1D8481421A03633400A92879 /* RightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightMenuViewController.m; sourceTree = "<group>"; };
 		1D8481431A03633400A92879 /* RightMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightMenuViewController.xib; sourceTree = "<group>"; };
+		1D921C3A1A4D24040075512B /* RMSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSearchResultCell.h; sourceTree = "<group>"; };
+		1D921C3B1A4D24040075512B /* RMSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSearchResultCell.m; sourceTree = "<group>"; };
+		1D921C3C1A4D24040075512B /* RMSearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMSearchResultCell.xib; sourceTree = "<group>"; };
 		1D99741919E90814007E53DB /* SDiPhoneVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDiPhoneVersion.h; sourceTree = "<group>"; };
 		1D99741A19E90814007E53DB /* SDiPhoneVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDiPhoneVersion.m; sourceTree = "<group>"; };
 		1D99745419E92D62007E53DB /* DBImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBImage.h; sourceTree = "<group>"; };
@@ -1735,19 +1730,6 @@
 				1D1C233F1A4BD93A007D5AEF /* CustomRefreshView.m */,
 			);
 			path = CustomRefreshView;
-			sourceTree = "<group>";
-		};
-		1D357C861A0748E9000C5C44 /* 搜索结果 */ = {
-			isa = PBXGroup;
-			children = (
-				1D357C871A0748E9000C5C44 /* RMSearchResultCell.h */,
-				1D357C881A0748E9000C5C44 /* RMSearchResultCell.m */,
-				1D357C891A0748E9000C5C44 /* RMSearchResultCell.xib */,
-				1D357C8A1A0748E9000C5C44 /* RMSearchResultViewController.h */,
-				1D357C8B1A0748E9000C5C44 /* RMSearchResultViewController.m */,
-				1D357C8C1A0748E9000C5C44 /* RMSearchResultViewController.xib */,
-			);
-			path = "搜索结果";
 			sourceTree = "<group>";
 		};
 		1D357C911A076A0F000C5C44 /* PulsingHalo */ = {
@@ -2675,7 +2657,9 @@
 		1D8480B71A03633400A92879 /* 搜索 */ = {
 			isa = PBXGroup;
 			children = (
-				1D357C861A0748E9000C5C44 /* 搜索结果 */,
+				1D921C3A1A4D24040075512B /* RMSearchResultCell.h */,
+				1D921C3B1A4D24040075512B /* RMSearchResultCell.m */,
+				1D921C3C1A4D24040075512B /* RMSearchResultCell.xib */,
 				1D8480BF1A03633400A92879 /* RMHistoricalRecordsView.h */,
 				1D8480C01A03633400A92879 /* RMHistoricalRecordsView.m */,
 				1D357C7C1A071B4D000C5C44 /* RMSearchRecordsCell.h */,
@@ -3885,7 +3869,6 @@
 				1D4C35FC19F5F91800AC8F1E /* tv_download.png in Resources */,
 				91AF40581A19E5CA00FB16FE /* backup_img@3x.png in Resources */,
 				1DD8C8DB1A19B67B00D4B128 /* RecommendedDaily_red_6.png in Resources */,
-				1D357C901A0748E9000C5C44 /* RMSearchResultViewController.xib in Resources */,
 				1DB8E2C11A1DB82C008ADB78 /* vd_loadImg.png in Resources */,
 				91365BBB1A43BB0400995E45 /* red_@2x.png in Resources */,
 				919E207C1A1B489D00EB13F0 /* downLoading_noselectImage.png in Resources */,
@@ -3899,6 +3882,7 @@
 				1D357CC41A0A1CDF000C5C44 /* vd_collectionRedImg.png in Resources */,
 				1D4C35FB19F5F91800AC8F1E /* rotating_img@2x.png in Resources */,
 				91908CD519FA39BF00C3DF09 /* select_cellImage@2x.png in Resources */,
+				1D921C3E1A4D24040075512B /* RMSearchResultCell.xib in Resources */,
 				91365BBF1A43BB0400995E45 /* redbg_@3x.png in Resources */,
 				1DB8E2C21A1DB82C008ADB78 /* vd_loadImg@2x.png in Resources */,
 				1D847F341A0324D000A92879 /* UMSCommentDetailController.xib in Resources */,
@@ -3971,7 +3955,6 @@
 				1D847F371A0324D000A92879 /* UMShareEditViewController.xib in Resources */,
 				912C099E19F8ECC1006B6305 /* file_before_Image@2x.png in Resources */,
 				912C099A19F8D79E006B6305 /* variety_selected.png in Resources */,
-				1D357C8E1A0748E9000C5C44 /* RMSearchResultCell.xib in Resources */,
 				1DD5E5FC1A1B2F0C00FCBC11 /* pd_accessoryType_gray@3x.png in Resources */,
 				91AF406A1A19E6E000FB16FE /* cell_accessoryType_red@3x.png in Resources */,
 				91AF40441A19E4F600FB16FE /* logo_xlkk@3x.png in Resources */,
@@ -4258,6 +4241,7 @@
 				1D1C3C921A3ECB7600B70C82 /* RMTagList.m in Sources */,
 				1D357D361A0B2381000C5C44 /* DAAutoScrollView.m in Sources */,
 				1D84815C1A03633400A92879 /* RMMyChannelCell.m in Sources */,
+				1D921C3D1A4D24040075512B /* RMSearchResultCell.m in Sources */,
 				913D15D11A01E4BB000A50E2 /* SDWebImageCompat.m in Sources */,
 				1D4D47B619D7B41C00E3A50B /* NSString+Base64.m in Sources */,
 				1D99745D19E92D62007E53DB /* DBImageRequest.m in Sources */,
@@ -4337,7 +4321,6 @@
 				1D84819E1A03633400A92879 /* RMMoreAPPTableViewCell.m in Sources */,
 				1DA929861A41838D0033690F /* RMModel.m in Sources */,
 				1D4D476619D7AAD900E3A50B /* main.m in Sources */,
-				1D357C8F1A0748E9000C5C44 /* RMSearchResultViewController.m in Sources */,
 				1D9CB9CA1A1084F200F185B1 /* RMDownLoadingTableViewCell.m in Sources */,
 				1D4D47BA19D7B41C00E3A50B /* AFHTTPSessionManager.m in Sources */,
 				1D99745F19E92D62007E53DB /* DBImageViewCache.m in Sources */,
@@ -4349,7 +4332,6 @@
 				1DAB0CF419EB634D0063A58E /* ViewPagerController.m in Sources */,
 				1D9CB9C41A1084C800F185B1 /* RMFinishDownViewController.m in Sources */,
 				913D15D21A01E4BB000A50E2 /* SDWebImageDecoder.m in Sources */,
-				1D357C8D1A0748E9000C5C44 /* RMSearchResultCell.m in Sources */,
 				1DD2BFEE19D919950073D9F8 /* AFSoundManager.m in Sources */,
 				1D4D47BD19D7B41C00E3A50B /* AFSecurityPolicy.m in Sources */,
 				1D4D47F619D7B42800E3A50B /* JDStatusBarView.m in Sources */,

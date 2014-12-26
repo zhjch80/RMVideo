@@ -20,4 +20,10 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)DirectBroadcastClick:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(DirectBroadcastMethodWithValue:)]){
+        [self.delegate DirectBroadcastMethodWithValue:sender.tag];
+    }
+}
+
 @end
