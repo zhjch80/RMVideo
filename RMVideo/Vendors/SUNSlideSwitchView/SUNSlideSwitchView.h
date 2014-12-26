@@ -12,7 +12,7 @@
 @interface SUNSlideSwitchView : UIView<UIScrollViewDelegate>
 {
     UIScrollView *_rootScrollView;                  //主视图
-    UIScrollView *_topScrollView;                   //顶部页签视图
+    UIView *_topScrollView;                   //顶部页签视图
     
     CGFloat _userContentOffsetX;
     BOOL _isLeftScroll;                             //是否左滑动
@@ -31,15 +31,14 @@
 }
 
 @property (nonatomic, strong) UIScrollView *rootScrollView;
-@property (nonatomic, strong) UIScrollView *topScrollView;
+@property (nonatomic, strong) UIView *topScrollView;
 @property (nonatomic, assign) CGFloat userContentOffsetX;
 @property (nonatomic, assign) NSInteger userSelectedChannelID;
 @property (nonatomic, assign) NSInteger scrollViewSelectedChannelID;
 @property (nonatomic, weak)  id<SUNSlideSwitchViewDelegate> slideSwitchViewDelegate;
 @property (nonatomic, strong) NSMutableArray *viewArray;
 @property (nonatomic, strong) UIButton *rigthSideButton;
-@property (nonatomic, strong) NSMutableArray * BGImgArr;
-@property (nonatomic, strong) NSMutableArray * SelectBtnImageArray;
+@property (nonatomic, strong) NSMutableArray *btnTitleArray;
 @property (nonatomic ,assign) CGFloat btnWidth;
 @property (nonatomic ,assign) CGFloat btnHeight;
 

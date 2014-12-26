@@ -26,16 +26,11 @@
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     
     sunSliderSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-69)];
+    sunSliderSwitchView.btnTitleArray = [NSMutableArray arrayWithObjects:@"已缓存",@"缓存中", nil];
     sunSliderSwitchView.slideSwitchViewDelegate = self;
-    //downLoading_noselectImage  downLoading_selectImage finish_downLoad_noselectImage finish_downLoad_selectImage
-    sunSliderSwitchView.BGImgArr = [NSMutableArray arrayWithObjects:@"finish_downLoad_noselectImage",@"downLoading_noselectImage",nil];
-    sunSliderSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"finish_downLoad_selectImage",@"downLoading_selectImage", nil];
     downLoadingViewContr = [[RMDownLoadingViewController shared] init];
-//    __unsafe_unretained RMMyDownLoadViewController *weekSelf = self;
     downLoadingViewContr.myDownLoadDelegate = self;
     [downLoadingViewContr selectTableViewCellWithIndex:^(NSInteger index) {
-//        RMDownLoadTVSeriesDetailViewController *TVSeriesDetailView = [[RMDownLoadTVSeriesDetailViewController alloc] init];
-//        [weekSelf.navigationController pushViewController:TVSeriesDetailView animated:YES];
     }];
     [downLoadingViewContr delectCellArray:^(NSMutableArray *array) {
         UIButton *button = (UIButton *)[btnView viewWithTag:11];

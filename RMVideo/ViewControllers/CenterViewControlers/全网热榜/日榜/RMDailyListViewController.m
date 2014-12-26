@@ -40,9 +40,6 @@
     _slideSwitchView.slideSwitchViewDelegate = self;
     [self.view addSubview:_slideSwitchView];
     
-    _slideSwitchView.BGImgArr = [NSMutableArray arrayWithObjects:@"movie_unSelected",@"teleplay_unSelected",@"variety_unSelected",nil];
-    _slideSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"movie_selected",@"teleplay_selected",@"variety_selected", nil];
-    
     _starFilmListCtl = [[RMDailyMovieViewController alloc] init];
     _starFilmListCtl.delegate = self;
     _starFilmListCtl.downLoadTopType = self.topType;
