@@ -35,9 +35,6 @@
     _slideSwitchView.slideSwitchViewDelegate = self;
     [self.view addSubview:_slideSwitchView];
     
-    _slideSwitchView.BGImgArr = [NSMutableArray arrayWithObjects:@"movie_unSelected",@"teleplay_unSelected",@"variety_unSelected",nil];
-    _slideSwitchView.SelectBtnImageArray = [NSMutableArray arrayWithObjects:@"movie_selected",@"teleplay_selected",@"variety_selected", nil];
-    
     _starFilmListCtl = [[RMShouldSeeMovieViewController alloc] init];
     _starFilmListCtl.myChannelShouldDelegate = self;
     _starFilmListCtl.downLoadID = self.downLoadID;
