@@ -100,6 +100,7 @@
 {
     if (direction==RefreshDirectionTop)
     {
+        [SVProgressHUD showWithStatus:@"加载中..."];
         RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
         manager.delegate = self;
         [manager getTopListWithVideoTpye:@"2" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
