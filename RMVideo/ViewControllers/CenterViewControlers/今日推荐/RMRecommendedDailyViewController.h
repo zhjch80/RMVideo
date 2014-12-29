@@ -8,11 +8,12 @@
 
 #import "RMBaseViewController.h"
 #import "RMRecommendedDailyTableViewCell.h"
-#import "PullToRefreshTableView.h"
+#import "RefreshControl.h"
 
-@interface RMRecommendedDailyViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource,RecommendedDailyTableViewCellDelegate>
+@interface RMRecommendedDailyViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource,RecommendedDailyTableViewCellDelegate,RefreshControlDelegate>
 {
-    PullToRefreshTableView *mainTableVeiew;
+    UITableView *mainTableVeiew;
+    RefreshControl * refreshControl;
     NSMutableArray *dataArray;
     NSArray *cellHeadStringArray;
     NSMutableArray *CellScrollimageArray;

@@ -47,13 +47,14 @@
     self.title = @"今日推荐";
     cellHeadStringArray = [NSArray arrayWithObjects:@"电影",@"电视剧",@"综艺", nil];
     
-    mainTableVeiew = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-49-44)];
+    mainTableVeiew = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight-49-44)style:UITableViewStylePlain];
     mainTableVeiew.backgroundColor = [UIColor clearColor];
     mainTableVeiew.delegate = self;
     mainTableVeiew.dataSource = self;
     mainTableVeiew.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [mainTableVeiew setIsCloseFooter:YES];
-    [mainTableVeiew setTableViewFootNil];
+    refreshControl=[[RefreshControl alloc] initWithScrollView:mainTableVeiew delegate:self];
+    refreshControl.topEnabled=YES;
+    refreshControl.bottomEnabled=NO;
     [self.view addSubview:mainTableVeiew];
     
     [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
@@ -104,57 +105,16 @@
     }
     return 0;
 }
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [mainTableVeiew tableViewDidDragging];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewDidEndDecelerating" object:nil];
-    NSInteger returnKey = [mainTableVeiew tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction
+{
+    if (direction==RefreshDirectionTop)
+    {
+        [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+        RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+        manager.delegate = self;
+        [manager getDailyRecommend];
     }
 }
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            
-        }
-            break;
-        case k_RETURN_REFRESH://刷新
-        {
-            [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
-            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
-            manager.delegate = self;
-            [manager getDailyRecommend];
-        }
-            break;
-        case k_RETURN_LOADMORE://加载更多
-        {
-            
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
-
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tableViewWillBeginDragging" object:nil];
 }
@@ -255,14 +215,16 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    [refreshControl finishRefreshingDirection:RefreshDirectionTop];
+    [dataArray removeAllObjects];
     dataArray = data;
     [mainTableVeiew reloadData];
     [SVProgressHUD dismiss];
-    [mainTableVeiew reloadData:NO];
+    [mainTableVeiew reloadData];
 }
 
 - (void)requestError:(NSError *)error{
-    [mainTableVeiew reloadData:NO];
+   
 }
 
 #pragma mark - Animation 广告展示页面
