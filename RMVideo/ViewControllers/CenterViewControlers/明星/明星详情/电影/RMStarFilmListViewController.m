@@ -73,9 +73,17 @@
         pageCount = 0;
         [self startRequest];
     }else if(direction == RefreshDirectionBottom) { //上拉加载
-        isRefresh = NO;
-        pageCount ++;
-        [self startRequest];
+        if (pageCount * 12 + 12 > AltogetherRows){
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.44 * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+            });
+        }else{
+            pageCount ++;
+            isRefresh = NO;
+            [self startRequest];
+        }
     }
 }
 
@@ -130,7 +138,6 @@
 
     
     if (indexPath.row * 3 + 1 < [dataArr count]){
-        
         RMPublicModel *model_center = [dataArr objectAtIndex:indexPath.row*3 + 1];
         [cell.secondLable loadTextViewWithString:model_center.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.secondLable startScrolling];
@@ -145,7 +152,6 @@
 
     
     if (indexPath.row * 3 + 2 < [dataArr count]){
-        
         RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.threeLable startScrolling];
@@ -200,19 +206,33 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    RMPublicModel * model = [data objectAtIndex:0];
-    AltogetherRows = [model.rows integerValue];
-    if (isRefresh){
+    if (self.refreshControl.refreshingDirection==RefreshingDirectionTop) {
+        RMPublicModel * model = [data objectAtIndex:0];
+        AltogetherRows = [model.rows integerValue];
         dataArr = data;
         [self.mTableView reloadData];
         [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
-    }else{
+    }else if(self.refreshControl.refreshingDirection==RefreshingDirectionBottom) {
+        if (data.count == 0){
+            [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+            return;
+        }
+        RMPublicModel * model = [data objectAtIndex:0];
+        AltogetherRows = [model.rows integerValue];
         for (int i=0; i<data.count; i++) {
             RMPublicModel * model = [data objectAtIndex:i];
             [dataArr addObject:model];
         }
         [self.mTableView reloadData];
         [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+    }
+    
+    if (isRefresh){
+        RMPublicModel * model = [data objectAtIndex:0];
+        AltogetherRows = [model.rows integerValue];
+        dataArr = data;
+        [self.mTableView reloadData];
     }
 }
 
