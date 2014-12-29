@@ -112,6 +112,7 @@
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, label.frame.size.height);
         button.backgroundColor = [UIColor clearColor];
+        button.titleLabel.text = text;
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = value+10;
         [self addSubview:button];
@@ -125,8 +126,8 @@
 }
 
 - (void)buttonClick:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(clickTagWithValue:)]) {
-        [self.delegate clickTagWithValue:sender.tag];
+    if ([self.delegate respondsToSelector:@selector(clickTagWithTitle:)]) {
+        [self.delegate clickTagWithTitle:sender.titleLabel.text];
     }
 }
 

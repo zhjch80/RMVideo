@@ -18,6 +18,7 @@
 #import "CustomRefreshView.h"
 #import "RMSearchResultCell.h"
 #import "UIButton+EnlargeEdge.h"
+#import "RMVideoPlaybackDetailsViewController.h"
 
 //语音
 #import "iflyMSC/IFlySpeechRecognizerDelegate.h"
@@ -76,6 +77,7 @@ typedef enum{
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
     [Flurry logEvent:@"VIEW_Search" timed:YES];
 }
 
@@ -108,8 +110,6 @@ typedef enum{
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.hidden = YES;
-
     recordsDataArr = [[NSMutableArray alloc] init];
     resultDataArr = [[NSMutableArray alloc] init];
     searchRecommendArr = [[NSMutableArray alloc] init];
@@ -377,8 +377,14 @@ typedef enum{
 /**
  *  点击全网热榜推荐标签的事件
  */
-- (void)clickTagWithValue:(int)value {
-    NSLog(@"value:%d",value);
+- (void)clickTagWithTitle:(NSString *)title {
+    for (int i=0; i<[searchRecommendArr count]; i++){
+        if ([title isEqualToString:[[searchRecommendArr objectAtIndex:i] objectForKey:@"name"]]){
+            RMVideoPlaybackDetailsViewController *videoPlay = [[RMVideoPlaybackDetailsViewController alloc] init];
+            videoPlay.currentVideo_id = [NSString stringWithFormat:@"%@",[[searchRecommendArr objectAtIndex:i] objectForKey:@"id"]];
+            [self.navigationController pushViewController:videoPlay animated:YES];
+        }
+    }
 }
 
 /**
