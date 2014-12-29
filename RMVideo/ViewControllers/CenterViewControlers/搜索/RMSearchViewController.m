@@ -308,7 +308,7 @@ typedef enum{
             [SVProgressHUD showErrorWithStatus:@"输入内容为空" duration:1.0];
             return ;
         }
-        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeClear];
         [self updateUserSearchRecord:self.searchTextField.text];
         [self.searchTableView reloadData];
         [self startSearchRequest:self.searchTextField.text];
@@ -358,7 +358,7 @@ typedef enum{
             [SVProgressHUD showErrorWithStatus:@"输入内容为空" duration:1.0];
             return NO;
         }
-        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeClear];
         [self updateUserSearchRecord:textField.text];
         [self.searchTableView reloadData];
         [self startSearchRequest:textField.text];
@@ -511,7 +511,7 @@ typedef enum{
         }
         NSString * str = [NSString stringWithFormat:@"%@",[AESCrypt decrypt:[recordsDataArr objectAtIndex:indexPath.row] password:PASSWORD]];
         [SVProgressHUD dismiss];
-        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"搜索中..." maskType:SVProgressHUDMaskTypeClear];
         self.searchTextField.text = str;
         [self startSearchRequest:str];
     }else{
@@ -580,7 +580,7 @@ typedef enum{
  */
 - (void)startSearchRequest:(NSString *)key {
     [self.searchTextField resignFirstResponder];
-    [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"正在搜索" maskType:SVProgressHUDMaskTypeClear];
     requestManagerType = requestSearchType;
     [self.requestManager getSearchVideoWithKeyword:[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] Page:[NSString stringWithFormat:@"%d",pageCount] count:@"20"];
     self.requestManager.delegate = self;

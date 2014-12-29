@@ -92,7 +92,7 @@ typedef enum{
     [self showEmptyViewWithImage:[UIImage imageNamed:@"no_save_history"] WithTitle:@"您没有收藏记录"];
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
-    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeClear];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     [manager getFavoriteVideoListWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] Page:@"1" count:@"10"];
@@ -133,7 +133,7 @@ typedef enum{
             ((UIButton *)[btnView viewWithTag:11]).enabled = NO;
             [((UIButton *)[btnView viewWithTag:11]) setImage:LOADIMAGE(@"nodelect_all_btn", kImageTypePNG) forState:UIControlStateNormal];
             deleteID = [deleteID substringFromIndex:3];
-            [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:@"删除中" maskType:SVProgressHUDMaskTypeClear];
             CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
             NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
             [manager getDeleteFavoriteVideoWithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]] videoID:deleteID];

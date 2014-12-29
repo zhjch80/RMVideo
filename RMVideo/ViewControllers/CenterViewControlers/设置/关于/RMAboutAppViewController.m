@@ -48,7 +48,7 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-   [SVProgressHUD showWithStatus:@"正在加载中..." maskType:SVProgressHUDMaskTypeBlack];
+   [SVProgressHUD showWithStatus:@"正在加载中..." maskType:SVProgressHUDMaskTypeClear];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

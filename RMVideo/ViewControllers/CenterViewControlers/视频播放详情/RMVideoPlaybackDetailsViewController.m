@@ -70,7 +70,7 @@ typedef enum{
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!isFirstViewDidAppear){
-        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
         [self performSelector:@selector(willStartRequest) withObject:nil afterDelay:1.0];
         isFirstViewDidAppear = YES;
     }
@@ -91,7 +91,7 @@ typedef enum{
         NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
         [request getVideoDetailWithID:self.currentVideo_id andToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
         request.delegate = self;
-        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
     }
 }
 
@@ -368,18 +368,18 @@ typedef enum{
     switch (sender.tag) {
         case 101:{
             [Flurry logEvent:@"Click_Download_Btn"];
-            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
             [self performSelector:@selector(willDownload) withObject:nil afterDelay:0.5];
             break;
         }
         case 102:{
-            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
             [self performSelector:@selector(willAddOrCancel) withObject:nil afterDelay:0.5];
             break;
         }
         case 103:{
             [Flurry logEvent:@"Click_Share_Btn"];
-            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
             [self performSelector:@selector(willShare) withObject:nil afterDelay:0.5];
             break;
         }

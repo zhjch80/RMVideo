@@ -58,7 +58,6 @@ typedef enum{
     }
     self.mTableView.delegate = self;
     self.mTableView.dataSource = self;
-    self.mTableView.tag = 101;
     self.mTableView.backgroundColor = [UIColor clearColor];
     self.mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mTableView];
@@ -227,13 +226,13 @@ typedef enum{
 }
 
 - (void)clickCreativeStaffCellAddMyChannelMethod:(RMImageView *)imageView {
-    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"加载中" maskType:SVProgressHUDMaskTypeClear];
     [self performSelector:@selector(willAddOrDeleteCreeativeStaff:) withObject:imageView afterDelay:1.0];
 }
 
 - (void)updateCreativeStaff:(RMPublicModel *)model {
     dataArr = model.creatorArr;
-    [(UITableView *)[self.view viewWithTag:101] reloadData];
+    [self.mTableView reloadData];
 }
 
 #pragma mark 刷新代理

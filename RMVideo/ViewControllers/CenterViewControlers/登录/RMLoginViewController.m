@@ -62,7 +62,7 @@
                     UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
                     userName = sinaAccount.userName;
                     headImageURLString = sinaAccount.iconURL;
-                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                     [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 }
             }
@@ -87,7 +87,7 @@
                     UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
                     userName = tencentAccount.userName;
                     headImageURLString = tencentAccount.iconURL;
-                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                     [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 }
             }
@@ -125,7 +125,7 @@
                 UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
                 userName = tencentAccount.userName;
                 headImageURLString = tencentAccount.iconURL;
-                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                 [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
         }else if ( loginType == usingSinaLogin){
@@ -134,7 +134,7 @@
                 UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
                 userName = sinaAccount.userName;
                 headImageURLString = sinaAccount.iconURL;
-                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                 [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
         }

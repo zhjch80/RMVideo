@@ -281,7 +281,7 @@ typedef enum{
 }
 
 - (void)clickAddMyChannelMethod:(RMImageView *)imageView {
-    [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"处理中" maskType:SVProgressHUDMaskTypeClear];
     [self performSelector:@selector(willStartAddMyChannelMethod:) withObject:imageView afterDelay:1.0];
 }
 
@@ -313,7 +313,7 @@ typedef enum{
 }
 
 - (void)startRequest {
-    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     RMAFNRequestManager * requset = [[RMAFNRequestManager alloc] init];

@@ -57,7 +57,7 @@
     refreshControl.bottomEnabled=NO;
     [self.view addSubview:mainTableVeiew];
     
-    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeClear];
     RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
     [manager getDailyRecommend];
@@ -109,7 +109,7 @@
 {
     if (direction==RefreshDirectionTop)
     {
-        [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeClear];
         RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
         manager.delegate = self;
         [manager getDailyRecommend];

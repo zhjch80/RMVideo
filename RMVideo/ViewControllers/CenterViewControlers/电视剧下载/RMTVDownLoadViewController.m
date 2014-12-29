@@ -29,7 +29,7 @@
     [leftBarButton setImage:[UIImage imageNamed:@"backup_img"] forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
 
-    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeClear];
     RMAFNRequestManager *requestManager = [[RMAFNRequestManager alloc] init];
     requestManager.delegate = self;
     [requestManager getDownloadDiversityWithID:self.modelID];

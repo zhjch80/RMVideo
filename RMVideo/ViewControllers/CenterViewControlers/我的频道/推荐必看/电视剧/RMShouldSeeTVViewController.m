@@ -50,7 +50,7 @@
 
 - (void)requestData{
     if(!isDownLoad){
-        [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showWithStatus:@"下载中..." maskType:SVProgressHUDMaskTypeClear];
         RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
         manager.delegate = self;
         //视频类型（1：电影 2：电视剧 3：综艺）

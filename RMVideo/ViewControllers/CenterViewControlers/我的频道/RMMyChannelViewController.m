@@ -191,6 +191,7 @@ typedef enum{
 }
 
 - (void)startRequest {
+    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
     CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
     NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
     loadType = requestMyChannelListType;
@@ -404,7 +405,7 @@ typedef enum{
                     UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
                     userName = sinaAccount.userName;
                     headImageURLString = [NSMutableString stringWithFormat:@"%@",sinaAccount.iconURL];
-                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                     loadType = requestLoginType;
                     [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 }
@@ -431,7 +432,7 @@ typedef enum{
                     UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
                     userName = tencentAccount.userName;
                     headImageURLString = [NSMutableString stringWithFormat:@"%@",tencentAccount.iconURL];
-                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                    [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                     loadType = requestLoginType;
                     [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                 }
@@ -468,7 +469,7 @@ typedef enum{
                 UMSocialAccountEntity *tencentAccount = [snsAccountDic valueForKey:UMShareToTencent];
                 userName = tencentAccount.userName;
                 headImageURLString = [NSMutableString stringWithFormat:@"%@",tencentAccount.iconURL];
-                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                 loadType = requestLoginType;
                 [manager postLoginWithSourceType:@"2" sourceId:tencentAccount.usid username:[tencentAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
@@ -478,7 +479,7 @@ typedef enum{
                 UMSocialAccountEntity *sinaAccount = [snsAccountDic valueForKey:UMShareToSina];
                 userName = sinaAccount.userName;
                 headImageURLString = [NSMutableString stringWithFormat:@"%@",sinaAccount.iconURL];
-                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeClear];
                 loadType = requestLoginType;
                 [manager postLoginWithSourceType:@"4" sourceId:sinaAccount.usid username:[sinaAccount.userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] headImageURL:[headImageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
@@ -540,6 +541,7 @@ typedef enum{
             dataArr = data;
             [self.tableView reloadData];
         }
+        [SVProgressHUD dismiss];
     }else if (loadType == requestLoginType){
         RMGenderTabViewController *vc = [[RMGenderTabViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
