@@ -8,23 +8,26 @@
 
 #import "RMVideoCreativeStaffViewController.h"
 #import "RMVideoCreativeStaffCell.h"
-#import "PullToRefreshTableView.h"
 #import "RMLoginViewController.h"
 #import "RMCustomPresentNavViewController.h"
 #import "RMVideoPlaybackDetailsViewController.h"
+#import "RefreshControl.h"
+#import "CustomRefreshView.h"
 
 typedef enum{
     requestAddCreativeStaffType = 1,
     requestDeleteCreativeStaffType
 }LoadType;
 
-@interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate> {
+@interface RMVideoCreativeStaffViewController ()<UITableViewDataSource,UITableViewDelegate,CreativeStaffCellDelegate,RMAFNRequestManagerDelegate,RefreshControlDelegate> {
     NSMutableArray * dataArr;
     NSMutableDictionary * starTypeDic;
     BOOL isRefresh;
     LoadType loadType;
     RMImageView * rmImage;                  //获取点击cell的图片
 }
+@property (nonatomic, strong) UITableView * mTableView;
+@property (nonatomic, strong) RefreshControl * refreshControl;
 
 @end
 
@@ -46,22 +49,25 @@ typedef enum{
     dataArr = [[NSMutableArray alloc] init];
     starTypeDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"导演", @"1", @"演员", @"2", @"主持人", @"6", @"编剧", @"7", nil];
 
-    PullToRefreshTableView * tableView;
     if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 205 - 82)];
+        self.mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 205 - 82)];
     }else if (IS_IPHONE_6_SCREEN){
-        tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 295)];
+        self.mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 295)];
     }else if (IS_IPHONE_6p_SCREEN){
-        tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 267 - 82)];
+        self.mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 267 - 82)];
     }
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.tag = 101;
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [tableView setIsCloseHeader:YES];
-    [tableView setIsCloseFooter:YES];
-    [self.view addSubview:tableView];
+    self.mTableView.delegate = self;
+    self.mTableView.dataSource = self;
+    self.mTableView.tag = 101;
+    self.mTableView.backgroundColor = [UIColor clearColor];
+    self.mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.mTableView];
+    
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.mTableView delegate:self];
+    self.refreshControl.topEnabled=NO;
+    self.refreshControl.bottomEnabled=NO;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -229,50 +235,14 @@ typedef enum{
     dataArr = model.creatorArr;
     [(UITableView *)[self.view viewWithTag:101] reloadData];
 }
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [(PullToRefreshTableView *)[self.view viewWithTag:101]tableViewDidDragging];
-}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
-    }
-}
+#pragma mark 刷新代理
 
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            
-            break;
-        }
-        case k_RETURN_REFRESH://刷新
-        {
-            [(PullToRefreshTableView *)[self.view viewWithTag:101] reloadData:NO];
-            break;
-        }
-        case k_RETURN_LOADMORE://加载更多
-        {
-            [(PullToRefreshTableView *)[self.view viewWithTag:101] reloadData:NO];
-            break;
-        }
-            
-        default:
-            break;
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
+    if (direction == RefreshDirectionTop) { //下拉刷新
+    
+    }else if(direction == RefreshDirectionBottom) { //上拉加载
+   
     }
 }
 
@@ -280,12 +250,12 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestAddCreativeStaffType){
-        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:101] cellForRowAtIndexPath:rmImage.indexPath];
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[self.mTableView cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_success_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:YES];
     }else if (loadType == requestDeleteCreativeStaffType){
-        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[(PullToRefreshTableView *)[self.view viewWithTag:101] cellForRowAtIndexPath:rmImage.indexPath];
+        RMVideoCreativeStaffCell * cell = (RMVideoCreativeStaffCell *)[self.mTableView cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
         image = [UIImage imageNamed:@"mx_add_img"];
         [cell setImageWithImage:image IdentifierString:rmImage.identifierString AddMyChannel:NO];
