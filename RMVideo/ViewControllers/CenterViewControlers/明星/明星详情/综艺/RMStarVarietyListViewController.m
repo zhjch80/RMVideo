@@ -144,7 +144,7 @@
         [cell.secondStarRateView displayRating:[model_center.gold integerValue]];
     }
     
-    if (indexPath.row * 3 + 2 >= [dataArr count]){
+    if (indexPath.row * 3 + 2 < [dataArr count]){
         RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.threeLable startScrolling];
