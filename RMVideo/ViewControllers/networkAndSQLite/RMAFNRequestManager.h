@@ -218,4 +218,9 @@ typedef enum{
  */
 - (void)getCheckStarPropertyWithStar_id:(NSString *)star_id;
 
+/**
+ *  搜索 推荐标签
+ */
+- (void)getSearchRecommend;
+
 @end

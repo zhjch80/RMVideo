@@ -13,7 +13,7 @@
 #import "RefreshControl.h"
 #import "CustomRefreshView.h"
 
-@interface RMStarVarietyListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate> {
+@interface RMStarVarietyListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate,RefreshControlDelegate> {
     NSMutableArray * dataArr;
     NSInteger AltogetherRows;
     NSInteger pageCount;
@@ -47,13 +47,18 @@
     // Do any additional setup after loading the view from its nib.
     dataArr = [[NSMutableArray alloc] init];
     self.mTableView = [[UITableView alloc] init];
-    self.mTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
+    self.mTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 190 - 44 - 10);
     self.mTableView.delegate = self;
     self.mTableView.dataSource = self;
     self.mTableView.backgroundColor = [UIColor clearColor];
     self.mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.mTableView];
     
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.mTableView delegate:self];
+    self.refreshControl.topEnabled=YES;
+    self.refreshControl.bottomEnabled=YES;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
+
     pageCount = 0;
     isRefresh = YES;
 }

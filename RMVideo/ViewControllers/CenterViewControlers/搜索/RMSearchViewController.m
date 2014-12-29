@@ -35,12 +35,14 @@
 
 typedef enum{
     requestSearchType = 1,                  //搜索
-    requestDynamicAssociativeSearchType     //动态联想搜索
+    requestDynamicAssociativeSearchType,    //动态联想搜索
+    requestSearchRecommend                  //搜索推荐标签
 }RequestManagerType;
 
 @interface RMSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,IFlySpeechRecognizerDelegate,UIGestureRecognizerDelegate,RMAFNRequestManagerDelegate,UIAlertViewDelegate,SearchRecordsDelegate,LastRecordsDelegate,TagListDelegate,RefreshControlDelegate,SearchResultDelegate>{
     NSMutableArray * recordsDataArr;            //搜索记录的Arr
     NSMutableArray * resultDataArr;             //搜索结果的Arr
+    NSMutableArray * searchRecommendArr;        //搜索推荐标签
     RequestManagerType requestManagerType;      //请求类型
     NSInteger pageCount;                        //分页
     BOOL isRefresh;                             //是否刷新
@@ -100,6 +102,8 @@ typedef enum{
         self.isDisplayMoreRecords = NO;
     }
     [self.searchTableView reloadData];
+    
+    [self startRequestSearchRecommend];
 }
 
 - (void)viewDidLoad {
@@ -108,6 +112,8 @@ typedef enum{
 
     recordsDataArr = [[NSMutableArray alloc] init];
     resultDataArr = [[NSMutableArray alloc] init];
+    searchRecommendArr = [[NSMutableArray alloc] init];
+    
     self.result = @"";
     self.onResult = @"";
     pageCount = 1;
@@ -251,6 +257,9 @@ typedef enum{
     }
 }
 
+/**
+ *  默认搜索界面
+ */
 - (void)loadDefaultView {
     self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleAllHeight - 64) style:UITableViewStylePlain];
     self.searchTableView.delegate = self;
@@ -258,7 +267,12 @@ typedef enum{
     self.searchTableView.backgroundColor = [UIColor clearColor];
     self.searchTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.searchTableView];
-    
+}
+
+/**
+ *  默认搜索界面的FootView UI
+ */
+- (void)DefaultSearchFootViewWithRecommendArr:(NSMutableArray *)arr {
     self.footView = [[UIView alloc] init];
     self.footView.backgroundColor = [UIColor clearColor];
     self.footView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, 255); //176
@@ -275,8 +289,7 @@ typedef enum{
     
     self.tagList = [[RMTagList alloc] initWithFrame:CGRectMake(10, 50.0f, [UtilityFunc shareInstance].globleWidth - 20, 176)];
     self.tagList.delegate = self;
-    NSArray *array = [[NSArray alloc] initWithObjects:@"红高粱", @"变形金刚", @"致我们终将逝去的青春", @"空中求援", @"碟中谍", @"不能说的秘密", nil];
-    [self.tagList setTags:array];
+    [self.tagList setTags:arr];
     [self.footView addSubview:self.tagList];
     self.searchTableView.tableFooterView = self.footView;
 }
@@ -539,6 +552,15 @@ typedef enum{
 #pragma mark - requset RMAFNRequestManagerDelegate
 
 /**
+ *  搜索推荐标签
+ */
+- (void)startRequestSearchRecommend {
+    requestManagerType = requestSearchRecommend;
+    [self.requestManager getSearchRecommend];
+    self.requestManager.delegate = self;
+}
+
+/**
  *  动态联想搜索
  */
 - (void)startDynamicAssociativeSearchRequest:(NSString *)key {
@@ -583,13 +605,19 @@ typedef enum{
             [self.displayResultTableView reloadData];
             [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
         }
+    }else if (requestManagerType == requestSearchRecommend){ //搜索推荐标签
+        searchRecommendArr = [NSMutableArray arrayWithArray:data];
+        NSMutableArray * recommendArr = [[NSMutableArray alloc] init];
+        for (int i=0; i<searchRecommendArr.count; i++) {
+            [recommendArr addObject:[[searchRecommendArr objectAtIndex:i] objectForKey:@"name"]];
+        }
+        [self DefaultSearchFootViewWithRecommendArr:recommendArr];
     }else{ //联想搜索
         self.refreshControl.topEnabled = NO;
         self.refreshControl.bottomEnabled = NO;
         self.searchTableView.hidden = YES;
         self.displayResultTableView.hidden = NO;
         self.publicModel = [data objectAtIndex:0];
-        NSLog(@"self.publicModel.DynamicAssociativeArr:%@",self.publicModel.DynamicAssociativeArr);
         resultDataArr = [NSMutableArray arrayWithArray:self.publicModel.DynamicAssociativeArr];
         [self.displayResultTableView reloadData];
     }

@@ -14,11 +14,12 @@
 #import "RMImageView.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMMyChannelShouldSeeViewController.h"
-#import "PullToRefreshTableView.h"
 #import "UMSocial.h"
 #import "RMCustomNavViewController.h"
 #import "RMCustomPresentNavViewController.h"
 #import "RMGenderTabViewController.h"
+#import "RefreshControl.h"
+#import "CustomRefreshView.h"
 
 typedef enum{
     usingSinaLogin = 1,
@@ -33,7 +34,7 @@ typedef enum{
 }LoadType;
 
 
-@interface RMMyChannelViewController ()<UITableViewDataSource,UITableViewDelegate,MyChannemMoreWonderfulDelegate,RMAFNRequestManagerDelegate,UMSocialUIDelegate> {
+@interface RMMyChannelViewController ()<UITableViewDataSource,UITableViewDelegate,MyChannemMoreWonderfulDelegate,RMAFNRequestManagerDelegate,UMSocialUIDelegate,RefreshControlDelegate> {
     NSMutableArray * dataArr;
     LoginType loginType;
     LoadType loadType;
@@ -48,7 +49,9 @@ typedef enum{
     BOOL isFirstViewDidAppear;
 }
 @property (nonatomic, strong) NSString * kLoginStatus;
-@property (nonatomic, strong) PullToRefreshTableView * tableView;
+@property (nonatomic, strong) UITableView * tableView;
+@property (nonatomic, strong) RefreshControl * refreshControl;
+
 @property (nonatomic, strong) NSArray * btnImgWithTitleArr;
 @property (nonatomic, strong) UILabel * tipTitle;
 @property (nonatomic, strong) UIView * verticalLine;
@@ -130,14 +133,17 @@ typedef enum{
     [leftBarButton setBackgroundImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
     [rightBarButton setBackgroundImage:LOADIMAGE(@"search", kImageTypePNG) forState:UIControlStateNormal];
     
-    self.tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 40 - 49 - 44)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 40 - 49 - 44)];
     self.tableView.delegate = self;
     self.tableView.dataSource  =self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
-    [self.tableView setIsCloseFooter:NO];
-    [self.tableView setIsCloseHeader:NO];
     [self.view addSubview:self.tableView];
+    
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.tableView delegate:self];
+    self.refreshControl.topEnabled=YES;
+    self.refreshControl.bottomEnabled=YES;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
     
     self.moreWonderfulImg.hidden = YES;
     self.moreBgImg.hidden = YES;
@@ -480,58 +486,25 @@ typedef enum{
     }
 }
 
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self.tableView tableViewDidDragging];
-}
+#pragma mark 刷新代理
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [self.tableView tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
-    }
-}
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            break;
-        }
-        case k_RETURN_REFRESH://刷新
-        {
-            isRefresh = YES;
-            pageCount = 1;
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
+    if (direction == RefreshDirectionTop) { //下拉刷新
+        isRefresh = YES;
+        pageCount = 1;
+        [self startRequest];
+    }else if(direction == RefreshDirectionBottom) { //上拉加载
+        if (pageCount * 30 > AltogetherRows){
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.44 * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+            });
+        }else{
+            pageCount ++;
+            isRefresh = NO;
             [self startRequest];
-            break;
         }
-        case k_RETURN_LOADMORE://加载更多
-        {
-            if (pageCount * 30 > AltogetherRows){
-                [self.tableView reloadData:YES];
-            }else{
-                pageCount ++;
-                isRefresh = NO;
-                [self startRequest];
-            }
-            
-            break;
-        }
-            
-        default:
-            break;
     }
 }
 
@@ -539,22 +512,34 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (loadType == requestMyChannelListType){
-        self.tableView.isCloseFooter = NO;
-        if(data.count==0||data==nil){
-            [self.tableView reloadData:NO];
-            return;
-        }
-        RMPublicModel * model_row = [data objectAtIndex:0];
-        AltogetherRows = [model_row.rows integerValue];
-        if (isRefresh){
+        if (self.refreshControl.refreshingDirection==RefreshingDirectionTop) {
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
             dataArr = data;
-        }else{
+            [self.tableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
+        }else if(self.refreshControl.refreshingDirection==RefreshingDirectionBottom) {
+            if (data.count == 0){
+                [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+                return;
+            }
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
             for (int i=0; i<data.count; i++) {
                 RMPublicModel * model = [data objectAtIndex:i];
                 [dataArr addObject:model];
             }
+            [self.tableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
         }
-        [self.tableView reloadData:NO];
+        
+        if (isRefresh){
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
+            dataArr = data;
+            [self.tableView reloadData];
+        }
     }else if (loadType == requestLoginType){
         RMGenderTabViewController *vc = [[RMGenderTabViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -580,8 +565,6 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
-    [self.tableView reloadData:NO];
-    self.tableView.isCloseFooter = YES;
     NSLog(@"error:%@",error);
 }
 
