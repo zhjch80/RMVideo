@@ -1690,7 +1690,6 @@
 				1D4D476219D7AAD900E3A50B /* RMVideo */,
 				1D4D477F19D7AADA00E3A50B /* RMVideoTests */,
 				1D4D482019D7B57300E3A50B /* Frameworks */,
-				1D4D476119D7AAD900E3A50B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1701,6 +1700,7 @@
 				1D4D477C19D7AADA00E3A50B /* RMVideoTests.xctest */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		1D4D476219D7AAD900E3A50B /* RMVideo */ = {
@@ -1727,6 +1727,7 @@
 		1D4D477F19D7AADA00E3A50B /* RMVideoTests */ = {
 			isa = PBXGroup;
 			children = (
+				1D4D476119D7AAD900E3A50B /* Products */,
 				1D4D478219D7AADA00E3A50B /* RMVideoTests.m */,
 				1D4D478019D7AADA00E3A50B /* Supporting Files */,
 			);

@@ -10,7 +10,7 @@
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMMyChannelShouldSeeViewController.h"
 
-@interface RMShouldSeeVarietViewController (){
+@interface RMShouldSeeVarietViewController ()<RefreshControlDelegate>{
     BOOL isDownLoad;
     NSInteger pageNum;//请求的页码
     BOOL isRefresh;
@@ -37,9 +37,11 @@
      self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-44-64);
     self.mainTableView.backgroundColor = [UIColor clearColor];
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.mainTableView setIsCloseFooter:NO];
-    [self.mainTableView setIsCloseHeader:NO];
-//    [self setExtraCellLineHidden:self.mainTableView];
+    
+    _refreshControl=[[RefreshControl alloc] initWithScrollView:self.mainTableView delegate:self];
+    _refreshControl.topEnabled=YES;
+    _refreshControl.bottomEnabled=YES;
+    
     pageNum = 0;
     isRefresh = YES;
 }
@@ -147,27 +149,36 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"综艺暂无数据"];
-        [self.mainTableView reloadData:NO];
-        return;
-    }
-    [SVProgressHUD dismiss];
-    RMPublicModel * model_row = [data objectAtIndex:0];
-    allPageCount = [model_row.rows integerValue];
-    if (isRefresh){
-        self.dataArray = data;
     }else{
-        for (int i=0; i<data.count; i++) {
-            RMPublicModel * model = [data objectAtIndex:i];
-            [self.dataArray addObject:model];
+        [SVProgressHUD dismiss];
+        RMPublicModel * model_row = [data objectAtIndex:0];
+        allPageCount = [model_row.rows integerValue];
+        if (isRefresh){
+            self.dataArray = data;
+        }else{
+            for (int i=0; i<data.count; i++) {
+                RMPublicModel * model = [data objectAtIndex:i];
+                [self.dataArray addObject:model];
+            }
+        }
+        [self.mainTableView reloadData];
+        if (self.refreshControl.refreshingDirection==RefreshingDirectionTop)
+        {
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
+        }
+        else if (self.refreshControl.refreshingDirection==RefreshingDirectionBottom)
+        {
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
         }
     }
-    [self.mainTableView reloadData:NO];
+
 }
 
 - (void)requestError:(NSError *)error{
-    [self.mainTableView reloadData:NO];
+    
 }
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView{
     RMVideoPlaybackDetailsViewController * videoPlaybackDetailsCtl = [[RMVideoPlaybackDetailsViewController alloc] init];
@@ -185,61 +196,31 @@
 - (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
     
 }
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self.mainTableView tableViewDidDragging];
-}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [self.mainTableView tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction
+{
+    if (direction==RefreshDirectionTop)
+    {
+        isRefresh = YES;
+        pageNum = 0;
+        isDownLoad = NO;
+        [self requestData];
     }
-}
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
+    else if (direction==RefreshDirectionBottom)
+    {
+        if (pageNum * 12 + 12 > allPageCount){
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SVProgressHUD showErrorWithStatus:@"没有更多的数据加载了"];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+            });
             
-            break;
-        }
-        case k_RETURN_REFRESH://刷新
-        {
-            isRefresh = YES;
-            pageNum = 0;
+        }else{
             isDownLoad = NO;
+            pageNum ++;
+            isRefresh = NO;
             [self requestData];
-            break;
         }
-        case k_RETURN_LOADMORE://加载更多
-        {
-            if (pageNum * 12 + 12 > allPageCount){
-                [self.mainTableView reloadData:YES];
-            }else{
-                isDownLoad = NO;
-                pageNum ++;
-                isRefresh = NO;
-                [self requestData];
-            }
-            break;
-        }
-            
-        default:
-            break;
+        
     }
 }
-
 @end

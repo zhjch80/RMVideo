@@ -15,6 +15,7 @@
 @interface RMMyChannelShouldSeeViewController ()<SUNSlideSwitchViewDelegate>
 @property (nonatomic, strong) NSString * navTitle;
 @property (nonatomic, strong) NSString *tag_id;
+@property (nonatomic, strong) NSMutableArray *titelArray;
 @property RMShouldSeeTVViewController * starTeleplayListCtl;
 @property RMShouldSeeMovieViewController * starFilmListCtl;
 @property RMShouldSeeVarietViewController * starVarietyListCtl;
@@ -30,35 +31,10 @@
     
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
-    
-    _slideSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight)];
-    _slideSwitchView.slideSwitchViewDelegate = self;
-    [self.view addSubview:_slideSwitchView];
-    
-    _starFilmListCtl = [[RMShouldSeeMovieViewController alloc] init];
-    _starFilmListCtl.myChannelShouldDelegate = self;
-    _starFilmListCtl.downLoadID = self.downLoadID;
-    
-    _starTeleplayListCtl = [[RMShouldSeeTVViewController alloc] init];
-    _starTeleplayListCtl.myChannelShouldDelegate = self;
-    _starTeleplayListCtl.downLoadID = self.downLoadID;
-
-    _starVarietyListCtl = [[RMShouldSeeVarietViewController alloc] init];
-    _starVarietyListCtl.myChannelShouldDelegate = self;
-    _starVarietyListCtl.downLoadID = self.downLoadID;
-    
-    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
-        _slideSwitchView.btnHeight = 30;
-        _slideSwitchView.btnWidth = 93;
-    }else if (IS_IPHONE_6_SCREEN){
-        _slideSwitchView.btnHeight = 30;
-        _slideSwitchView.btnWidth = 93;
-    }else if (IS_IPHONE_6p_SCREEN){
-        _slideSwitchView.btnHeight = 37 ;
-        _slideSwitchView.btnWidth = 120;
-    }
-    [_slideSwitchView buildUI];
-    
+    self.titelArray = [[NSMutableArray alloc] init];
+    RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+    manager.delegate = self;
+    [manager getCheckStarPropertyWithStar_id:self.downLoadID];
 }
 
 - (void)setTagId:(NSString *)tag_id {
@@ -67,18 +43,17 @@
 
 #pragma mark - 滑动tab视图代理方法
 - (NSUInteger)numberOfTab:(SUNSlideSwitchView *)view {
-    return 3;
+    return self.titelArray.count;
 }
 
 - (UIViewController *)slideSwitchView:(SUNSlideSwitchView *)view viewOfTab:(NSUInteger)number {
-    if (number == 0) {
+    NSString *title = [self.titelArray objectAtIndex:number];
+    if ([title isEqualToString:@"电影"]) {
         return _starFilmListCtl;
-    } else if (number == 1) {
+    } else if ([title isEqualToString:@"电视剧"]) {
         return _starTeleplayListCtl;
-    } else if (number == 2) {
-        return _starVarietyListCtl;
     } else {
-        return nil;
+        return _starVarietyListCtl;
     }
 }
 
@@ -87,15 +62,13 @@
 }
 
 - (void)slideSwitchView:(SUNSlideSwitchView *)view didselectTab:(NSUInteger)number {
-    if (number == 0) {
+    NSString *title = [self.titelArray objectAtIndex:number];
+    if ([title isEqualToString:@"电影"]) {
         [self.starFilmListCtl requestData];
-        NSLog(@"slie to 第一个");
-    } else if (number == 1) {
+    } else if ([title isEqualToString:@"电视剧"]) {
         [self.starTeleplayListCtl requestData];
-        NSLog(@"slie to 第二个");
-    } else if (number == 2) {
+    } else {
         [self.starVarietyListCtl requestData];
-        NSLog(@"slie to 第三个");
     }
 }
 
@@ -112,5 +85,46 @@
  
 }
 
+#pragma mark downLoad finish
+- (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    NSDictionary *dataDic = [data objectAtIndex:0];
+    if([[dataDic objectForKey:@"vod_num"] intValue]>0){
+        [self.titelArray addObject:@"电影"];
+    }
+    if([[dataDic objectForKey:@"tv_num"] intValue]>0){
+        [self.titelArray addObject:@"电视剧"];
+    }
+    if([[dataDic objectForKey:@"variety_num"] intValue]>0){
+        [self.titelArray addObject:@"综艺"];
+    }
+    _slideSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight)];
+    _slideSwitchView.slideSwitchViewDelegate = self;
+    _slideSwitchView.btnTitleArray = self.titelArray;
+    [self.view addSubview:_slideSwitchView];
+    
+    _starFilmListCtl = [[RMShouldSeeMovieViewController alloc] init];
+    _starFilmListCtl.myChannelShouldDelegate = self;
+    _starFilmListCtl.downLoadID = self.downLoadID;
+    
+    _starTeleplayListCtl = [[RMShouldSeeTVViewController alloc] init];
+    _starTeleplayListCtl.myChannelShouldDelegate = self;
+    _starTeleplayListCtl.downLoadID = self.downLoadID;
+    
+    _starVarietyListCtl = [[RMShouldSeeVarietViewController alloc] init];
+    _starVarietyListCtl.myChannelShouldDelegate = self;
+    _starVarietyListCtl.downLoadID = self.downLoadID;
+    
+    if (IS_IPHONE_4_SCREEN | IS_IPHONE_5_SCREEN){
+        _slideSwitchView.btnHeight = 30;
+        _slideSwitchView.btnWidth = 93;
+    }else if (IS_IPHONE_6_SCREEN){
+        _slideSwitchView.btnHeight = 30;
+        _slideSwitchView.btnWidth = 93;
+    }else if (IS_IPHONE_6p_SCREEN){
+        _slideSwitchView.btnHeight = 37 ;
+        _slideSwitchView.btnWidth = 120;
+    }
+    [_slideSwitchView buildUI];
+}
 
 @end

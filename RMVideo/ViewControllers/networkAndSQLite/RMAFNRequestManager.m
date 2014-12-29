@@ -675,10 +675,8 @@ void checkTheNetworkConnection(NSString *title){
     AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
     NSString *url = [self urlPathadress:Http_getSearchTips];
     url = [NSString stringWithFormat:@"%@word=%@",url,string];
-    NSLog(@"url:%@",url);
     url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"responseObject:%@",responseObject);
         NSMutableArray *dataArray = [NSMutableArray array];
         RMPublicModel * model = [[RMPublicModel alloc] init];
         model.DynamicAssociativeArr = [responseObject objectForKey:@"data"];

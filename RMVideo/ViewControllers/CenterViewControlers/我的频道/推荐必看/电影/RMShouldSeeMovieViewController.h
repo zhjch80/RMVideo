@@ -8,12 +8,13 @@
 
 #import "RMBaseViewController.h"
 #import "RMStarDetailsCell.h"
-#import "PullToRefreshTableView.h"
+#import "RefreshControl.h"
 
-@interface RMShouldSeeMovieViewController : RMBaseViewController<StarDetailsCellDelegate>
+@interface RMShouldSeeMovieViewController : RMBaseViewController<StarDetailsCellDelegate,RefreshControlDelegate>
 @property (nonatomic,strong) NSMutableArray *dataArray;
-@property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 @property (nonatomic,copy)NSString *downLoadID;
+@property (nonatomic,strong)RefreshControl * refreshControl;
 
 @property (nonatomic, assign) id myChannelShouldDelegate;
 - (void)requestData;
