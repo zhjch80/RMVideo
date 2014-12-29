@@ -8,7 +8,6 @@
 
 #import "RMBaseViewController.h"
 #import "RMStarDetailsCell.h"
-#import "PullToRefreshTableView.h"
 #import "RefreshControl.h"
 
 @interface RMShouldSeeVarietViewController : RMBaseViewController<StarDetailsCellDelegate>
