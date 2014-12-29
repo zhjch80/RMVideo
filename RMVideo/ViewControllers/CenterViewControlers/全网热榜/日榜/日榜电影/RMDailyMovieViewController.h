@@ -7,7 +7,7 @@
 //
 
 #import "RMBaseViewController.h"
-#import "PullToRefreshTableView.h"
+#import "RefreshControl.h"
 
 @protocol RMDailyMovieViewControllerDelegate <NSObject>
 
@@ -15,11 +15,12 @@
 - (void)playMovieWithModel:(RMPublicModel *)model;
 
 @end
-@interface RMDailyMovieViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{
+@interface RMDailyMovieViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource,RefreshControlDelegate>{
    
 }
 @property (nonatomic,strong) NSMutableArray *dataArray;
-@property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+@property (nonatomic,strong)RefreshControl * refreshControl;
 @property (nonatomic,copy)NSString *downLoadTopType;
 @property (nonatomic, assign) id<RMDailyMovieViewControllerDelegate> delegate;
 

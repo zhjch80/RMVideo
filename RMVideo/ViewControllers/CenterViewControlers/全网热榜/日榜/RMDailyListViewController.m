@@ -12,6 +12,10 @@
 #import "RMDailyVarietyViewController.h"
 #import "SUNSlideSwitchView.h"
 #import "RMVideoPlaybackDetailsViewController.h"
+#import "RMWebViewPlayViewController.h"
+#import "RMModel.h"
+#import "RMPlayer.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMDailyListViewController ()<SUNSlideSwitchViewDelegate,RMDailyMovieViewControllerDelegate,RMDailyTVViewControllerDelegate,RMDailyVarietyViewControllerDelegate>
 @property RMDailyTVViewController * starTeleplayListCtl;
@@ -129,13 +133,54 @@
 }
 #pragma mark delegate  直接播放页面
 - (void)playMovieWithModel:(RMPublicModel *)model{
-    NSLog(@"影片名称：%@",model.name);
+    [self setPlayWith:model];
 }
 - (void)playTVWithModel:(RMPublicModel *)model{
-    NSLog(@"影片名称：%@",model.name);
+    [self setPlayWith:model];
 }
 - (void)playVarietyWithModel:(RMPublicModel *)model{
-    NSLog(@"影片名称：%@",model.name);
+    [self setPlayWith:model];
+}
+
+- (void)setPlayWith:(RMPublicModel *)model{
+    NSLog(@"jump:%@  playUrl:%@",model.jumpurl,model.downLoadURL);
+    if([model.downLoadURL isEqualToString:@""]||model.downLoadURL== nil){
+        if([model.jumpurl isEqualToString:@""]||model.jumpurl==nil){
+            [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+            return;
+        }
+        //跳转web
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.jumpurl = model.jumpurl;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+        RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+        webView.urlString = model.jumpurl;
+        [self presentViewController:webNav animated:YES completion:^{
+        }];
+    }
+    else{
+        //使用custom play 播放mp4
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.reurl = model.downLoadURL;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        //电影
+        RMModel * playmodel = [[RMModel alloc] init];
+        playmodel.url = model.downLoadURL;
+        playmodel.title = model.name;
+        [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
+    }
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

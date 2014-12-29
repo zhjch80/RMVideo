@@ -7,7 +7,7 @@
 //
 
 #import "RMBaseViewController.h"
-#import "PullToRefreshTableView.h"
+#import "RefreshControl.h"
 
 @protocol RMDailyVarietyViewControllerDelegate <NSObject>
 
@@ -16,11 +16,12 @@
 
 @end
 
-@interface RMDailyVarietyViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource>{
+@interface RMDailyVarietyViewController : RMBaseViewController<UITableViewDelegate,UITableViewDataSource,RefreshControlDelegate>{
     
 }
 @property (nonatomic,strong) NSMutableArray *dataArray;
-@property (weak, nonatomic) IBOutlet PullToRefreshTableView *mainTableView;
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
+@property (nonatomic,strong)RefreshControl * refreshControl;
 @property (nonatomic,copy)NSString *downLoadTopType;
 @property (assign,nonatomic)id<RMDailyVarietyViewControllerDelegate> delegate;
 

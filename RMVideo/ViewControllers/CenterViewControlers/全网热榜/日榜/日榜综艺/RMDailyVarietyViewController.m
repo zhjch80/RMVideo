@@ -38,7 +38,9 @@
     }else{
         self.mainTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth,[UtilityFunc shareInstance].globleAllHeight-54-64);
     }
-    [self.mainTableView setIsCloseFooter:YES];
+    _refreshControl=[[RefreshControl alloc] initWithScrollView:self.mainTableView delegate:self];
+    _refreshControl.topEnabled=YES;
+    _refreshControl.bottomEnabled=NO;
     
     [self setExtraCellLineHidden:self.mainTableView];
 }
@@ -91,53 +93,13 @@
     }
 }
 
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self.mainTableView tableViewDidDragging];
-}
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [self.mainTableView tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
-    }
-}
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            
-        }
-            break;
-        case k_RETURN_REFRESH://刷新
-        {
-            RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
-            manager.delegate = self;
-            [manager getTopListWithVideoTpye:@"3" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
-        }
-            break;
-        case k_RETURN_LOADMORE://加载更多
-        {
-
-        }
-            break;
-            
-        default:
-            break;
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction
+{
+    if (direction==RefreshDirectionTop)
+    {
+        RMAFNRequestManager *manager = [[RMAFNRequestManager alloc] init];
+        manager.delegate = self;
+        [manager getTopListWithVideoTpye:@"3" andTopType:self.downLoadTopType searchPageNumber:@"1" andCount:@"10"];
     }
 }
 
@@ -146,18 +108,18 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
-    
+    [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
     if (data.count==0) {
         [SVProgressHUD showErrorWithStatus:@"综艺暂无数据"];
         return;
     }
     [SVProgressHUD dismiss];
+    [self.dataArray removeAllObjects];
     self.dataArray = data;
-    [self.mainTableView reloadData:NO];
+    [self.mainTableView reloadData];
 }
 
 - (void)requestError:(NSError *)error{
-    [self.mainTableView reloadData:NO];
 }
 
 - (void)palyMovieWithIndex:(NSInteger)index{

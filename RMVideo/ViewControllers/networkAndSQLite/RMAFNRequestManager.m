@@ -198,6 +198,8 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL = [dict objectForKey:@"m_down_url"];
                 [tvArray addObject:model];
             }
             NSMutableDictionary *tv = [[NSMutableDictionary alloc] init];
@@ -209,6 +211,8 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL = [dict objectForKey:@"m_down_url"];
                 [movieArray addObject:model];
             }
             NSMutableDictionary *movie = [[NSMutableDictionary alloc] init];
@@ -221,6 +225,8 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL = [dict objectForKey:@"m_down_url"];
                 [varietyArray addObject:model];
             }
             NSMutableDictionary *variety = [[NSMutableDictionary alloc] init];
@@ -259,6 +265,8 @@ void checkTheNetworkConnection(NSString *title){
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.sum_i_hits = [dict objectForKey:@"sum_i_hits"];
                 model.topNum = [dict objectForKey:@"order"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL = [dict objectForKey:@"m_down_url"];
                 [dataArray addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
