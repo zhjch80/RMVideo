@@ -10,7 +10,7 @@
 
 @protocol SwitchSelectedMethodDelegate <NSObject>
 
-- (void)switchSelectedMethodWithValue:(int)value;
+- (void)switchSelectedMethodWithValue:(int)value withTitle:(NSString *)title;
 
 @end
 enum RMSelectionIndicatorMode {

@@ -30,5 +30,5 @@
 #define Http_getDeleteMyChannelTag              320     //我的频道：删除tag
 #define Http_getDeviceHits                      321     //统计:播放影片次数
 #define Http_getAboutApp                        322     //关于
-#define Http_getSearchTips                   323     //联想动态搜索
-
+#define Http_getSearchTips                      323     //联想动态搜索
+#define Http_getCheckStarProperty               324     //判断明星标签下的属性

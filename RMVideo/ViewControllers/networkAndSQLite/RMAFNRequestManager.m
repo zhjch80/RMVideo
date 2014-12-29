@@ -135,6 +135,11 @@
             strUrl = [NSString stringWithFormat:@"%@getSearchTips?",baseUrl];
             break;
         }
+        case Http_getCheckStarProperty:{
+            strUrl = [NSString stringWithFormat:@"%@getVideoNumByTagId?",baseUrl];
+            break;
+        }
+            
         default:{
             strUrl = nil;
         }
@@ -833,6 +838,25 @@ void checkTheNetworkConnection(NSString *title){
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         checkTheNetworkConnection(@"获取失败");
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 判断明星标签下的属性
+
+- (void)getCheckStarPropertyWithStar_id:(NSString *)star_id {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getCheckStarProperty];
+    url = [NSString stringWithFormat:@"%@tag_id=%@",url,star_id];
+    url = [self encryptUrl:url];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSMutableArray *arr = [NSMutableArray arrayWithObjects:[responseObject objectForKey:@"data"], nil];
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:arr];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if([self.delegate respondsToSelector:@selector(requestError:)]){
             [self.delegate requestError:error];
         }

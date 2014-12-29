@@ -65,8 +65,38 @@
 
 -(void)setDefaultsLabelTitle{
     float screenWidth = [UIScreen mainScreen].bounds.size.width;
+    
+    NSString * name_1 = [NSString stringWithFormat:@"%@",[self.sectionTitles objectAtIndex:0]]; //电影
+    NSString * name_2 = [NSString stringWithFormat:@"%@",[self.sectionTitles objectAtIndex:1]]; //电视剧
+    NSString * name_3 = [NSString stringWithFormat:@"%@",[self.sectionTitles objectAtIndex:2]]; //综艺
+
+    NSMutableArray * nameArr = [NSMutableArray arrayWithObjects:@"电影", @"电视剧", @"综艺", nil];
+
     int count = [self.sectionTitles count];
-    NSArray * nameArr = [NSArray arrayWithObjects:@"电影", @"电视剧", @"综艺", nil];
+    if (name_1.length == 0){
+        for (int i=0; i<[nameArr count]; i++){
+            if ([[nameArr objectAtIndex:i] isEqualToString:@"电影"]) {
+                [nameArr removeObjectAtIndex:i];
+                count --;
+            }
+        }
+    }
+    if (name_2.length == 0){
+        for (int i=0; i<[nameArr count]; i++){
+            if ([[nameArr objectAtIndex:i] isEqualToString:@"电视剧"]) {
+                [nameArr removeObjectAtIndex:i];
+                count --;
+            }
+        }
+    }
+    if (name_3.length == 0){
+        for (int i=0; i<[nameArr count]; i++){
+            if ([[nameArr objectAtIndex:i] isEqualToString:@"综艺"]) {
+                [nameArr removeObjectAtIndex:i];
+                count --;
+            }
+        }
+    }
     
     float MARGIN = 0.0;
     float subMARGIN = 0.0;
@@ -128,7 +158,7 @@
     [bgView.layer addSublayer:shapeLayer];
     bgView.layer.cornerRadius = cornerRadius;
 
-    for (int i=0; i<self.sectionTitles.count; i++){
+    for (int i=0; i<count; i++){
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(MARGIN + i * ((screenWidth - 50)/count) + i*MARGIN, 2, (screenWidth - 48)/count + subMARGIN, 31);
         button.tag = 100+i;
@@ -179,8 +209,8 @@
     }
     sender.backgroundColor = [UIColor colorWithRed:0.94 green:0.93 blue:0.93 alpha:1];
     [sender setTitleColor:[UIColor colorWithRed:0.96 green:0.3 blue:0.29 alpha:1] forState:UIControlStateNormal];
-    if ([self.delegate respondsToSelector:@selector(switchSelectedMethodWithValue:)]){
-        [self.delegate switchSelectedMethodWithValue:sender.tag-100];
+    if ([self.delegate respondsToSelector:@selector(switchSelectedMethodWithValue:withTitle:)]){
+        [self.delegate switchSelectedMethodWithValue:sender.tag-100 withTitle:sender.titleLabel.text];
     }
 }
 

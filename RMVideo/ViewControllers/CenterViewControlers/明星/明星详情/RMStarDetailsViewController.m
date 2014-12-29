@@ -25,12 +25,15 @@ typedef enum{
 typedef enum{
     requestIntroType = 1,
     requestAddMyChannelType,
-    requestDeleteMyChannelType
+    requestDeleteMyChannelType,
+    requestCheckStarPropertyYype
 }LoadType;
 
 @interface RMStarDetailsViewController ()<SwitchSelectedMethodDelegate,RMAFNRequestManagerDelegate>{
     NSMutableArray * introDataArr;              //明星相关的数据
     NSMutableArray * csArray;                   //starIntroduction 的约束Arr
+    NSMutableArray * CheckArr;                  //检查明星下面的标签
+    
     BOOL isStarIntroductionClose;               //明星介绍是否关闭
     BOOL isStarAttentionMyChannel;              //明星是否添加到我的频道
     RMAFNRequestManager * manager;
@@ -49,6 +52,7 @@ typedef enum{
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self startCheckStarProperty];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -57,12 +61,6 @@ typedef enum{
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
-    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
-    manager = [[RMAFNRequestManager alloc] init];
-    self.loadType = requestIntroType;
-    [manager getStartDetailWithID:self.star_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
-    manager.delegate = self;
 }
 
 - (void)viewDidLoad {
@@ -70,6 +68,7 @@ typedef enum{
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     
+    CheckArr = [[NSMutableArray alloc] init];
     introDataArr = [[NSMutableArray alloc] init];
     csArray = [[NSMutableArray alloc] init];
     isStarIntroductionClose = YES;
@@ -109,7 +108,13 @@ typedef enum{
     
     self.selectedCtlType = selectedUnknownCtlStateType;
     
-    _segmentedControl = [[RMSegmentedControl alloc] initWithSectionTitles:@[@"电影", @"电视剧", @"综艺"] withIdentifierType:@"starIdentifier"];
+}
+
+/**
+ *  判断明星标签下的属性   如果传入arr 为空 会有问题
+ */
+- (void)loadSegmentedWithArr:(NSMutableArray *)arr {
+    _segmentedControl = [[RMSegmentedControl alloc] initWithSectionTitles:@[[arr objectAtIndex:0], [arr objectAtIndex:1], [arr objectAtIndex:2]] withIdentifierType:@"starIdentifier"];
     _segmentedControl.delegate = self;
     _segmentedControl.frame = CGRectMake(0, 150, [UIScreen mainScreen].bounds.size.width, 40);
     [_segmentedControl setSelectedIndex:0];
@@ -118,28 +123,55 @@ typedef enum{
     [_segmentedControl setSelectionIndicatorColor:[UIColor clearColor]];
     [_segmentedControl setTag:3];
     [self.upsideView addSubview:_segmentedControl];
-    
 }
 
-- (void)switchSelectedMethodWithValue:(int)value {
+- (void)switchSelectedMethodWithValue:(int)value withTitle:(NSString *)title{
     switch (value) {
         case 0:{
-            if (! self.starFilmListCtl){
-                self.starFilmListCtl = [[RMStarFilmListViewController alloc] init];
+            if ([title isEqualToString:@"电影"]){
+                if (! self.starFilmListCtl){
+                    self.starFilmListCtl = [[RMStarFilmListViewController alloc] init];
+                }
+                self.starFilmListCtl.starDetailsDelegate = self;
+                [self.belowView addSubview:self.starFilmListCtl.view];
+                self.starFilmListCtl.star_id = self.star_id;
+            }else if ([title isEqualToString:@"电视剧"]){
+                if (! self.starTeleplayListCtl){
+                    self.starTeleplayListCtl = [[RMStarTeleplayListViewController alloc] init];
+                }
+                
+                self.starTeleplayListCtl.starDetailsDelegate = self;
+                [self.belowView addSubview:self.starTeleplayListCtl.view];
+                self.starTeleplayListCtl.star_id = self.star_id;
+            }else{
+                if (! self.starVarietyListCtl){
+                    self.starVarietyListCtl = [[RMStarVarietyListViewController alloc] init];
+                }
+                self.starVarietyListCtl.starDetailsDelegate = self;
+                [self.belowView addSubview:self.starVarietyListCtl.view];
+                self.starVarietyListCtl.star_id = self.star_id;
             }
-            self.starFilmListCtl.starDetailsDelegate = self;
-            [self.belowView addSubview:self.starFilmListCtl.view];
-            self.starFilmListCtl.star_id = self.star_id;
+
             break;
         }
         case 1:{
-            if (! self.starTeleplayListCtl){
-                self.starTeleplayListCtl = [[RMStarTeleplayListViewController alloc] init];
+            if ([title isEqualToString:@"电视剧"]){
+                if (! self.starTeleplayListCtl){
+                    self.starTeleplayListCtl = [[RMStarTeleplayListViewController alloc] init];
+                }
+                
+                self.starTeleplayListCtl.starDetailsDelegate = self;
+                [self.belowView addSubview:self.starTeleplayListCtl.view];
+                self.starTeleplayListCtl.star_id = self.star_id;
+            }else if ([title isEqualToString:@"综艺"]){
+                if (! self.starVarietyListCtl){
+                    self.starVarietyListCtl = [[RMStarVarietyListViewController alloc] init];
+                }
+                self.starVarietyListCtl.starDetailsDelegate = self;
+                [self.belowView addSubview:self.starVarietyListCtl.view];
+                self.starVarietyListCtl.star_id = self.star_id;
             }
-
-            self.starTeleplayListCtl.starDetailsDelegate = self;
-            [self.belowView addSubview:self.starTeleplayListCtl.view];
-            self.starTeleplayListCtl.star_id = self.star_id;
+    
             break;
         }
         case 2:{
@@ -173,9 +205,41 @@ typedef enum{
         [self.addOrDeleteBtn setBackgroundImage:LOADIMAGE(@"mx_join", kImageTypePNG) forState:UIControlStateNormal];
         isStarAttentionMyChannel = NO;
     }
+    
+    //刷新第一个标签下的内容
+    NSMutableArray * arr = [NSMutableArray arrayWithArray:CheckArr];
+    for (int i=0; i<[arr count]; i++){
+        if ([[arr objectAtIndex:i] isEqualToString:@""]){
+            [arr removeObjectAtIndex:i];
+        }
+    }
+    [self switchSelectedMethodWithValue:0 withTitle:[arr objectAtIndex:0]];
 }
 
 #pragma mark - request 
+
+
+/**
+ *  判断明星标签下 电影 电视剧 综艺 是否有数据
+ */
+- (void)startCheckStarProperty {
+    manager = [[RMAFNRequestManager alloc] init];
+    self.loadType = requestCheckStarPropertyYype;
+    [manager getCheckStarPropertyWithStar_id:self.star_id];
+    manager.delegate = self;
+}
+
+/**
+ *  请求明星相关数据
+ */
+- (void)startRequestStarData {
+    CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
+    NSDictionary *dict = [storage objectForKey:UserLoginInformation_KEY];
+    manager = [[RMAFNRequestManager alloc] init];
+    self.loadType = requestIntroType;
+    [manager getStartDetailWithID:self.star_id WithToken:[NSString stringWithFormat:@"%@",[dict objectForKey:@"token"]]];
+    manager.delegate = self;
+}
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     if (self.loadType == requestIntroType) {
@@ -188,6 +252,28 @@ typedef enum{
     }else if (self.loadType == requestDeleteMyChannelType){
         [self.addOrDeleteBtn setBackgroundImage:LOADIMAGE(@"mx_join", kImageTypePNG) forState:UIControlStateNormal];
         isStarAttentionMyChannel = 0;
+    }else {
+        if ([[[data objectAtIndex:0] objectForKey:@"vod_num"] integerValue] != 0){ //电影
+            [CheckArr addObject:@"电影"];
+        }else{
+            [CheckArr addObject:@""];
+        }
+        
+        if ([[[data objectAtIndex:0] objectForKey:@"tv_num"] integerValue] != 0){ //电视剧
+            [CheckArr addObject:@"电视剧"];
+        }else{
+            [CheckArr addObject:@""];
+        }
+        
+        if ([[[data objectAtIndex:0] objectForKey:@"variety_num"] integerValue] != 0){ //综艺
+            [CheckArr addObject:@"综艺"];
+        }else{
+            [CheckArr addObject:@""];
+        }
+        
+        [self loadSegmentedWithArr:CheckArr];
+        
+        [self startRequestStarData];
     }
 }
 

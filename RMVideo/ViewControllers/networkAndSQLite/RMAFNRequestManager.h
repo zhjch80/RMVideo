@@ -213,5 +213,9 @@ typedef enum{
  */
 - (void)getAboutAppWithOS:(NSString *)os withVersionNumber:(NSString *)versionNumber;
 
+/**
+ *  判断明星标签下 电影 电视剧 综艺 是否有数据
+ */
+- (void)getCheckStarPropertyWithStar_id:(NSString *)star_id;
 
 @end

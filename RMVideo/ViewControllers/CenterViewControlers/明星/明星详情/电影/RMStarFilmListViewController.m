@@ -10,15 +10,18 @@
 #import "RMStarDetailsCell.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMStarDetailsViewController.h"
+#import "RefreshControl.h"
+#import "CustomRefreshView.h"
 
-#import "PullToRefreshTableView.h"
 
-@interface RMStarFilmListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate>{
+@interface RMStarFilmListViewController ()<UITableViewDataSource,UITableViewDelegate,StarDetailsCellDelegate,RMAFNRequestManagerDelegate,RefreshControlDelegate>{
     NSMutableArray * dataArr;
     NSInteger AltogetherRows;               //总共有多少条数据
     NSInteger pageCount;
     BOOL isRefresh;
 }
+@property (nonatomic, strong) UITableView * mTableView;
+@property (nonatomic, strong) RefreshControl * refreshControl;
 
 @end
 
@@ -35,37 +38,45 @@
     [Flurry endTimedEvent:@"VIEW_StarDetail_Film" withParameters:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self startRequest];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     dataArr = [[NSMutableArray alloc] init];
 
-    PullToRefreshTableView * tableView = [[PullToRefreshTableView alloc] init];
-    if (IS_IPHONE_6_SCREEN){
-        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
-    }else if (IS_IPHONE_6p_SCREEN){
-        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
-    }else{
-        tableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
-    }
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.tag = 201;
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [tableView setIsCloseHeader:NO];
-    [tableView setIsCloseFooter:NO];
-    [self.view addSubview:tableView];
+    self.mTableView = [[UITableView alloc] init];
+    self.mTableView.frame = CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 42 - 180);
+    self.mTableView.delegate = self;
+    self.mTableView.dataSource = self;
+    self.mTableView.backgroundColor = [UIColor clearColor];
+    self.mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.mTableView];
+    
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.mTableView delegate:self];
+    self.refreshControl.topEnabled=YES;
+    self.refreshControl.bottomEnabled=YES;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
+
     pageCount = 0;
     isRefresh = YES;
 }
 
-#pragma mark - request
+#pragma mark 刷新代理
 
-- (void)startRequest{
-    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
-    [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
-    request.delegate = self;
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
+    if (direction == RefreshDirectionTop) { //下拉刷新
+        isRefresh = YES;
+        pageCount = 0;
+        [self startRequest];
+    }else if(direction == RefreshDirectionBottom) { //上拉加载
+        isRefresh = NO;
+        pageCount ++;
+        [self startRequest];
+    }
 }
 
 #pragma mark - UITableView Delegate
@@ -160,61 +171,6 @@
     return 155;
 }
 
-#pragma mark -
-#pragma mark Scroll View Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidDragging];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    NSInteger returnKey = [(PullToRefreshTableView *)[self.view viewWithTag:201]tableViewDidEndDragging];
-    
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
-    }
-}
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            
-            break;
-        }
-        case k_RETURN_REFRESH://刷新
-        {
-            pageCount = 0;
-            isRefresh = YES;
-            [self startRequest];
-            break;
-        }
-        case k_RETURN_LOADMORE://加载更多
-        {
-            if (pageCount * 12 + 12 > AltogetherRows){
-                [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:YES];
-            }else{
-                pageCount ++;
-                isRefresh = NO;
-                [self startRequest];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - StarDetailsCellDelegate
 
 - (void)startDetailsCellDidSelectWithImage:(RMImageView *)imageView {
@@ -224,6 +180,7 @@
     [starDetailsDelegate.navigationController pushViewController:videoPlaybackDetailsCtl animated:YES];
     [videoPlaybackDetailsCtl setAppearTabBarNextPopViewController:kNO];
 }
+
 /**
  *  直接播放
  *
@@ -233,52 +190,34 @@
 - (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
     
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - request RMAFNRequestManagerDelegate
 
+- (void)startRequest{
+    RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
+    [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
+    request.delegate = self;
+}
+
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
-    if (data.count == 0){
-        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
-        [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
-        [SVProgressHUD showSuccessWithStatus:@"暂无相关内容" duration:0.44];
-        return;
-    }
-    ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
     RMPublicModel * model = [data objectAtIndex:0];
     AltogetherRows = [model.rows integerValue];
-    if (AltogetherRows <= 12){
-        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = YES;
-    }else {
-        ((PullToRefreshTableView *)[self.view viewWithTag:201]).isCloseFooter = NO;
-    }
     if (isRefresh){
         dataArr = data;
+        [self.mTableView reloadData];
+        [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
     }else{
         for (int i=0; i<data.count; i++) {
             RMPublicModel * model = [data objectAtIndex:i];
             [dataArr addObject:model];
         }
+        [self.mTableView reloadData];
+        [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
     }
-    [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
 }
 
 -(void)requestError:(NSError *)error {
-    [(PullToRefreshTableView *)[self.view viewWithTag:201] reloadData:NO];
     NSLog(@"star 电影 error:%@",error);
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
