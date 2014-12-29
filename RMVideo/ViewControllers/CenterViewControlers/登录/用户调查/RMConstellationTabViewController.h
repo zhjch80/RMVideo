@@ -14,6 +14,8 @@
     __weak IBOutlet UIButton *HeavyTasteBtn;
 }
 
+@property (nonatomic ,copy) NSString *genderString;
+@property (nonatomic ,copy) NSString *yearString;
 - (IBAction)likeGenreBtnClick:(UIButton *)sender;
 
 - (IBAction)constellation:(UIButton *)sender;

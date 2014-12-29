@@ -61,6 +61,11 @@
 }
 
 - (IBAction)finishBtnClick:(UIButton *)sender {
+    if(likeTypeString==nil||constellationString==nil){
+        UIAlertView *alview = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"请选择相应的选项" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alview show];
+        return;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"completethesurvey" object:nil];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
