@@ -9,7 +9,7 @@
 
 @protocol TagListDelegate <NSObject>
 
-- (void)clickTagWithValue:(int)value;
+- (void)clickTagWithTitle:(NSString *)title;
 
 - (void)refreshTagListViewHeight:(float)height;
 

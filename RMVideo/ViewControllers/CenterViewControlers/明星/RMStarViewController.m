@@ -9,7 +9,6 @@
 #import "RMStarViewController.h"
 #import "RMStarCell.h"
 #import "RMImageView.h"
-#import "PullToRefreshTableView.h"
 #import "RMSetupViewController.h"
 #import "RMStarDetailsViewController.h"
 #import "RMLoginViewController.h"
@@ -18,8 +17,8 @@
 #import "RMSearchViewController.h"
 
 #import "RMStarDetailsViewController.h"
-
-
+#import "RefreshControl.h"
+#import "CustomRefreshView.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -30,7 +29,7 @@ typedef enum{
     requestSuccessType
 }LoadType;
 
-@interface RMStarViewController ()<UITableViewDataSource,UITableViewDelegate,StarCellDelegate,RMAFNRequestManagerDelegate> {
+@interface RMStarViewController ()<UITableViewDataSource,UITableViewDelegate,StarCellDelegate,RMAFNRequestManagerDelegate,RefreshControlDelegate> {
     NSMutableArray * dataArr;
     LoadType loadType;
     NSInteger pageCount;
@@ -38,7 +37,8 @@ typedef enum{
     RMImageView * rmImage;                  //获取点击cell的图片
     NSInteger AltogetherRows;               //总共有多少条数据
 }
-@property (nonatomic, strong) PullToRefreshTableView * tableView;
+@property (nonatomic, strong) UITableView * tableView;
+@property (nonatomic, strong) RefreshControl * refreshControl;
 
 @end
 
@@ -65,19 +65,45 @@ typedef enum{
     [leftBarButton setImage:LOADIMAGE(@"setup", kImageTypePNG) forState:UIControlStateNormal];
     [rightBarButton setImage:LOADIMAGE(@"search", kImageTypePNG) forState:UIControlStateNormal];
     
-    
-    self.tableView = [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44 - 49)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UtilityFunc shareInstance].globleWidth, [UtilityFunc shareInstance].globleHeight - 44 - 49)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
-    [self.tableView setIsCloseHeader:NO];
-    [self.tableView setIsCloseFooter:NO];
     [self.view addSubview:self.tableView];
     
+    self.refreshControl=[[RefreshControl alloc] initWithScrollView:self.tableView delegate:self];
+    self.refreshControl.topEnabled=YES;
+    self.refreshControl.bottomEnabled=YES;
+    [self.refreshControl registerClassForTopView:[CustomRefreshView class]];
+
     pageCount = 1;
     isRefresh = YES;
     [self startRequest];
+}
+
+#pragma mark 刷新代理
+
+- (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction {
+    if (direction == RefreshDirectionTop) { //下拉刷新
+        pageCount = 1;
+        isRefresh = YES;
+        loadType =  requestStarListType;
+        [self startRequest];
+    }else if(direction == RefreshDirectionBottom) { //上拉加载
+        if (pageCount * 12 > AltogetherRows){
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.44 * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+            });
+        }else{
+            pageCount ++;
+            isRefresh = NO;
+            loadType =  requestStarListType;
+            [self startRequest];
+        }
+    }
 }
 
 #pragma mark - UITableView Delegate
@@ -203,24 +229,15 @@ typedef enum{
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-}
-
 #pragma mark - 进入明星详情页面
 
 - (void)clickVideoImageViewMehtod:(RMImageView *)imageView {
-//    if (imageView.identifierString) {
-//        RMStarDetailsViewController * starDetailsCtl = [[RMStarDetailsViewController alloc] init];
-//        [self.navigationController pushViewController:starDetailsCtl animated:YES];
-//        [starDetailsCtl setStarID:imageView.identifierString];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
-//    }
-    
-    RMStarDetailsViewController * newStarDetailsCtl = [[RMStarDetailsViewController alloc] init];
-    [self.navigationController pushViewController:newStarDetailsCtl animated:YES];
-    newStarDetailsCtl.star_id = imageView.identifierString;
+    if (imageView.identifierString) {
+    RMStarDetailsViewController * StarDetailsCtl = [[RMStarDetailsViewController alloc] init];
+    [self.navigationController pushViewController:StarDetailsCtl animated:YES];
+    StarDetailsCtl.star_id = imageView.identifierString;
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
-
+    }
 }
 
 #pragma mark - 添加或者删除 明星 在我的频道里
@@ -268,60 +285,6 @@ typedef enum{
     [self performSelector:@selector(willStartAddMyChannelMethod:) withObject:imageView afterDelay:1.0];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.tableView tableViewDidDragging];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    NSInteger returnKey = [self.tableView tableViewDidEndDragging];
-    //  returnKey用来判断执行的拖动是下拉还是上拖
-    //  如果数据正在加载，则回返DO_NOTHING
-    //  如果是下拉，则返回k_RETURN_REFRESH
-    //  如果是上拖，则返回k_RETURN_LOADMORE
-    //  相应的Key宏定义也封装在PullToRefreshTableView中
-    //  根据返回的值，您可以自己写您的数据改变方式
-    
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        //  这里执行方法
-        NSString * key = [NSString stringWithFormat:@"%lu", (long)returnKey];
-        [NSThread detachNewThreadSelector:@selector(updateThread:) toTarget:self withObject:key];
-    }
-}
-
-- (void)updateThread:(id)sender {
-    int index = [sender intValue];
-    switch (index) {
-        case k_RETURN_DO_NOTHING://不执行操作
-        {
-            break;
-        }
-        case k_RETURN_REFRESH://刷新
-        {
-            pageCount = 1;
-            isRefresh = YES;
-            loadType =  requestStarListType;
-            [self startRequest];
-            break;
-        }
-        case k_RETURN_LOADMORE://加载更多
-        {
-            if (pageCount * 12 > AltogetherRows){
-                [self.tableView reloadData:YES];
-            }else{
-                pageCount ++;
-                isRefresh = NO;
-                loadType =  requestStarListType;
-                [self startRequest];
-            }
-
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - Base Method
 
 - (void)navgationBarButtonClick:(UIBarButtonItem *)sender {
@@ -360,19 +323,37 @@ typedef enum{
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data {
     [SVProgressHUD dismiss];
-    self.tableView.isCloseFooter = NO;
     if (loadType == requestStarListType){
-        RMPublicModel * model_row = [data objectAtIndex:0];
-        AltogetherRows = [model_row.rows integerValue];
-        if (isRefresh){
+        if (self.refreshControl.refreshingDirection==RefreshingDirectionTop) {
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
             dataArr = data;
-        }else{
+            [self.tableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionTop];
+        }else if(self.refreshControl.refreshingDirection==RefreshingDirectionBottom) {
+            if (data.count == 0){
+                [SVProgressHUD showSuccessWithStatus:@"没有更多内容了" duration:1.0];
+                [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
+                return;
+            }
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
             for (int i=0; i<data.count; i++) {
                 RMPublicModel * model = [data objectAtIndex:i];
                 [dataArr addObject:model];
             }
+            [self.tableView reloadData];
+            [self.refreshControl finishRefreshingDirection:RefreshDirectionBottom];
         }
-        [self.tableView reloadData:NO];
+        
+        if (isRefresh){
+            RMPublicModel * model = [data objectAtIndex:0];
+            AltogetherRows = [model.rows integerValue];
+            dataArr = data;
+            [self.tableView reloadData];
+        }
+        
+        
     }else if (loadType == requestAddStarMyChannelType){
         RMStarCell * cell = (RMStarCell *)[self.tableView cellForRowAtIndexPath:rmImage.indexPath];
         UIImage * image = [[UIImage alloc] init];
@@ -390,8 +371,6 @@ typedef enum{
 }
 
 - (void)requestError:(NSError *)error {
-    self.tableView.isCloseFooter = YES;
-    [self.tableView reloadData:NO];
     [SVProgressHUD dismiss];
 }
 

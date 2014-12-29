@@ -65,6 +65,7 @@ typedef enum{
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [leftBarButton setBackgroundImage:LOADIMAGE(@"backup_img", kImageTypePNG) forState:UIControlStateNormal];
     rightBarButton.hidden = YES;
     

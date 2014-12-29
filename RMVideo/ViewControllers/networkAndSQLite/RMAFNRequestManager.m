@@ -139,6 +139,10 @@
             strUrl = [NSString stringWithFormat:@"%@getVideoNumByTagId?",baseUrl];
             break;
         }
+        case Http_getSearchRecommend:{
+            strUrl = [NSString stringWithFormat:@"%@getSearchRecommend",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -859,6 +863,28 @@ void checkTheNetworkConnection(NSString *title){
     url = [self encryptUrl:url];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         NSMutableArray *arr = [NSMutableArray arrayWithObjects:[responseObject objectForKey:@"data"], nil];
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:arr];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 搜索 标签推荐
+
+- (void)getSearchRecommend {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getSearchRecommend];
+    url = [NSString stringWithFormat:@"%@",url];
+    url = [self encryptUrl:url];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSMutableArray *arr = [NSMutableArray array];
+        for (int i=0; i<[[responseObject objectForKey:@"data"] count]; i++){
+            [arr addObject:[[responseObject objectForKey:@"data"] objectAtIndex:i]];
+        }
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:arr];
         }

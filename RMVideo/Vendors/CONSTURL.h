@@ -32,3 +32,6 @@
 #define Http_getAboutApp                        322     //关于
 #define Http_getSearchTips                      323     //联想动态搜索
 #define Http_getCheckStarProperty               324     //判断明星标签下的属性
+#define Http_getSearchRecommend                 325     //搜索 标签推荐
+
+
