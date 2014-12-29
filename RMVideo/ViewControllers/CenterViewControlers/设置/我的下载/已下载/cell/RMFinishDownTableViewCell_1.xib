@@ -14,13 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gel-3J-8Rx">
-                        <rect key="frame" x="115" y="95" width="49" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="被解放的姜戈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SRW-vw-Zui">
                         <rect key="frame" x="115" y="25" width="195" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -37,13 +30,6 @@
                         <rect key="frame" x="15" y="4" width="90" height="119"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nLh-ua-2RB">
-                        <rect key="frame" x="115" y="65" width="107" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xRD-Ta-AAI">
                         <rect key="frame" x="10" y="133" width="300" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -52,6 +38,16 @@
                         <color key="textColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="75Y-qG-C6S">
+                        <rect key="frame" x="115" y="91" width="97" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" image="play_btn.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="playButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="g46-UB-2DS"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
@@ -59,14 +55,14 @@
             <connections>
                 <outlet property="editingImage" destination="IkG-Rr-hCE" id="uim-bs-lhY"/>
                 <outlet property="headImage" destination="sbJ-sl-aMM" id="DXh-UZ-Mpu"/>
-                <outlet property="memoryCount" destination="Gel-3J-8Rx" id="aJS-ha-vcf"/>
-                <outlet property="movieCount" destination="nLh-ua-2RB" id="ICn-T3-tN7"/>
                 <outlet property="movieName" destination="SRW-vw-Zui" id="Uf9-9d-LSb"/>
+                <outlet property="playButton" destination="75Y-qG-C6S" id="Oo3-ZQ-VSz"/>
             </connections>
-            <point key="canvasLocation" x="140" y="138.5"/>
+            <point key="canvasLocation" x="375" y="166"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="play_btn.png" width="137" height="45"/>
         <image name="search.png" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

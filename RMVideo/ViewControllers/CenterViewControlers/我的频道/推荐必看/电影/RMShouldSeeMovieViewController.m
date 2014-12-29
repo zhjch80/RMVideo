@@ -9,6 +9,10 @@
 #import "RMShouldSeeMovieViewController.h"
 #import "RMVideoPlaybackDetailsViewController.h"
 #import "RMMyChannelShouldSeeViewController.h"
+#import "RMWebViewPlayViewController.h"
+#import "RMModel.h"
+#import "RMPlayer.h"
+#import "RMCustomPresentNavViewController.h"
 
 @interface RMShouldSeeMovieViewController (){
     BOOL isDownLoad;
@@ -191,7 +195,46 @@
  *  @param location 相应cell上button的位置
  */
 - (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
-    
+    NSInteger number = index*3+location;
+    RMPublicModel *model =[self.dataArray objectAtIndex:number];
+    RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
+    NSLog(@"jump:%@  playUrl:%@ title:%@",model.jumpurl,model.downLoadURL,model.name);
+    if([model.downLoadURL isEqualToString:@""]||model.downLoadURL== nil){
+        if([model.jumpurl isEqualToString:@""]||model.jumpurl==nil){
+            [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+            return;
+        }
+        //跳转web
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.jumpurl = model.jumpurl;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+        RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+        webView.urlString = model.jumpurl;
+        [myChannelShouldDelegate presentViewController:webNav animated:YES completion:^{
+        }];
+    }
+    else{
+        //使用custom play 播放mp4
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.reurl = model.downLoadURL;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        //电影
+        RMModel * playmodel = [[RMModel alloc] init];
+        playmodel.url = model.downLoadURL;
+        playmodel.title = model.name;
+        [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:myChannelShouldDelegate withVideoType:1];
+    }
 }
 
 - (void)refreshControl:(RefreshControl *)refreshControl didEngageRefreshDirection:(RefreshDirection)direction

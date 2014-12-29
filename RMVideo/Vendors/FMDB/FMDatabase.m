@@ -583,7 +583,6 @@
     FMResultSet *rs         = 0x00;
     
     if (_traceExecution && sql) {
-#warning 调试时候用
 //        NSLog(@"%@ executeQuery: %@", self, sql);
     }
     
@@ -772,7 +771,6 @@
     FMStatement *cachedStmt  = 0x00;
     
     if (_traceExecution && sql) {
-#warning 调试时候用
 //        NSLog(@"%@ executeUpdate: %@", self, sql);
     }
     

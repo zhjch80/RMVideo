@@ -9,6 +9,10 @@
 #import "RMDownMoreViewController.h"
 #import "RMFinishDownTableViewCell.h"
 #import "RMVideoPlaybackDetailsViewController.h"
+#import "RMWebViewPlayViewController.h"
+#import "RMModel.h"
+#import "RMPlayer.h"
+#import "RMCustomPresentNavViewController.h"
 
 typedef enum{
     downLoadRequestType = 1,
@@ -16,7 +20,7 @@ typedef enum{
     
 }AFNRequestType;
 
-@interface RMDownMoreViewController (){
+@interface RMDownMoreViewController ()<RMFinishDownTableViewCellDelegate>{
     RMAFNRequestManager *manager;
     AFNRequestType requestType;
 }
@@ -145,14 +149,15 @@ typedef enum{
     static NSString *identifier = @"cellIIdentifier";
     RMFinishDownTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if(cell==nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell" owner:self options:nil] lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RMFinishDownTableViewCell_1" owner:self options:nil] lastObject];
         if(isEditing)
             [cell setCellViewFrame];
     }
     RMPublicModel *model = [self.dataArray objectAtIndex:indexPath.row];
     [cell.headImage sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:LOADIMAGE(@"Default90_119", kImageTypePNG)];
     cell.movieName.text = model.name;
-    cell.movieCount.text = nil;
+    cell.playButton.tag = indexPath.row;
+    cell.delegate = self;
     [cell.editingImage setImage:[UIImage imageNamed:[cellEditingImageArray objectAtIndex:indexPath.row]]];
     return cell;
     
@@ -249,6 +254,48 @@ typedef enum{
     NSLog(@"error:%@",error);
 }
 
+- (void)palyMovieWithIndex:(NSInteger)index{
+    RMPublicModel *model = [self.dataArray objectAtIndex:index];
+    NSLog(@"jump:%@  playUrl:%@",model.jumpurl,model.downLoadURL);
+    if([model.downLoadURL isEqualToString:@""]||model.downLoadURL== nil){
+        if([model.jumpurl isEqualToString:@""]||model.jumpurl==nil){
+            [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+            return;
+        }
+        //跳转web
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.jumpurl = model.jumpurl;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+        RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+        webView.urlString = model.jumpurl;
+        [self presentViewController:webNav animated:YES completion:^{
+        }];
+    }
+    else{
+        //使用custom play 播放mp4
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = model.name;
+        insertModel.pic_url = model.pic;
+        insertModel.reurl = model.downLoadURL;
+        insertModel.playTime = @"0";
+        insertModel.video_id = model.video_id;
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        //电影
+        RMModel * playmodel = [[RMModel alloc] init];
+        playmodel.url = model.downLoadURL;
+        playmodel.title = model.name;
+        [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
+    }
+    
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

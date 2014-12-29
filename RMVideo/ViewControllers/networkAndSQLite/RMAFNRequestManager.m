@@ -198,6 +198,7 @@ void checkTheNetworkConnection(NSString *title){
             NSMutableArray *tvArray = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list_tv"]){
                 RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.name = [dict objectForKey:@"title"];
                 model.DailyRecommendPic = [dict objectForKey:@"pic"];
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
@@ -211,6 +212,7 @@ void checkTheNetworkConnection(NSString *title){
             NSMutableArray *movieArray = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list_vod"]){
                 RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.name = [dict objectForKey:@"title"];
                 model.DailyRecommendPic = [dict objectForKey:@"pic"];
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
@@ -225,6 +227,7 @@ void checkTheNetworkConnection(NSString *title){
             NSMutableArray *varietyArray = [NSMutableArray array];
             for(NSDictionary *dict in [responseObject objectForKey:@"list_variety"]){
                 RMPublicModel *model = [[RMPublicModel alloc] init];
+                model.name = [dict objectForKey:@"title"];
                 model.DailyRecommendPic = [dict objectForKey:@"pic"];
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
@@ -494,6 +497,8 @@ void checkTheNetworkConnection(NSString *title){
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.video_id = [dict objectForKey:@"video_id"];
                 model.rows = [responseObject objectForKey:@"rows"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL = [dict objectForKey:@"m_down_url"];
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -614,7 +619,10 @@ void checkTheNetworkConnection(NSString *title){
                 model.name = [dict objectForKey:@"name"];
                 model.video_id =[dict objectForKey:@"video_id"];
                 model.video_type = [dict objectForKey:@"video_type"];
+                model.jumpurl = [dict objectForKey:@"jumpurl"];
+                model.downLoadURL= [dict objectForKey:@"m_down_url"];
                 model.rows = [responseObject objectForKey:@"rows"];
+                
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){

@@ -12,7 +12,7 @@
 
 //5 44  6+ 60    120
 //static const CGFloat kHeightOfTopScrollView = 44.0f;
-static const CGFloat kWidthOfButtonMargin = 15.0f;
+//static const CGFloat kWidthOfButtonMargin = 15.0f;
 static const NSUInteger kTagOfRightSideButton = 999;
 
 @implementation SUNSlideSwitchView

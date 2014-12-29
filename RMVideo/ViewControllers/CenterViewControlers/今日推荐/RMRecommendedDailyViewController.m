@@ -153,10 +153,10 @@
                 //保存数据sqlit
                 RMPublicModel *insertModel = [[RMPublicModel alloc] init];
                 insertModel.name = model.name;
-                insertModel.pic_url = model.pic;
+                insertModel.pic_url = model.DailyRecommendPic;
                 insertModel.jumpurl = model.jumpurl;
                 insertModel.playTime = @"0";
-                insertModel.video_id = model.video_id;
+                insertModel.video_id = model.DailyRecommendVideo_id;
                 [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
                 RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
                 RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];

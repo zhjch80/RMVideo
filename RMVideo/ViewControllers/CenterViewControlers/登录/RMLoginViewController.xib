@@ -38,6 +38,10 @@
                 </label>
                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VO-Rz-uw1">
                     <rect key="frame" x="68" y="63" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="hvr-zP-A73"/>
+                        <constraint firstAttribute="width" constant="50" id="mBc-bh-2t5"/>
+                    </constraints>
                     <state key="normal" image="logo_weibo.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

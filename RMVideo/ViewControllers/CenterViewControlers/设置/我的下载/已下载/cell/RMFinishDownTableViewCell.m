@@ -24,6 +24,7 @@
     self.movieName.frame = CGRectMake(self.movieName.frame.origin.x+30, self.movieName.frame.origin.y, self.movieName.frame.size.width, self.movieName.frame.size.height);
     self.editingImage.frame = CGRectMake(self.editingImage.frame.origin.x+35, self.editingImage.frame.origin.y, self.editingImage.frame.size.width, self.editingImage.frame.size.height);
     self.movieCount.frame = CGRectMake(self.movieCount.frame.origin.x+30, self.movieCount.frame.origin.y, self.movieCount.frame.size.width, self.movieCount.frame.size.height);
+    self.playButton.frame = CGRectMake(self.playButton.frame.origin.x+30, self.playButton.frame.origin.y, self.playButton.frame.size.width, self.playButton.frame.size.height);
 }
 - (void)beginAnimation{
     __weak RMFinishDownTableViewCell *weekSelf = self;
@@ -33,6 +34,7 @@
         weekSelf.movieName.frame = CGRectMake(weekSelf.movieName.frame.origin.x+30, weekSelf.movieName.frame.origin.y, weekSelf.movieName.frame.size.width, weekSelf.movieName.frame.size.height);
         weekSelf.editingImage.frame = CGRectMake(weekSelf.editingImage.frame.origin.x+35, weekSelf.editingImage.frame.origin.y, weekSelf.editingImage.frame.size.width, weekSelf.editingImage.frame.size.height);
         weekSelf.movieCount.frame = CGRectMake(weekSelf.movieCount.frame.origin.x+30, weekSelf.movieCount.frame.origin.y, weekSelf.movieCount.frame.size.width, weekSelf.movieCount.frame.size.height);
+        weekSelf.playButton.frame = CGRectMake(weekSelf.playButton.frame.origin.x+30, weekSelf.playButton.frame.origin.y, weekSelf.playButton.frame.size.width, weekSelf.playButton.frame.size.height);
     }];
 }
 
@@ -45,10 +47,16 @@
         weekSelf.movieName.frame = CGRectMake(weekSelf.movieName.frame.origin.x-30, weekSelf.movieName.frame.origin.y, weekSelf.movieName.frame.size.width, weekSelf.movieName.frame.size.height);
         weekSelf.editingImage.frame = CGRectMake(weekSelf.editingImage.frame.origin.x-35, weekSelf.editingImage.frame.origin.y, weekSelf.editingImage.frame.size.width, weekSelf.editingImage.frame.size.height);
         weekSelf.movieCount.frame = CGRectMake(weekSelf.movieCount.frame.origin.x-30, weekSelf.movieCount.frame.origin.y, weekSelf.movieCount.frame.size.width, weekSelf.movieCount.frame.size.height);
+        weekSelf.playButton.frame = CGRectMake(weekSelf.playButton.frame.origin.x-30, weekSelf.playButton.frame.origin.y, weekSelf.playButton.frame.size.width, weekSelf.playButton.frame.size.height);
     }];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
+}
+- (IBAction)playButtonClick:(UIButton *)sender {
+    if([self.delegate respondsToSelector:@selector(palyMovieWithIndex:)]){
+        [self.delegate palyMovieWithIndex:sender.tag];
+    }
 }
 @end
