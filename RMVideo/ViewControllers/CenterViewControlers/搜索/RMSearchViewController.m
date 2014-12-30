@@ -110,6 +110,8 @@ typedef enum{
     [self.searchTableView reloadData];
     
     [self startRequestSearchRecommend];
+    
+    [self.searchTextField becomeFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -502,7 +504,7 @@ typedef enum{
         if (requestManagerType == requestSearchType){
             return 155;
         }else{
-            return 30;
+            return 44;
         }
     }
 }
@@ -520,9 +522,8 @@ typedef enum{
         [self startSearchRequest:str];
     }else{
         if (requestManagerType == requestSearchType){ //目标搜索
-            NSLog(@"SearchResult:%d",indexPath.row);
         }else{ //联想搜索
-            NSLog(@"DynamicAssociative:%@",[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"name"]);
+            [self startSearchRequest:[[resultDataArr objectAtIndex:indexPath.row] objectForKey:@"name"]];
         }
     }
 }

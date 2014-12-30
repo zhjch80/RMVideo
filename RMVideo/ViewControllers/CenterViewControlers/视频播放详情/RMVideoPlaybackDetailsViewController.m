@@ -260,7 +260,6 @@ typedef enum{
             }
             [SVProgressHUD dismiss];
             if(model.downLoadURL == nil){
-//                NSLog(@"下载地址:%@",[[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"]);
                 RMDownLoadingViewController *rmDownLoading = [RMDownLoadingViewController shared];
                 model.downLoadURL = [[model.playurlArr objectAtIndex:0] objectForKey:@"m_down_url"];
                 model.downLoadState = @"等待缓存";

@@ -164,7 +164,6 @@ typedef enum{
 - (NSInteger)getTagIdFromTag:(NSString *)str {
     for (int i=0; i<dataArr.count; i++){
         if ([((RMPublicModel *)[dataArr objectAtIndex:i]).name isEqualToString:str]){
-            NSLog(@"%@",((RMPublicModel *)[dataArr objectAtIndex:i]).tag_id);
             return [((RMPublicModel *)[dataArr objectAtIndex:i]).tag_id integerValue];
             break;
         }
