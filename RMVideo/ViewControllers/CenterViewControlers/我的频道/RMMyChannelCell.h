@@ -17,7 +17,7 @@
 
 - (void)clickVideoImageViewMehtod:(RMImageView *)imageView;
 
-- (void)playBtnWithIndex:(NSInteger)Index andLocation:(NSInteger)location;
+- (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location;
 
 @end
 

@@ -20,6 +20,10 @@
 #import "RMGenderTabViewController.h"
 #import "RefreshControl.h"
 #import "CustomRefreshView.h"
+#import "RMWebViewPlayViewController.h"
+#import "RMModel.h"
+#import "RMPlayer.h"
+
 
 typedef enum{
     usingSinaLogin = 1,
@@ -187,7 +191,6 @@ typedef enum{
     }
     
     [self refreshCurrentCtl];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myChannelLoginSuccessRecommendmethod) name:@"completethesurvey" object:nil];
 }
 
 - (void)startRequest {
@@ -377,13 +380,46 @@ typedef enum{
         [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
     }
 }
-#pragma mark 直接播放
-- (void)playBtnWithIndex:(NSInteger)Index andLocation:(NSInteger)location{
 
-    /**
-     *  index 对应的是cell的位置  location对应的“直接播放”按钮的位置
-     */
-    NSLog(@"index:%d location:%d",Index,location);
+#pragma mark - 直接播放
+
+- (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
+    RMPublicModel *model = [dataArr objectAtIndex:index];
+    if([[[model.video_list objectAtIndex:location] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.video_list objectAtIndex:location] objectForKey:@"m_down_url"] == nil){
+        if([[[model.video_list objectAtIndex:location] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.video_list objectAtIndex:location] objectForKey:@"jumpurl"] == nil){
+            [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+            return;
+        }
+        //跳转web
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = [[model.video_list objectAtIndex:location] objectForKey:@"name"];
+        insertModel.pic_url = [[model.video_list objectAtIndex:location] objectForKey:@"pic"];
+        insertModel.jumpurl = [[model.video_list objectAtIndex:location] objectForKey:@"jumpurl"];
+        insertModel.playTime = @"0";
+        insertModel.video_id = [[model.video_list objectAtIndex:location] objectForKey:@"video_id"];
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+        RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+        webView.urlString = [[model.video_list objectAtIndex:location] objectForKey:@"jumpurl"];
+        [self presentViewController:webNav animated:YES completion:^{
+        }];
+    }else{
+        //使用custom play 播放mp4
+        //保存数据sqlit
+        RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+        insertModel.name = [[model.video_list objectAtIndex:location] objectForKey:@"name"];
+        insertModel.pic_url = [[model.video_list objectAtIndex:location] objectForKey:@"pic"];
+        insertModel.reurl = [[model.video_list objectAtIndex:location] objectForKey:@"m_down_url"];
+        insertModel.playTime = @"0";
+        insertModel.video_id = [[model.video_list objectAtIndex:location] objectForKey:@"video_id"];
+        [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+        //电影
+        RMModel * playmodel = [[RMModel alloc] init];
+        playmodel.url = [[model.video_list objectAtIndex:location] objectForKey:@"m_down_url"];
+        playmodel.title = [[model.video_list objectAtIndex:location] objectForKey:@"name"];
+        [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
+    }
 }
 
 - (IBAction)mbuttonClick:(UIButton *)sender {
@@ -543,13 +579,11 @@ typedef enum{
         }
         [SVProgressHUD dismiss];
     }else if (loadType == requestLoginType){
-        RMGenderTabViewController *vc = [[RMGenderTabViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+        RMPublicModel * model = [data objectAtIndex:0];
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setValue:userName forKey:@"userName"];
         [dict setValue:headImageURLString forKey:@"HeadImageURL"];
-        [dict setValue:[data objectAtIndex:0] forKey:@"token"];
+        [dict setValue:model.token forKey:@"token"];
         CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
         [storage beginUpdates];
         NSString * loginStatus = [AESCrypt encrypt:@"islogin" password:PASSWORD];
@@ -558,6 +592,14 @@ typedef enum{
         [storage endUpdates];
         [SVProgressHUD dismiss];
         [self refreshCurrentCtl];
+        if ([model.status integerValue] == 1){ //没有登录过  push 获取用户信息界面
+            RMGenderTabViewController *viewContro = [[RMGenderTabViewController alloc] init];
+            viewContro.viewControlerrIdentify = @"MyChannelCtl";
+            [self.navigationController pushViewController:viewContro animated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
+        }else{ //登录过 拉取精彩推荐内容
+            [self performSelector:@selector(myChannelLoginSuccessRecommendmethod) withObject:nil afterDelay:0.44];
+        }
     }else if (loadType == requestDeleteMyChannel){
         [dataArr removeObjectAtIndex:GetDeleteRow];
         NSIndexPath * indexPath = [NSIndexPath indexPathForRow:GetDeleteRow inSection:0];

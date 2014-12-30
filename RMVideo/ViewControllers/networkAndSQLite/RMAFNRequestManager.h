@@ -223,4 +223,14 @@ typedef enum{
  */
 - (void)getSearchRecommend;
 
+/**
+ *  登录后提交用户信息
+ * @param token             用户手令牌
+ * @param gender            性别
+ * @param age               年代
+ * @param preferences       喜欢类型
+ * @param constellation     星座
+ */
+- (void)getLoginAfterSetInfoWithToken:(NSString *)token withGender:(NSString *)gender withAge:(NSString *)age withPreferences:(NSString *)preferences withConstellation:(NSString *)constellation;
+
 @end

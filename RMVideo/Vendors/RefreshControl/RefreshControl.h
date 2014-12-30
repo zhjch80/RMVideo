@@ -56,6 +56,9 @@ typedef enum {
 ///当前的状态
 @property (nonatomic,assign,readonly)RefreshingDirections refreshingDirection;
 
+//top刷新字体颜色
+@property (nonatomic,strong)UIColor *topTextColor;
+
 @property (nonatomic,readonly)UIScrollView * scrollView;
 
 

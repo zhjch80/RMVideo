@@ -16,6 +16,8 @@
 
 @property (nonatomic ,copy) NSString *genderString;
 @property (nonatomic ,copy) NSString *yearString;
+@property (nonatomic, copy) NSString * viewControlerrIdentify;   //记录是从哪个模块登录
+
 - (IBAction)likeGenreBtnClick:(UIButton *)sender;
 
 - (IBAction)constellation:(UIButton *)sender;

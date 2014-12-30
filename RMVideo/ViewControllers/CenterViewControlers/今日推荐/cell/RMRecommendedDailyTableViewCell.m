@@ -125,7 +125,7 @@
     //        view = view;
     //    }
     UIButton *playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    playBtn.frame = CGRectMake((subImage.frame.origin.x+subImage.frame.size.width)-60, (subImage.frame.origin.y+subImage.frame.size.height)-60, 60, 60);
+    playBtn.frame = CGRectMake((subImage.frame.origin.x+subImage.frame.size.width)-80, (subImage.frame.origin.y+subImage.frame.size.height)-80, 60, 60);
     [playBtn setImage:LOADIMAGE(@"jr_play", kImageTypePNG) forState:UIControlStateNormal];
     playBtn.tag = index;
     [playBtn addTarget:self action:@selector(playMovie:) forControlEvents:UIControlEventTouchUpInside];

@@ -8,6 +8,7 @@
 
 #import "RMGenderTabViewController.h"
 #import "RMConstellationTabViewController.h"
+#import "UIButton+EnlargeEdge.h"
 
 @interface RMGenderTabViewController (){
     NSString *genderString;
@@ -21,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.grilBtn setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
+    [self.boyBtn setEnlargeEdgeWithTop:15 right:15 bottom:15 left:15];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,8 +40,10 @@
     RMConstellationTabViewController *viewContro = [[RMConstellationTabViewController alloc] init];
     viewContro.yearString = yearString;
     viewContro.genderString = genderString;
+    viewContro.viewControlerrIdentify = viewContro.viewControlerrIdentify;
     [self.navigationController pushViewController:viewContro animated:YES];
 }
+
 - (IBAction)afterYearBtnClick:(UIButton *)sender {
     yearString = sender.titleLabel.text;
     [sender setBackgroundImage:[UIImage imageNamed:@"redbg"] forState:UIControlStateNormal];
@@ -54,14 +59,15 @@
 - (IBAction)genderBtnClick:(UIButton *)sender {
     //男
     if(sender.tag == 200){
+        genderString = @"1";
         [self.grilBtn setImage:[UIImage imageNamed:@"no-select_cellImage"] forState:UIControlStateNormal];
         [self.boyBtn setImage:[UIImage imageNamed:@"select_cellImage"] forState:UIControlStateNormal];
     }
     //女
     else{
+        genderString = @"2";
         [self.boyBtn setImage:[UIImage imageNamed:@"no-select_cellImage"] forState:UIControlStateNormal];
         [self.grilBtn setImage:[UIImage imageNamed:@"select_cellImage"] forState:UIControlStateNormal];
     }
-    genderString = sender.titleLabel.text;
 }
 @end

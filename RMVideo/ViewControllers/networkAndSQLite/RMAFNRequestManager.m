@@ -143,6 +143,10 @@
             strUrl = [NSString stringWithFormat:@"%@getSearchRecommend",baseUrl];
             break;
         }
+        case Http_getSetInfo:{
+            strUrl = [NSString stringWithFormat:@"%@setInfo?",baseUrl];
+            break;
+        }
             
         default:{
             strUrl = nil;
@@ -751,11 +755,15 @@ void checkTheNetworkConnection(NSString *title){
                                  };
     [manager POST:url parameters:parameter success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([[responseObject objectForKey:@"code"] intValue] == 4001){
+            NSMutableArray * arr = [NSMutableArray array];
+            RMPublicModel * model = [[RMPublicModel alloc] init];
+            model.status = [responseObject objectForKey:@"status"];
+            model.token = [responseObject objectForKey:@"token"];
+            [arr addObject:model];
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
-                [self.delegate requestFinishiDownLoadWith:[NSMutableArray arrayWithObjects:[ responseObject objectForKey:@"token"], nil]];
+                [self.delegate requestFinishiDownLoadWith:arr];
             }
-        }
-        else{
+        }else{
             [SVProgressHUD showErrorWithStatus:@"登录失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -893,6 +901,25 @@ void checkTheNetworkConnection(NSString *title){
         for (int i=0; i<[[responseObject objectForKey:@"data"] count]; i++){
             [arr addObject:[[responseObject objectForKey:@"data"] objectAtIndex:i]];
         }
+        if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
+            [self.delegate requestFinishiDownLoadWith:arr];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if([self.delegate respondsToSelector:@selector(requestError:)]){
+            [self.delegate requestError:error];
+        }
+    }];
+}
+
+#pragma mark - 登录后收集信息
+
+- (void)getLoginAfterSetInfoWithToken:(NSString *)token withGender:(NSString *)gender withAge:(NSString *)age withPreferences:(NSString *)preferences withConstellation:(NSString *)constellation {
+    AFHTTPRequestOperationManager *manager = [self creatAFNNetworkRequestManager];
+    NSString *url = [self urlPathadress:Http_getSetInfo];
+    url = [NSString stringWithFormat:@"%@token=%@&gender=%@&age=%@&preferences=%@&constellation=%@",url,token,gender,age,preferences,constellation];
+    url = [self encryptUrl:url];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSMutableArray * arr = [[NSMutableArray alloc] initWithObjects:responseObject, nil];
         if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
             [self.delegate requestFinishiDownLoadWith:arr];
         }

@@ -44,7 +44,8 @@
     self.lableTitle.text = [NSString stringWithFormat:@"使用社交账号登录到%@",kAppName];
     manager = [[RMAFNRequestManager alloc] init];
     manager.delegate = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dissmissCurrentCtl) name:@"completethesurvey" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LoginSuccessCallback) name:@"LoginSuccessCallback" object:nil];
 }
 
 - (IBAction)buttonMethod:(UIButton *)sender {
@@ -142,10 +143,11 @@
 }
 
 - (void)requestFinishiDownLoadWith:(NSMutableArray *)data{
+    RMPublicModel * model = [data objectAtIndex:0];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setValue:userName forKey:@"userName"];
     [dict setValue:headImageURLString forKey:@"HeadImageURL"];
-    [dict setValue:[data objectAtIndex:0] forKey:@"token"];
+    [dict setValue:model.token forKey:@"token"];
      CUSFileStorage *storage = [CUSFileStorageManager getFileStorage:CURRENTENCRYPTFILE];
      [storage beginUpdates];
      NSString * loginStatus = [AESCrypt encrypt:@"islogin" password:PASSWORD];
@@ -153,9 +155,14 @@
      [storage setObject:loginStatus forKey:LoginStatus_KEY];
      [storage endUpdates];
     [SVProgressHUD dismiss];
-    RMGenderTabViewController *viewContro = [[RMGenderTabViewController alloc] init];
-    [self.navigationController pushViewController:viewContro animated:YES];
-//    [self performSelector:@selector(dissmissCurrentCtl) withObject:nil afterDelay:1];
+    
+    if ([model.status integerValue] == 1){ //没有登录过  push 获取用户信息界面
+        RMGenderTabViewController *viewContro = [[RMGenderTabViewController alloc] init];
+        viewContro.viewControlerrIdentify = @"LoginCtl";
+        [self.navigationController pushViewController:viewContro animated:YES];
+    }else{ //登录过 拉取精彩推荐内容
+        [self performSelector:@selector(dissmissCurrentCtl) withObject:nil afterDelay:0.44];
+    }
 }
 
 - (void)requestError:(NSError *)error {
@@ -171,6 +178,17 @@
     }
     [self dismissViewControllerAnimated:NO completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccessRecommendmethod" object:nil];
+    }];
+}
+
+/**
+ *  第一次登录 成功获取用户信息回调
+ */
+- (void)LoginSuccessCallback {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:UIDeviceOrientationPortrait] forKey:@"orientation"];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
     }];
 }
 

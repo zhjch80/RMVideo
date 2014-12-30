@@ -49,7 +49,8 @@
 @property (nonatomic, strong) NSMutableArray * video_list;              //视频列表
 @property (nonatomic, strong) NSString * message;                       //请求返回信息
 @property (nonatomic, strong) NSMutableArray * DynamicAssociativeArr;   //动态搜索返回的数据
-
+@property (nonatomic, strong) NSString * status;                        //1 没有登录过   2 已登录过
+@property (nonatomic, strong) NSString * token;                         //用户令牌
 
 @property (nonatomic)BOOL isTVModel;
 

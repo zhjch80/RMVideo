@@ -198,7 +198,6 @@
     NSInteger number = index*3+location;
     RMPublicModel *model =[self.dataArray objectAtIndex:number];
     RMMyChannelShouldSeeViewController * myChannelShouldDelegate = self.myChannelShouldDelegate;
-    NSLog(@"jump:%@  playUrl:%@ title:%@",model.jumpurl,model.downLoadURL,model.name);
     if([model.downLoadURL isEqualToString:@""]||model.downLoadURL== nil){
         if([model.jumpurl isEqualToString:@""]||model.jumpurl==nil){
             [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];

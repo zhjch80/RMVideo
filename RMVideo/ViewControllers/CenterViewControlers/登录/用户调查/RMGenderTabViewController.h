@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *after1800Btn;
 @property (weak, nonatomic) IBOutlet UIButton *after1700Btn;
 
+@property (nonatomic, copy) NSString * viewControlerrIdentify;   //记录是从哪个模块登录
+
 - (IBAction)NextClick:(UIButton *)sender;
 - (IBAction)afterYearBtnClick:(UIButton *)sender;
 - (IBAction)genderBtnClick:(UIButton *)sender;
