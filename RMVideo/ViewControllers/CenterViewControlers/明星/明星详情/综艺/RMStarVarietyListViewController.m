@@ -203,6 +203,10 @@
 - (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
     NSInteger number = index*3+location;
     RMPublicModel *model =[dataArr objectAtIndex:number];
+    if ([model.urls count] == 0){
+        [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+        return;
+    }
     if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
         if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
             [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
