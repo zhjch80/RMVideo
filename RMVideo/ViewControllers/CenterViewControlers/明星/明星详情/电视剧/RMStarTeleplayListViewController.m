@@ -22,6 +22,7 @@
     NSInteger AltogetherRows;
     NSInteger pageCount;
     BOOL isRefresh;
+    BOOL isFirstViewAppear;
 }
 @property (nonatomic, strong) UITableView * mTableView;
 @property (nonatomic, strong) RefreshControl * refreshControl;
@@ -43,7 +44,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self startRequest];
+    if (isFirstViewAppear){
+        [self startRequest];
+        isFirstViewAppear = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -65,6 +69,7 @@
     
     pageCount = 0;
     isRefresh = YES;
+    isFirstViewAppear = YES;
 }
 
 #pragma mark 刷新代理
@@ -199,7 +204,9 @@
  */
 - (void)playBtnWithIndex:(NSInteger)index andLocation:(NSInteger)location{
     NSInteger number = index*3+location;
+    NSLog(@"dataArr:%@",dataArr);
     RMPublicModel *model =[dataArr objectAtIndex:number];
+    NSLog(@"model:%@",model);
     if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
         if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
             [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];

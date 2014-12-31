@@ -22,6 +22,7 @@
     NSInteger AltogetherRows;               //总共有多少条数据
     NSInteger pageCount;
     BOOL isRefresh;
+    BOOL isFirstViewAppear;
 }
 @property (nonatomic, strong) UITableView * mTableView;
 @property (nonatomic, strong) RefreshControl * refreshControl;
@@ -43,7 +44,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self startRequest];
+    if (isFirstViewAppear){
+        [self startRequest];
+        isFirstViewAppear = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -66,6 +70,7 @@
 
     pageCount = 0;
     isRefresh = YES;
+    isFirstViewAppear = YES;
 }
 
 #pragma mark 刷新代理

@@ -36,6 +36,8 @@ typedef enum{
     
     BOOL isStarIntroductionClose;               //明星介绍是否关闭
     BOOL isStarAttentionMyChannel;              //明星是否添加到我的频道
+    BOOL isFirsAppearView;                      //判断第一次进入
+    
     RMAFNRequestManager * manager;
 }
 @property (nonatomic, copy) RMSegmentedControl *segmentedControl;
@@ -52,15 +54,10 @@ typedef enum{
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self startCheckStarProperty];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    if (isFirsAppearView){
+        [self startCheckStarProperty];
+        isFirsAppearView = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -108,7 +105,7 @@ typedef enum{
     [self.aboveView addSubview:self.openOrCloseBtn];
     
     self.selectedCtlType = selectedUnknownCtlStateType;
-    
+    isFirsAppearView = YES;
 }
 
 /**
