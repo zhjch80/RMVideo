@@ -220,7 +220,7 @@
         RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
         RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
         webView.urlString = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
-        [self presentViewController:webNav animated:YES completion:^{
+        [self.starDetailsDelegate presentViewController:webNav animated:YES completion:^{
         }];
     }else{
         //使用custom play 播放mp4
@@ -241,7 +241,7 @@
             playmodel.EpisodeValue = [[model.urls objectAtIndex:i] objectForKey:@"order"];
             [arr addObject:playmodel];
         }
-        [RMPlayer presentVideoPlayerWithPlayArray:arr withUIViewController:self withVideoType:2];
+        [RMPlayer presentVideoPlayerWithPlayArray:arr withUIViewController:self.starDetailsDelegate withVideoType:2];
     }
 }
 
