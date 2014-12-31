@@ -139,51 +139,146 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kHideTabbar object:nil];
 }
 - (void)clickDirectlyPlayBtnWithTag:(NSInteger)tag andtypeIdentifier:(NSString *)identifier{
-    
-    for(NSDictionary *dict in dataArray){
-        NSMutableArray *array = [dict objectForKey:identifier];
-        if(array.count>0){
-            RMPublicModel *model = [array objectAtIndex:tag];
-            NSLog(@"jump:%@  playUrl:%@",model.jumpurl,model.downLoadURL);
-            if([model.downLoadURL isEqualToString:@""]||model.downLoadURL== nil){
-                if([model.jumpurl isEqualToString:@""]||model.jumpurl==nil){
-                    [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
-                    return;
+    if ([identifier isEqualToString:@"电影"]){
+        for(NSDictionary *dict in dataArray){
+            NSMutableArray *array = [dict objectForKey:identifier];
+            if(array.count>0){
+                RMPublicModel *model = [array objectAtIndex:tag];
+                if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""]|| [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
+                    if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] ==nil){
+                        [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+                        return;
+                    }
+                    //跳转web
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.jumpurl = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+                    RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+                    webView.urlString = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    [self presentViewController:webNav animated:YES completion:^{
+                    }];
                 }
-                //跳转web
-                //保存数据sqlit
-                RMPublicModel *insertModel = [[RMPublicModel alloc] init];
-                insertModel.name = model.name;
-                insertModel.pic_url = model.DailyRecommendPic;
-                insertModel.jumpurl = model.jumpurl;
-                insertModel.playTime = @"0";
-                insertModel.video_id = model.DailyRecommendVideo_id;
-                [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
-                RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
-                RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
-                webView.urlString = model.jumpurl;
-                [self presentViewController:webNav animated:YES completion:^{
-                }];
+                else{
+                    //使用custom play 播放mp4
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.reurl = [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    //电影
+                    RMModel * playmodel = [[RMModel alloc] init];
+                    playmodel.url = [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"];
+                    playmodel.title = model.name;
+                    [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
+                }
             }
-            else{
-                //使用custom play 播放mp4
-                //保存数据sqlit
-                RMPublicModel *insertModel = [[RMPublicModel alloc] init];
-                insertModel.name = model.name;
-                insertModel.pic_url = model.pic;
-                insertModel.reurl = model.downLoadURL;
-                insertModel.playTime = @"0";
-                insertModel.video_id = model.video_id;
-                [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
-                //电影
-                RMModel * playmodel = [[RMModel alloc] init];
-                playmodel.url = model.downLoadURL;
-                playmodel.title = model.name;
-                [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
+        }
+    }else if ([identifier isEqualToString:@"电视剧"]){
+        for(NSDictionary *dict in dataArray){
+            NSMutableArray *array = [dict objectForKey:identifier];
+            if(array.count>0){
+                RMPublicModel *model = [array objectAtIndex:tag];
+                if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
+                    if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
+                        [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+                        return;
+                    }
+                    //跳转web
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.jumpurl = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+                    RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+                    webView.urlString = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    [self presentViewController:webNav animated:YES completion:^{
+                    }];
+                }
+                else{
+                    //使用custom play 播放mp4
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.reurl = [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    
+                    NSMutableArray * arr = [[NSMutableArray alloc] init];
+                    for (int i=0; i<[model.urls count]; i++) {
+                        RMModel * playmodel = [[RMModel alloc] init];
+                        playmodel.url = [[model.urls objectAtIndex:i] objectForKey:@"m_down_url"];
+                        playmodel.title = model.name;
+                        playmodel.EpisodeValue = [[model.urls objectAtIndex:i] objectForKey:@"order"];
+                        [arr addObject:playmodel];
+                    }
+                    [RMPlayer presentVideoPlayerWithPlayArray:arr withUIViewController:self withVideoType:2];
+                }
+            }
+        }
+    }else { //综艺
+        for(NSDictionary *dict in dataArray){
+            NSMutableArray *array = [dict objectForKey:identifier];
+            if(array.count>0){
+                RMPublicModel *model = [array objectAtIndex:tag];
+                if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
+                    if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
+                        [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+                        return;
+                    }
+                    //跳转web
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.jumpurl = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    RMWebViewPlayViewController *webView = [[RMWebViewPlayViewController alloc] init];
+                    RMCustomPresentNavViewController * webNav = [[RMCustomPresentNavViewController alloc] initWithRootViewController:webView];
+                    webView.urlString = [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"];
+                    [self presentViewController:webNav animated:YES completion:^{
+                    }];
+                }
+                else{
+                    //使用custom play 播放mp4
+                    //保存数据sqlit
+                    RMPublicModel *insertModel = [[RMPublicModel alloc] init];
+                    insertModel.name = model.name;
+                    insertModel.pic_url = model.DailyRecommendPic;
+                    insertModel.reurl = [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"];
+                    insertModel.playTime = @"0";
+                    insertModel.video_id = model.DailyRecommendVideo_id;
+                    [[Database sharedDatabase] insertProvinceItem:insertModel andListName:PLAYHISTORYLISTNAME];
+                    
+                    NSMutableArray * arr = [[NSMutableArray alloc] init];
+                    for (int i=0; i<[model.urls count]; i++) {
+                        RMModel * playmodel = [[RMModel alloc] init];
+                        playmodel.url = [[model.urls objectAtIndex:i] objectForKey:@"m_down_url"];
+                        playmodel.title = model.name;
+                        playmodel.EpisodeValue = [[model.urls objectAtIndex:i] objectForKey:@"order"];
+                        [arr addObject:playmodel];
+                    }
+                    [RMPlayer presentVideoPlayerWithPlayArray:arr withUIViewController:self withVideoType:2];
+                }
             }
         }
     }
-    
 }
 
 #pragma mark - Base Method

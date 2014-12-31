@@ -207,8 +207,7 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL = [dict objectForKey:@"m_down_url"];
+                model.urls = [dict objectForKey:@"urls"];
                 [tvArray addObject:model];
             }
             NSMutableDictionary *tv = [[NSMutableDictionary alloc] init];
@@ -221,8 +220,7 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL = [dict objectForKey:@"m_down_url"];
+                model.urls = [NSMutableArray arrayWithObjects:[dict objectForKey:@"urls"], nil];
                 [movieArray addObject:model];
             }
             NSMutableDictionary *movie = [[NSMutableDictionary alloc] init];
@@ -236,8 +234,7 @@ void checkTheNetworkConnection(NSString *title){
                 model.DailyRecommendDescription = [dict objectForKey:@"description"];
                 model.DailyRecommendVideo_id = [dict objectForKey:@"video_id"];
                 model.DailyRecommendVideo_type = [dict objectForKey:@"video_type"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL = [dict objectForKey:@"m_down_url"];
+                model.urls = [dict objectForKey:@"urls"];
                 [varietyArray addObject:model];
             }
             NSMutableDictionary *variety = [[NSMutableDictionary alloc] init];
@@ -276,8 +273,12 @@ void checkTheNetworkConnection(NSString *title){
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.sum_i_hits = [dict objectForKey:@"sum_i_hits"];
                 model.topNum = [dict objectForKey:@"order"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL = [dict objectForKey:@"m_down_url"];
+                if ([videoType isEqualToString:@"1"]){
+                    model.jumpurl = [[dict objectForKey:@"urls"] objectForKey:@"jumpurl"];
+                    model.downLoadURL = [[dict objectForKey:@"urls"] objectForKey:@"m_down_url"];
+                }else{
+                    model.urls = [dict objectForKey:@"urls"];
+                }
                 [dataArray addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -501,8 +502,12 @@ void checkTheNetworkConnection(NSString *title){
                 model.video_type = [dict objectForKey:@"video_type"];
                 model.video_id = [dict objectForKey:@"video_id"];
                 model.rows = [responseObject objectForKey:@"rows"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL = [dict objectForKey:@"m_down_url"];
+                if ([type isEqualToString:@"1"]){
+                    model.jumpurl = [[dict objectForKey:@"urls"] objectForKey:@"jumpurl"];
+                    model.downLoadURL = [[dict objectForKey:@"urls"] objectForKey:@"m_down_url"];
+                }else{
+                    model.urls = [dict objectForKey:@"urls"];
+                }
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
@@ -621,19 +626,21 @@ void checkTheNetworkConnection(NSString *title){
                 RMPublicModel *model = [[RMPublicModel alloc] init];
                 model.pic = [dict objectForKey:@"pic"];
                 model.name = [dict objectForKey:@"name"];
-                model.video_id =[dict objectForKey:@"video_id"];
                 model.video_type = [dict objectForKey:@"video_type"];
-                model.jumpurl = [dict objectForKey:@"jumpurl"];
-                model.downLoadURL= [dict objectForKey:@"m_down_url"];
+                model.video_id =[dict objectForKey:@"video_id"];
+                if ([[dict objectForKey:@"video_type"] isEqualToString:@"1"]){
+                    model.downLoadURL = [[dict objectForKey:@"urls"] objectForKey:@"m_down_url"];
+                    model.jumpurl = [[dict objectForKey:@"urls"] objectForKey:@"jumpurl"];
+                }else{
+                    model.urls = [dict objectForKey:@"urls"];
+                }
                 model.rows = [responseObject objectForKey:@"rows"];
-                
                 [array addObject:model];
             }
             if([self.delegate respondsToSelector:@selector(requestFinishiDownLoadWith:)]){
                 [self.delegate requestFinishiDownLoadWith:array];
             }
-        }
-        else{
+        }else{
             [SVProgressHUD showErrorWithStatus:@"下载失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

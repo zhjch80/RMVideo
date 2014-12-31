@@ -251,10 +251,10 @@
     
     CMTime interval = CMTimeMake(33, 1000);
     __weak __typeof(self) weakself = self;
-    if (playbackObserver) {
-        [self.player.moviePlayer removeTimeObserver:playbackObserver];
-        playbackObserver = nil;
-    }
+//    if (playbackObserver) {
+//        [self.player.moviePlayer removeTimeObserver:playbackObserver];
+//        playbackObserver = nil;
+//    }
     playbackObserver = [self.player.moviePlayer addPeriodicTimeObserverForInterval:interval queue:dispatch_get_main_queue() usingBlock: ^(CMTime time) {
         CMTime endTime = CMTimeConvertScale (weakself.player.moviePlayer.currentItem.asset.duration, weakself.player.moviePlayer.currentTime.timescale, kCMTimeRoundingMethod_RoundHalfAwayFromZero);
         if (CMTimeCompare(endTime, kCMTimeZero) != 0) {
