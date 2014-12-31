@@ -238,6 +238,7 @@
 #pragma mark - request RMAFNRequestManagerDelegate
 
 - (void)startRequest{
+    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getTagOfVideoListWithID:self.star_id andVideoType:@"1" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
     request.delegate = self;
@@ -272,9 +273,11 @@
         dataArr = data;
         [self.mTableView reloadData];
     }
+    [SVProgressHUD dismiss];
 }
 
 -(void)requestError:(NSError *)error {
+    [SVProgressHUD dismiss];
     NSLog(@"star 电影 error:%@",error);
 }
 

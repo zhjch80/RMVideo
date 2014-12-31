@@ -254,7 +254,6 @@ typedef enum{
         [self.addOrDeleteBtn setBackgroundImage:LOADIMAGE(@"mx_join", kImageTypePNG) forState:UIControlStateNormal];
         isStarAttentionMyChannel = 0;
     }else {
-        NSLog(@"data:%@",data);
         if ([[[data objectAtIndex:0] objectForKey:@"vod_num"] integerValue] != 0){ //电影
             [CheckArr addObject:@"电影"];
         }else{

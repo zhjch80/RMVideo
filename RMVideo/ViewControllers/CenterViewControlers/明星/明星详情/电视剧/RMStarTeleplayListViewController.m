@@ -90,6 +90,7 @@
 }
 
 - (void)startRequest {
+    [SVProgressHUD showWithStatus:@"加载中..." maskType:SVProgressHUDMaskTypeClear];
     RMAFNRequestManager * request = [[RMAFNRequestManager alloc] init];
     [request getTagOfVideoListWithID:self.star_id andVideoType:@"2" WithPage:[NSString stringWithFormat:@"%d",pageCount] count:@"12"];
     request.delegate = self;
@@ -157,7 +158,6 @@
     }
 
     if (indexPath.row * 3 + 2 < [dataArr count]){
-        
         RMPublicModel *model_right = [dataArr objectAtIndex:indexPath.row*3 + 2];
         [cell.threeLable loadTextViewWithString:model_right.name WithTextFont:[UIFont systemFontOfSize:14.0] WithTextColor:[UIColor blackColor] WithTextAlignment:NSTextAlignmentCenter WithSetupLabelCenterPoint:YES WithTextOffset:0];
         [cell.threeLable startScrolling];
@@ -269,9 +269,11 @@
         dataArr = data;
         [self.mTableView reloadData];
     }
+    [SVProgressHUD dismiss];
 }
 
 -(void)requestError:(NSError *)error {
+    [SVProgressHUD dismiss];
     NSLog(@"star 电影 error:%@",error);
 }
 

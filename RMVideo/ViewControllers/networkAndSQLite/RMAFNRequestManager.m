@@ -26,14 +26,14 @@
 
 #endif
 
-#define kPassWord       @"yu32uzy4"
+#define kPassWord       @"yu32uzy4"                 //接口密匙
 
 @implementation RMAFNRequestManager
 
 - (AFHTTPRequestOperationManager *)creatAFNNetworkRequestManager{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 10;//超时
+    manager.requestSerializer.timeoutInterval = 15;//超时
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
     return manager;
 }
