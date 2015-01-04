@@ -184,6 +184,10 @@
             break;
         }
         case 2:{
+            if ([model.urls count] == 0){
+                [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+                return ;
+            }
             if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
                 if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
                     [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
@@ -227,6 +231,10 @@
             break;
         }
         case 3:{
+            if ([model.urls count] == 0){
+                [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+                return ;
+            }
             if([[[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
                 if([[[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[model.urls objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
                     [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];

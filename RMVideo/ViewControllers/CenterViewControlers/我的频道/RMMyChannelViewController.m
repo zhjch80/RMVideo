@@ -422,6 +422,10 @@ typedef enum{
             [RMPlayer presentVideoPlayerWithPlayModel:playmodel withUIViewController:self withVideoType:1];
         }
     }else{//电视剧 综艺
+        if ([[[model.video_list objectAtIndex:location] objectForKey:@"urls"] count] == 0){
+            [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
+            return ;
+        }
         if([[[[[model.video_list objectAtIndex:location] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"m_down_url"] isEqualToString:@""] || [[[[model.video_list objectAtIndex:location] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"m_down_url"] == nil){
             if([[[[[model.video_list objectAtIndex:location] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"jumpurl"] isEqualToString:@""] || [[[[model.video_list objectAtIndex:location] objectForKey:@"urls"] objectAtIndex:0] objectForKey:@"jumpurl"] == nil){
                 [SVProgressHUD showErrorWithStatus:@"暂时不能播放该视频"];
